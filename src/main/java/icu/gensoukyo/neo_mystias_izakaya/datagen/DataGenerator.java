@@ -1,4 +1,4 @@
-package icu.gensoukyo.neo_mystias_izakaya.dataGen;
+package icu.gensoukyo.neo_mystias_izakaya.datagen;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import net.neoforged.api.distmarker.Dist;

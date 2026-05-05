@@ -1,4 +1,4 @@
-package icu.gensoukyo.neo_mystias_izakaya.dataGen;
+package icu.gensoukyo.neo_mystias_izakaya.datagen;
 
 import com.google.gson.JsonObject;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
