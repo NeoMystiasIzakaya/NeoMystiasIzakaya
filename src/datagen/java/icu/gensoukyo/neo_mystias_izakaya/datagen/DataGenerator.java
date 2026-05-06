@@ -16,6 +16,7 @@ public class DataGenerator {
 
         event.createProvider(output -> new ModLanguage(output, "en_us"));
         event.createProvider(output -> new ModLanguage(output, "zh_cn"));
+        event.createProvider(output -> new ModTagItemList(output, NeoMystiasIzakaya.MODID));
 
         event.createProvider(ModItem::new);
     }
