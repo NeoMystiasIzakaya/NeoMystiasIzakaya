@@ -18,6 +18,16 @@ sourceSets.main.resources {
     exclude("src/generated/**/.cache") // datagen cache files
 }
 
+sourceSets {
+    datagen {
+        java {
+            compileClasspath += main.compileClasspath
+            compileClasspath += main.output
+            runtimeClasspath += main.output
+        }
+    }
+}
+
 repositories {
     mavenLocal()
     mavenCentral()
@@ -68,6 +78,7 @@ neoForge {
     mods {
         "${mod_id}" {
             sourceSet(sourceSets.main)
+            sourceSet(sourceSets.datagen)
         }
     }
 }
@@ -79,6 +90,14 @@ configurations {
 dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.40'
     annotationProcessor 'org.projectlombok:lombok:1.18.40'
+
+//    compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+//    compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
+//
+//    compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:${rei_version}"
+//    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:${rei_version}"
+//
+//    localRuntime "me.shedaniel:RoughlyEnoughItems-neoforge:$rei_version"
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {

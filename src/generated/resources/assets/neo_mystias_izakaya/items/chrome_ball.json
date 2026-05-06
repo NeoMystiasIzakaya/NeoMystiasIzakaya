@@ -1,7 +1,7 @@
 {
-  "hand_animation_on_swap": false,
   "model": {
     "type": "minecraft:model",
     "model": "neo_mystias_izakaya:item/chrome_ball"
-  }
+  },
+  "oversized_in_gui": true
 }
