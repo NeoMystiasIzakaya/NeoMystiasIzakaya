@@ -22,4 +22,11 @@ public record TagItemList(List<String> items) {
             ByteBufCodecs.<ByteBuf,String>list().apply(ByteBufCodecs.STRING_UTF8), TagItemList::items,
             TagItemList::new
     );
+
+    @Override
+    public String toString() {
+        return "TagItemList{" +
+                "items=" + items +
+                '}';
+    }
 }

@@ -14,4 +14,11 @@ public record TagItemListHolder(Identifier key, TagItemList tag) {
             ).apply(instance, TagItemListHolder::new)
     );
 
+    @Override
+    public String toString() {
+        return "TagItemListHolder{" +
+                "key=" + key +
+                ", tag=" + tag +
+                '}';
+    }
 }

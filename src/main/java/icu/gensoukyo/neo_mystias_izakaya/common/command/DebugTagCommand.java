@@ -1,0 +1,64 @@
+package icu.gensoukyo.neo_mystias_izakaya.common.command;
+
+import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.sun.jdi.connect.Connector;
+import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
+import icu.gensoukyo.neo_mystias_izakaya.common.event.ReloadEventHandler;
+import icu.gensoukyo.neo_mystias_izakaya.content.tag.TagItemListHolder;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.IdentifierArgument;
+import net.minecraft.commands.arguments.item.ItemArgument;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.Item;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@EventBusSubscriber(modid = NeoMystiasIzakaya.MODID)
+public class DebugTagCommand {
+
+    @SubscribeEvent
+    public static void onRegisterCommandsEvent(RegisterCommandsEvent event) {
+        event.getDispatcher().register(Commands.literal(NeoMystiasIzakaya.MODID)
+                .then(Commands.literal("debug")
+                        .then(Commands.literal("tag")
+                                .then(Commands.literal("getItemList").then(Commands.argument("tag", IdentifierArgument.id()).executes(
+                                        context -> {
+                                            Identifier tag = IdentifierArgument.getId(context, "tag");
+                                            TagItemListHolder holder = ReloadEventHandler.getTagItemListReloadListener().getTagItemListMap().get(tag);
+                                            MutableComponent component = Component.literal( "items of " + tag + ":");
+                                            holder.tag().items().forEach(item -> component.append("\n- " + item));
+                                            component.append("\n total: " + holder.tag().items().size());
+                                            context.getSource().sendSuccess(() -> component, false);
+                                            return 0;
+                                        }
+                                )))
+                                .then(Commands.literal("getTagList").then(Commands.argument("item", ItemArgument.item(event.getBuildContext())).executes(
+                                        context -> {
+                                            Item item = ItemArgument.getItem(context, "item").item().value();
+                                            // todo 从component拿tag
+                                            return 0;
+                                        }
+                                )))
+                                .then(Commands.literal("getTagListRaw").then(Commands.argument("item", ItemArgument.item(event.getBuildContext())).executes(
+                                                context -> {
+                                                    Item item = ItemArgument.getItem(context, "item").item().value();
+                                                    Identifier key = BuiltInRegistries.ITEM.getKey(item);
+                                                    List<Identifier> identifiers = ReloadEventHandler.getTagItemListReloadListener().getTagItemListMap().getItemMap().getOrDefault(key,new ArrayList<>());
+                                                    MutableComponent component = Component.literal("tags of " + key + ":");
+                                                    identifiers.forEach(id -> component.append("\n- " + id));
+                                                    component.append("\n total: " + identifiers.size());
+                                                    context.getSource().sendSuccess(() -> component, false);
+                                                    return 0;
+                                                }
+                                        ))
+                                ))));
+    }
+}
