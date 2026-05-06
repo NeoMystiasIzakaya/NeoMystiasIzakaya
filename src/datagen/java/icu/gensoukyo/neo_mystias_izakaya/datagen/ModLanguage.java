@@ -7,6 +7,8 @@ import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredItem;
 import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
@@ -56,8 +58,16 @@ public class ModLanguage implements DataProvider {
         this.add(key.getDescriptionId(), en, cn);
     }
 
+    public void add(DeferredBlock<@NotNull Block> key, String en, String cn) {
+        this.add(key.get().getDescriptionId(), en, cn);
+    }
+
     public void add(Item key, String en, String cn) {
         this.add(key.getDescriptionId(), en, cn);
+    }
+
+    public void add(DeferredItem<@NotNull Item> key, String en, String cn) {
+        this.add(key.get().getDescriptionId(), en, cn);
     }
 
     private void add(String key, String en, String cn) {

@@ -4,12 +4,14 @@ import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.registry.ItemRegistry;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.data.models.ItemModelOutput;
 import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.renderer.item.ClientItem;
 import net.minecraft.client.renderer.item.CuboidItemModelWrapper;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Item;
+import net.neoforged.neoforge.registries.DeferredItem;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
@@ -22,19 +24,34 @@ public class ModItem extends ModelProvider {
 
     @Override
     protected void registerModels(@NotNull BlockModelGenerators blockModels, @NotNull ItemModelGenerators itemModels) {
-        simpleItem(itemModels, ItemRegistry.CHROME_BALL.get());
+        SimpleItemModelRegister simple = new SimpleItemModelRegister(itemModels.itemModelOutput);
+
+        simple.register(ItemRegistry.CHROME_BALL);
     }
 
-    private void simpleItem(ItemModelGenerators itemModels, Item item) {
-        itemModels.itemModelOutput.register(
-                item, new ClientItem(
-                        new CuboidItemModelWrapper.Unbaked(
-                                ModelLocationUtils.getModelLocation(item),
-                                Optional.empty(),
-                                Collections.emptyList()
-                        ),
-                        new ClientItem.Properties(true, true, 1.0F)
-                )
-        );
+    public static class SimpleItemModelRegister {
+        private final ItemModelOutput itemModelOutput;
+
+        public SimpleItemModelRegister(ItemModelOutput itemModelOutput) {
+            this.itemModelOutput = itemModelOutput;
+        }
+
+        public void register(Item item) {
+            this.itemModelOutput.register(
+                    item, new ClientItem(
+                            new CuboidItemModelWrapper.Unbaked(
+                                    ModelLocationUtils.getModelLocation(item),
+                                    Optional.empty(),
+                                    Collections.emptyList()
+                            ),
+                            new ClientItem.Properties(true, true, 1.0F)
+                    )
+            );
+        }
+
+        public void register(DeferredItem<@NotNull Item> item) {
+            this.register(item.get());
+        }
     }
+
 }

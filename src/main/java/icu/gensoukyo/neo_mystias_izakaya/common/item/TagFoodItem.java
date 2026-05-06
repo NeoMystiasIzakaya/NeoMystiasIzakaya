@@ -1,4 +1,4 @@
-package icu.gensoukyo.neo_mystias_izakaya.item;
+package icu.gensoukyo.neo_mystias_izakaya.common.item;
 
 import net.minecraft.world.item.Item;
 
