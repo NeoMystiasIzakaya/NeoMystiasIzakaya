@@ -28,47 +28,47 @@ public class NMIFoodItems {
 
     public static final DeferredItem<Item> ALL_MEAT_FEAST = registerItem(ITEMS, "food/all_meat_feast", Item::new, props -> props);
 
-    public static final DeferredItem<Item> ARCTIC_SWEET_SHRIMP_AND_PEACH_SALAD = registerItem(ITEMS, "food/arctic_sweet_shrimp_and_peach_salad", Item::new, props -> props);
+    public static final DeferredItem<Item> PEACH_SHRIMP_SALAD = registerItem(ITEMS, "food/peach_shrimp_salad", Item::new, props -> props);
 
-    public static final DeferredItem<Item> ASSORTED_TEMPURA = registerItem(ITEMS, "food/assorted_tempura", Item::new, props -> props);
+    public static final DeferredItem<Item> TEMPURA_PLATTER = registerItem(ITEMS, "food/tempura_platter", Item::new, props -> props);
 
-    public static final DeferredItem<Item> A_LITTLE_SWEET_POISON = registerItem(ITEMS, "food/a_little_sweet_poison", Item::new, props -> props);
+    public static final DeferredItem<Item> LITTLE_SWEET_POISON = registerItem(ITEMS, "food/little_sweet_poison", Item::new, props -> props);
 
-    public static final DeferredItem<Item> BAKED_CRAB_WITH_CREAM = registerItem(ITEMS, "food/baked_crab_with_cream", Item::new, props -> props);
+    public static final DeferredItem<Item> CREAMY_CRAB = registerItem(ITEMS, "food/creamy_crab", Item::new, props -> props);
 
-    public static final DeferredItem<Item> BAKED_SWEET_POTATOES = registerItem(ITEMS, "food/baked_sweet_potatoes", Item::new, props -> props);
+    public static final DeferredItem<Item> BAKED_SWEET_POTATO = registerItem(ITEMS, "food/baked_sweet_potato", Item::new, props -> props);
 
-    public static final DeferredItem<Item> BAMBOO_SHOOTS_FRIED_MEAT = registerItem(ITEMS, "food/bamboo_shoots_fried_meat", Item::new, props -> props);
+    public static final DeferredItem<Item> PORK_BAMBOO_SHOOTS_STIR_FRY = registerItem(ITEMS, "food/pork_bamboo_shoots_stir_fry", Item::new, props -> props);
 
-    public static final DeferredItem<Item> BAMBOO_SHOOTS_STEWED_IN_STONE_POT = registerItem(ITEMS, "food/bamboo_shoots_stewed_in_stone_pot", Item::new, props -> props);
+    public static final DeferredItem<Item> BAMBOO_MEAT_POT = registerItem(ITEMS, "food/bamboo_meat_pot", Item::new, props -> props);
 
-    public static final DeferredItem<Item> BAMBOO_STEAMED_EGG = registerItem(ITEMS, "food/bamboo_steamed_egg", Item::new, props -> props);
+    public static final DeferredItem<Item> STEAMED_EGG_BAMBOO_SHOOTS = registerItem(ITEMS, "food/steamed_egg_bamboo_shoots", Item::new, props -> props);
 
-    public static final DeferredItem<Item> BAMBOO_TUBE_ROASTED_DRUNKEN_SHRIMP = registerItem(ITEMS, "food/bamboo_tube_roasted_drunken_shrimp", Item::new, props -> props);
+    public static final DeferredItem<Item> DRUNK_SHRIMP_IN_BAMBOO = registerItem(ITEMS, "food/drunk_shrimp_in_bamboo", Item::new, props -> props);
 
-    public static final DeferredItem<Item> BAMBOO_TUBE_STEAMED_PORK = registerItem(ITEMS, "food/bamboo_tube_steamed_pork", Item::new, props -> props);
+    public static final DeferredItem<Item> RICE_POWDER_MEAT = registerItem(ITEMS, "food/rice_powder_meat", Item::new, props -> props);
 
-    public static final DeferredItem<Item> BEAR_PAW = registerItem(ITEMS, "food/bear_paw", Item::new, props -> props);
+    public static final DeferredItem<Item> IMITATION_BEAR_PAW = registerItem(ITEMS, "food/imitation_bear_paw", Item::new, props -> props);
 
-    public static final DeferredItem<Item> BEEF_HOT_POT = registerItem(ITEMS, "food/beef_hot_pot", Item::new, props -> props);
+    public static final DeferredItem<Item> TWO_FLAVOR_BEEF_HOTPOT = registerItem(ITEMS, "food/two_flavor_beef_hotpot", Item::new, props -> props);
 
-    public static final DeferredItem<Item> BEEF_RICE = registerItem(ITEMS, "food/beef_rice", Item::new, props -> props);
+    public static final DeferredItem<Item> BEEF_BOWL = registerItem(ITEMS, "food/beef_bowl", Item::new, props -> props);
 
     public static final DeferredItem<Item> BEEF_WELLINGTON = registerItem(ITEMS, "food/beef_wellington", Item::new, props -> props);
 
-    public static final DeferredItem<Item> BEETLE_STEAMED_CAKE = registerItem(ITEMS, "food/beetle_steamed_cake", Item::new, props -> props);
+    public static final DeferredItem<Item> KABUTO_STEAMED_CAKE = registerItem(ITEMS, "food/kabuto_steamed_cake", Item::new, props -> props);
 
     public static final DeferredItem<Item> BISCAY_BISCUITS = registerItem(ITEMS, "food/biscay_biscuits", Item::new, props -> props);
 
-    public static final DeferredItem<Item> BOILED_FISH = registerItem(ITEMS, "food/boiled_fish", Item::new, props -> props);
+    public static final DeferredItem<Item> SICHUAN_BOILED_FISH = registerItem(ITEMS, "food/sichuan_boiled_fish", Item::new, props -> props);
 
-    public static final DeferredItem<Item> BRAISED_EEL = registerItem(ITEMS, "food/braised_eel", Item::new, props -> props);
+    public static final DeferredItem<Item> KABAYAKI_LAMPREYS = registerItem(ITEMS, "food/kabayaki_lampreys", Item::new, props -> props);
 
     public static final DeferredItem<Item> BRAISED_PORK_WITH_PEACH = registerItem(ITEMS, "food/braised_pork_with_peach", Item::new, props -> props);
 
-    public static final DeferredItem<Item> BURNT_PUDDING = registerItem(ITEMS, "food/burnt_pudding", Item::new, props -> props);
+    public static final DeferredItem<Item> BURN_OUT_PUDDING = registerItem(ITEMS, "food/burn_out_pudding", Item::new, props -> props);
 
-    public static final DeferredItem<Item> BUTTER_STEAK = registerItem(ITEMS, "food/butter_steak", Item::new, props -> props);
+    public static final DeferredItem<Item> CLASSIC_STEAK = registerItem(ITEMS, "food/classic_steak", Item::new, props -> props);
 
     public static final DeferredItem<Item> CANDIED_CHESTNUTS = registerItem(ITEMS, "food/candied_chestnuts", Item::new, props -> props);
 
