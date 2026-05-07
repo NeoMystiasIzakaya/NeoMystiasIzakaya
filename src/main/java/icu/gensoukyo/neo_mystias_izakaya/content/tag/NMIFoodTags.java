@@ -3,7 +3,7 @@ package icu.gensoukyo.neo_mystias_izakaya.content.tag;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import net.minecraft.resources.Identifier;
 
-public class NMICuisineTags {
+public class NMIFoodTags {
 
     public static final Identifier Aquatic = NeoMystiasIzakaya.id("aquatic");
     public static final Identifier Aura_Bursting = NeoMystiasIzakaya.id("aura_bursting");

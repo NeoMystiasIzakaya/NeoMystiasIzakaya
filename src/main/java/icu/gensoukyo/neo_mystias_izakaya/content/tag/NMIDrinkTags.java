@@ -3,7 +3,7 @@ package icu.gensoukyo.neo_mystias_izakaya.content.tag;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import net.minecraft.resources.Identifier;
 
-public class NMIBeverageTags {
+public class NMIDrinkTags {
 
     public static final Identifier Beer = NeoMystiasIzakaya.id("beer");
     public static final Identifier Bitter = NeoMystiasIzakaya.id("bitter");
