@@ -2,12 +2,15 @@ package icu.gensoukyo.neo_mystias_izakaya.datagen;
 
 import com.google.gson.JsonObject;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
+import icu.gensoukyo.neo_mystias_izakaya.content.tag.NMIBeverageTags;
+import icu.gensoukyo.neo_mystias_izakaya.content.tag.NMICuisineTags;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIDrinkItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIFoodItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIIngredientItems;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -32,6 +35,84 @@ public class NMILanguageProvider implements DataProvider {
 
     private void addTranslations() {
         this.add(NeoMystiasIzakaya.MODID, "Neo Mystia's Izakaya", "新夜雀食堂");
+
+    }
+
+    private void addTagTranslations() {
+        this.addTag(NMICuisineTags.Aquatic, "Aquatic", "水产");
+        this.addTag(NMICuisineTags.Aura_Bursting, "Aura Bursting", "燃起来了");
+        this.addTag(NMICuisineTags.Chinese, "Chinese", "中华");
+        this.addTag(NMICuisineTags.Cultural_Heritage, "Cultural Heritage", "文化底蕴");
+        this.addTag(NMICuisineTags.Divine_Punishment, "Divine Punishment", "天罚");
+        this.addTag(NMICuisineTags.Dreamy, "Dreamy", "梦幻");
+        this.addTag(NMICuisineTags.Economical, "Economical", "实惠");
+        this.addTag(NMICuisineTags.Expensive, "Expensive", "昂贵");
+        this.addTag(NMICuisineTags.Filling, "Filling", "饱腹");
+        this.addTag(NMICuisineTags.Fresh, "Fresh", "鲜");
+        this.addTag(NMICuisineTags.Fruity, "Fruity", "果味");
+        this.addTag(NMICuisineTags.Fungus, "Fungus", "菌类");
+        this.addTag(NMICuisineTags.Good_With_Alcohol, "Good With Alcohol", "下酒");
+        this.addTag(NMICuisineTags.Greasy, "Greasy", "重油");
+        this.addTag(NMICuisineTags.Grilled, "Grilled", "烧烤");
+        this.addTag(NMICuisineTags.Homecooking, "Homecooking", "家常");
+        this.addTag(NMICuisineTags.Hot, "Hot", "灼热");
+        this.addTag(NMICuisineTags.Japanese, "Japanese", "和风");
+        this.addTag(NMICuisineTags.Large_Portion, "Large Portion", "大份");
+        this.addTag(NMICuisineTags.Legendary, "Legendary", "传说");
+        this.addTag(NMICuisineTags.Meat, "Meat", "肉");
+        this.addTag(NMICuisineTags.Mild, "Mild", "清淡");
+        this.addTag(NMICuisineTags.Mountain_Delicacy, "Mountain Delicacy", "山珍");
+        this.addTag(NMICuisineTags.Peculiar, "Peculiar", "猎奇");
+        this.addTag(NMICuisineTags.Photogenic, "Photogenic", "适合拍照");
+        this.addTag(NMICuisineTags.Poison, "Poison", "毒药");
+        this.addTag(NMICuisineTags.Premium, "Premium", "高级");
+        this.addTag(NMICuisineTags.Raw, "Raw", "生");
+        this.addTag(NMICuisineTags.Refreshing, "Refreshing", "凉爽");
+        this.addTag(NMICuisineTags.Salty, "Salty", "咸");
+        this.addTag(NMICuisineTags.Sea_Delicacy, "Sea Delicacy", "海味");
+        this.addTag(NMICuisineTags.Signature, "Signature", "招牌");
+        this.addTag(NMICuisineTags.Small_Portion, "Small Portion", "小巧");
+        this.addTag(NMICuisineTags.Soup, "Soup", "汤羹");
+        this.addTag(NMICuisineTags.Sour, "Sour", "酸");
+        this.addTag(NMICuisineTags.Specialty, "Specialty", "特产");
+        this.addTag(NMICuisineTags.Spicy, "Spicy", "辣");
+        this.addTag(NMICuisineTags.Strength_Boosting, "Strength Boosting", "力量涌现");
+        this.addTag(NMICuisineTags.Sweet, "Sweet", "甜");
+        this.addTag(NMICuisineTags.Vegetarian, "Vegetarian", "素");
+        this.addTag(NMICuisineTags.Western, "Western", "西式");
+        this.addTag(NMICuisineTags.Wonderful, "Wonderful", "不可思议");
+
+        this.addTag(NMICuisineTags.Boiling_Pot , "Boiling Pot", "煮锅");
+        this.addTag(NMICuisineTags.Cutting_Board , "Cutting Board", "料理台");
+        this.addTag(NMICuisineTags.Frying_Pan , "Frying Pan", "油锅");
+        this.addTag(NMICuisineTags.Grill , "Grill", "烧烤架");
+        this.addTag(NMICuisineTags.Streamer , "Streamer", "蒸锅");
+
+        this.addTag(NMICuisineTags.Trend_Popular , "Trend - Popular", "趋势-流行");
+        this.addTag(NMICuisineTags.Trend_Unpopular , "Trend - Unpopular", "趋势-厌恶");
+
+
+        this.addTag(NMIBeverageTags.Beer, "Beer", "啤酒");
+        this.addTag(NMIBeverageTags.Bitter, "Bitter", "苦");
+        this.addTag(NMIBeverageTags.Chillable, "Chillable", "可加冰");
+        this.addTag(NMIBeverageTags.Cocktail, "Cocktail", "鸡尾酒");
+        this.addTag(NMIBeverageTags.Dry, "Dry", "辛");
+        this.addTag(NMIBeverageTags.Fruity, "Fruity", "水果");
+        this.addTag(NMIBeverageTags.Heatable, "Heatable", "可加热");
+        this.addTag(NMIBeverageTags.High_Alcohol, "High Alcohol", "高酒精");
+        this.addTag(NMIBeverageTags.Liquor, "Liquor", "利口酒");
+        this.addTag(NMIBeverageTags.Low_Alcohol, "Low Alcohol", "低酒精");
+        this.addTag(NMIBeverageTags.Mid_Alcohol, "Mid Alcohol", "中酒精");
+        this.addTag(NMIBeverageTags.Modern, "Modern", "现代");
+        this.addTag(NMIBeverageTags.Neat, "Neat", "直饮");
+        this.addTag(NMIBeverageTags.No_Alcohol, "No Alcohol", "无酒精");
+        this.addTag(NMIBeverageTags.Sake, "Sake", "清酒");
+        this.addTag(NMIBeverageTags.Shochu, "Shochu", "烧酒");
+        this.addTag(NMIBeverageTags.Soda, "Soda", "气泡");
+        this.addTag(NMIBeverageTags.Stimulating, "Stimulating", "提神");
+        this.addTag(NMIBeverageTags.Sweet, "Sweet", "甘");
+        this.addTag(NMIBeverageTags.Vintage, "Vintage", "古典");
+        this.addTag(NMIBeverageTags.Western, "Western", "西洋酒");
 
     }
 
@@ -300,6 +381,7 @@ public class NMILanguageProvider implements DataProvider {
     @Override
     public @NotNull CompletableFuture<?> run(@NotNull CachedOutput cache) {
         this.addTranslations();
+        this.addTagTranslations();
         this.addItemTranslations();
         Path path = this.output.getOutputFolder(PackOutput.Target.RESOURCE_PACK)
                 .resolve(NeoMystiasIzakaya.MODID).resolve("lang");
@@ -342,6 +424,14 @@ public class NMILanguageProvider implements DataProvider {
         } else if (this.locale.equals("zh_cn") && !this.cnData.containsKey(key)) {
             this.cnData.put(key, cn);
         }
+    }
+
+    private void add(Identifier key, String en, String cn) {
+        this.add(key.toLanguageKey(), en, cn);
+    }
+
+    private void addTag(Identifier key, String en, String cn) {
+        this.add(key.toLanguageKey("tag"), en, cn);
     }
 
     @Override
