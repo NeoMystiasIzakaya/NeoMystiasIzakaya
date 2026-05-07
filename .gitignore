@@ -40,3 +40,4 @@ repo/
 !**/src/**/repo/
 
 .claude
+/code_gen/

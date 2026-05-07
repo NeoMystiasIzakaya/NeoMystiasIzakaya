@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "neo_mystias_izakaya:item/food/holy_white_lotus_seed_cake"
+  }
+}
