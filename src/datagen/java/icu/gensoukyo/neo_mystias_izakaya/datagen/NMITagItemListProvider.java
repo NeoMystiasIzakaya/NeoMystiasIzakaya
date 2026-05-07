@@ -3,10 +3,9 @@ package icu.gensoukyo.neo_mystias_izakaya.datagen;
 import icu.gensoukyo.neo_mystias_izakaya.datagen.api.TagItemListProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Items;
-import net.neoforged.neoforge.registries.DeferredRegister;
 
-public class ModTagItemList extends TagItemListProvider {
-    public ModTagItemList(PackOutput output, String modid) {
+public class NMITagItemListProvider extends TagItemListProvider {
+    public NMITagItemListProvider(PackOutput output, String modid) {
         super(output, modid);
     }
 

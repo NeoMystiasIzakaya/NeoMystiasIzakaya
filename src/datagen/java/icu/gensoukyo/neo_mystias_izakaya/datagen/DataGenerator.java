@@ -14,10 +14,10 @@ public class DataGenerator {
         var registries = event.getLookupProvider();
         var vanillaPack = generator.getVanillaPack(true);
 
-        event.createProvider(output -> new ModLanguage(output, "en_us"));
-        event.createProvider(output -> new ModLanguage(output, "zh_cn"));
-        event.createProvider(output -> new ModTagItemList(output, NeoMystiasIzakaya.MODID));
+        event.createProvider(output -> new NMILanguageProvider(output, "en_us"));
+        event.createProvider(output -> new NMILanguageProvider(output, "zh_cn"));
+        event.createProvider(output -> new NMITagItemListProvider(output, NeoMystiasIzakaya.MODID));
 
-        event.createProvider(ModItem::new);
+        event.createProvider(NMIItemModelProvider::new);
     }
 }

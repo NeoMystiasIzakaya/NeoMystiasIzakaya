@@ -19,13 +19,13 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.CompletableFuture;
 
-public class ModLanguage implements DataProvider {
+public class NMILanguageProvider implements DataProvider {
     private final Map<String, String> enData = new TreeMap<>();
     private final Map<String, String> cnData = new TreeMap<>();
     private final PackOutput output;
     private final String locale;
 
-    public ModLanguage(PackOutput output, String locale) {
+    public NMILanguageProvider(PackOutput output, String locale) {
         this.output = output;
         this.locale = locale;
     }

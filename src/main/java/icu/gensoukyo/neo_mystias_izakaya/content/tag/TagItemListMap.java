@@ -1,6 +1,11 @@
 package icu.gensoukyo.neo_mystias_izakaya.content.tag;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.netty.buffer.ByteBuf;
 import lombok.Getter;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 
 import java.util.ArrayList;
@@ -16,6 +21,17 @@ public class TagItemListMap {
     private final Map<Identifier, TagItemListHolder> tagMap;
     @Getter
     private final Map<Identifier, List<Identifier>> itemMap;
+
+    public static final Codec<TagItemListMap> CODEC = RecordCodecBuilder.create(
+            instance -> instance.group(
+                    TagItemListHolder.CODEC.listOf().fieldOf("tags").forGetter(TagItemListMap::getTags)
+            ).apply(instance, TagItemListMap::new)
+    );
+
+    public static final StreamCodec<ByteBuf, TagItemListMap> STREAM_CODEC = StreamCodec.composite(
+            ByteBufCodecs.<ByteBuf, TagItemListHolder>list().apply(TagItemListHolder.STREAM_CODEC), TagItemListMap::getTags,
+            TagItemListMap::new
+    );
 
     private TagItemListMap(List<TagItemListHolder> tags) {
         this.tags = tags;

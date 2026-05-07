@@ -1,7 +1,7 @@
 package icu.gensoukyo.neo_mystias_izakaya.datagen;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
-import icu.gensoukyo.neo_mystias_izakaya.registry.item.ItemRegistry;
+import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMiscItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIDrinkItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIFoodItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIIngredientItems;
@@ -22,8 +22,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class ModItem extends ModelProvider {
-    public ModItem(PackOutput output) {
+public class NMIItemModelProvider extends ModelProvider {
+    public NMIItemModelProvider(PackOutput output) {
         super(output, NeoMystiasIzakaya.MODID);
     }
 
@@ -31,7 +31,7 @@ public class ModItem extends ModelProvider {
     protected void registerModels(@NotNull BlockModelGenerators blockModels, @NotNull ItemModelGenerators itemModels) {
         SimpleItemModelRegister simple = new SimpleItemModelRegister(itemModels.itemModelOutput);
 
-        simple.register(ItemRegistry.CHROME_BALL);
+        simple.register(NMIMiscItems.CHROME_BALL);
 
         this.registerBlockModels(blockModels);
         this.registerItemModels(itemModels);

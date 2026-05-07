@@ -1,7 +1,7 @@
 package icu.gensoukyo.neo_mystias_izakaya;
 
 import com.mojang.logging.LogUtils;
-import icu.gensoukyo.neo_mystias_izakaya.registry.item.ItemRegistry;
+import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMiscItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIDrinkItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIFoodItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIIngredientItems;
@@ -17,7 +17,7 @@ public class NeoMystiasIzakaya {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public NeoMystiasIzakaya(IEventBus modEventBus, ModContainer modContainer) {
-        ItemRegistry.ITEMS.register(modEventBus);
+        NMIMiscItems.ITEMS.register(modEventBus);
         NMIDrinkItems.ITEMS.register(modEventBus);
         NMIFoodItems.ITEMS.register(modEventBus);
         NMIIngredientItems.ITEMS.register(modEventBus);

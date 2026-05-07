@@ -2,6 +2,7 @@ package icu.gensoukyo.neo_mystias_izakaya.common.event;
 
 import com.mojang.logging.LogUtils;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
+import icu.gensoukyo.neo_mystias_izakaya.common.dal.ServerNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.TagItemListReloadListener;
 import lombok.Getter;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -13,12 +14,10 @@ import org.slf4j.Logger;
 public class ReloadEventHandler {
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    @Getter
-    private static TagItemListReloadListener tagItemListReloadListener;
 
     @SubscribeEvent
     public static void onAddServerReloadListenersEvent(AddServerReloadListenersEvent event){
-        tagItemListReloadListener = new TagItemListReloadListener(event.getRegistryAccess());
+        TagItemListReloadListener tagItemListReloadListener = new TagItemListReloadListener(event.getRegistryAccess());
         event.addListener(NeoMystiasIzakaya.id("item_tag"),tagItemListReloadListener);
     }
 }

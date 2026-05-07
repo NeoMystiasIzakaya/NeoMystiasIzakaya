@@ -4,6 +4,8 @@ import com.mojang.logging.LogUtils;
 import com.mojang.serialization.JsonOps;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.api.event.ModifyItemTagJsonsEvent;
+import icu.gensoukyo.neo_mystias_izakaya.common.dal.ServerNMIDataAccessor;
+import icu.gensoukyo.neo_mystias_izakaya.common.network.ServerPayloadSender;
 import lombok.Getter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.FileToIdConverter;
@@ -51,6 +53,8 @@ public class TagItemListReloadListener extends SimplePreparableReloadListener<Ta
     @Override
     protected void apply(TagItemListMap tagItemListMap, ResourceManager resourceManager, ProfilerFiller profilerFiller) {
         this.tagItemListMap = tagItemListMap;
+        ServerNMIDataAccessor.INSTANCE.setTagItemListMap(tagItemListMap);
+        ServerPayloadSender.sendTagItemListMapSyncMessage(tagItemListMap);
         LOGGER.info("Loaded {} item tags", tagItemListMap.getTags().size());
     }
 }

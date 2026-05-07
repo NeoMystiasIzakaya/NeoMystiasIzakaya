@@ -4,6 +4,8 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.sun.jdi.connect.Connector;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
+import icu.gensoukyo.neo_mystias_izakaya.api.dal.NMIDataAccessor;
+import icu.gensoukyo.neo_mystias_izakaya.common.dal.ServerNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.common.event.ReloadEventHandler;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.TagItemListHolder;
 import net.minecraft.commands.Commands;
@@ -32,7 +34,7 @@ public class DebugTagCommand {
                                 .then(Commands.literal("getItemList").then(Commands.argument("tag", IdentifierArgument.id()).executes(
                                         context -> {
                                             Identifier tag = IdentifierArgument.getId(context, "tag");
-                                            TagItemListHolder holder = ReloadEventHandler.getTagItemListReloadListener().getTagItemListMap().get(tag);
+                                            TagItemListHolder holder = NMIDataAccessor.server().getTagItemListMap().get(tag);
                                             MutableComponent component = Component.literal( "items of " + tag + ":");
                                             holder.tag().items().forEach(item -> component.append("\n- " + item));
                                             component.append("\n total: " + holder.tag().items().size());
@@ -51,7 +53,7 @@ public class DebugTagCommand {
                                                 context -> {
                                                     Item item = ItemArgument.getItem(context, "item").item().value();
                                                     Identifier key = BuiltInRegistries.ITEM.getKey(item);
-                                                    List<Identifier> identifiers = ReloadEventHandler.getTagItemListReloadListener().getTagItemListMap().getItemMap().getOrDefault(key,new ArrayList<>());
+                                                    List<Identifier> identifiers = NMIDataAccessor.server().getTagItemListMap().getItemMap().getOrDefault(key,new ArrayList<>());
                                                     MutableComponent component = Component.literal("tags of " + key + ":");
                                                     identifiers.forEach(id -> component.append("\n- " + id));
                                                     component.append("\n total: " + identifiers.size());
