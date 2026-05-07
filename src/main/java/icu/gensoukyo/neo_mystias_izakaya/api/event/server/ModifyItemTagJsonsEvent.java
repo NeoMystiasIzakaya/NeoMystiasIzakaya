@@ -1,4 +1,4 @@
-package icu.gensoukyo.neo_mystias_izakaya.api.event;
+package icu.gensoukyo.neo_mystias_izakaya.api.event.server;
 
 import com.google.gson.JsonElement;
 import lombok.Getter;

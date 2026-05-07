@@ -3,7 +3,7 @@ package icu.gensoukyo.neo_mystias_izakaya.content.tag;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.JsonOps;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
-import icu.gensoukyo.neo_mystias_izakaya.api.event.ModifyItemTagJsonsEvent;
+import icu.gensoukyo.neo_mystias_izakaya.api.event.server.ModifyItemTagJsonsEvent;
 import icu.gensoukyo.neo_mystias_izakaya.common.dal.ServerNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.common.network.ServerPayloadSender;
 import lombok.Getter;
