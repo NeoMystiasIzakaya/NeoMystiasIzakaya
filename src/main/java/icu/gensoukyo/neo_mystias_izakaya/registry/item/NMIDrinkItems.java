@@ -26,13 +26,13 @@ public class NMIDrinkItems {
         return item;
     }
 
-    public static final DeferredItem<Item> AFFGADO = registerItem(ITEMS, "drink/affgado", Item::new, props -> props);
+    public static final DeferredItem<Item> AFFOGATO = registerItem(ITEMS, "drink/affogato", Item::new, props -> props);
 
-    public static final DeferredItem<Item> BEER = registerItem(ITEMS, "drink/beer", Item::new, props -> props);
+    public static final DeferredItem<Item> ZUN_BEER = registerItem(ITEMS, "drink/zun_beer", Item::new, props -> props);
 
-    public static final DeferredItem<Item> BIG_POPSICLE = registerItem(ITEMS, "drink/big_popsicle", Item::new, props -> props);
+    public static final DeferredItem<Item> GIANT_POPSICLE = registerItem(ITEMS, "drink/giant_popsicle", Item::new, props -> props);
 
-    public static final DeferredItem<Item> BLESSING_WIND = registerItem(ITEMS, "drink/blessing_wind", Item::new, props -> props);
+    public static final DeferredItem<Item> WIND_PRIESTESS = registerItem(ITEMS, "drink/wind_priestess", Item::new, props -> props);
 
     public static final DeferredItem<Item> COFFEE = registerItem(ITEMS, "drink/coffee", Item::new, props -> props);
 
@@ -40,35 +40,35 @@ public class NMIDrinkItems {
 
     public static final DeferredItem<Item> DAUGHTER_OF_THE_SEA = registerItem(ITEMS, "drink/daughter_of_the_sea", Item::new, props -> props);
 
-    public static final DeferredItem<Item> DAWN = registerItem(ITEMS, "drink/dawn", Item::new, props -> props);
+    public static final DeferredItem<Item> DASSAI = registerItem(ITEMS, "drink/dassai", Item::new, props -> props);
 
-    public static final DeferredItem<Item> DEMONIC_COFFEE = registerItem(ITEMS, "drink/demonic_coffee", Item::new, props -> props);
+    public static final DeferredItem<Item> MAKAI_COFFEE = registerItem(ITEMS, "drink/makai_coffee", Item::new, props -> props);
 
-    public static final DeferredItem<Item> DEMON_SLAYER = registerItem(ITEMS, "drink/demon_slayer", Item::new, props -> props);
+    public static final DeferredItem<Item> ONI_KILLER = registerItem(ITEMS, "drink/oni_killer", Item::new, props -> props);
 
-    public static final DeferredItem<Item> DRUNK_ACTOR = registerItem(ITEMS, "drink/drunk_actor", Item::new, props -> props);
+    public static final DeferredItem<Item> DRUNKEN_BARD = registerItem(ITEMS, "drink/drunken_bard", Item::new, props -> props);
 
-    public static final DeferredItem<Item> FAIRY_RAIN = registerItem(ITEMS, "drink/fairy_rain", Item::new, props -> props);
+    public static final DeferredItem<Item> FAIRY_DEW = registerItem(ITEMS, "drink/fairy_dew", Item::new, props -> props);
 
-    public static final DeferredItem<Item> FIRE_RAT_FUR = registerItem(ITEMS, "drink/fire_rat_fur", Item::new, props -> props);
+    public static final DeferredItem<Item> FIRE_RATS_ROBE = registerItem(ITEMS, "drink/fire_rats_robe", Item::new, props -> props);
 
-    public static final DeferredItem<Item> FOURTEENTH_NIGHT = registerItem(ITEMS, "drink/fourteenth_night", Item::new, props -> props);
+    public static final DeferredItem<Item> FULL_MOONS_EVE = registerItem(ITEMS, "drink/full_moons_eve", Item::new, props -> props);
 
-    public static final DeferredItem<Item> FRUITY_HIGH_BALL = registerItem(ITEMS, "drink/fruity_high_ball", Item::new, props -> props);
+    public static final DeferredItem<Item> FRUITY_HIGHBALL = registerItem(ITEMS, "drink/fruity_highball", Item::new, props -> props);
 
     public static final DeferredItem<Item> FRUITY_SOUR = registerItem(ITEMS, "drink/fruity_sour", Item::new, props -> props);
 
     public static final DeferredItem<Item> GODFATHER = registerItem(ITEMS, "drink/godfather", Item::new, props -> props);
 
-    public static final DeferredItem<Item> GODS_WHEAT = registerItem(ITEMS, "drink/gods_wheat", Item::new, props -> props);
+    public static final DeferredItem<Item> DIVINE_WHEAT = registerItem(ITEMS, "drink/divine_wheat", Item::new, props -> props);
 
     public static final DeferredItem<Item> GREEN_TEA = registerItem(ITEMS, "drink/green_tea", Item::new, props -> props);
 
-    public static final DeferredItem<Item> GYOKURO_TEA = registerItem(ITEMS, "drink/gyokuro_tea", Item::new, props -> props);
+    public static final DeferredItem<Item> JADE_DEW_TEA = registerItem(ITEMS, "drink/jade_dew_tea", Item::new, props -> props);
 
-    public static final DeferredItem<Item> HEAVEN_AND_EARTH_ARE_USELESS = registerItem(ITEMS, "drink/heaven_and_earth_are_useless", Item::new, props -> props);
+    public static final DeferredItem<Item> THIS_SIDE_UP = registerItem(ITEMS, "drink/this_side_up", Item::new, props -> props);
 
-    public static final DeferredItem<Item> ICEBERG_MAPLE_FROZEN_LEMON = registerItem(ITEMS, "drink/iceberg_maple_frozen_lemon", Item::new, props -> props);
+    public static final DeferredItem<Item> ICEBERG_KEDAMA_LEMONADE = registerItem(ITEMS, "drink/iceberg_kedama_lemonade", Item::new, props -> props);
 
     public static final DeferredItem<Item> KOMEIJI_ICE_CREAM = registerItem(ITEMS, "drink/komeiji_ice_cream", Item::new, props -> props);
 
@@ -76,7 +76,7 @@ public class NMIDrinkItems {
 
     public static final DeferredItem<Item> MILK = registerItem(ITEMS, "drink/milk", Item::new, props -> props);
 
-    public static final DeferredItem<Item> MOJITO_BURST_BALL = registerItem(ITEMS, "drink/mojito_burst_ball", Item::new, props -> props);
+    public static final DeferredItem<Item> MOJITO_SPHERE = registerItem(ITEMS, "drink/mojito_sphere", Item::new, props -> props);
 
     public static final DeferredItem<Item> MOON_ROCKET = registerItem(ITEMS, "drink/moon_rocket", Item::new, props -> props);
 
@@ -84,38 +84,38 @@ public class NMIDrinkItems {
 
     public static final DeferredItem<Item> ORDINARY_FITNESS_TEA = registerItem(ITEMS, "drink/ordinary_fitness_tea", Item::new, props -> props);
 
-    public static final DeferredItem<Item> OTTER_FESTIVAL = registerItem(ITEMS, "drink/otter_festival", Item::new, props -> props);
+    public static final DeferredItem<Item> DASSAI = registerItem(ITEMS, "drink/dassai", Item::new, props -> props);
 
-    public static final DeferredItem<Item> PALEO_CREAMY_SMOOTHIE = registerItem(ITEMS, "drink/paleo_creamy_smoothie", Item::new, props -> props);
+    public static final DeferredItem<Item> ICE_CREAM_SMOOTHIE = registerItem(ITEMS, "drink/ice_cream_smoothie", Item::new, props -> props);
 
-    public static final DeferredItem<Item> PLUM_WINE = registerItem(ITEMS, "drink/plum_wine", Item::new, props -> props);
+    public static final DeferredItem<Item> UMESHU = registerItem(ITEMS, "drink/umeshu", Item::new, props -> props);
 
-    public static final DeferredItem<Item> QI = registerItem(ITEMS, "drink/qi", Item::new, props -> props);
+    public static final DeferredItem<Item> MIO = registerItem(ITEMS, "drink/mio", Item::new, props -> props);
 
     public static final DeferredItem<Item> QILIN = registerItem(ITEMS, "drink/qilin", Item::new, props -> props);
 
-    public static final DeferredItem<Item> QI_HEALTH = registerItem(ITEMS, "drink/qi_health", Item::new, props -> props);
+    public static final DeferredItem<Item> RIBOVITAN = registerItem(ITEMS, "drink/ribovitan", Item::new, props -> props);
 
-    public static final DeferredItem<Item> RED_GRAPEFRUIT_JUICE = registerItem(ITEMS, "drink/red_grapefruit_juice", Item::new, props -> props);
+    public static final DeferredItem<Item> GRAPEFRUIT_JUICE = registerItem(ITEMS, "drink/grapefruit_juice", Item::new, props -> props);
 
-    public static final DeferredItem<Item> RED_MIST = registerItem(ITEMS, "drink/red_mist", Item::new, props -> props);
+    public static final DeferredItem<Item> SCARLET_MIST = registerItem(ITEMS, "drink/scarlet_mist", Item::new, props -> props);
 
-    public static final DeferredItem<Item> SATELLITE_ICED_COFFEE = registerItem(ITEMS, "drink/satellite_iced_coffee", Item::new, props -> props);
+    public static final DeferredItem<Item> SATELLITE_ICE_COFFEE = registerItem(ITEMS, "drink/satellite_ice_coffee", Item::new, props -> props);
 
-    public static final DeferredItem<Item> SCARLET_DEVIL = registerItem(ITEMS, "drink/scarlet_devil", Item::new, props -> props);
+    public static final DeferredItem<Item> BLOODY_REMY = registerItem(ITEMS, "drink/bloody_remy", Item::new, props -> props);
 
-    public static final DeferredItem<Item> SCARLET_DEVIL_MANSION_BLACK_TEA = registerItem(ITEMS, "drink/scarlet_devil_mansion_black_tea", Item::new, props -> props);
+    public static final DeferredItem<Item> SCARLET_TEA = registerItem(ITEMS, "drink/scarlet_tea", Item::new, props -> props);
 
-    public static final DeferredItem<Item> SODA = registerItem(ITEMS, "drink/soda", Item::new, props -> props);
+    public static final DeferredItem<Item> RAMUNE = registerItem(ITEMS, "drink/ramune", Item::new, props -> props);
 
     public static final DeferredItem<Item> SPACE_BEER = registerItem(ITEMS, "drink/space_beer", Item::new, props -> props);
 
     public static final DeferredItem<Item> SPARROW_SAKE = registerItem(ITEMS, "drink/sparrow_sake", Item::new, props -> props);
 
-    public static final DeferredItem<Item> SUN_MOON_STAR = registerItem(ITEMS, "drink/sun_moon_star", Item::new, props -> props);
+    public static final DeferredItem<Item> SANGETSUSEI = registerItem(ITEMS, "drink/sangetsusei", Item::new, props -> props);
 
-    public static final DeferredItem<Item> TENGU_DANCE = registerItem(ITEMS, "drink/tengu_dance", Item::new, props -> props);
+    public static final DeferredItem<Item> TENGU_TANGO = registerItem(ITEMS, "drink/tengu_tango", Item::new, props -> props);
 
-    public static final DeferredItem<Item> WINTER_BREW = registerItem(ITEMS, "drink/winter_brew", Item::new, props -> props);
+    public static final DeferredItem<Item> CASSIA_WINE = registerItem(ITEMS, "drink/cassia_wine", Item::new, props -> props);
 
 }

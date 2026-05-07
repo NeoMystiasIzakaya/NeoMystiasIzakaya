@@ -136,7 +136,7 @@ public class NMIFoodItems {
 
     public static final DeferredItem<Item> TOMATO_FRIES = registerItem(ITEMS, "food/tomato_fries", Item::new, props -> props);
 
-    public static final DeferredItem<Item> FRIGHT_ADVENTURE = registerItem(ITEMS, "food/fright_adventure", Item::new, props -> props);
+    public static final DeferredItem<Item> HEART_THROBBING_SURPRISE = registerItem(ITEMS, "food/heart_throbbing_surprise", Item::new, props -> props);
 
     public static final DeferredItem<Item> HUNTERS_CASSEROLE = registerItem(ITEMS, "food/hunters_casserole", Item::new, props -> props);
 
@@ -166,7 +166,7 @@ public class NMIFoodItems {
 
     public static final DeferredItem<Item> HEART_WARMING_CONGEE = registerItem(ITEMS, "food/heart_warming_congee", Item::new, props -> props);
 
-    public static final DeferredItem<Item> HELL_THRILL_WARNING = registerItem(ITEMS, "food/hell_thrill_warning", Item::new, props -> props);
+    public static final DeferredItem<Item> CAUTION_HELLISH_SPICE = registerItem(ITEMS, "food/caution_hellish_spice", Item::new, props -> props);
 
     public static final DeferredItem<Item> PURE_WHITE_LOTUS = registerItem(ITEMS, "food/pure_white_lotus", Item::new, props -> props);
 
@@ -268,7 +268,7 @@ public class NMIFoodItems {
 
     public static final DeferredItem<Item> ENERGY_PUDDING = registerItem(ITEMS, "food/energy_pudding", Item::new, props -> props);
 
-    public static final DeferredItem<Item> REVERSING_THE_WORLD = registerItem(ITEMS, "food/reversing_the_world", Item::new, props -> props);
+    public static final DeferredItem<Item> AGAINST_THE_WORLD = registerItem(ITEMS, "food/against_the_world", Item::new, props -> props);
 
     public static final DeferredItem<Item> RICE_BALL = registerItem(ITEMS, "food/rice_ball", Item::new, props -> props);
 
