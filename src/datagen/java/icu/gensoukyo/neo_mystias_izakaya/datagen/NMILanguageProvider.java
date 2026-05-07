@@ -240,7 +240,7 @@ public class NMILanguageProvider implements DataProvider {
         this.add(NMIFoodItems.HOLY_WHITE_LOTUS_SEED_CAKE, "Holy White Lotus Seed Cake", "圣白莲子糕");
         this.add(NMIFoodItems.HONEY_BBQ_PORK, "Honey BBQ Pork", "蜜汁叉烧");
         this.add(NMIFoodItems.HORAI_DAMA_NO_EDA, "Horai Dama no Eda", "蓬莱玉枝");
-        this.add(NMIFoodItems.HOT_WAFFLES, "Hot Waffles", "热华夫饼");
+        this.add(NMIFoodItems.HOT_WAFFLES, "Pancakes with Syrup", "热松饼");
         this.add(NMIFoodItems.HULA_SOUP, "Hot Pepper Soup", "胡辣汤");
         this.add(NMIFoodItems.LION_HEAD, "Lion Head", "狮子头");
         this.add(NMIFoodItems.LONGYIN_PEACH, "Longyin Peach", "龙吟桃子");
@@ -261,7 +261,7 @@ public class NMILanguageProvider implements DataProvider {
         this.add(NMIFoodItems.MOON_LOVERS, "Moon Lovers", "月之恋人");
         this.add(NMIFoodItems.MUSHROOM_GIRLS_DANCE_STEW, "Mushroom Girls Dance Stew", "蘑女的舞踏烩");
         this.add(NMIFoodItems.MUSHROOM_MEAT_SLICES, "Pork & Mushroom Stir Fry", "蘑菇肉片");
-        this.add(NMIFoodItems.NIGIRI_SUSHI, "Nigiri Sushi", "握寿司");
+        this.add(NMIFoodItems.NIGIRI_SUSHI, "Nigiri Sushi", "手握寿司");
         this.add(NMIFoodItems.OEDO_BOAT_FESTIVAL, "Oedo Boat Festival", "大江户船祭");
         this.add(NMIFoodItems.OKONOMIYAKI, "Okonomiyaki", "大阪烧");
         this.add(NMIFoodItems.ONE_HIT_KILL, "Instant☆Death", "一击☆必杀");
@@ -500,7 +500,7 @@ public class NMILanguageProvider implements DataProvider {
         this.addDescription(NMIFoodItems.HOLY_WHITE_LOTUS_SEED_CAKE, "Shell and core a fresh lotus seed, boil until soft, add butter and flour, mix until even, stir-fry and imprint the pattern of a lotus with a mold. A pure, white lotus.", "将新鲜莲子剥壳去芯,煮至软烂,再将黄油与面粉搅拌均匀,最后混合翻炒,用磨具压出美丽的莲花图案,看起来神圣洁白。");
         this.addDescription(NMIFoodItems.HONEY_BBQ_PORK, "A special dish from Meiling's homeland. While making it is hard, the unique and unforgettable taste made it all worth it.", "来自红美铃老家的特殊做法，制作工序有点繁复，但是口感独一无二，令人难忘。");
         this.addDescription(NMIFoodItems.HORAI_DAMA_NO_EDA, "To put it simply, it's just a skewer with all kinds of premium meat.", "简单地说就是使用竹签串起各种高级肉类，一口吃个饱的料理。但是在辉夜小姐的胁迫下，成为了高级的冠名料理。");
-        this.addDescription(NMIFoodItems.HOT_WAFFLES, "", "热华夫饼");
+        this.addDescription(NMIFoodItems.HOT_WAFFLES, "A simple breakfast item. Simply heat the prepared batter until done. Add honey, and voilà!", "早餐的简单选择，将准备好的面糊煎熟，浇上蜂蜜就可以吃了。");
         this.addDescription(NMIFoodItems.HULA_SOUP, "Ingredients include many herbs used in Chinese medicine, black pepper, and chili pepper, then brewed in beef bone broth. One spoon is enough to defeat sleepiness.", "由多种天然中草药按比例配制的汤料,再加入胡椒和辣椒,又用骨头汤做底料的牛肉胡辣汤,喝一口就能驱散瞌睡虫。");
         this.addDescription(NMIFoodItems.LION_HEAD, "The go-to dish of every wine lover! The wild and majestic head of a lion accompanied by a strong liquor makes it an essential part of an oni's breakfast!", "爱酒之人无不喜欢的基础下酒菜!气派又野性的狮子头配上烈性的酒,是鬼族起床的早餐!");
         this.addDescription(NMIFoodItems.LONGYIN_PEACH, "Essentially, it's about making a peach anew with peach. Mince the peach, then recreate the shape of the peach using the minced peach. On the surface, this may seem to be a simplistic approach, but the actual making process is insanely complex and delicate.", "本质上就是用桃子来制作桃子。将桃子作为原材料打碎,最后再还原出最初始的形状,从表面来看似乎是贯彻了一种返璞归真的理念,但制作过程极其繁琐考究。");
@@ -521,7 +521,7 @@ public class NMILanguageProvider implements DataProvider {
         this.addDescription(NMIFoodItems.MOONLIGHT_OVER_LOTUS_POND, "Refreshing grape-flavored oolong tea jelly, dressed in white cream mousse! The collision of cream's silkiness and grape's sharpness creates a new dimension of flavors. The Shine Muscat dressed across the jelly fills the mouth with a delicate, fruity smell. The interesting arrangement of raindrops on the lotus pad adds even more aesthetics to the dish.", "清爽细腻的葡萄乌龙冻,色色的是奶油慕斯!奶油的绵密与葡萄的清爽在舌尖碰撞出別样滋味,茶冻间点缀片片青提,馥郁果香充盈唇齿。菏泽上的小露珠也相当有趣~");
         this.addDescription(NMIFoodItems.MUSHROOM_GIRLS_DANCE_STEW, "A dish where mushrooms are the protagonist, accompanied by a variety of fresh and tender ingredients. Its golden glow cannot be ignored, and its fragrant taste can instantly evaporate a person's soul.", "蘑菇为主角,佐以各种鲜嫩食材的强力料理,金灿灿的光芒散发着强烈的存在感,香浓的口感可以瞬间蒸发人的灵魂,一发沉沦。");
         this.addDescription(NMIFoodItems.MUSHROOM_MEAT_SLICES, "A basic home-cooked dish: just mushrooms and sliced pork stir-fry in a pan.", "将蘑菇和肉切片后，混入锅里一起炒，是非常基本的家庭料理。");
-        this.addDescription(NMIFoodItems.NIGIRI_SUSHI, "", "握寿司");
+        this.addDescription(NMIFoodItems.NIGIRI_SUSHI, "One of the most quintessential Japanese dishes. Freshly sliced fish topped over hand-pressed rice balls. Filling and delicious. No wonder why it has a long history behind it.", "日本最传统的料理之一。将鱼切片后盖在手握的饭团上，解饿又鲜美，拥有很长的历史。");
         this.addDescription(NMIFoodItems.OEDO_BOAT_FESTIVAL, "With its fabulous festival boat donned with sashimi and kept fresh by the surrounding icy mist, this dish is absolutely guaranteed to be the focus of the party!", "用华丽的祭典船造型、摆满上好的鱼刺身、周围散发着保鲜而制作的冰雾,是真真真正的宴会的焦点!");
         this.addDescription(NMIFoodItems.OKONOMIYAKI, "A popular street food of the Outside World. Made by mixing batter and various other ingredients and cooked on a flat iron grill. Crisp and rich, it is loved by many for its versatility and affordability.", "听说的为根据，面糊和各种各样的食材给使用且混合之后在铁板烧制而成的，又脆又香又丰富，万变和平价的特征为因被所有人喜欢涨了。");
         this.addDescription(NMIFoodItems.ONE_HIT_KILL, "A super skewer with additional spices and ingredients added to further stimulate the tasted buds. Okuu gave it a really imposing name, which resulted in its inexplicable popularity among wild youkai.", "加入了极为刺激的食材和辅料,对味觉的刺激满点的超级烤串,阿空亲自为它起了一个中二度满满的名字,结果在保持野性的妖怪中莫名的有人气。");
