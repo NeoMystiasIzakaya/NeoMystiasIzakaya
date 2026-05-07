@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "neo_mystias_izakaya:item/food/buddha_jumps_over_the_wall"
+  }
+}

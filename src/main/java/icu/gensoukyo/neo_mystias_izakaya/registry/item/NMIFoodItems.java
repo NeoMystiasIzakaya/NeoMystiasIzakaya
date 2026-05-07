@@ -300,7 +300,7 @@ public class NMIFoodItems {
 
     public static final DeferredItem<Item> SEVEN_COLORED_YOKAN = registerItem(ITEMS, "food/seven_colored_yokan", Item::new, props -> props);
 
-    public static final DeferredItem<Item> WHITE_DEER_UNYIELDING_PINE = registerItem(ITEMS, "food/white_deer,_unyielding_pine", Item::new, props -> props);
+    public static final DeferredItem<Item> WHITE_DEER_UNYIELDING_PINE = registerItem(ITEMS, "food/white_deer_unyielding_pine", Item::new, props -> props);
 
     public static final DeferredItem<Item> YASHOUMA_DANGO = registerItem(ITEMS, "food/yashouma_dango", Item::new, props -> props);
 

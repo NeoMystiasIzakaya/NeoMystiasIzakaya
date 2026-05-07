@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "neo_mystias_izakaya:item/food/milky_mushroom_soup"
-  }
-}
