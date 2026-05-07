@@ -1,12 +1,16 @@
 package icu.gensoukyo.neo_mystias_izakaya.datagen;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
-import icu.gensoukyo.neo_mystias_izakaya.registry.ItemRegistry;
+import icu.gensoukyo.neo_mystias_izakaya.registry.item.ItemRegistry;
+import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIDrinkItems;
+import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIFoodItems;
+import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIIngredientItems;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ItemModelOutput;
 import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
+import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.renderer.item.ClientItem;
 import net.minecraft.client.renderer.item.CuboidItemModelWrapper;
 import net.minecraft.data.PackOutput;
@@ -15,6 +19,7 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 public class ModItem extends ModelProvider {
@@ -27,6 +32,21 @@ public class ModItem extends ModelProvider {
         SimpleItemModelRegister simple = new SimpleItemModelRegister(itemModels.itemModelOutput);
 
         simple.register(ItemRegistry.CHROME_BALL);
+
+        this.registerBlockModels(blockModels);
+        this.registerItemModels(itemModels);
+    }
+
+    private void registerBlockModels(BlockModelGenerators blockModels) {
+
+    }
+
+    private void registerItemModels(ItemModelGenerators itemModels) {
+        for (List<DeferredItem<Item>> items : List.of(NMIDrinkItems.ITEM_LIST, NMIFoodItems.ITEM_LIST, NMIIngredientItems.ITEM_LIST)) {
+            for (DeferredItem<Item> item : items) {
+                itemModels.generateFlatItem(item.asItem(), ModelTemplates.FLAT_ITEM);
+            }
+        }
     }
 
     public static class SimpleItemModelRegister {

@@ -30,11 +30,11 @@ public abstract class TagItemListProvider implements DataProvider {
 
     protected abstract void addTags();
 
-    protected void addTag(String key, List<String> items) {
+    protected void addTag(String key, List<Identifier> items) {
         this.tagData.put(Identifier.fromNamespaceAndPath(modid, key), new TagItemList(items));
     }
 
-    protected void addTag(Identifier key, List<String> items) {
+    protected void addTag(Identifier key, List<Identifier> items) {
         this.tagData.put(key, new TagItemList(items));
     }
 
@@ -50,12 +50,12 @@ public abstract class TagItemListProvider implements DataProvider {
         this.tagData.put(Identifier.fromNamespaceAndPath(modid, key), tag);
     }
 
-    protected List<String> fromItems(Item... items) {
-        return List.of(items).stream().map(BuiltInRegistries.ITEM::getKey).map(Identifier::toString).toList();
+    protected List<Identifier> fromItems(Item... items) {
+        return List.of(items).stream().map(BuiltInRegistries.ITEM::getKey).toList();
     }
 
-    protected List<String> fromItems(DeferredItem<Item>... items) {
-        return List.of(items).stream().map(DeferredHolder::get).map(BuiltInRegistries.ITEM::getKey).map(Identifier::toString).toList();
+    protected List<Identifier> fromItems(DeferredItem<Item>... items) {
+        return List.of(items).stream().map(DeferredHolder::get).map(BuiltInRegistries.ITEM::getKey).toList();
     }
 
     @Override

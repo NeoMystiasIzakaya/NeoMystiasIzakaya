@@ -1,7 +1,10 @@
 package icu.gensoukyo.neo_mystias_izakaya;
 
 import com.mojang.logging.LogUtils;
-import icu.gensoukyo.neo_mystias_izakaya.registry.ItemRegistry;
+import icu.gensoukyo.neo_mystias_izakaya.registry.item.ItemRegistry;
+import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIDrinkItems;
+import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIFoodItems;
+import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIIngredientItems;
 import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -15,6 +18,9 @@ public class NeoMystiasIzakaya {
 
     public NeoMystiasIzakaya(IEventBus modEventBus, ModContainer modContainer) {
         ItemRegistry.ITEMS.register(modEventBus);
+        NMIDrinkItems.ITEMS.register(modEventBus);
+        NMIFoodItems.ITEMS.register(modEventBus);
+        NMIIngredientItems.ITEMS.register(modEventBus);
     }
 
     public static Identifier id(String key){

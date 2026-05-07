@@ -29,8 +29,7 @@ public class TagItemListMap {
         return itemMap;
     }
 
-    private static void addTagToItemMap(Map<Identifier, List<Identifier>> itemMap, String item, Identifier tagId) {
-        Identifier itemId = Identifier.tryParse(item);
+    private static void addTagToItemMap(Map<Identifier, List<Identifier>> itemMap, Identifier itemId, Identifier tagId) {
         List<Identifier> list = itemMap.getOrDefault(itemId, new ArrayList<>());
         list.add(tagId);
         itemMap.put(itemId, list);
