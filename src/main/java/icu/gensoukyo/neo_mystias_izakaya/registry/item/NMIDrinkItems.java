@@ -84,7 +84,7 @@ public class NMIDrinkItems {
 
     public static final DeferredItem<Item> ORDINARY_FITNESS_TEA = registerItem(ITEMS, "drink/ordinary_fitness_tea", Item::new, props -> props);
 
-    public static final DeferredItem<Item> DASSAI = registerItem(ITEMS, "drink/dassai", Item::new, props -> props);
+    public static final DeferredItem<Item> AKATSUKI = registerItem(ITEMS, "drink/akatsuki", Item::new, props -> props);
 
     public static final DeferredItem<Item> ICE_CREAM_SMOOTHIE = registerItem(ITEMS, "drink/ice_cream_smoothie", Item::new, props -> props);
 

@@ -342,7 +342,7 @@ public class NMILanguageProvider implements DataProvider {
         this.add(NMIDrinkItems.TENGU_TANGO, "Tengu Tango", "天狗踊");
         this.add(NMIDrinkItems.BLOODY_REMY, "Bloody Remy", "猩红恶魔");
         this.add(NMIDrinkItems.DIVINE_WHEAT, "Divine Wheat", "神之麦");
-        this.add(NMIDrinkItems.DASSAI, "Dassai", "水獭祭");
+        this.add(NMIDrinkItems.AKATSUKI, "Akatsuki", "晓");
         this.add(NMIDrinkItems.DASSAI, "Dassai", "水獭祭");
         this.add(NMIDrinkItems.SPARROW_SAKE, "Sparrow Sake", "雀酒");
         this.add(NMIDrinkItems.SCARLET_TEA, "Scarlet Tea", "红魔馆红茶");
