@@ -1,18 +1,18 @@
 {
   "items": [
-    "neo_mystias_izakaya:drink/sangetsusei",
-    "neo_mystias_izakaya:drink/umeshu",
-    "neo_mystias_izakaya:drink/tengu_tango",
-    "neo_mystias_izakaya:drink/divine_wheat",
-    "neo_mystias_izakaya:drink/dassai",
-    "neo_mystias_izakaya:drink/sparrow_sake",
-    "neo_mystias_izakaya:drink/scarlet_tea",
-    "neo_mystias_izakaya:drink/scarlet_mist",
-    "neo_mystias_izakaya:drink/cassia_wine",
-    "neo_mystias_izakaya:drink/full_moons_eve",
-    "neo_mystias_izakaya:drink/fire_rats_robe",
-    "neo_mystias_izakaya:drink/jade_dew_tea",
-    "neo_mystias_izakaya:drink/coffee",
-    "neo_mystias_izakaya:drink/makai_coffee"
+    "neo_mystias_izakaya:beverages/sangetsusei",
+    "neo_mystias_izakaya:beverages/umeshu",
+    "neo_mystias_izakaya:beverages/tengu_tango",
+    "neo_mystias_izakaya:beverages/divine_wheat",
+    "neo_mystias_izakaya:beverages/dassai",
+    "neo_mystias_izakaya:beverages/sparrow_sake",
+    "neo_mystias_izakaya:beverages/scarlet_tea",
+    "neo_mystias_izakaya:beverages/scarlet_mist",
+    "neo_mystias_izakaya:beverages/cassia_wine",
+    "neo_mystias_izakaya:beverages/full_moons_eve",
+    "neo_mystias_izakaya:beverages/fire_rats_robe",
+    "neo_mystias_izakaya:beverages/jade_dew_tea",
+    "neo_mystias_izakaya:beverages/coffee",
+    "neo_mystias_izakaya:beverages/makai_coffee"
   ]
 }

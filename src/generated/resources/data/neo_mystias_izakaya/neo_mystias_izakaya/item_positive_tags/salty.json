@@ -1,14 +1,14 @@
 {
   "items": [
-    "neo_mystias_izakaya:food/secret_dried_fish_crisps",
-    "neo_mystias_izakaya:food/roasted_mushroom",
-    "neo_mystias_izakaya:food/pickles",
-    "neo_mystias_izakaya:food/mushroom_maidens_tip_tap_pot",
-    "neo_mystias_izakaya:food/all_meat_feast",
-    "neo_mystias_izakaya:food/cheese_omelette",
-    "neo_mystias_izakaya:food/misery_cheese_sticks",
-    "neo_mystias_izakaya:food/caution_hellish_spice",
-    "neo_mystias_izakaya:food/gloomy_fruit_pie",
-    "neo_mystias_izakaya:food/biscay_biscuits"
+    "neo_mystias_izakaya:cuisines/secret_dried_fish_crisps",
+    "neo_mystias_izakaya:cuisines/roasted_mushroom",
+    "neo_mystias_izakaya:cuisines/pickles",
+    "neo_mystias_izakaya:cuisines/mushroom_maidens_tip_tap_pot",
+    "neo_mystias_izakaya:cuisines/all_meat_feast",
+    "neo_mystias_izakaya:cuisines/cheese_omelette",
+    "neo_mystias_izakaya:cuisines/misery_cheese_sticks",
+    "neo_mystias_izakaya:cuisines/caution_hellish_spice",
+    "neo_mystias_izakaya:cuisines/gloomy_fruit_pie",
+    "neo_mystias_izakaya:cuisines/biscay_biscuits"
   ]
 }

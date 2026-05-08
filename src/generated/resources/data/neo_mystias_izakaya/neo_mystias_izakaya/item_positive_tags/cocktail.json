@@ -1,12 +1,12 @@
 {
   "items": [
-    "neo_mystias_izakaya:drink/fruity_highball",
-    "neo_mystias_izakaya:drink/fruity_sour",
-    "neo_mystias_izakaya:drink/mio",
-    "neo_mystias_izakaya:drink/bloody_remy",
-    "neo_mystias_izakaya:drink/negroni",
-    "neo_mystias_izakaya:drink/godfather",
-    "neo_mystias_izakaya:drink/wind_priestess",
-    "neo_mystias_izakaya:drink/mojito_sphere"
+    "neo_mystias_izakaya:beverages/fruity_highball",
+    "neo_mystias_izakaya:beverages/fruity_sour",
+    "neo_mystias_izakaya:beverages/mio",
+    "neo_mystias_izakaya:beverages/bloody_remy",
+    "neo_mystias_izakaya:beverages/negroni",
+    "neo_mystias_izakaya:beverages/godfather",
+    "neo_mystias_izakaya:beverages/wind_priestess",
+    "neo_mystias_izakaya:beverages/mojito_sphere"
   ]
 }

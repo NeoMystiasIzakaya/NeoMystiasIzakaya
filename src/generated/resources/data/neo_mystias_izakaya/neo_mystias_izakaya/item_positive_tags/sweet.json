@@ -1,20 +1,20 @@
 {
   "items": [
-    "neo_mystias_izakaya:drink/fruity_highball",
-    "neo_mystias_izakaya:drink/fruity_sour",
-    "neo_mystias_izakaya:drink/mio",
-    "neo_mystias_izakaya:drink/umeshu",
-    "neo_mystias_izakaya:drink/affogato",
-    "neo_mystias_izakaya:drink/wind_priestess",
-    "neo_mystias_izakaya:drink/cassia_wine",
-    "neo_mystias_izakaya:drink/full_moons_eve",
-    "neo_mystias_izakaya:drink/iceberg_kedama_lemonade",
-    "neo_mystias_izakaya:drink/giant_popsicle",
-    "neo_mystias_izakaya:drink/daiginjo",
-    "neo_mystias_izakaya:drink/fairy_dew",
-    "neo_mystias_izakaya:drink/ice_cream_smoothie",
-    "neo_mystias_izakaya:drink/ribovitan",
-    "neo_mystias_izakaya:drink/komeiji_ice_cream",
-    "neo_mystias_izakaya:drink/drunken_bard"
+    "neo_mystias_izakaya:beverages/fruity_highball",
+    "neo_mystias_izakaya:beverages/fruity_sour",
+    "neo_mystias_izakaya:beverages/mio",
+    "neo_mystias_izakaya:beverages/umeshu",
+    "neo_mystias_izakaya:beverages/affogato",
+    "neo_mystias_izakaya:beverages/wind_priestess",
+    "neo_mystias_izakaya:beverages/cassia_wine",
+    "neo_mystias_izakaya:beverages/full_moons_eve",
+    "neo_mystias_izakaya:beverages/iceberg_kedama_lemonade",
+    "neo_mystias_izakaya:beverages/giant_popsicle",
+    "neo_mystias_izakaya:beverages/daiginjo",
+    "neo_mystias_izakaya:beverages/fairy_dew",
+    "neo_mystias_izakaya:beverages/ice_cream_smoothie",
+    "neo_mystias_izakaya:beverages/ribovitan",
+    "neo_mystias_izakaya:beverages/komeiji_ice_cream",
+    "neo_mystias_izakaya:beverages/drunken_bard"
   ]
 }

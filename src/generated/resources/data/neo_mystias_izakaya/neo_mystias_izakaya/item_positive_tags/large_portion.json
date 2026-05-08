@@ -1,8 +1,8 @@
 {
   "items": [
-    "neo_mystias_izakaya:food/all_meat_feast",
-    "neo_mystias_izakaya:food/dragon_carp",
-    "neo_mystias_izakaya:food/agony_oden",
-    "neo_mystias_izakaya:food/smoked_buccaneer"
+    "neo_mystias_izakaya:cuisines/all_meat_feast",
+    "neo_mystias_izakaya:cuisines/dragon_carp",
+    "neo_mystias_izakaya:cuisines/agony_oden",
+    "neo_mystias_izakaya:cuisines/smoked_buccaneer"
   ]
 }

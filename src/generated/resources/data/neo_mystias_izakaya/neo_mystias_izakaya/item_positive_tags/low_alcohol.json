@@ -1,13 +1,13 @@
 {
   "items": [
-    "neo_mystias_izakaya:drink/fruity_highball",
-    "neo_mystias_izakaya:drink/fruity_sour",
-    "neo_mystias_izakaya:drink/mio",
-    "neo_mystias_izakaya:drink/zun_beer",
-    "neo_mystias_izakaya:drink/bloody_remy",
-    "neo_mystias_izakaya:drink/cassia_wine",
-    "neo_mystias_izakaya:drink/drunken_bard",
-    "neo_mystias_izakaya:drink/daughter_of_the_sea",
-    "neo_mystias_izakaya:drink/mojito_sphere"
+    "neo_mystias_izakaya:beverages/fruity_highball",
+    "neo_mystias_izakaya:beverages/fruity_sour",
+    "neo_mystias_izakaya:beverages/mio",
+    "neo_mystias_izakaya:beverages/zun_beer",
+    "neo_mystias_izakaya:beverages/bloody_remy",
+    "neo_mystias_izakaya:beverages/cassia_wine",
+    "neo_mystias_izakaya:beverages/drunken_bard",
+    "neo_mystias_izakaya:beverages/daughter_of_the_sea",
+    "neo_mystias_izakaya:beverages/mojito_sphere"
   ]
 }

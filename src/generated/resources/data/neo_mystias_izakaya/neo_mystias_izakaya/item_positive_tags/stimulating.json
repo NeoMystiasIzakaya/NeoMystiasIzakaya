@@ -1,12 +1,12 @@
 {
   "items": [
-    "neo_mystias_izakaya:drink/scarlet_tea",
-    "neo_mystias_izakaya:drink/affogato",
-    "neo_mystias_izakaya:drink/iceberg_kedama_lemonade",
-    "neo_mystias_izakaya:drink/giant_popsicle",
-    "neo_mystias_izakaya:drink/coffee",
-    "neo_mystias_izakaya:drink/ribovitan",
-    "neo_mystias_izakaya:drink/makai_coffee",
-    "neo_mystias_izakaya:drink/satellite_ice_coffee"
+    "neo_mystias_izakaya:beverages/scarlet_tea",
+    "neo_mystias_izakaya:beverages/affogato",
+    "neo_mystias_izakaya:beverages/iceberg_kedama_lemonade",
+    "neo_mystias_izakaya:beverages/giant_popsicle",
+    "neo_mystias_izakaya:beverages/coffee",
+    "neo_mystias_izakaya:beverages/ribovitan",
+    "neo_mystias_izakaya:beverages/makai_coffee",
+    "neo_mystias_izakaya:beverages/satellite_ice_coffee"
   ]
 }

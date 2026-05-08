@@ -1,13 +1,13 @@
 {
   "items": [
-    "neo_mystias_izakaya:drink/godfather",
-    "neo_mystias_izakaya:drink/cassia_wine",
-    "neo_mystias_izakaya:drink/full_moons_eve",
-    "neo_mystias_izakaya:drink/jade_dew_tea",
-    "neo_mystias_izakaya:drink/daiginjo",
-    "neo_mystias_izakaya:drink/ice_cream_smoothie",
-    "neo_mystias_izakaya:drink/oni_killer",
-    "neo_mystias_izakaya:drink/drunken_bard",
-    "neo_mystias_izakaya:drink/daughter_of_the_sea"
+    "neo_mystias_izakaya:beverages/godfather",
+    "neo_mystias_izakaya:beverages/cassia_wine",
+    "neo_mystias_izakaya:beverages/full_moons_eve",
+    "neo_mystias_izakaya:beverages/jade_dew_tea",
+    "neo_mystias_izakaya:beverages/daiginjo",
+    "neo_mystias_izakaya:beverages/ice_cream_smoothie",
+    "neo_mystias_izakaya:beverages/oni_killer",
+    "neo_mystias_izakaya:beverages/drunken_bard",
+    "neo_mystias_izakaya:beverages/daughter_of_the_sea"
   ]
 }

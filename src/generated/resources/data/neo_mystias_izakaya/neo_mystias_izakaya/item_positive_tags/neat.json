@@ -1,15 +1,15 @@
 {
   "items": [
-    "neo_mystias_izakaya:drink/sangetsusei",
-    "neo_mystias_izakaya:drink/tengu_tango",
-    "neo_mystias_izakaya:drink/divine_wheat",
-    "neo_mystias_izakaya:drink/dassai",
-    "neo_mystias_izakaya:drink/akatsuki",
-    "neo_mystias_izakaya:drink/milk",
-    "neo_mystias_izakaya:drink/iceberg_kedama_lemonade",
-    "neo_mystias_izakaya:drink/daiginjo",
-    "neo_mystias_izakaya:drink/ribovitan",
-    "neo_mystias_izakaya:drink/qilin",
-    "neo_mystias_izakaya:drink/drunken_bard"
+    "neo_mystias_izakaya:beverages/sangetsusei",
+    "neo_mystias_izakaya:beverages/tengu_tango",
+    "neo_mystias_izakaya:beverages/divine_wheat",
+    "neo_mystias_izakaya:beverages/dassai",
+    "neo_mystias_izakaya:beverages/akatsuki",
+    "neo_mystias_izakaya:beverages/milk",
+    "neo_mystias_izakaya:beverages/iceberg_kedama_lemonade",
+    "neo_mystias_izakaya:beverages/daiginjo",
+    "neo_mystias_izakaya:beverages/ribovitan",
+    "neo_mystias_izakaya:beverages/qilin",
+    "neo_mystias_izakaya:beverages/drunken_bard"
   ]
 }

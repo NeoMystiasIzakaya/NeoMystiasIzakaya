@@ -1,13 +1,13 @@
 {
   "items": [
-    "neo_mystias_izakaya:drink/fruity_highball",
-    "neo_mystias_izakaya:drink/fruity_sour",
-    "neo_mystias_izakaya:drink/mio",
-    "neo_mystias_izakaya:drink/zun_beer",
-    "neo_mystias_izakaya:drink/negroni",
-    "neo_mystias_izakaya:drink/godfather",
-    "neo_mystias_izakaya:drink/affogato",
-    "neo_mystias_izakaya:drink/ordinary_fitness_tea",
-    "neo_mystias_izakaya:drink/satellite_ice_coffee"
+    "neo_mystias_izakaya:beverages/fruity_highball",
+    "neo_mystias_izakaya:beverages/fruity_sour",
+    "neo_mystias_izakaya:beverages/mio",
+    "neo_mystias_izakaya:beverages/zun_beer",
+    "neo_mystias_izakaya:beverages/negroni",
+    "neo_mystias_izakaya:beverages/godfather",
+    "neo_mystias_izakaya:beverages/affogato",
+    "neo_mystias_izakaya:beverages/ordinary_fitness_tea",
+    "neo_mystias_izakaya:beverages/satellite_ice_coffee"
   ]
 }

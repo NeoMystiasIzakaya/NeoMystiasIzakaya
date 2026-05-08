@@ -1,11 +1,11 @@
 {
   "items": [
-    "neo_mystias_izakaya:drink/tengu_tango",
-    "neo_mystias_izakaya:drink/akatsuki",
-    "neo_mystias_izakaya:drink/godfather",
-    "neo_mystias_izakaya:drink/fire_rats_robe",
-    "neo_mystias_izakaya:drink/oni_killer",
-    "neo_mystias_izakaya:drink/this_side_up",
-    "neo_mystias_izakaya:drink/makai_coffee"
+    "neo_mystias_izakaya:beverages/tengu_tango",
+    "neo_mystias_izakaya:beverages/akatsuki",
+    "neo_mystias_izakaya:beverages/godfather",
+    "neo_mystias_izakaya:beverages/fire_rats_robe",
+    "neo_mystias_izakaya:beverages/oni_killer",
+    "neo_mystias_izakaya:beverages/this_side_up",
+    "neo_mystias_izakaya:beverages/makai_coffee"
   ]
 }

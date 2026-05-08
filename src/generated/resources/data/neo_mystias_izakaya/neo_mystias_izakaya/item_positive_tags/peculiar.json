@@ -1,18 +1,18 @@
 {
   "items": [
     "neo_mystias_izakaya:ingredient/cicada_slough",
-    "neo_mystias_izakaya:food/stinky_tofu",
-    "neo_mystias_izakaya:food/imitation_shirikodama",
-    "neo_mystias_izakaya:food/crispy_spirals",
-    "neo_mystias_izakaya:food/ceiling_longing_pie",
-    "neo_mystias_izakaya:food/caution_hellish_spice",
-    "neo_mystias_izakaya:food/kabuto_steamed_cake",
-    "neo_mystias_izakaya:food/yashouma_dango",
-    "neo_mystias_izakaya:food/heart_throbbing_surprise",
-    "neo_mystias_izakaya:food/tomato_fries",
-    "neo_mystias_izakaya:food/against_the_world",
-    "neo_mystias_izakaya:food/palace_of_the_han",
-    "neo_mystias_izakaya:food/miasma_garden",
-    "neo_mystias_izakaya:food/drunk_shrimp_in_bamboo"
+    "neo_mystias_izakaya:cuisines/stinky_tofu",
+    "neo_mystias_izakaya:cuisines/imitation_shirikodama",
+    "neo_mystias_izakaya:cuisines/crispy_spirals",
+    "neo_mystias_izakaya:cuisines/ceiling_longing_pie",
+    "neo_mystias_izakaya:cuisines/caution_hellish_spice",
+    "neo_mystias_izakaya:cuisines/kabuto_steamed_cake",
+    "neo_mystias_izakaya:cuisines/yashouma_dango",
+    "neo_mystias_izakaya:cuisines/heart_throbbing_surprise",
+    "neo_mystias_izakaya:cuisines/tomato_fries",
+    "neo_mystias_izakaya:cuisines/against_the_world",
+    "neo_mystias_izakaya:cuisines/palace_of_the_han",
+    "neo_mystias_izakaya:cuisines/miasma_garden",
+    "neo_mystias_izakaya:cuisines/drunk_shrimp_in_bamboo"
   ]
 }

@@ -1,7 +1,7 @@
 {
   "items": [
-    "neo_mystias_izakaya:food/biscay_biscuits",
-    "neo_mystias_izakaya:food/smoked_buccaneer",
-    "neo_mystias_izakaya:food/white_deer_unyielding_pine"
+    "neo_mystias_izakaya:cuisines/biscay_biscuits",
+    "neo_mystias_izakaya:cuisines/smoked_buccaneer",
+    "neo_mystias_izakaya:cuisines/white_deer_unyielding_pine"
   ]
 }

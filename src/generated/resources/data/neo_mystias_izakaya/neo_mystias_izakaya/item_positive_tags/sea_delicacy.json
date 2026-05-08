@@ -1,15 +1,15 @@
 {
   "items": [
     "neo_mystias_izakaya:ingredient/premium_tuna",
-    "neo_mystias_izakaya:food/falling_blossoms",
+    "neo_mystias_izakaya:cuisines/falling_blossoms",
     "minecraft:pufferfish",
-    "neo_mystias_izakaya:food/creamy_crab",
-    "neo_mystias_izakaya:food/sea_urchin_sashimi",
-    "neo_mystias_izakaya:food/ceiling_longing_pie",
-    "neo_mystias_izakaya:food/dragon_carp",
-    "neo_mystias_izakaya:food/oedo_boat_feast",
-    "neo_mystias_izakaya:food/urchin_steamed_egg",
-    "neo_mystias_izakaya:food/planet_mars",
-    "neo_mystias_izakaya:food/supreme_seafood_noodles"
+    "neo_mystias_izakaya:cuisines/creamy_crab",
+    "neo_mystias_izakaya:cuisines/sea_urchin_sashimi",
+    "neo_mystias_izakaya:cuisines/ceiling_longing_pie",
+    "neo_mystias_izakaya:cuisines/dragon_carp",
+    "neo_mystias_izakaya:cuisines/oedo_boat_feast",
+    "neo_mystias_izakaya:cuisines/urchin_steamed_egg",
+    "neo_mystias_izakaya:cuisines/planet_mars",
+    "neo_mystias_izakaya:cuisines/supreme_seafood_noodles"
   ]
 }

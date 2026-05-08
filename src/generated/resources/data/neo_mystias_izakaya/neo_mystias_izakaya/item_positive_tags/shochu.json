@@ -1,8 +1,8 @@
 {
   "items": [
-    "neo_mystias_izakaya:drink/fruity_sour",
-    "neo_mystias_izakaya:drink/divine_wheat",
-    "neo_mystias_izakaya:drink/fire_rats_robe",
-    "neo_mystias_izakaya:drink/this_side_up"
+    "neo_mystias_izakaya:beverages/fruity_sour",
+    "neo_mystias_izakaya:beverages/divine_wheat",
+    "neo_mystias_izakaya:beverages/fire_rats_robe",
+    "neo_mystias_izakaya:beverages/this_side_up"
   ]
 }

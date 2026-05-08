@@ -2,8 +2,8 @@ package icu.gensoukyo.neo_mystias_izakaya.datagen;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMiscItems;
-import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIDrinkItems;
-import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIFoodItems;
+import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIBeveragesItems;
+import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMICuisinesItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIIngredientItems;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
@@ -31,7 +31,7 @@ public class NMIItemModelProvider extends ModelProvider {
     protected void registerModels(@NotNull BlockModelGenerators blockModels, @NotNull ItemModelGenerators itemModels) {
         SimpleItemModelRegister simple = new SimpleItemModelRegister(itemModels.itemModelOutput);
 
-        simple.register(NMIMiscItems.CHROME_BALL);
+        itemModels.generateFlatItem(NMIMiscItems.CHROME_BALL.asItem(), ModelTemplates.FLAT_ITEM);
 
         this.registerBlockModels(blockModels);
         this.registerItemModels(itemModels);
@@ -42,7 +42,7 @@ public class NMIItemModelProvider extends ModelProvider {
     }
 
     private void registerItemModels(ItemModelGenerators itemModels) {
-        for (List<DeferredItem<Item>> items : List.of(NMIDrinkItems.ITEM_LIST, NMIFoodItems.ITEM_LIST, NMIIngredientItems.ITEM_LIST)) {
+        for (List<DeferredItem<Item>> items : List.of(NMIBeveragesItems.ITEM_LIST, NMICuisinesItems.ITEM_LIST, NMIIngredientItems.ITEM_LIST)) {
             for (DeferredItem<Item> item : items) {
                 itemModels.generateFlatItem(item.asItem(), ModelTemplates.FLAT_ITEM);
             }

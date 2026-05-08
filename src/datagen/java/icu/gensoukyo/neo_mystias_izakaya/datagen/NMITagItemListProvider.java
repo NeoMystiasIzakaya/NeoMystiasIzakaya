@@ -1,16 +1,14 @@
 package icu.gensoukyo.neo_mystias_izakaya.datagen;
 
-import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.NMIDrinkTags;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.NMIFoodTags;
 import icu.gensoukyo.neo_mystias_izakaya.datagen.api.TagItemListProvider;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Items;
 
 import static icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIIngredientItems.*;
-import static icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIDrinkItems.*;
-import static icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIFoodItems.*;
+import static icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIBeveragesItems.*;
+import static icu.gensoukyo.neo_mystias_izakaya.registry.item.NMICuisinesItems.*;
 
 public class NMITagItemListProvider extends TagItemListProvider {
     public NMITagItemListProvider(PackOutput output, String modid) {

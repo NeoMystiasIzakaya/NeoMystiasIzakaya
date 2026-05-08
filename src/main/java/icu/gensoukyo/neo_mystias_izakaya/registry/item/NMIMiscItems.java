@@ -8,8 +8,6 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class NMIMiscItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(NeoMystiasIzakaya.MODID);
 
-    public static final DeferredItem<Item> CHROME_BALL = ITEMS.registerItem("chrome_ball", Item::new, props -> props);
-    static {
+    public static final DeferredItem<Item> CHROME_BALL = ITEMS.registerItem("misc/chrome_ball", Item::new, props -> props);
 
-    }
 }

@@ -1,15 +1,15 @@
 {
   "items": [
-    "neo_mystias_izakaya:drink/fruity_highball",
-    "neo_mystias_izakaya:drink/fruity_sour",
-    "neo_mystias_izakaya:drink/umeshu",
-    "neo_mystias_izakaya:drink/scarlet_tea",
-    "neo_mystias_izakaya:drink/negroni",
-    "neo_mystias_izakaya:drink/grapefruit_juice",
-    "neo_mystias_izakaya:drink/iceberg_kedama_lemonade",
-    "neo_mystias_izakaya:drink/daiginjo",
-    "neo_mystias_izakaya:drink/drunken_bard",
-    "neo_mystias_izakaya:drink/space_beer",
-    "neo_mystias_izakaya:drink/mango_pomelo_sago"
+    "neo_mystias_izakaya:beverages/fruity_highball",
+    "neo_mystias_izakaya:beverages/fruity_sour",
+    "neo_mystias_izakaya:beverages/umeshu",
+    "neo_mystias_izakaya:beverages/scarlet_tea",
+    "neo_mystias_izakaya:beverages/negroni",
+    "neo_mystias_izakaya:beverages/grapefruit_juice",
+    "neo_mystias_izakaya:beverages/iceberg_kedama_lemonade",
+    "neo_mystias_izakaya:beverages/daiginjo",
+    "neo_mystias_izakaya:beverages/drunken_bard",
+    "neo_mystias_izakaya:beverages/space_beer",
+    "neo_mystias_izakaya:beverages/mango_pomelo_sago"
   ]
 }

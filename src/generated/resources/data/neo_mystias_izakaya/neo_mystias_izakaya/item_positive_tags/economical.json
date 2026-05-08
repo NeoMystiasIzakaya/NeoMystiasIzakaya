@@ -1,13 +1,13 @@
 {
   "items": [
-    "neo_mystias_izakaya:food/seafood_miso_soup",
-    "neo_mystias_izakaya:food/rice_ball",
-    "neo_mystias_izakaya:food/dew_runny_eggs",
-    "neo_mystias_izakaya:food/roasted_mushroom",
-    "neo_mystias_izakaya:food/pork_rice_ball",
-    "neo_mystias_izakaya:food/pork_stir_fry",
-    "neo_mystias_izakaya:food/scone",
-    "neo_mystias_izakaya:food/pickles",
-    "neo_mystias_izakaya:food/baked_sweet_potato"
+    "neo_mystias_izakaya:cuisines/seafood_miso_soup",
+    "neo_mystias_izakaya:cuisines/rice_ball",
+    "neo_mystias_izakaya:cuisines/dew_runny_eggs",
+    "neo_mystias_izakaya:cuisines/roasted_mushroom",
+    "neo_mystias_izakaya:cuisines/pork_rice_ball",
+    "neo_mystias_izakaya:cuisines/pork_stir_fry",
+    "neo_mystias_izakaya:cuisines/scone",
+    "neo_mystias_izakaya:cuisines/pickles",
+    "neo_mystias_izakaya:cuisines/baked_sweet_potato"
   ]
 }

@@ -1,7 +1,7 @@
 {
   "items": [
-    "neo_mystias_izakaya:food/candied_sweet_potato",
-    "neo_mystias_izakaya:food/rice_powder_meat",
-    "neo_mystias_izakaya:food/dragonsong_peach"
+    "neo_mystias_izakaya:cuisines/candied_sweet_potato",
+    "neo_mystias_izakaya:cuisines/rice_powder_meat",
+    "neo_mystias_izakaya:cuisines/dragonsong_peach"
   ]
 }

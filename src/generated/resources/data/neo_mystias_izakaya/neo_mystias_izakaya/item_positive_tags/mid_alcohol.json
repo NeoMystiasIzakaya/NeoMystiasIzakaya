@@ -1,16 +1,16 @@
 {
   "items": [
-    "neo_mystias_izakaya:drink/sangetsusei",
-    "neo_mystias_izakaya:drink/umeshu",
-    "neo_mystias_izakaya:drink/divine_wheat",
-    "neo_mystias_izakaya:drink/dassai",
-    "neo_mystias_izakaya:drink/sparrow_sake",
-    "neo_mystias_izakaya:drink/scarlet_mist",
-    "neo_mystias_izakaya:drink/negroni",
-    "neo_mystias_izakaya:drink/wind_priestess",
-    "neo_mystias_izakaya:drink/full_moons_eve",
-    "neo_mystias_izakaya:drink/ordinary_fitness_tea",
-    "neo_mystias_izakaya:drink/qilin",
-    "neo_mystias_izakaya:drink/space_beer"
+    "neo_mystias_izakaya:beverages/sangetsusei",
+    "neo_mystias_izakaya:beverages/umeshu",
+    "neo_mystias_izakaya:beverages/divine_wheat",
+    "neo_mystias_izakaya:beverages/dassai",
+    "neo_mystias_izakaya:beverages/sparrow_sake",
+    "neo_mystias_izakaya:beverages/scarlet_mist",
+    "neo_mystias_izakaya:beverages/negroni",
+    "neo_mystias_izakaya:beverages/wind_priestess",
+    "neo_mystias_izakaya:beverages/full_moons_eve",
+    "neo_mystias_izakaya:beverages/ordinary_fitness_tea",
+    "neo_mystias_izakaya:beverages/qilin",
+    "neo_mystias_izakaya:beverages/space_beer"
   ]
 }
