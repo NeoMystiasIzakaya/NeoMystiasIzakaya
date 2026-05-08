@@ -20,6 +20,7 @@ public class TagItemListMap {
     private final List<TagItemListHolder> negativeTags;
     private final Map<Identifier, TagItemListHolder> positiveTagMap;
     private final Map<Identifier, TagItemListHolder> negativeTagMap;
+    private final Map<Identifier, ItemTagList> tagItemMap;
     private final Map<Identifier, List<Identifier>> positiveItemMap;
     private final Map<Identifier, List<Identifier>> negativeItemMap;
 
@@ -41,11 +42,24 @@ public class TagItemListMap {
         this.negativeTags = negativeTags;
         this.positiveTagMap = positiveTags.stream().collect(Collectors.toMap(TagItemListHolder::key, t -> t));
         this.negativeTagMap = negativeTags.stream().collect(Collectors.toMap(TagItemListHolder::key, t -> t));
-        this.positiveItemMap = buildItemMap(positiveTags);
-        this.negativeItemMap = buildItemMap(negativeTags);
+        this.positiveItemMap = buildSingleItemMap(positiveTags);
+        this.negativeItemMap = buildSingleItemMap(negativeTags);
+        this.tagItemMap = buildItemMap(positiveItemMap, negativeItemMap);
     }
 
-    private static Map<Identifier, List<Identifier>> buildItemMap(List<TagItemListHolder> tags) {
+    private static Map<Identifier, ItemTagList> buildItemMap(Map<Identifier, List<Identifier>> positiveItemMap,Map<Identifier, List<Identifier>> negativeItemMap ) {
+        Map<Identifier, ItemTagList> itemMap = new TreeMap<>();
+        positiveItemMap.keySet().forEach(
+                itemId -> {
+                    List<Identifier> positiveTags = positiveItemMap.getOrDefault(itemId, List.of());
+                    List<Identifier> negativeTags = negativeItemMap.getOrDefault(itemId, List.of());
+                    itemMap.put(itemId, new ItemTagList(positiveTags, negativeTags));
+                }
+        );
+        return itemMap;
+    }
+
+    private static Map<Identifier, List<Identifier>> buildSingleItemMap(List<TagItemListHolder> tags) {
         Map<Identifier, List<Identifier>> itemMap = new TreeMap<>();
         tags.forEach(holder -> holder.tag().items().forEach(item -> addTagToItemMap(itemMap, item, holder.key())));
         return itemMap;
@@ -66,9 +80,7 @@ public class TagItemListMap {
     }
 
     public ItemTagList getTagsForItem(Identifier itemId) {
-        List<Identifier> positiveTagIds = positiveItemMap.getOrDefault(itemId, List.of());
-        List<Identifier> negativeTagIds = negativeItemMap.getOrDefault(itemId, List.of());
-        return new ItemTagList(positiveTagIds,negativeTagIds);
+        return tagItemMap.getOrDefault(itemId, ItemTagList.EMPTY);
     }
 
     public static final TagItemListMap EMPTY = create(List.of(), List.of());
