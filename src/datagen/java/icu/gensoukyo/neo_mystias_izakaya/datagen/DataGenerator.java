@@ -14,9 +14,11 @@ public class DataGenerator {
         var registries = event.getLookupProvider();
         var vanillaPack = generator.getVanillaPack(true);
 
+        event.createProvider(NMIBlockTagProvider::new);
         event.createProvider(output -> new NMILanguageProvider(output, "en_us"));
         event.createProvider(output -> new NMILanguageProvider(output, "zh_cn"));
         event.createProvider(output -> new NMITagItemListProvider(output, NeoMystiasIzakaya.MODID));
+        event.createProvider(output -> new NMINMIRecipeProvider(output, NeoMystiasIzakaya.MODID));
 
         event.createProvider(NMIItemModelProvider::new);
     }
