@@ -92,7 +92,7 @@ public class NMIFoodItems {
     public static final DeferredItem<Item> IMITATION_SHIRIKODAMA = registerItem(ITEMS, "food/imitation_shirikodama", Item::new, props -> props);
     public static final DeferredItem<Item> IMMORTAL_TURKEY = registerItem(ITEMS, "food/immortal_turkey", Item::new, props -> props);
     public static final DeferredItem<Item> INO_SHIKA_CHOU = registerItem(ITEMS, "food/ino_shika_chou", Item::new, props -> props);
-    public static final DeferredItem<Item> INSTANTDEATH = registerItem(ITEMS, "food/instantdeath", Item::new, props -> props);
+    public static final DeferredItem<Item> INSTANT_DEATH = registerItem(ITEMS, "food/instantdeath", Item::new, props -> props);
     public static final DeferredItem<Item> ITALIAN_RISOTTO = registerItem(ITEMS, "food/italian_risotto", Item::new, props -> props);
     public static final DeferredItem<Item> KABAYAKI_LAMPREYS = registerItem(ITEMS, "food/kabayaki_lampreys", Item::new, props -> props);
     public static final DeferredItem<Item> KABUTO_STEAMED_CAKE = registerItem(ITEMS, "food/kabuto_steamed_cake", Item::new, props -> props);

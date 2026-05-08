@@ -24,6 +24,7 @@ public class ItemEventHandler {
         if (livingEntity instanceof ServerPlayer player) {
             ItemTagList itemTagList = NMIItemTagUtil.serverGet(item);
             NeoForge.EVENT_BUS.post(new ServerTagFoodItemEvent(itemTagList, item, player));
+            NMIItemTagUtil.set(item, itemTagList);
         }
     }
 

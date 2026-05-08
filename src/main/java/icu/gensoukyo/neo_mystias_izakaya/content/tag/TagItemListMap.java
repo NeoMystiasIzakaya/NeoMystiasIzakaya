@@ -14,29 +14,35 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+@Getter
 public class TagItemListMap {
-    @Getter
-    private final List<TagItemListHolder> tags;
-    @Getter
-    private final Map<Identifier, TagItemListHolder> tagMap;
-    @Getter
-    private final Map<Identifier, List<Identifier>> itemMap;
+    private final List<TagItemListHolder> positiveTags;
+    private final List<TagItemListHolder> negativeTags;
+    private final Map<Identifier, TagItemListHolder> positiveTagMap;
+    private final Map<Identifier, TagItemListHolder> negativeTagMap;
+    private final Map<Identifier, List<Identifier>> positiveItemMap;
+    private final Map<Identifier, List<Identifier>> negativeItemMap;
 
     public static final Codec<TagItemListMap> CODEC = RecordCodecBuilder.create(
             instance -> instance.group(
-                    TagItemListHolder.CODEC.listOf().fieldOf("tags").forGetter(TagItemListMap::getTags)
+                    TagItemListHolder.CODEC.listOf().fieldOf("positiveTags").forGetter(TagItemListMap::getPositiveTags),
+                    TagItemListHolder.CODEC.listOf().fieldOf("negativeTags").forGetter(TagItemListMap::getNegativeTags)
             ).apply(instance, TagItemListMap::new)
     );
 
     public static final StreamCodec<ByteBuf, TagItemListMap> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.<ByteBuf, TagItemListHolder>list().apply(TagItemListHolder.STREAM_CODEC), TagItemListMap::getTags,
+            ByteBufCodecs.<ByteBuf, TagItemListHolder>list().apply(TagItemListHolder.STREAM_CODEC), TagItemListMap::getPositiveTags,
+            ByteBufCodecs.<ByteBuf, TagItemListHolder>list().apply(TagItemListHolder.STREAM_CODEC), TagItemListMap::getNegativeTags,
             TagItemListMap::new
     );
 
-    private TagItemListMap(List<TagItemListHolder> tags) {
-        this.tags = tags;
-        this.tagMap = tags.stream().collect(Collectors.toMap(TagItemListHolder::key, t -> t));
-        this.itemMap = buildItemMap(tags);
+    private TagItemListMap(List<TagItemListHolder> positiveTags, List<TagItemListHolder> negativeTags) {
+        this.positiveTags = positiveTags;
+        this.negativeTags = negativeTags;
+        this.positiveTagMap = positiveTags.stream().collect(Collectors.toMap(TagItemListHolder::key, t -> t));
+        this.negativeTagMap = negativeTags.stream().collect(Collectors.toMap(TagItemListHolder::key, t -> t));
+        this.positiveItemMap = buildItemMap(positiveTags);
+        this.negativeItemMap = buildItemMap(negativeTags);
     }
 
     private static Map<Identifier, List<Identifier>> buildItemMap(List<TagItemListHolder> tags) {
@@ -51,19 +57,20 @@ public class TagItemListMap {
         itemMap.put(itemId, list);
     }
 
-    public static TagItemListMap create(List<TagItemListHolder> tags) {
-        return new TagItemListMap(tags);
+    public static TagItemListMap create(List<TagItemListHolder> positiveTags, List<TagItemListHolder> negativeTags) {
+        return new TagItemListMap(positiveTags, negativeTags);
     }
 
     public TagItemListHolder get(Identifier id) {
-        return tagMap.get(id);
+        return positiveTagMap.get(id);
     }
 
     public ItemTagList getTagsForItem(Identifier itemId) {
-        List<Identifier> tagIds = itemMap.getOrDefault(itemId, List.of());
-        return new ItemTagList(tagIds);
+        List<Identifier> positiveTagIds = positiveItemMap.getOrDefault(itemId, List.of());
+        List<Identifier> negativeTagIds = negativeItemMap.getOrDefault(itemId, List.of());
+        return new ItemTagList(positiveTagIds,negativeTagIds);
     }
 
-    public static final TagItemListMap EMPTY = create(List.of());
+    public static final TagItemListMap EMPTY = create(List.of(), List.of());
 
 }

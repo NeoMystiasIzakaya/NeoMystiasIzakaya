@@ -1,12 +1,7 @@
 package icu.gensoukyo.neo_mystias_izakaya.common.command;
 
-import com.mojang.brigadier.arguments.StringArgumentType;
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import com.sun.jdi.connect.Connector;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.api.dal.NMIDataAccessor;
-import icu.gensoukyo.neo_mystias_izakaya.common.dal.ServerNMIDataAccessor;
-import icu.gensoukyo.neo_mystias_izakaya.common.event.ReloadEventHandler;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.TagItemListHolder;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.IdentifierArgument;
@@ -53,8 +48,8 @@ public class DebugTagCommand {
                                                 context -> {
                                                     Item item = ItemArgument.getItem(context, "item").item().value();
                                                     Identifier key = BuiltInRegistries.ITEM.getKey(item);
-                                                    List<Identifier> identifiers = NMIDataAccessor.server().getTagItemListMap().getItemMap().getOrDefault(key,new ArrayList<>());
-                                                    MutableComponent component = Component.literal("tags of " + key + ":");
+                                                    List<Identifier> identifiers = NMIDataAccessor.server().getTagItemListMap().getPositiveItemMap().getOrDefault(key,new ArrayList<>());
+                                                    MutableComponent component = Component.literal("positiveTags of " + key + ":");
                                                     identifiers.forEach(id -> component.append("\n- " + id));
                                                     component.append("\n total: " + identifiers.size());
                                                     context.getSource().sendSuccess(() -> component, false);

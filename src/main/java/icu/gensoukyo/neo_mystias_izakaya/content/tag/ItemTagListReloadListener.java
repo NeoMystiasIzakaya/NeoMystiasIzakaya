@@ -16,41 +16,56 @@ import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.neoforged.fml.loading.FMLEnvironment;
-import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.conditions.ConditionalOps;
 import org.slf4j.Logger;
 
 import java.util.*;
 
-public class TagItemListReloadListener extends SimplePreparableReloadListener<TagItemListMap> {
+public class ItemTagListReloadListener extends SimplePreparableReloadListener<TagItemListMap> {
     private static final Logger LOGGER = LogUtils.getLogger();
-    private static final FileToIdConverter TAG_LISTER = FileToIdConverter.json(NeoMystiasIzakaya.path("item_tags"));
+    private static final FileToIdConverter POSITIVE_TAG_LISTER = FileToIdConverter.json(NeoMystiasIzakaya.path("item_positive_tags"));
+    private static final FileToIdConverter NEGATIVE_TAG_LISTER = FileToIdConverter.json(NeoMystiasIzakaya.path("item_negative_tags"));
     private final HolderLookup.Provider registries;
     @Getter
     private TagItemListMap tagItemListMap = TagItemListMap.EMPTY;
 
-    public TagItemListReloadListener(HolderLookup.Provider registries) {
+    public ItemTagListReloadListener(HolderLookup.Provider registries) {
         this.registries = registries;
     }
 
     @Override
     protected TagItemListMap prepare(ResourceManager resourceManager, ProfilerFiller profilerFiller) {
 
-        SortedMap<Identifier, TagItemList> itemTagTreeMap = new TreeMap<>();
+        SortedMap<Identifier, TagItemList> pItemTagTreeMap = new TreeMap<>();
+        SortedMap<Identifier, TagItemList> nItemTagTreeMap = new TreeMap<>();
         var conditionalOps = new ConditionalOps<>(this.registries.createSerializationContext(JsonOps.INSTANCE), getContext());
         SimpleJsonResourceReloadListener.scanDirectoryWithModifier(
-                resourceManager, TAG_LISTER, conditionalOps, TagItemList.CODEC, itemTagTreeMap, recipeJsons -> {
-                    var event = new ModifyItemTagJsonsEvent(conditionalOps, recipeJsons);
+                resourceManager, POSITIVE_TAG_LISTER, conditionalOps, TagItemList.CODEC, pItemTagTreeMap, recipeJsons -> {
+                    var event = new ModifyItemTagJsonsEvent(conditionalOps, recipeJsons, true);
                     NeoForge.EVENT_BUS.post(event);
                 }
         );
-        List<TagItemListHolder> recipeHolders = new ArrayList<>(itemTagTreeMap.size());
-        itemTagTreeMap.forEach((id, tag) -> {
+        List<TagItemListHolder> pRecipeHolders = new ArrayList<>(pItemTagTreeMap.size());
+        pItemTagTreeMap.forEach((id, tag) -> {
             TagItemListHolder holder = new TagItemListHolder(id, tag);
-            recipeHolders.add(holder);
+            pRecipeHolders.add(holder);
         });
-        return TagItemListMap.create(recipeHolders);
+
+        SimpleJsonResourceReloadListener.scanDirectoryWithModifier(
+                resourceManager, NEGATIVE_TAG_LISTER, conditionalOps, TagItemList.CODEC, nItemTagTreeMap, recipeJsons -> {
+                    var event = new ModifyItemTagJsonsEvent(conditionalOps, recipeJsons, false);
+                    NeoForge.EVENT_BUS.post(event);
+                }
+        );
+        List<TagItemListHolder> nRecipeHolders = new ArrayList<>(nItemTagTreeMap.size());
+        nItemTagTreeMap.forEach((id, tag) -> {
+            TagItemListHolder holder = new TagItemListHolder(id, tag);
+            nRecipeHolders.add(holder);
+        });
+
+
+        return TagItemListMap.create(pRecipeHolders,nRecipeHolders);
     }
 
     @Override
@@ -63,6 +78,7 @@ public class TagItemListReloadListener extends SimplePreparableReloadListener<Ta
             ServerNMIDataAccessor.INSTANCE.setTagItemListMap(tagItemListMap);
             ClientNMIDataAccessor.INSTANCE.setTagItemListMap(tagItemListMap);
         }
-        LOGGER.info("Loaded {} item tags", tagItemListMap.getTags().size());
+        LOGGER.info("Loaded {} item positive tags with {} items", tagItemListMap.getPositiveTags().size(),tagItemListMap.getPositiveItemMap().size());
+        LOGGER.info("Loaded {} item negative tags with {} items", tagItemListMap.getNegativeTags().size(),tagItemListMap.getNegativeItemMap().size());
     }
 }

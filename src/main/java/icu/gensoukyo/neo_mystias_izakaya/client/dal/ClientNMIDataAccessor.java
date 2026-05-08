@@ -12,4 +12,5 @@ public class ClientNMIDataAccessor implements NMIDataAccessor {
     public static final ClientNMIDataAccessor INSTANCE = new ClientNMIDataAccessor();
 
     private TagItemListMap tagItemListMap;
+
 }

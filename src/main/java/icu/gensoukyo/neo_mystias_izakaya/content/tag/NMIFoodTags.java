@@ -9,6 +9,7 @@ public class NMIFoodTags {
     public static final Identifier Aura_Bursting = NeoMystiasIzakaya.id("aura_bursting");
     public static final Identifier Chinese = NeoMystiasIzakaya.id("chinese");
     public static final Identifier Cultural_Heritage = NeoMystiasIzakaya.id("cultural_heritage");
+    public static final Identifier Dark_Matter = NeoMystiasIzakaya.id("dark_matter");
     public static final Identifier Divine_Punishment = NeoMystiasIzakaya.id("divine_punishment");
     public static final Identifier Dreamy = NeoMystiasIzakaya.id("dreamy");
     public static final Identifier Economical = NeoMystiasIzakaya.id("economical");

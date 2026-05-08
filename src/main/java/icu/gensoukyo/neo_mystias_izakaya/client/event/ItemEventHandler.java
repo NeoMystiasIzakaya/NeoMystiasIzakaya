@@ -26,6 +26,7 @@ public class ItemEventHandler {
         if (event.getEntity() instanceof LocalPlayer player) {
             ItemTagList itemTagList = NMIItemTagUtil.clientGet(item);
             NeoForge.EVENT_BUS.post(new ClientTagFoodItemEvent(itemTagList, item, player));
+            NMIItemTagUtil.set(item, itemTagList);
         }
     }
 
@@ -36,7 +37,8 @@ public class ItemEventHandler {
 
         List<Component> toolTip = event.getToolTip();
 
-        itemTagList.tags().forEach(e->toolTip.add(Component.empty().append(NMIComponentUtil.translatableTag(e))));
+        itemTagList.positiveTags().forEach(e->toolTip.add(Component.literal("+ ").append(NMIComponentUtil.translatableTag(e))));
+        itemTagList.negativeTags().forEach(e->toolTip.add(Component.literal("- ").append(NMIComponentUtil.translatableTag(e))));
 
     }
 }

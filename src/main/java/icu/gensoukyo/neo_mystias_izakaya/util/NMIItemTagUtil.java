@@ -13,7 +13,7 @@ public class NMIItemTagUtil {
             return itemTagList;
         }
         ItemTagList tagsForItem = NMIDataAccessor.server().getTagItemListMap().getTagsForItem(NMIItemStackUtil.get(stack));
-        return tagsForItem == null ? ItemTagList.EMPTY : tagsForItem;
+        return tagsForItem == null ? ItemTagList.EMPTY : tagsForItem.copy();
     }
 
     public static ItemTagList clientGet(ItemStack stack) {
@@ -22,6 +22,10 @@ public class NMIItemTagUtil {
             return itemTagList;
         }
         ItemTagList tagsForItem = NMIDataAccessor.client().getTagItemListMap().getTagsForItem(NMIItemStackUtil.get(stack));
-        return tagsForItem == null ? ItemTagList.EMPTY : tagsForItem;
+        return tagsForItem == null ? ItemTagList.EMPTY : tagsForItem.copy();
+    }
+
+    public static void set(ItemStack stack, ItemTagList itemTagList) {
+        stack.set(NMIDataComponentTypes.ITEM_TAG_LIST, itemTagList.sort());
     }
 }

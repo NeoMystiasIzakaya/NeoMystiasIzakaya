@@ -43,6 +43,7 @@ public class NMILanguageProvider implements DataProvider {
         this.addTag(NMIFoodTags.Aura_Bursting, "Aura Bursting", "燃起来了");
         this.addTag(NMIFoodTags.Chinese, "Chinese", "中华");
         this.addTag(NMIFoodTags.Cultural_Heritage, "Cultural Heritage", "文化底蕴");
+        this.addTag(NMIFoodTags.Dark_Matter, "Dark Matter", "黑暗物质");
         this.addTag(NMIFoodTags.Divine_Punishment, "Divine Punishment", "天罚");
         this.addTag(NMIFoodTags.Dreamy, "Dreamy", "梦幻");
         this.addTag(NMIFoodTags.Economical, "Economical", "实惠");
@@ -234,7 +235,7 @@ public class NMILanguageProvider implements DataProvider {
         this.add(NMIFoodItems.IMITATION_SHIRIKODAMA, "Imitation Shirikodama", "拟尻子玉");
         this.add(NMIFoodItems.IMMORTAL_TURKEY, "Immortal Turkey", "不死鸟");
         this.add(NMIFoodItems.INO_SHIKA_CHOU, "Ino-Shika-Chou", "猪鹿蝶");
-        this.add(NMIFoodItems.INSTANTDEATH, "Instant☆Death", "一击☆必杀");
+        this.add(NMIFoodItems.INSTANT_DEATH, "Instant☆Death", "一击☆必杀");
         this.add(NMIFoodItems.ITALIAN_RISOTTO, "Italian Risotto", "意式烩饭");
         this.add(NMIFoodItems.KABAYAKI_LAMPREYS, "Kabayaki Lampreys", "红烧鳗鱼");
         this.add(NMIFoodItems.KABUTO_STEAMED_CAKE, "Kabuto Steamed Cake", "兜甲蒸糕");
@@ -527,7 +528,7 @@ public class NMILanguageProvider implements DataProvider {
         this.addDescription(NMIFoodItems.NIGIRI_SUSHI, "One of the most quintessential Japanese dishes. Freshly sliced fish topped over hand-pressed rice balls. Filling and delicious. No wonder why it has a long history behind it.", "日本最传统的料理之一。将鱼切片后盖在手握的饭团上，解饿又鲜美，拥有很长的历史。");
         this.addDescription(NMIFoodItems.OEDO_BOAT_FEAST, "With its fabulous festival boat donned with sashimi and kept fresh by the surrounding icy mist, this dish is absolutely guaranteed to be the focus of the party!", "用华丽的祭典船造型、摆满上好的鱼刺身、周围散发着保鲜而制作的冰雾,是真真真正的宴会的焦点!");
         this.addDescription(NMIFoodItems.OKONOMIYAKI, "A popular street food of the Outside World. Made by mixing batter and various other ingredients and cooked on a flat iron grill. Crisp and rich, it is loved by many for its versatility and affordability.", "听说的为根据，面糊和各种各样的食材给使用且混合之后在铁板烧制而成的，又脆又香又丰富，万变和平价的特征为因被所有人喜欢涨了。");
-        this.addDescription(NMIFoodItems.INSTANTDEATH, "A super skewer with additional spices and ingredients added to further stimulate the tasted buds. Okuu gave it a really imposing name, which resulted in its inexplicable popularity among wild youkai.", "加入了极为刺激的食材和辅料,对味觉的刺激满点的超级烤串,阿空亲自为它起了一个中二度满满的名字,结果在保持野性的妖怪中莫名的有人气。");
+        this.addDescription(NMIFoodItems.INSTANT_DEATH, "A super skewer with additional spices and ingredients added to further stimulate the tasted buds. Okuu gave it a really imposing name, which resulted in its inexplicable popularity among wild youkai.", "加入了极为刺激的食材和辅料,对味觉的刺激满点的超级烤串,阿空亲自为它起了一个中二度满满的名字,结果在保持野性的妖怪中莫名的有人气。");
         this.addDescription(NMIFoodItems.ORDINARY_EAT_ME_CUPCAKE, "A small snack containing a surprising amount of calories. Supposedly can make one stronger. It says \"Eat Me\" on it, which is very tempting. Be careful if you eat too many, you might gain weight...", "有着惊人热量的小点心,据说能迅速强健体魄。上面写着“吃掉我”,非常诱人。吃多了估计会长胖吧 ……");
         this.addDescription(NMIFoodItems.GOLDEN_TWO_SHROOM_WRAP, "A common but delicious delicacy with a balanced mix of meat and vegetables. Two different mushrooms wrapped in carefully selected meat creates a layered flavor for the taste buds.", "荤素搭配均匀,味道也很好的常见佳肴。用两种不同口感的菇类,包裹着精挑细选的嫩肉,给味蕾带来层次感十足的享受。");
         this.addDescription(NMIFoodItems.SALMON_STEAK, "Made by pan-frying a whole salmon until the skin is crispy and the inside is tender. I heard they use asparagus in the Outside World, but I guess we'll make do with fresh bamboo shoots. Just call it Gensokyo-style!", "将整块带皮的三文鱼煎至外焦里嫩，配上鲜嫩的竹笋——不过外界这个菜谱一般是芦笋，这也算是幻想乡式的融合菜吧。");

@@ -16,12 +16,21 @@ public class ModifyItemTagJsonsEvent extends Event {
     @Getter
     private final RegistryOps<JsonElement> ops;
     @Getter
-    private final Map<Identifier, JsonElement> recipeJsons;
+    private final Map<Identifier, JsonElement> jsons;
+    private final boolean isPositiveTag;
 
-    public ModifyItemTagJsonsEvent(final RegistryOps<JsonElement> ops, final Map<Identifier, JsonElement> recipeJsons) {
+    public boolean isNegativeTag() {
+        return !isPositiveTag;
+    }
+    public boolean isPositiveTag() {
+        return isPositiveTag;
+    }
+
+    public ModifyItemTagJsonsEvent(final RegistryOps<JsonElement> ops, final Map<Identifier, JsonElement> jsons, boolean isPositiveTag) {
         this.registryInfoLookup = ops.lookupProvider;
         this.ops = ops;
-        this.recipeJsons = recipeJsons;
+        this.jsons = jsons;
+        this.isPositiveTag = isPositiveTag;
     }
 
     public <T> Optional<RegistryOps.RegistryInfo<T>> lookup(ResourceKey<? extends Registry<? extends T>> registryKey) {

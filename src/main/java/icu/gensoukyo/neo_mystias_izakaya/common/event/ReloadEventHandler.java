@@ -2,9 +2,7 @@ package icu.gensoukyo.neo_mystias_izakaya.common.event;
 
 import com.mojang.logging.LogUtils;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
-import icu.gensoukyo.neo_mystias_izakaya.common.dal.ServerNMIDataAccessor;
-import icu.gensoukyo.neo_mystias_izakaya.content.tag.TagItemListReloadListener;
-import lombok.Getter;
+import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagListReloadListener;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
@@ -17,7 +15,7 @@ public class ReloadEventHandler {
 
     @SubscribeEvent
     public static void onAddServerReloadListenersEvent(AddServerReloadListenersEvent event){
-        TagItemListReloadListener tagItemListReloadListener = new TagItemListReloadListener(event.getRegistryAccess());
+        ItemTagListReloadListener tagItemListReloadListener = new ItemTagListReloadListener(event.getRegistryAccess());
         event.addListener(NeoMystiasIzakaya.id("item_tag"),tagItemListReloadListener);
     }
 }
