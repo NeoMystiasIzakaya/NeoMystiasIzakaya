@@ -8,11 +8,10 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 @Getter
 public class NMIRecipeMap {
@@ -21,7 +20,7 @@ public class NMIRecipeMap {
     private final Map<Identifier, NMIRecipeHolder> recipeMap;
     private final Map<Identifier, List<Identifier>> inputItemToRecipeMap;
     private final Map<Identifier, List<Identifier>> outputItemToRecipeMap;
-    private final Map<Identifier, List<Identifier>> kitchenwareToRecipeMap;
+    private final Map<TagKey<Block>, List<Identifier>> kitchenwareToRecipeMap;
 
     public static final Codec<NMIRecipeMap> CODEC = RecordCodecBuilder.create(
             instance -> instance.group(
@@ -47,49 +46,58 @@ public class NMIRecipeMap {
     }
 
     private Map<Identifier, List<Identifier>> buildInputItemToRecipeMap(List<NMIRecipeHolder> recipes) {
-        Map<Identifier, List<Identifier>> map = new TreeMap<>();
+        Map<Identifier, Set<Identifier>> map = new TreeMap<>();
         recipes.forEach(
-                e->{
+                e -> {
                     e.recipe().input().forEach(
-                            i->i.getValues().forEach(
-                                    s->{
+                            i -> i.getValues().forEach(
+                                    s -> {
                                         addToMap(map, NMIItemUtil.get(s.value()), e.key());
                                     }
                             )
                     );
                 }
         );
-        return map;
+        return normalizeMap(map);
     }
 
     private Map<Identifier, List<Identifier>> buildOutputItemToRecipeMap(List<NMIRecipeHolder> recipes) {
-        Map<Identifier, List<Identifier>> map = new TreeMap<>();
+        Map<Identifier, Set<Identifier>> map = new TreeMap<>();
         recipes.forEach(
-                e->{
-                    addToMap(map, NMIItemUtil.get(e.recipe().output().getItem()), e.key());
+                e -> {
+                    addToMap(map, NMIItemUtil.get(e.recipe().output().create().getItem()), e.key());
                 }
         );
-        return map;
+
+        return normalizeMap(map);
     }
 
-    private Map<Identifier, List<Identifier>> buildKitchenwareToRecipeMap(List<NMIRecipeHolder> recipes) {
-        Map<Identifier, List<Identifier>> map = new TreeMap<>();
+    private Map<TagKey<Block>, List<Identifier>> buildKitchenwareToRecipeMap(List<NMIRecipeHolder> recipes) {
+        Map<TagKey<Block>, Set<Identifier>> map = new HashMap<>();
         recipes.forEach(
-                e->{
-                    e.recipe().kitchenware().getValues().forEach(
-                            s->addToMap(map, NMIItemUtil.get(s.value()), e.key())
-                    );
+                e -> {
+                    TagKey<Block> kitchenware = e.recipe().kitchenware();
+                    Set<Identifier> set = map.getOrDefault(kitchenware, new HashSet<>());
+                    set.add(e.key());
+                    map.put(kitchenware, set);
                 }
         );
-        return map;
+        Map<TagKey<Block>, List<Identifier>> normalizedMap = new HashMap<>();
+        map.forEach((key, valueSet) -> normalizedMap.put(key, new ArrayList<>(valueSet)));
+        return normalizedMap;
+    }
+
+    private Map<Identifier, List<Identifier>> normalizeMap(Map<Identifier, Set<Identifier>> map) {
+        Map<Identifier, List<Identifier>> normalizedMap = new TreeMap<>();
+        map.forEach((key, valueSet) -> normalizedMap.put(key, new ArrayList<>(valueSet)));
+        return normalizedMap;
     }
 
 
-
-    private void addToMap(Map<Identifier, List<Identifier>> inputItemToRecipeMap, Identifier itemId, Identifier recipeId) {
-        List<Identifier> list = inputItemToRecipeMap.getOrDefault(itemId, new ArrayList<>());
-        list.add(recipeId);
-        inputItemToRecipeMap.put(itemId, list);
+    private void addToMap(Map<Identifier, Set<Identifier>> inputItemToRecipeMap, Identifier itemId, Identifier recipeId) {
+        Set<Identifier> set = inputItemToRecipeMap.getOrDefault(itemId, new HashSet<>());
+        set.add(recipeId);
+        inputItemToRecipeMap.put(itemId, set);
     }
 
     public static NMIRecipeMap create(List<NMIRecipeHolder> recipes) {

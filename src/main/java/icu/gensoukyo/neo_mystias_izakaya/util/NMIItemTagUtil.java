@@ -7,6 +7,15 @@ import net.minecraft.world.item.ItemStack;
 
 public class NMIItemTagUtil {
 
+    public static ItemTagList get(ItemStack stack) {
+        ItemTagList itemTagList = stack.get(NMIDataComponentTypes.ITEM_TAG_LIST);
+        if (itemTagList != null) {
+            return itemTagList;
+        }
+        ItemTagList tagsForItem = NMIDataAccessor.getInstance().getTagItemListMap().getTagsForItem(NMIItemStackUtil.get(stack));
+        return tagsForItem == null ? ItemTagList.EMPTY : tagsForItem.copy();
+    }
+
     public static ItemTagList serverGet(ItemStack stack) {
         ItemTagList itemTagList = stack.get(NMIDataComponentTypes.ITEM_TAG_LIST);
         if (itemTagList != null) {

@@ -81,8 +81,8 @@ public class ItemTagListReloadListener extends SimplePreparableReloadListener<Ta
         this.tagItemListMap = tagItemListMap;
         long loadEndTime = System.currentTimeMillis();
         LOGGER.info("Finished loading item tags in {} ms", loadEndTime - loadStartTime);
-        LOGGER.info("Loaded {} item positive tags with {} items", tagItemListMap.getPositiveTags().size(),tagItemListMap.getPositiveItemMap().size());
-        LOGGER.info("Loaded {} item negative tags with {} items", tagItemListMap.getNegativeTags().size(),tagItemListMap.getNegativeItemMap().size());
+        LOGGER.info("Loaded {} item positive tags with {} items", tagItemListMap.getPositiveTags().size(),tagItemListMap.getItemToPositiveTagMap().size());
+        LOGGER.info("Loaded {} item negative tags with {} items", tagItemListMap.getNegativeTags().size(),tagItemListMap.getItemToNegativeTagMap().size());
         if (FMLEnvironment.getDist().isDedicatedServer()) {
             ServerNMIDataAccessor.INSTANCE.setTagItemListMap(tagItemListMap);
             ServerPayloadSender.sendTagItemListMapSyncMessage(tagItemListMap);

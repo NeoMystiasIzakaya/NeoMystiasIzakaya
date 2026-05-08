@@ -48,7 +48,7 @@ public class DebugTagCommand {
                                                 context -> {
                                                     Item item = ItemArgument.getItem(context, "item").item().value();
                                                     Identifier key = BuiltInRegistries.ITEM.getKey(item);
-                                                    List<Identifier> identifiers = NMIDataAccessor.server().getTagItemListMap().getPositiveItemMap().getOrDefault(key,new ArrayList<>());
+                                                    List<Identifier> identifiers = NMIDataAccessor.server().getTagItemListMap().getItemToPositiveTagMap().getOrDefault(key,new ArrayList<>());
                                                     MutableComponent component = Component.literal("positiveTags of " + key + ":");
                                                     identifiers.forEach(id -> component.append("\n- " + id));
                                                     component.append("\n total: " + identifiers.size());

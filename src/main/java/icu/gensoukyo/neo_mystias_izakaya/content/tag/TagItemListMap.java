@@ -18,11 +18,11 @@ import java.util.stream.Collectors;
 public class TagItemListMap {
     private final List<TagItemListHolder> positiveTags;
     private final List<TagItemListHolder> negativeTags;
-    private final Map<Identifier, TagItemListHolder> positiveTagMap;
-    private final Map<Identifier, TagItemListHolder> negativeTagMap;
-    private final Map<Identifier, ItemTagList> tagItemMap;
-    private final Map<Identifier, List<Identifier>> positiveItemMap;
-    private final Map<Identifier, List<Identifier>> negativeItemMap;
+    private final Map<Identifier, TagItemListHolder> positiveTagToItemMap;
+    private final Map<Identifier, TagItemListHolder> negativeTagToItemMap;
+    private final Map<Identifier, ItemTagList> itemToTagMap;
+    private final Map<Identifier, List<Identifier>> itemToPositiveTagMap;
+    private final Map<Identifier, List<Identifier>> itemToNegativeTagMap;
 
     public static final Codec<TagItemListMap> CODEC = RecordCodecBuilder.create(
             instance -> instance.group(
@@ -40,11 +40,11 @@ public class TagItemListMap {
     private TagItemListMap(List<TagItemListHolder> positiveTags, List<TagItemListHolder> negativeTags) {
         this.positiveTags = positiveTags;
         this.negativeTags = negativeTags;
-        this.positiveTagMap = positiveTags.stream().collect(Collectors.toMap(TagItemListHolder::key, t -> t));
-        this.negativeTagMap = negativeTags.stream().collect(Collectors.toMap(TagItemListHolder::key, t -> t));
-        this.positiveItemMap = buildSingleItemMap(positiveTags);
-        this.negativeItemMap = buildSingleItemMap(negativeTags);
-        this.tagItemMap = buildItemMap(positiveItemMap, negativeItemMap);
+        this.positiveTagToItemMap = positiveTags.stream().collect(Collectors.toMap(TagItemListHolder::key, t -> t));
+        this.negativeTagToItemMap = negativeTags.stream().collect(Collectors.toMap(TagItemListHolder::key, t -> t));
+        this.itemToPositiveTagMap = buildSingleItemMap(positiveTags);
+        this.itemToNegativeTagMap = buildSingleItemMap(negativeTags);
+        this.itemToTagMap = buildItemMap(itemToPositiveTagMap, itemToNegativeTagMap);
     }
 
     private static Map<Identifier, ItemTagList> buildItemMap(Map<Identifier, List<Identifier>> positiveItemMap,Map<Identifier, List<Identifier>> negativeItemMap ) {
@@ -76,11 +76,11 @@ public class TagItemListMap {
     }
 
     public TagItemListHolder get(Identifier id) {
-        return positiveTagMap.get(id);
+        return positiveTagToItemMap.get(id);
     }
 
     public ItemTagList getTagsForItem(Identifier itemId) {
-        return tagItemMap.getOrDefault(itemId, ItemTagList.EMPTY);
+        return itemToTagMap.getOrDefault(itemId, ItemTagList.EMPTY);
     }
 
     public static final TagItemListMap EMPTY = create(List.of(), List.of());

@@ -4,14 +4,23 @@ import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.common.dal.ServerNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeMap;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.TagItemListMap;
+import net.neoforged.fml.loading.FMLEnvironment;
 
 public interface NMIDataAccessor {
 
-    static NMIDataAccessor server(){
+    static NMIDataAccessor getInstance() {
+        if (FMLEnvironment.getDist().isClient()) {
+            return ClientNMIDataAccessor.INSTANCE;
+        } else {
+            return ServerNMIDataAccessor.INSTANCE;
+        }
+    }
+
+    static NMIDataAccessor server() {
         return ServerNMIDataAccessor.INSTANCE;
     }
 
-    static NMIDataAccessor client(){
+    static NMIDataAccessor client() {
         return ClientNMIDataAccessor.INSTANCE;
     }
 
