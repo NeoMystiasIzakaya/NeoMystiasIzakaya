@@ -1,0 +1,20 @@
+{
+  "items": [
+    "neo_mystias_izakaya:cuisines/scone",
+    "neo_mystias_izakaya:cuisines/salmon_steak",
+    "neo_mystias_izakaya:cuisines/pancakes_with_syrup",
+    "neo_mystias_izakaya:cuisines/classic_steak",
+    "neo_mystias_izakaya:cuisines/eggs_benedict",
+    "neo_mystias_izakaya:cuisines/italian_risotto",
+    "neo_mystias_izakaya:cuisines/creamy_vegetable_chowder",
+    "neo_mystias_izakaya:ingredient/cream",
+    "neo_mystias_izakaya:cuisines/beef_wellington",
+    "neo_mystias_izakaya:cuisines/immortal_turkey",
+    "neo_mystias_izakaya:cuisines/faint_dream",
+    "neo_mystias_izakaya:cuisines/kitten_pizza",
+    "neo_mystias_izakaya:cuisines/mad_hatters_tea_party",
+    "neo_mystias_izakaya:cuisines/scarlet_devil_cake",
+    "neo_mystias_izakaya:cuisines/cubic_kedama_ice_cream",
+    "neo_mystias_izakaya:cuisines/unconscious_youkai_mousse"
+  ]
+}

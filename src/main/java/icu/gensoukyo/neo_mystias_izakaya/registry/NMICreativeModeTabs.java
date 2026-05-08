@@ -9,6 +9,7 @@ import icu.gensoukyo.neo_mystias_izakaya.util.NMIComponentUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -37,6 +38,17 @@ public class NMICreativeModeTabs {
                     .title(NMIComponentUtil.translatableItemGroup(INGREDIENT_ID))
                     .icon(()->NMIIngredientItems.DEW.get().getDefaultInstance())
                     .displayItems((parameters, output) -> {
+                        output.accept(Items.PUFFERFISH);
+                        output.accept(Items.PUMPKIN);
+                        output.accept(Items.KELP);
+                        output.accept(Items.BROWN_MUSHROOM);
+                        output.accept(Items.POTATO);
+                        output.accept(Items.PORKCHOP);
+                        output.accept(Items.BEEF);
+                        output.accept(Items.EGG);
+                        output.accept(Items.ICE);
+                        output.accept(Items.HONEY_BOTTLE);
+                        output.accept(Items.COCOA_BEANS);
                         NMIIngredientItems.ITEMS.getEntries().forEach(
                                 item -> output.accept(item.get())
                         );
