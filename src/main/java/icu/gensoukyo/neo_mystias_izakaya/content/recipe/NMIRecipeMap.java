@@ -95,4 +95,6 @@ public class NMIRecipeMap {
     public static NMIRecipeMap create(List<NMIRecipeHolder> recipes) {
         return new NMIRecipeMap(recipes);
     }
+
+    public static final NMIRecipeMap EMPTY = new NMIRecipeMap(List.of());
 }

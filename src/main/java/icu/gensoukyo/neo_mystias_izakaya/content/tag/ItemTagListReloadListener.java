@@ -20,7 +20,10 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.conditions.ConditionalOps;
 import org.slf4j.Logger;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class ItemTagListReloadListener extends SimplePreparableReloadListener<TagItemListMap> {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -34,8 +37,13 @@ public class ItemTagListReloadListener extends SimplePreparableReloadListener<Ta
         this.registries = registries;
     }
 
+    private long loadStartTime = 0L;
+
     @Override
     protected TagItemListMap prepare(ResourceManager resourceManager, ProfilerFiller profilerFiller) {
+
+        loadStartTime = System.currentTimeMillis();
+        LOGGER.info("Start loading tags lists...");
 
         SortedMap<Identifier, TagItemList> pItemTagTreeMap = new TreeMap<>();
         SortedMap<Identifier, TagItemList> nItemTagTreeMap = new TreeMap<>();
@@ -71,6 +79,10 @@ public class ItemTagListReloadListener extends SimplePreparableReloadListener<Ta
     @Override
     protected void apply(TagItemListMap tagItemListMap, ResourceManager resourceManager, ProfilerFiller profilerFiller) {
         this.tagItemListMap = tagItemListMap;
+        long loadEndTime = System.currentTimeMillis();
+        LOGGER.info("Finished loading item tags in {} ms", loadEndTime - loadStartTime);
+        LOGGER.info("Loaded {} item positive tags with {} items", tagItemListMap.getPositiveTags().size(),tagItemListMap.getPositiveItemMap().size());
+        LOGGER.info("Loaded {} item negative tags with {} items", tagItemListMap.getNegativeTags().size(),tagItemListMap.getNegativeItemMap().size());
         if (FMLEnvironment.getDist().isDedicatedServer()) {
             ServerNMIDataAccessor.INSTANCE.setTagItemListMap(tagItemListMap);
             ServerPayloadSender.sendTagItemListMapSyncMessage(tagItemListMap);
@@ -78,7 +90,5 @@ public class ItemTagListReloadListener extends SimplePreparableReloadListener<Ta
             ServerNMIDataAccessor.INSTANCE.setTagItemListMap(tagItemListMap);
             ClientNMIDataAccessor.INSTANCE.setTagItemListMap(tagItemListMap);
         }
-        LOGGER.info("Loaded {} item positive tags with {} items", tagItemListMap.getPositiveTags().size(),tagItemListMap.getPositiveItemMap().size());
-        LOGGER.info("Loaded {} item negative tags with {} items", tagItemListMap.getNegativeTags().size(),tagItemListMap.getNegativeItemMap().size());
     }
 }

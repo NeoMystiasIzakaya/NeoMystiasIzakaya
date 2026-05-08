@@ -1,6 +1,7 @@
 package icu.gensoukyo.neo_mystias_izakaya.registry;
 
 import icu.gensoukyo.neo_mystias_izakaya.client.network.ClientPayloadHandler;
+import icu.gensoukyo.neo_mystias_izakaya.common.network.NMIRecipeMapSyncMessage;
 import icu.gensoukyo.neo_mystias_izakaya.common.network.TagItemListMapSyncMessage;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -18,6 +19,12 @@ public class NMINetwork {
                 TagItemListMapSyncMessage.TYPE,
                 TagItemListMapSyncMessage.STREAM_CODEC,
                 ClientPayloadHandler::handleTagItemListMapSyncMessage
+        );
+
+        registrar.playToClient(
+                NMIRecipeMapSyncMessage.TYPE,
+                NMIRecipeMapSyncMessage.STREAM_CODEC,
+                ClientPayloadHandler::handleRecipeMapSyncMessage
         );
     }
 }
