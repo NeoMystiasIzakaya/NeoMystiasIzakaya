@@ -36,13 +36,10 @@ public class NMIRecipeReloadListener extends SimplePreparableReloadListener<NMIR
         this.registries = registries;
     }
 
-    private long loadStartTime = 0L;
-
     @Override
     protected NMIRecipeMap prepare(ResourceManager resourceManager, ProfilerFiller profilerFiller) {
 
-        loadStartTime = System.currentTimeMillis();
-        LOGGER.info("Start loading NMI recipes...");
+        long loadStartTime = System.currentTimeMillis();
 
         SortedMap<Identifier, NMIRecipe> recipeHolderTreeMap = new TreeMap<>();
         var conditionalOps = new ConditionalOps<>(this.registries.createSerializationContext(JsonOps.INSTANCE), getContext());
@@ -57,15 +54,18 @@ public class NMIRecipeReloadListener extends SimplePreparableReloadListener<NMIR
             NMIRecipeHolder holder = new NMIRecipeHolder(id, recipe);
             recipeHolders.add(holder);
         });
-
-        return NMIRecipeMap.create(recipeHolders);
+        long loadEndTime = System.currentTimeMillis();
+        LOGGER.info("Finished loading NMI recipes in {} ms", loadEndTime - loadStartTime);
+        long buildStartTime = System.currentTimeMillis();
+        NMIRecipeMap recipeMap = NMIRecipeMap.create(recipeHolders);
+        long buildEndTime = System.currentTimeMillis();
+        LOGGER.info("Finished building NMI recipe map in {} ms", buildEndTime - buildStartTime);
+        return recipeMap;
     }
 
     @Override
     protected void apply(NMIRecipeMap map, ResourceManager resourceManager, ProfilerFiller profilerFiller) {
         this.nmiRecipeMap = map;
-        long loadEndTime = System.currentTimeMillis();
-        LOGGER.info("Finished loading NMI recipes in {} ms", loadEndTime - loadStartTime);
         LOGGER.info("Loaded {} NMI recipes", nmiRecipeMap.getRecipes().size());
         if (FMLEnvironment.getDist().isDedicatedServer()) {
             ServerNMIDataAccessor.INSTANCE.setRecipeMap(nmiRecipeMap);

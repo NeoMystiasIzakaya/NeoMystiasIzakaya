@@ -37,13 +37,10 @@ public class ItemTagListReloadListener extends SimplePreparableReloadListener<Ta
         this.registries = registries;
     }
 
-    private long loadStartTime = 0L;
-
     @Override
     protected TagItemListMap prepare(ResourceManager resourceManager, ProfilerFiller profilerFiller) {
 
-        loadStartTime = System.currentTimeMillis();
-        LOGGER.info("Start loading tags lists...");
+        long loadStartTime = System.currentTimeMillis();
 
         SortedMap<Identifier, TagItemList> pItemTagTreeMap = new TreeMap<>();
         SortedMap<Identifier, TagItemList> nItemTagTreeMap = new TreeMap<>();
@@ -71,16 +68,19 @@ public class ItemTagListReloadListener extends SimplePreparableReloadListener<Ta
             TagItemListHolder holder = new TagItemListHolder(id, tag);
             nRecipeHolders.add(holder);
         });
+        long loadEndTime = System.currentTimeMillis();
+        LOGGER.info("Finished loading item tags in {} ms", loadEndTime - loadStartTime);
+        long buildStartTime = System.currentTimeMillis();
+        TagItemListMap itemListMap = TagItemListMap.create(pRecipeHolders, nRecipeHolders);
+        long buildEndTime = System.currentTimeMillis();
+        LOGGER.info("Finished building item tag map in {} ms", buildEndTime - buildStartTime);
 
-
-        return TagItemListMap.create(pRecipeHolders,nRecipeHolders);
+        return itemListMap;
     }
 
     @Override
     protected void apply(TagItemListMap tagItemListMap, ResourceManager resourceManager, ProfilerFiller profilerFiller) {
         this.tagItemListMap = tagItemListMap;
-        long loadEndTime = System.currentTimeMillis();
-        LOGGER.info("Finished loading item tags in {} ms", loadEndTime - loadStartTime);
         LOGGER.info("Loaded {} item positive tags with {} items", tagItemListMap.getPositiveTags().size(),tagItemListMap.getItemToPositiveTagMap().size());
         LOGGER.info("Loaded {} item negative tags with {} items", tagItemListMap.getNegativeTags().size(),tagItemListMap.getItemToNegativeTagMap().size());
         if (FMLEnvironment.getDist().isDedicatedServer()) {
