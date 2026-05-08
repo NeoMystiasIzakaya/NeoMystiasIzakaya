@@ -1,6 +1,8 @@
 package icu.gensoukyo.neo_mystias_izakaya;
 
 import com.mojang.logging.LogUtils;
+import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockEntities;
+import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlocks;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMICreativeModeTabs;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIDataComponentTypes;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIBeveragesItems;
@@ -25,6 +27,8 @@ public class NeoMystiasIzakaya {
         NMIIngredientItems.ITEMS.register(modEventBus);
         NMIDataComponentTypes.DATA_COMPONENT_TYPES.register(modEventBus);
         NMICreativeModeTabs.CREATIVE_MODE_TABS.register(modEventBus);
+        NMIBlocks.BLOCKS.register(modEventBus);
+        NMIBlockEntities.BLOCK_ENTITY_TYPES.register(modEventBus);
     }
 
     public static Identifier id(String key){

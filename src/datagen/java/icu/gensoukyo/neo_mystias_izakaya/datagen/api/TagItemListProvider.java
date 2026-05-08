@@ -11,12 +11,14 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
+import org.jspecify.annotations.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Stream;
 
 public abstract class TagItemListProvider implements DataProvider {
 
@@ -69,11 +71,11 @@ public abstract class TagItemListProvider implements DataProvider {
     }
 
     protected List<Identifier> fromItems(Item... items) {
-        return List.of(items).stream().map(BuiltInRegistries.ITEM::getKey).toList();
+        return Stream.of(items).map(BuiltInRegistries.ITEM::getKey).toList();
     }
 
     protected List<Identifier> fromItems(DeferredItem<? extends Item>... items) {
-        return List.of(items).stream().map(DeferredHolder::get).map(BuiltInRegistries.ITEM::getKey).toList();
+        return Stream.of(items).map(DeferredHolder::get).map(BuiltInRegistries.ITEM::getKey).toList();
     }
 
     protected Builder pTag(String key) {
@@ -104,13 +106,14 @@ public abstract class TagItemListProvider implements DataProvider {
         }
 
         public Builder add(Item... items) {
-            this.tmp.addAll(List.of(items).stream().map(BuiltInRegistries.ITEM::getKey).toList());
+            this.tmp.addAll(Stream.of(items).map(BuiltInRegistries.ITEM::getKey).toList());
             this.tagData.put(key, new TagItemList(tmp));
             return this;
         }
 
-        public Builder add(DeferredItem<? extends Item>... items) {
-            this.tmp.addAll(List.of(items).stream().map(DeferredHolder::get).map(BuiltInRegistries.ITEM::getKey).toList());
+        @SafeVarargs
+        public final Builder add(DeferredItem<? extends Item>... items) {
+            this.tmp.addAll(Stream.of(items).map(DeferredHolder::get).map(BuiltInRegistries.ITEM::getKey).toList());
             this.tagData.put(key, new TagItemList(tmp));
             return this;
         }
@@ -126,7 +129,7 @@ public abstract class TagItemListProvider implements DataProvider {
     }
 
     @Override
-    public String getName() {
+    public @NonNull String getName() {
         return "neo_mystias_izakaya:item_tags:" + modid;
     }
 }
