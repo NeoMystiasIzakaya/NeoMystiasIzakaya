@@ -59,6 +59,11 @@ public class TagItemListMap {
         return tagMap.get(id);
     }
 
+    public ItemTagList getTagsForItem(Identifier itemId) {
+        List<Identifier> tagIds = itemMap.getOrDefault(itemId, List.of());
+        return new ItemTagList(tagIds);
+    }
+
     public static final TagItemListMap EMPTY = create(List.of());
 
 }

@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import com.mojang.serialization.JsonOps;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.api.event.server.ModifyItemTagJsonsEvent;
+import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.common.dal.ServerNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.common.network.ServerPayloadSender;
 import lombok.Getter;
@@ -14,6 +15,8 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.conditions.ConditionalOps;
 import org.slf4j.Logger;
@@ -53,8 +56,13 @@ public class TagItemListReloadListener extends SimplePreparableReloadListener<Ta
     @Override
     protected void apply(TagItemListMap tagItemListMap, ResourceManager resourceManager, ProfilerFiller profilerFiller) {
         this.tagItemListMap = tagItemListMap;
-        ServerNMIDataAccessor.INSTANCE.setTagItemListMap(tagItemListMap);
-        ServerPayloadSender.sendTagItemListMapSyncMessage(tagItemListMap);
+        if (FMLEnvironment.getDist().isDedicatedServer()) {
+            ServerNMIDataAccessor.INSTANCE.setTagItemListMap(tagItemListMap);
+            ServerPayloadSender.sendTagItemListMapSyncMessage(tagItemListMap);
+        }else {
+            ServerNMIDataAccessor.INSTANCE.setTagItemListMap(tagItemListMap);
+            ClientNMIDataAccessor.INSTANCE.setTagItemListMap(tagItemListMap);
+        }
         LOGGER.info("Loaded {} item tags", tagItemListMap.getTags().size());
     }
 }

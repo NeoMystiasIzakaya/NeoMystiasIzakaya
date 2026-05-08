@@ -1,23 +1,18 @@
 package icu.gensoukyo.neo_mystias_izakaya.api.event.client;
 
-import icu.gensoukyo.neo_mystias_izakaya.content.tag.TagItemListHolder;
+import icu.gensoukyo.neo_mystias_izakaya.api.event.common.TagFoodItemEvent;
+import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
 import lombok.Getter;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.bus.api.Event;
 
-public class ClientTagFoodItemEvent extends Event {
-    @Getter
-    private final TagItemListHolder tagItemListHolder;
-    @Getter
-    private final ItemStack itemStack;
-    @Getter
-    private final LocalPlayer player;
+@Getter
+public class ClientTagFoodItemEvent extends TagFoodItemEvent {
 
-    public ClientTagFoodItemEvent(TagItemListHolder tagItemListHolder, ItemStack itemStack, LocalPlayer player) {
-        this.tagItemListHolder = tagItemListHolder;
-        this.itemStack = itemStack;
-        this.player = player;
+    private final LocalPlayer localPlayer;
+
+    public ClientTagFoodItemEvent(ItemTagList itemTagList, ItemStack itemStack, LocalPlayer player) {
+        super(itemTagList, itemStack, player);
+        this.localPlayer = player;
     }
-
 }
