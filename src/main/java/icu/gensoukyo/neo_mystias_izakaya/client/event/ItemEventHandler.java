@@ -2,9 +2,10 @@ package icu.gensoukyo.neo_mystias_izakaya.client.event;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.api.event.client.ClientTagFoodItemEvent;
+import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientItemTagUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
-import icu.gensoukyo.neo_mystias_izakaya.util.NMIComponentUtil;
-import icu.gensoukyo.neo_mystias_izakaya.util.NMIItemTagUtil;
+import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonComponentUtil;
+import icu.gensoukyo.neo_mystias_izakaya.common.util.NMIServerItemTagUtil;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -24,21 +25,21 @@ public class ItemEventHandler {
     public static void onLivingEntityUseItemEventFinish(LivingEntityUseItemEvent.Finish event) {
         ItemStack item = event.getItem();
         if (event.getEntity() instanceof LocalPlayer player) {
-            ItemTagList itemTagList = NMIItemTagUtil.client().get(item);
+            ItemTagList itemTagList = NMIClientItemTagUtil.get(item);
             NeoForge.EVENT_BUS.post(new ClientTagFoodItemEvent(itemTagList, item, player));
-            NMIItemTagUtil.set(item, itemTagList);
+            NMIServerItemTagUtil.set(item, itemTagList);
         }
     }
 
 
     @SubscribeEvent
     public static void onItemTooltipEvent(ItemTooltipEvent event){
-        ItemTagList itemTagList = NMIItemTagUtil.client().get(event.getItemStack());
+        ItemTagList itemTagList = NMIClientItemTagUtil.get(event.getItemStack());
 
         List<Component> toolTip = event.getToolTip();
 
-        itemTagList.positiveTags().forEach(e->toolTip.add(Component.literal("+ ").append(NMIComponentUtil.translatableTag(e))));
-        itemTagList.negativeTags().forEach(e->toolTip.add(Component.literal("- ").append(NMIComponentUtil.translatableTag(e))));
+        itemTagList.positiveTags().forEach(e->toolTip.add(Component.literal("+ ").append(NMICommonComponentUtil.translatableTag(e))));
+        itemTagList.negativeTags().forEach(e->toolTip.add(Component.literal("- ").append(NMICommonComponentUtil.translatableTag(e))));
 
     }
 }

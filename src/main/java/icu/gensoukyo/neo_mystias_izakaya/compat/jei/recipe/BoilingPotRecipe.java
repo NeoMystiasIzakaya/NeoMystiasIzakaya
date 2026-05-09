@@ -1,4 +1,4 @@
-package icu.gensoukyo.neo_mystias_izakaya.compat.recipe;
+package icu.gensoukyo.neo_mystias_izakaya.compat.jei.recipe;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipe;

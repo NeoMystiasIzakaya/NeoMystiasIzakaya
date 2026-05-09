@@ -2,7 +2,7 @@ package icu.gensoukyo.neo_mystias_izakaya.content.recipe;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import icu.gensoukyo.neo_mystias_izakaya.util.NMIItemUtil;
+import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonItemUtil;
 import lombok.Getter;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -52,7 +52,7 @@ public class NMIRecipeMap {
                     e.recipe().input().forEach(
                             i -> i.getValues().forEach(
                                     s -> {
-                                        addToMap(map, NMIItemUtil.get(s.value()), e.key());
+                                        addToMap(map, NMICommonItemUtil.get(s.value()), e.key());
                                     }
                             )
                     );
@@ -65,7 +65,7 @@ public class NMIRecipeMap {
         Map<Identifier, Set<Identifier>> map = new HashMap<>();
         recipes.forEach(
                 e -> {
-                    addToMap(map, NMIItemUtil.get(e.recipe().output().item().value()), e.key());
+                    addToMap(map, NMICommonItemUtil.get(e.recipe().output().item().value()), e.key());
                 }
         );
 
@@ -83,13 +83,13 @@ public class NMIRecipeMap {
                 }
         );
         Map<TagKey<Block>, List<Identifier>> normalizedMap = new HashMap<>();
-        map.forEach((key, valueSet) -> normalizedMap.put(key, new ArrayList<>(valueSet)));
+        map.forEach((key, valueSet) -> normalizedMap.put(key, List.copyOf(valueSet)));
         return normalizedMap;
     }
 
     private Map<Identifier, List<Identifier>> normalizeMap(Map<Identifier, Set<Identifier>> map) {
         Map<Identifier, List<Identifier>> normalizedMap = new HashMap<>();
-        map.forEach((key, valueSet) -> normalizedMap.put(key, new ArrayList<>(valueSet)));
+        map.forEach((key, valueSet) -> normalizedMap.put(key, List.copyOf(valueSet)));
         return normalizedMap;
     }
 

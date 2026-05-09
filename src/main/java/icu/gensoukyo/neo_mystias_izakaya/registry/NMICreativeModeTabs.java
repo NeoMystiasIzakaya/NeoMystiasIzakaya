@@ -5,7 +5,7 @@ import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIBeveragesItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMICuisinesItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIIngredientItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMainItems;
-import icu.gensoukyo.neo_mystias_izakaya.util.NMIComponentUtil;
+import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonComponentUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.CreativeModeTab;
@@ -21,7 +21,7 @@ public class NMICreativeModeTabs {
 
     public static final DeferredHolder<CreativeModeTab,?> CUISINES = CREATIVE_MODE_TABS.register("cuisines", () ->
             CreativeModeTab.builder()
-                    .title(NMIComponentUtil.translatableItemGroup(CUISINES_ID))
+                    .title(NMICommonComponentUtil.translatableItemGroup(CUISINES_ID))
                     .icon(()->NMICuisinesItems.GRILLED_LAMPREY.get().getDefaultInstance())
                     .displayItems((parameters, output) -> {
                         NMICuisinesItems.ITEMS.getEntries().forEach(
@@ -35,7 +35,7 @@ public class NMICreativeModeTabs {
 
     public static final DeferredHolder<CreativeModeTab,?> INGREDIENT = CREATIVE_MODE_TABS.register("ingredient", () ->
             CreativeModeTab.builder()
-                    .title(NMIComponentUtil.translatableItemGroup(INGREDIENT_ID))
+                    .title(NMICommonComponentUtil.translatableItemGroup(INGREDIENT_ID))
                     .icon(()->NMIIngredientItems.DEW.get().getDefaultInstance())
                     .displayItems((parameters, output) -> {
                         output.accept(Items.PUFFERFISH);
@@ -60,7 +60,7 @@ public class NMICreativeModeTabs {
 
     public static final DeferredHolder<CreativeModeTab,?> BEVERAGES = CREATIVE_MODE_TABS.register("beverages", () ->
             CreativeModeTab.builder()
-                    .title(NMIComponentUtil.translatableItemGroup(BEVERAGES_ID))
+                    .title(NMICommonComponentUtil.translatableItemGroup(BEVERAGES_ID))
                     .icon(()-> NMIBeveragesItems.GREEN_TEA.get().getDefaultInstance())
                     .displayItems((parameters, output) -> {
                         NMIBeveragesItems.ITEMS.getEntries().forEach(
@@ -74,7 +74,7 @@ public class NMICreativeModeTabs {
 
     public static final DeferredHolder<CreativeModeTab,?> MAIN = CREATIVE_MODE_TABS.register("main", () ->
             CreativeModeTab.builder()
-                    .title(NMIComponentUtil.translatableItemGroup(MAIN_ID))
+                    .title(NMICommonComponentUtil.translatableItemGroup(MAIN_ID))
                     .icon(()-> NMIMainItems.CHROME_BALL.get().getDefaultInstance())
                     .displayItems((parameters, output) -> {
                         NMIMainItems.ITEMS.getEntries().forEach(

@@ -42,9 +42,11 @@ public class TagItemListMap {
         this.itemToPositiveTagMap = buildSingleItemMap(positiveTags);
         this.itemToNegativeTagMap = buildSingleItemMap(negativeTags);
         this.itemToTagMap = buildItemMap(itemToPositiveTagMap, itemToNegativeTagMap);
+        immutableMap(itemToPositiveTagMap);
+        immutableMap(itemToNegativeTagMap);
     }
 
-    private static Map<Identifier, ItemTagList> buildItemMap(Map<Identifier, List<Identifier>> positiveItemMap,Map<Identifier, List<Identifier>> negativeItemMap ) {
+    private static Map<Identifier, ItemTagList> buildItemMap(Map<Identifier, List<Identifier>> positiveItemMap, Map<Identifier, List<Identifier>> negativeItemMap) {
         Map<Identifier, ItemTagList> itemMap = new HashMap<>();
         positiveItemMap.keySet().forEach(
                 itemId -> {
@@ -82,4 +84,7 @@ public class TagItemListMap {
 
     public static final TagItemListMap EMPTY = create(List.of(), List.of());
 
+    private static void immutableMap(Map<Identifier, List<Identifier>> map) {
+        map.replaceAll((key, value) -> Collections.unmodifiableList(value));
+    }
 }

@@ -1,4 +1,4 @@
-package icu.gensoukyo.neo_mystias_izakaya.util;
+package icu.gensoukyo.neo_mystias_izakaya.common.util;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -8,7 +8,7 @@ import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.util.Optional;
 
-public class NMIItemUtil {
+public  final class NMICommonItemUtil {
 
     public static Identifier get(Item item) {
         return BuiltInRegistries.ITEM.getKey(item);

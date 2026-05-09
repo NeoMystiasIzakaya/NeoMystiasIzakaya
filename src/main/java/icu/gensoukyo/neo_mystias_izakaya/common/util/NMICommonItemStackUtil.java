@@ -1,16 +1,16 @@
-package icu.gensoukyo.neo_mystias_izakaya.util;
+package icu.gensoukyo.neo_mystias_izakaya.common.util;
 
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 
-public class NMIItemStackUtil {
+public final class NMICommonItemStackUtil {
 
     public static Identifier get(ItemStack stack) {
-        return NMIItemUtil.get(stack.getItem());
+        return NMICommonItemUtil.get(stack.getItem());
     }
 
     public static ItemStack get(Identifier id, int count) {
-        return new ItemStack(NMIItemUtil.mustGet(id), count);
+        return new ItemStack(NMICommonItemUtil.mustGet(id), count);
     }
 
     public static ItemStack get(Identifier id) {

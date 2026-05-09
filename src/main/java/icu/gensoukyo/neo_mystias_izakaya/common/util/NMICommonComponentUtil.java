@@ -1,10 +1,10 @@
-package icu.gensoukyo.neo_mystias_izakaya.util;
+package icu.gensoukyo.neo_mystias_izakaya.common.util;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
 
-public class NMIComponentUtil {
+public final class NMICommonComponentUtil {
 
     public static MutableComponent translatableTag(Identifier tag){
         return Component.translatable(tag.toLanguageKey("tag"));
