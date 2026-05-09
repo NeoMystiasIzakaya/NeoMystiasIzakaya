@@ -1,7 +1,9 @@
 package icu.gensoukyo.neo_mystias_izakaya.util;
 
 import icu.gensoukyo.neo_mystias_izakaya.api.dal.NMIDataAccessor;
+import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipe;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeHolder;
+import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockTags;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
@@ -80,6 +82,17 @@ public class NMIRecipeUtil {
                 recipes.add(recipe);
             }
         });
+        return recipes;
+    }
+
+    public List<NMIRecipe> getRecipes(TagKey<Block> kitchenware) {
+        ArrayList<NMIRecipe> recipes = new ArrayList<>();
+        accessor.getRecipeMap().getRecipeMap().values().forEach(recipe -> {
+            if (recipe.recipe().kitchenware().equals(kitchenware)) {
+                recipes.add(recipe.recipe());
+            }
+        });
+
         return recipes;
     }
 

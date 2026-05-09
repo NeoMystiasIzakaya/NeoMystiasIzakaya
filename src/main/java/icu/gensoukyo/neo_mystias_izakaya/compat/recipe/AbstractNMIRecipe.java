@@ -11,14 +11,14 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Block;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public abstract class AbstractNMIRecipe implements IRecipeCategory<NMIRecipe> {
@@ -64,13 +64,13 @@ public abstract class AbstractNMIRecipe implements IRecipeCategory<NMIRecipe> {
 
     @Override
     public void draw(NMIRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor graphics, double mouseX, double mouseY) {
-//
-//        ItemStack cookerItem = recipe.kitchenware()
-//        Font font = Minecraft.getInstance().font;
-//        float time = recipe.time();
-//        int darkGray = 0x555555;
-//        graphics.text(font, String.format("%.1f min", time), 16, 25, darkGray, false);
-//        graphics.item(cookerItem, 64, 25);
+        TagKey<Block> kitchenware = recipe.kitchenware();
+        ItemStack defaultInstance = BuiltInRegistries.BLOCK.getTagOrEmpty(kitchenware).iterator().next().value().asItem().getDefaultInstance();
+        Font font = Minecraft.getInstance().font;
+        float time = recipe.time();
+        int darkGray = 0x555555;
+        graphics.text(font, String.format("%.1f min", time), 16, 25, darkGray, false);
+        graphics.item(defaultInstance, 64, 25);
     }
 
     private List<ItemStack> getItemList(Ingredient ingredient) {
