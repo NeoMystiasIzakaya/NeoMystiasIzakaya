@@ -1,0 +1,10 @@
+{
+  "input": [
+    "minecraft:kelp"
+  ],
+  "kitchenware": "neo_mystias_izakaya:boiling_pot",
+  "output": {
+    "id": "neo_mystias_izakaya:cuisines/sea_urchin_sashimi"
+  },
+  "time": 6
+}

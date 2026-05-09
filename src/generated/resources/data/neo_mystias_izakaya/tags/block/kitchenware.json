@@ -1,0 +1,24 @@
+{
+  "values": [
+    {
+      "id": "#neo_mystias_izakaya:boiling_pot",
+      "required": false
+    },
+    {
+      "id": "#neo_mystias_izakaya:cutting_board",
+      "required": false
+    },
+    {
+      "id": "#neo_mystias_izakaya:frying_pan",
+      "required": false
+    },
+    {
+      "id": "#neo_mystias_izakaya:grill",
+      "required": false
+    },
+    {
+      "id": "#neo_mystias_izakaya:steamer",
+      "required": false
+    }
+  ]
+}
