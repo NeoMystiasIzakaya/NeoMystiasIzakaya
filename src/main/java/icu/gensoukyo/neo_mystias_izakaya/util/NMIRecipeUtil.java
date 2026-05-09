@@ -14,28 +14,68 @@ import java.util.Set;
 
 public class NMIRecipeUtil {
 
-    public static List<NMIRecipeHolder> getAvailableRecipes(List<ItemStack> input) {
+    private final NMIDataAccessor accessor;
+
+    public NMIRecipeUtil(NMIDataAccessor accessor) {
+        this.accessor = accessor;
+    }
+
+    private static final NMIRecipeUtil SERVER = new NMIRecipeUtil(NMIDataAccessor.server());
+    private static final NMIRecipeUtil CLIENT = new NMIRecipeUtil(NMIDataAccessor.client());
+
+    public static NMIRecipeUtil server() {
+        return SERVER;
+    }
+
+    public static NMIRecipeUtil client() {
+        return CLIENT;
+    }
+
+    public List<NMIRecipeHolder> getAvailableRecipes(List<ItemStack> input) {
+        return getAvailableRecipes(accessor, input);
+    }
+
+    public List<NMIRecipeHolder> getRecipesByOutput(ItemStack output) {
+        return getRecipesByOutput(accessor, output);
+    }
+
+    public List<NMIRecipeHolder> getRecipesByKitchenware(TagKey<Block> kitchenware) {
+        return getRecipesByKitchenware(accessor, kitchenware);
+    }
+
+    public List<NMIRecipeHolder> getRecipes(List<Identifier> recipesIds) {
+        return getRecipes(accessor, recipesIds);
+    }
+
+    public NMIRecipeHolder getRecipe(Identifier id) {
+        return getRecipe(accessor, id);
+    }
+
+    public static List<NMIRecipeHolder> getAvailableRecipes(NMIDataAccessor accessor, List<ItemStack> input) {
         Set<Identifier> recipesIds = new HashSet<>();
         for (ItemStack stack : input) {
-            recipesIds.addAll(NMIDataAccessor.getInstance().getRecipeMap().getInputItemToRecipeMap().get(NMIItemStackUtil.get(stack)));
+            List<Identifier> identifiers = accessor.getRecipeMap().getInputItemToRecipeMap().get(NMIItemStackUtil.get(stack));
+            if (identifiers != null) {
+                recipesIds.addAll(identifiers);
+            }
         }
-        return getRecipes(new ArrayList<>(recipesIds));
+        return getRecipes(accessor,new ArrayList<>(recipesIds));
     }
 
-    public static List<NMIRecipeHolder> getRecipesByOutput(ItemStack output) {
-        List<Identifier> recipesIds = NMIDataAccessor.getInstance().getRecipeMap().getOutputItemToRecipeMap().get(NMIItemStackUtil.get(output));
-        return getRecipes(recipesIds);
+    public static List<NMIRecipeHolder> getRecipesByOutput(NMIDataAccessor accessor,ItemStack output) {
+        List<Identifier> recipesIds = accessor.getRecipeMap().getOutputItemToRecipeMap().get(NMIItemStackUtil.get(output));
+        return getRecipes(accessor,recipesIds);
     }
 
-    public static List<NMIRecipeHolder> getRecipesByKitchenware(TagKey<Block> kitchenware) {
-        List<Identifier> recipesIds = NMIDataAccessor.getInstance().getRecipeMap().getKitchenwareToRecipeMap().get(kitchenware);
-        return getRecipes(recipesIds);
+    public static List<NMIRecipeHolder> getRecipesByKitchenware(NMIDataAccessor accessor,TagKey<Block> kitchenware) {
+        List<Identifier> recipesIds = accessor.getRecipeMap().getKitchenwareToRecipeMap().get(kitchenware);
+        return getRecipes(accessor,recipesIds);
     }
 
-    public static List<NMIRecipeHolder> getRecipes(List<Identifier> recipesIds) {
+    public static List<NMIRecipeHolder> getRecipes(NMIDataAccessor accessor,List<Identifier> recipesIds) {
         List<NMIRecipeHolder> recipes = new ArrayList<>(recipesIds.size());
         recipesIds.forEach(id -> {
-            NMIRecipeHolder recipe = NMIDataAccessor.getInstance().getRecipeMap().getRecipeMap().get(id);
+            NMIRecipeHolder recipe = accessor.getRecipeMap().getRecipeMap().get(id);
             if (recipe != null) {
                 recipes.add(recipe);
             }
@@ -43,8 +83,8 @@ public class NMIRecipeUtil {
         return recipes;
     }
 
-    public static NMIRecipeHolder getRecipe(Identifier id) {
-        return NMIDataAccessor.getInstance().getRecipeMap().getRecipeMap().get(id);
+    public static NMIRecipeHolder getRecipe(NMIDataAccessor accessor,Identifier id) {
+        return accessor.getRecipeMap().getRecipeMap().get(id);
     }
 
 }

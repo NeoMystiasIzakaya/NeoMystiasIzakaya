@@ -8,10 +8,7 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Getter
@@ -48,7 +45,7 @@ public class TagItemListMap {
     }
 
     private static Map<Identifier, ItemTagList> buildItemMap(Map<Identifier, List<Identifier>> positiveItemMap,Map<Identifier, List<Identifier>> negativeItemMap ) {
-        Map<Identifier, ItemTagList> itemMap = new TreeMap<>();
+        Map<Identifier, ItemTagList> itemMap = new HashMap<>();
         positiveItemMap.keySet().forEach(
                 itemId -> {
                     List<Identifier> positiveTags = positiveItemMap.getOrDefault(itemId, List.of());
@@ -60,7 +57,7 @@ public class TagItemListMap {
     }
 
     private static Map<Identifier, List<Identifier>> buildSingleItemMap(List<TagItemListHolder> tags) {
-        Map<Identifier, List<Identifier>> itemMap = new TreeMap<>();
+        Map<Identifier, List<Identifier>> itemMap = new HashMap<>();
         tags.forEach(holder -> holder.tag().items().forEach(item -> addTagToItemMap(itemMap, item, holder.key())));
         return itemMap;
     }
