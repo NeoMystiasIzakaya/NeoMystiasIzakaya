@@ -8,7 +8,7 @@ import icu.gensoukyo.neo_mystias_izakaya.registry.NMICreativeModeTabs;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIBeveragesItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMICuisinesItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIIngredientItems;
-import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMiscItems;
+import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMainItems;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
@@ -41,9 +41,9 @@ public class NMILanguageProvider implements DataProvider {
         this.addItemGroup(NMICreativeModeTabs.BEVERAGES_ID, "Neo Mystia's Izakaya - Beverages", "新夜雀食堂 - 酒水");
         this.addItemGroup(NMICreativeModeTabs.CUISINES_ID, "Neo Mystia's Izakaya - Cuisines", "新夜雀食堂 - 料理");
         this.addItemGroup(NMICreativeModeTabs.INGREDIENT_ID, "Neo Mystia's Izakaya - Ingredient", "新夜雀食堂 - 食材");
-        this.addItemGroup(NMICreativeModeTabs.MISC_ID, "Neo Mystia's Izakaya - Misc", "新夜雀食堂 - 杂项");
+        this.addItemGroup(NMICreativeModeTabs.MAIN_ID, "Neo Mystia's Izakaya - Main", "新夜雀食堂 - 主体");
 
-        this.add(NMIMiscItems.CHROME_BALL, "Chrome Ball", "土球");
+        this.add(NMIMainItems.CHROME_BALL, "Chrome Ball", "土球");
     }
 
     private void addTagTranslations() {

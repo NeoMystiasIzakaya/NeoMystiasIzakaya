@@ -4,7 +4,7 @@ import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIBeveragesItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMICuisinesItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIIngredientItems;
-import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMiscItems;
+import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMainItems;
 import icu.gensoukyo.neo_mystias_izakaya.util.NMIComponentUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
@@ -70,15 +70,14 @@ public class NMICreativeModeTabs {
                     .build()
     );
 
+    public static final Identifier MAIN_ID = NeoMystiasIzakaya.id("main");
 
-    public static final Identifier MISC_ID = NeoMystiasIzakaya.id("misc");
-
-    public static final DeferredHolder<CreativeModeTab,?> MISC = CREATIVE_MODE_TABS.register("misc", () ->
+    public static final DeferredHolder<CreativeModeTab,?> MAIN = CREATIVE_MODE_TABS.register("main", () ->
             CreativeModeTab.builder()
-                    .title(NMIComponentUtil.translatableItemGroup(MISC_ID))
-                    .icon(()-> NMIMiscItems.CHROME_BALL.get().getDefaultInstance())
+                    .title(NMIComponentUtil.translatableItemGroup(MAIN_ID))
+                    .icon(()-> NMIMainItems.CHROME_BALL.get().getDefaultInstance())
                     .displayItems((parameters, output) -> {
-                        NMIMiscItems.ITEMS.getEntries().forEach(
+                        NMIMainItems.ITEMS.getEntries().forEach(
                                 item -> output.accept(item.get())
                         );
                     })

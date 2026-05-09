@@ -8,7 +8,7 @@ import icu.gensoukyo.neo_mystias_izakaya.registry.NMIDataComponentTypes;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIBeveragesItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMICuisinesItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIIngredientItems;
-import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMiscItems;
+import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMainItems;
 import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -21,7 +21,7 @@ public class NeoMystiasIzakaya {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public NeoMystiasIzakaya(IEventBus modEventBus, ModContainer modContainer) {
-        NMIMiscItems.ITEMS.register(modEventBus);
+        NMIMainItems.ITEMS.register(modEventBus);
         NMIBeveragesItems.ITEMS.register(modEventBus);
         NMICuisinesItems.ITEMS.register(modEventBus);
         NMIIngredientItems.ITEMS.register(modEventBus);
