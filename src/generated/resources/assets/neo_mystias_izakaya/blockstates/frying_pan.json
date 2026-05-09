@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "neo_mystias_izakaya:block/frying_pan"
+    },
+    "facing=north": {
+      "model": "neo_mystias_izakaya:block/frying_pan"
+    },
+    "facing=south": {
+      "model": "neo_mystias_izakaya:block/frying_pan"
+    },
+    "facing=west": {
+      "model": "neo_mystias_izakaya:block/frying_pan"
+    }
+  }
+}

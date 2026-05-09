@@ -2,7 +2,7 @@ package icu.gensoukyo.neo_mystias_izakaya.common.block;
 
 import com.mojang.serialization.MapCodec;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
-import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.BoilingPotBE;
+import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.SteamerBE;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -17,17 +17,17 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jspecify.annotations.Nullable;
 
-public class BoilingPotBlock extends AbstractKitchenware {
-    public static final MapCodec<BoilingPotBlock> CODEC = simpleCodec(BoilingPotBlock::new);
-    public static final VoxelShape SHAPE = Shapes.join(box(3,0,3,13,6,13),box(0,0,0,0,0,0), BooleanOp.FIRST);
+public class SteamerBlock extends AbstractKitchenware {
+    public static final MapCodec<SteamerBlock> CODEC = simpleCodec(SteamerBlock::new);
+    public static final VoxelShape SHAPE = Shapes.join(box(2,0,2,14,7,14),box(0,0,0,0,0,0), BooleanOp.FIRST);
 
-    public BoilingPotBlock(Properties properties) {
+    public SteamerBlock(Properties properties) {
         super(properties
-                .setId(ResourceKey.create(Registries.BLOCK, NeoMystiasIzakaya.id("boiling_pot")))
+                .setId(ResourceKey.create(Registries.BLOCK, NeoMystiasIzakaya.id("steamer")))
                 .noOcclusion()
-                .destroyTime(3.5F)
-                .sound(SoundType.STONE)
-                .lightLevel(litBlockEmission(13))
+                .destroyTime(3.0F)
+                .sound(SoundType.WOOD)
+                .lightLevel(litBlockEmission(9))
                 .requiresCorrectToolForDrops());
     }
 
@@ -38,7 +38,7 @@ public class BoilingPotBlock extends AbstractKitchenware {
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new BoilingPotBE(blockPos, blockState);
+        return new SteamerBE(blockPos, blockState);
     }
 
     @Override

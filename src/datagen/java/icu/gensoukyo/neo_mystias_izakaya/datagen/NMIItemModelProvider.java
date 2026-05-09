@@ -39,6 +39,10 @@ public class NMIItemModelProvider extends ModelProvider {
 
     private void registerBlockModels(BlockModelGenerators blockModels) {
         horizontallyBlock(blockModels, NMIBlocks.BOILING_POT.get());
+        horizontallyBlock(blockModels, NMIBlocks.GRILL.get());
+        horizontallyBlock(blockModels, NMIBlocks.FRYING_PAN.get());
+        horizontallyBlock(blockModels, NMIBlocks.STEAMER.get());
+        horizontallyBlock(blockModels, NMIBlocks.CUTTING_BOARD.get());
     }
 
     private void registerItemModels(ItemModelGenerators itemModels) {

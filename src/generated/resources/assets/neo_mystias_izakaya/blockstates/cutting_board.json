@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "neo_mystias_izakaya:block/cutting_board"
+    },
+    "facing=north": {
+      "model": "neo_mystias_izakaya:block/cutting_board"
+    },
+    "facing=south": {
+      "model": "neo_mystias_izakaya:block/cutting_board"
+    },
+    "facing=west": {
+      "model": "neo_mystias_izakaya:block/cutting_board"
+    }
+  }
+}

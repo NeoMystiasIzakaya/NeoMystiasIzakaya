@@ -15,8 +15,8 @@ import net.minecraft.world.phys.BlockHitResult;
 
 import java.util.function.ToIntFunction;
 
-public abstract class AbstractCooker extends BaseEntityBlock {
-    public AbstractCooker(Properties properties) {
+public abstract class AbstractKitchenware extends BaseEntityBlock {
+    public AbstractKitchenware(Properties properties) {
         super(properties);
     }
 

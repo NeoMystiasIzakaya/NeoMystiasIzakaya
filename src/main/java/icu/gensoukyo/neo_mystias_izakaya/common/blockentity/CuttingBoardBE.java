@@ -5,9 +5,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class BoilingPotBE extends AbstractKitchenwareBE {
-    public BoilingPotBE(BlockPos worldPosition, BlockState blockState) {
-        super(NMIBlockEntities.BOILING_POT.get(), worldPosition, blockState);
+public class CuttingBoardBE extends AbstractKitchenwareBE {
+    public CuttingBoardBE(BlockPos worldPosition, BlockState blockState) {
+        super(NMIBlockEntities.CUTTING_BOARD.get(), worldPosition, blockState);
     }
 
     @Override

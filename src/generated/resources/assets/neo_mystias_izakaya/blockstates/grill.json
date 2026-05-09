@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "neo_mystias_izakaya:block/grill"
+    },
+    "facing=north": {
+      "model": "neo_mystias_izakaya:block/grill"
+    },
+    "facing=south": {
+      "model": "neo_mystias_izakaya:block/grill"
+    },
+    "facing=west": {
+      "model": "neo_mystias_izakaya:block/grill"
+    }
+  }
+}
