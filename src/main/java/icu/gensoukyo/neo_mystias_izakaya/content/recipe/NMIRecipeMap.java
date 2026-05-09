@@ -46,7 +46,7 @@ public class NMIRecipeMap {
     }
 
     private Map<Identifier, List<Identifier>> buildInputItemToRecipeMap(List<NMIRecipeHolder> recipes) {
-        Map<Identifier, Set<Identifier>> map = new TreeMap<>();
+        Map<Identifier, Set<Identifier>> map = new HashMap<>();
         recipes.forEach(
                 e -> {
                     e.recipe().input().forEach(
@@ -62,7 +62,7 @@ public class NMIRecipeMap {
     }
 
     private Map<Identifier, List<Identifier>> buildOutputItemToRecipeMap(List<NMIRecipeHolder> recipes) {
-        Map<Identifier, Set<Identifier>> map = new TreeMap<>();
+        Map<Identifier, Set<Identifier>> map = new HashMap<>();
         recipes.forEach(
                 e -> {
                     addToMap(map, NMIItemUtil.get(e.recipe().output().item().value()), e.key());
@@ -88,7 +88,7 @@ public class NMIRecipeMap {
     }
 
     private Map<Identifier, List<Identifier>> normalizeMap(Map<Identifier, Set<Identifier>> map) {
-        Map<Identifier, List<Identifier>> normalizedMap = new TreeMap<>();
+        Map<Identifier, List<Identifier>> normalizedMap = new HashMap<>();
         map.forEach((key, valueSet) -> normalizedMap.put(key, new ArrayList<>(valueSet)));
         return normalizedMap;
     }

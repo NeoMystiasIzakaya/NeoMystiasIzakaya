@@ -24,7 +24,7 @@ public class ItemEventHandler {
     public static void onLivingEntityUseItemEventFinish(LivingEntityUseItemEvent.Finish event) {
         ItemStack item = event.getItem();
         if (event.getEntity() instanceof LocalPlayer player) {
-            ItemTagList itemTagList = NMIItemTagUtil.clientGet(item);
+            ItemTagList itemTagList = NMIItemTagUtil.client().get(item);
             NeoForge.EVENT_BUS.post(new ClientTagFoodItemEvent(itemTagList, item, player));
             NMIItemTagUtil.set(item, itemTagList);
         }
@@ -33,7 +33,7 @@ public class ItemEventHandler {
 
     @SubscribeEvent
     public static void onItemTooltipEvent(ItemTooltipEvent event){
-        ItemTagList itemTagList = NMIItemTagUtil.clientGet(event.getItemStack());
+        ItemTagList itemTagList = NMIItemTagUtil.client().get(event.getItemStack());
 
         List<Component> toolTip = event.getToolTip();
 

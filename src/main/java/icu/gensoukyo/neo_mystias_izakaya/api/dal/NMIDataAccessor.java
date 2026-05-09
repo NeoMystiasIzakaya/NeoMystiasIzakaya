@@ -8,14 +8,6 @@ import net.neoforged.fml.loading.FMLEnvironment;
 
 public interface NMIDataAccessor {
 
-    static NMIDataAccessor getInstance() {
-        if (FMLEnvironment.getDist().isClient()) {
-            return ClientNMIDataAccessor.INSTANCE;
-        } else {
-            return ServerNMIDataAccessor.INSTANCE;
-        }
-    }
-
     static NMIDataAccessor server() {
         return ServerNMIDataAccessor.INSTANCE;
     }

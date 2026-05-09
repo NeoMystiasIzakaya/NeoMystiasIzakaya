@@ -7,30 +7,42 @@ import net.minecraft.world.item.ItemStack;
 
 public class NMIItemTagUtil {
 
-    public static ItemTagList get(ItemStack stack) {
-        ItemTagList itemTagList = stack.get(NMIDataComponentTypes.ITEM_TAG_LIST);
-        if (itemTagList != null) {
-            return itemTagList;
-        }
-        ItemTagList tagsForItem = NMIDataAccessor.getInstance().getTagItemListMap().getTagsForItem(NMIItemStackUtil.get(stack));
-        return tagsForItem == null ? ItemTagList.EMPTY : tagsForItem.copy();
+    private final NMIDataAccessor accessor;
+
+    public NMIItemTagUtil(NMIDataAccessor accessor) {
+        this.accessor = accessor;
     }
 
-    public static ItemTagList serverGet(ItemStack stack) {
-        ItemTagList itemTagList = stack.get(NMIDataComponentTypes.ITEM_TAG_LIST);
-        if (itemTagList != null) {
-            return itemTagList;
-        }
-        ItemTagList tagsForItem = NMIDataAccessor.server().getTagItemListMap().getTagsForItem(NMIItemStackUtil.get(stack));
-        return tagsForItem == null ? ItemTagList.EMPTY : tagsForItem.copy();
+    private static final NMIItemTagUtil SERVER = new NMIItemTagUtil(NMIDataAccessor.server());
+    private static final NMIItemTagUtil CLIENT = new NMIItemTagUtil(NMIDataAccessor.client());
+
+    public static NMIItemTagUtil server() {
+        return SERVER;
     }
 
-    public static ItemTagList clientGet(ItemStack stack) {
+    public static NMIItemTagUtil client() {
+        return CLIENT;
+    }
+
+    public ItemTagList get(ItemStack stack) {
+        return get(accessor, stack);
+    }
+
+    public static ItemTagList get(NMIDataAccessor accessor,ItemStack stack) {
         ItemTagList itemTagList = stack.get(NMIDataComponentTypes.ITEM_TAG_LIST);
         if (itemTagList != null) {
             return itemTagList;
         }
-        ItemTagList tagsForItem = NMIDataAccessor.client().getTagItemListMap().getTagsForItem(NMIItemStackUtil.get(stack));
+        ItemTagList tagsForItem = accessor.getTagItemListMap().getTagsForItem(NMIItemStackUtil.get(stack));
+        return tagsForItem == null ? ItemTagList.EMPTY : tagsForItem;
+    }
+
+    public static ItemTagList copy(NMIDataAccessor accessor,ItemStack stack) {
+        ItemTagList itemTagList = stack.get(NMIDataComponentTypes.ITEM_TAG_LIST);
+        if (itemTagList != null) {
+            return itemTagList;
+        }
+        ItemTagList tagsForItem = accessor.getTagItemListMap().getTagsForItem(NMIItemStackUtil.get(stack));
         return tagsForItem == null ? ItemTagList.EMPTY : tagsForItem.copy();
     }
 
