@@ -1,7 +1,6 @@
 package icu.gensoukyo.neo_mystias_izakaya.common.block;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -12,16 +11,11 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 
 import java.util.function.ToIntFunction;
 
 public abstract class AbstractCooker extends BaseEntityBlock {
-    public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
-    public static final BooleanProperty LIT = BlockStateProperties.LIT;
-
     public AbstractCooker(Properties properties) {
         super(properties);
     }
@@ -39,13 +33,13 @@ public abstract class AbstractCooker extends BaseEntityBlock {
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
         return defaultBlockState()
-                .setValue(FACING, pContext.getHorizontalDirection().getOpposite())
-                .setValue(LIT, false);
+                .setValue(BlockStateProperties.HORIZONTAL_FACING, pContext.getHorizontalDirection().getOpposite())
+                .setValue(BlockStateProperties.LIT, false);
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(FACING, LIT);
+        pBuilder.add(BlockStateProperties.HORIZONTAL_FACING, BlockStateProperties.LIT);
     }
 
     @Override

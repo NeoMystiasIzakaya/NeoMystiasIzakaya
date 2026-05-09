@@ -1,26 +1,28 @@
 package icu.gensoukyo.neo_mystias_izakaya.datagen;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
-import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMiscItems;
+import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlocks;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIBeveragesItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMICuisinesItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIIngredientItems;
+import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMiscItems;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
-import net.minecraft.client.data.models.ItemModelOutput;
 import net.minecraft.client.data.models.ModelProvider;
+import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
-import net.minecraft.client.renderer.item.ClientItem;
-import net.minecraft.client.renderer.item.CuboidItemModelWrapper;
+import net.minecraft.client.renderer.block.dispatch.Variant;
+import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.registries.DeferredItem;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 public class NMIItemModelProvider extends ModelProvider {
     public NMIItemModelProvider(PackOutput output) {
@@ -29,8 +31,6 @@ public class NMIItemModelProvider extends ModelProvider {
 
     @Override
     protected void registerModels(@NotNull BlockModelGenerators blockModels, @NotNull ItemModelGenerators itemModels) {
-        SimpleItemModelRegister simple = new SimpleItemModelRegister(itemModels.itemModelOutput);
-
         itemModels.generateFlatItem(NMIMiscItems.CHROME_BALL.asItem(), ModelTemplates.FLAT_ITEM);
 
         this.registerBlockModels(blockModels);
@@ -38,7 +38,7 @@ public class NMIItemModelProvider extends ModelProvider {
     }
 
     private void registerBlockModels(BlockModelGenerators blockModels) {
-
+        horizontallyBlock(blockModels, NMIBlocks.BOILING_POT.get());
     }
 
     private void registerItemModels(ItemModelGenerators itemModels) {
@@ -49,29 +49,16 @@ public class NMIItemModelProvider extends ModelProvider {
         }
     }
 
-    public static class SimpleItemModelRegister {
-        private final ItemModelOutput itemModelOutput;
 
-        public SimpleItemModelRegister(ItemModelOutput itemModelOutput) {
-            this.itemModelOutput = itemModelOutput;
-        }
-
-        public void register(Item item) {
-            this.itemModelOutput.register(
-                    item, new ClientItem(
-                            new CuboidItemModelWrapper.Unbaked(
-                                    ModelLocationUtils.getModelLocation(item),
-                                    Optional.empty(),
-                                    Collections.emptyList()
-                            ),
-                            new ClientItem.Properties(true, true, 1.0F)
-                    )
-            );
-        }
-
-        public void register(DeferredItem<@NotNull Item> item) {
-            this.register(item.get());
-        }
+    private static void horizontallyBlock(BlockModelGenerators blockModels, Block block) {
+        Variant variant = new Variant(ModelLocationUtils.getModelLocation(block));
+        blockModels.blockStateOutput.accept(MultiVariantGenerator
+                .dispatch(block, BlockModelGenerators.variant(variant))
+                .with(PropertyDispatch.modify(BlockStateProperties.HORIZONTAL_FACING)
+                        .select(Direction.EAST, BlockModelGenerators.NOP)
+                        .select(Direction.NORTH, BlockModelGenerators.NOP)
+                        .select(Direction.SOUTH, BlockModelGenerators.NOP)
+                        .select(Direction.WEST, BlockModelGenerators.NOP)
+                ));
     }
-
 }
