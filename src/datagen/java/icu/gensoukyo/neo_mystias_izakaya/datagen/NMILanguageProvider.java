@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.NMIBeveragesTags;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.NMICuisinesTags;
+import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlocks;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMICreativeModeTabs;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIBeveragesItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMICuisinesItems;
@@ -42,6 +43,18 @@ public class NMILanguageProvider implements DataProvider {
         this.addItemGroup(NMICreativeModeTabs.CUISINES_ID, "Neo Mystia's Izakaya - Cuisines", "新夜雀食堂 - 料理");
         this.addItemGroup(NMICreativeModeTabs.INGREDIENT_ID, "Neo Mystia's Izakaya - Ingredient", "新夜雀食堂 - 食材");
         this.addItemGroup(NMICreativeModeTabs.MAIN_ID, "Neo Mystia's Izakaya - Main", "新夜雀食堂 - 主体");
+
+        this.add(NMIBlocks.BOILING_POT.get(), "Boiling Pot", "煮锅");
+        this.add(NMIBlocks.GRILL.get(), "Grill", "烤架");
+        this.add(NMIBlocks.FRYING_PAN.get(), "Frying Pan", "油锅");
+        this.add(NMIBlocks.STEAMER.get(), "Steamer", "蒸锅");
+        this.add(NMIBlocks.CUTTING_BOARD.get(), "Cutting Board", "料理台");
+
+        this.add(NMIMainItems.BOILING_POT, "Boiling Pot", "煮锅");
+        this.add(NMIMainItems.GRILL, "Grill", "烤架");
+        this.add(NMIMainItems.FRYING_PAN, "Frying Pan", "油锅");
+        this.add(NMIMainItems.STEAMER, "Steamer", "蒸锅");
+        this.add(NMIMainItems.CUTTING_BOARD, "Cutting Board", "料理台");
 
         this.add(NMIMainItems.CHROME_BALL, "Chrome Ball", "土球");
     }
@@ -390,8 +403,8 @@ public class NMILanguageProvider implements DataProvider {
         this.add(NMIBeveragesItems.ZUN_BEER, "ZUN Beer", "超ZUN啤酒");
     }
 
-    private void addItemDescTranslations(){
-        
+    private void addItemDescTranslations() {
+
         this.addDescription(NMIBeveragesItems.AFFOGATO, "Ice cream with coffee is great for people who are afraid of bitterness but still need caffeine. §n \"It's not like I can't handle the bitterness, I just need a boost.\"§n ——Patchouli", "将冰淇淋融化在咖啡中的做法，对于怕苦又需要咖啡提神的人来说是再好不过的饮料。§n \"我只是需要提神，并不是怕苦。\" §n——帕秋莉");
         this.addDescription(NMIBeveragesItems.AKATSUKI, "This whisky has been adjusted for the palate of Gensokyo residents and has a smooth taste while retaining its unique flavor.", "针对幻想乡居民口味改良的威士忌，在保留威士忌独有的气味的同时也有着顺滑的口感。");
         this.addDescription(NMIBeveragesItems.ZUN_BEER, "The product of a side hustle of a great figure who is deeply connected with Gensokyo. Surprisingly popular.", "某位和幻想乡很有渊源的大人物作为副业的产品，虽然是出于兴趣而研制的啤酒，但意外地十分有人气。");
