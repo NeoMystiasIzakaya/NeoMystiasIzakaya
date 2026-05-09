@@ -65,7 +65,7 @@ public class NMIRecipeMap {
         Map<Identifier, Set<Identifier>> map = new TreeMap<>();
         recipes.forEach(
                 e -> {
-                    addToMap(map, NMIItemUtil.get(e.recipe().output().create().getItem()), e.key());
+                    addToMap(map, NMIItemUtil.get(e.recipe().output().item().value()), e.key());
                 }
         );
 
