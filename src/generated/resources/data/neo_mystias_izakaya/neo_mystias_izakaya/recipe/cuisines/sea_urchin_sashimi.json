@@ -1,10 +1,10 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/sea_urchin"
+    "minecraft:kelp"
   ],
-  "kitchenware": "neo_mystias_izakaya:cutting_board",
+  "kitchenware": "neo_mystias_izakaya:boiling_pot",
   "output": {
     "id": "neo_mystias_izakaya:cuisines/sea_urchin_sashimi"
   },
-  "time": 8
+  "time": 6
 }

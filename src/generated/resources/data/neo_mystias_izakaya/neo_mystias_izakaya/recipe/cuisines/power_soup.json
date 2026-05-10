@@ -1,13 +1,10 @@
 {
   "input": [
-    [
-      "minecraft:kelp",
-      "minecraft:dried_kelp"
-    ]
+    "neo_mystias_izakaya:ingredient/boar_meat"
   ],
   "kitchenware": "neo_mystias_izakaya:boiling_pot",
   "output": {
     "id": "neo_mystias_izakaya:cuisines/power_soup"
   },
-  "time": 12
+  "time": 7
 }

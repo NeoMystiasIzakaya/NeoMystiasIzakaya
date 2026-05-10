@@ -78,7 +78,6 @@ public abstract class AbstractNMIRecipe implements IRecipeCategory<NMIRecipe> {
         graphics.item(defaultInstance, 64, 25);
     }
 
-    @SuppressWarnings("deprecation")
     private List<ItemStack> getItemList(Ingredient ingredient) {
         return ingredient.items().map(itemHolder -> itemHolder.value().getDefaultInstance()).toList();
     }
