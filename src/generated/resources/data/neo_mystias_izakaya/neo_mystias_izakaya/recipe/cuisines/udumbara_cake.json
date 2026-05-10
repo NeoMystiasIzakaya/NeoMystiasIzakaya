@@ -1,6 +1,7 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/udumbara"
+    "neo_mystias_izakaya:ingredient/udumbara",
+    "neo_mystias_izakaya:ingredient/dew"
   ],
   "kitchenware": "neo_mystias_izakaya:steamer",
   "output": {

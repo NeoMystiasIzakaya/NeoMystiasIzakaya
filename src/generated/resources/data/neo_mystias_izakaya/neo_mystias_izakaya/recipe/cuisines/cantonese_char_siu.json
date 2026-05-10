@@ -1,6 +1,7 @@
 {
   "input": [
-    "minecraft:porkchop"
+    "minecraft:porkchop",
+    "minecraft:honey_bottle"
   ],
   "kitchenware": "neo_mystias_izakaya:grill",
   "output": {

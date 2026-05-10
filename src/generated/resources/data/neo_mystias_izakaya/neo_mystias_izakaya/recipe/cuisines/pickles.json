@@ -1,6 +1,7 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/cucumber"
+    "neo_mystias_izakaya:ingredient/cucumber",
+    "neo_mystias_izakaya:ingredient/black_salt"
   ],
   "kitchenware": "neo_mystias_izakaya:cutting_board",
   "output": {

@@ -1,6 +1,17 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/flour"
+    "neo_mystias_izakaya:ingredient/flour",
+    "neo_mystias_izakaya:ingredient/flour",
+    [
+      "minecraft:egg",
+      "minecraft:blue_egg",
+      "minecraft:brown_egg"
+    ],
+    [
+      "minecraft:egg",
+      "minecraft:blue_egg",
+      "minecraft:brown_egg"
+    ]
   ],
   "kitchenware": "neo_mystias_izakaya:frying_pan",
   "output": {

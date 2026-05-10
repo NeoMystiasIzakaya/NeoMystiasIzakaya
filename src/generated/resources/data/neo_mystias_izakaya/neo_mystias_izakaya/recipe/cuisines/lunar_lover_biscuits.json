@@ -1,6 +1,13 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/butter"
+    "neo_mystias_izakaya:ingredient/butter",
+    "neo_mystias_izakaya:ingredient/flour",
+    [
+      "minecraft:egg",
+      "minecraft:blue_egg",
+      "minecraft:brown_egg"
+    ],
+    "neo_mystias_izakaya:ingredient/lunar_herb"
   ],
   "kitchenware": "neo_mystias_izakaya:cutting_board",
   "output": {

@@ -1,6 +1,10 @@
 {
   "input": [
-    "minecraft:bamboo"
+    "minecraft:bamboo",
+    "minecraft:porkchop",
+    "neo_mystias_izakaya:ingredient/salmon",
+    "neo_mystias_izakaya:ingredient/wagyu_beef",
+    "neo_mystias_izakaya:ingredient/venison"
   ],
   "kitchenware": "neo_mystias_izakaya:grill",
   "output": {

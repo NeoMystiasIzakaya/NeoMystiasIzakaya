@@ -3,7 +3,9 @@
     [
       "minecraft:red_mushroom",
       "minecraft:brown_mushroom"
-    ]
+    ],
+    "minecraft:potato",
+    "neo_mystias_izakaya:ingredient/cream"
   ],
   "kitchenware": "neo_mystias_izakaya:boiling_pot",
   "output": {

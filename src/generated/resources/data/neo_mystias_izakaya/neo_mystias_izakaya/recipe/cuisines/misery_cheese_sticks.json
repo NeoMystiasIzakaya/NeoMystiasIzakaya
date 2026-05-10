@@ -1,6 +1,8 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/cheese"
+    "neo_mystias_izakaya:ingredient/cheese",
+    "neo_mystias_izakaya:ingredient/ginkgo_nut",
+    "neo_mystias_izakaya:ingredient/ginkgo_nut"
   ],
   "kitchenware": "neo_mystias_izakaya:steamer",
   "output": {

@@ -1,6 +1,7 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/snow_fungus"
+    "neo_mystias_izakaya:ingredient/snow_fungus",
+    "neo_mystias_izakaya:ingredient/lotus_seed"
   ],
   "kitchenware": "neo_mystias_izakaya:boiling_pot",
   "output": {

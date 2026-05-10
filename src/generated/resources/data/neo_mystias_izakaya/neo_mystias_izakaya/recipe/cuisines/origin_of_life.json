@@ -1,6 +1,9 @@
 {
   "input": [
-    "minecraft:cocoa_beans"
+    "minecraft:cocoa_beans",
+    "neo_mystias_izakaya:ingredient/snow_fungus",
+    "minecraft:pumpkin",
+    "neo_mystias_izakaya:ingredient/dew"
   ],
   "kitchenware": "neo_mystias_izakaya:steamer",
   "output": {

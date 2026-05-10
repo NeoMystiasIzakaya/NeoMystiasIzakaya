@@ -3,7 +3,8 @@
     [
       "minecraft:red_mushroom",
       "minecraft:brown_mushroom"
-    ]
+    ],
+    "minecraft:porkchop"
   ],
   "kitchenware": "neo_mystias_izakaya:frying_pan",
   "output": {

@@ -1,6 +1,7 @@
 {
   "input": [
-    "minecraft:honey_bottle"
+    "minecraft:honey_bottle",
+    "neo_mystias_izakaya:ingredient/chestnut"
   ],
   "kitchenware": "neo_mystias_izakaya:cutting_board",
   "output": {

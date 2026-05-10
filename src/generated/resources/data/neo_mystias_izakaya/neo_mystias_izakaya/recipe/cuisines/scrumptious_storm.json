@@ -1,6 +1,10 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/onion"
+    "neo_mystias_izakaya:ingredient/onion",
+    "neo_mystias_izakaya:ingredient/boar_meat",
+    "minecraft:beef",
+    "neo_mystias_izakaya:ingredient/truffle",
+    "neo_mystias_izakaya:ingredient/tomato"
   ],
   "kitchenware": "neo_mystias_izakaya:grill",
   "output": {

@@ -1,6 +1,10 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/chili"
+    "neo_mystias_izakaya:ingredient/chili",
+    "neo_mystias_izakaya:ingredient/chili",
+    "neo_mystias_izakaya:ingredient/chili",
+    "neo_mystias_izakaya:ingredient/cheese",
+    "minecraft:beef"
   ],
   "kitchenware": "neo_mystias_izakaya:frying_pan",
   "output": {

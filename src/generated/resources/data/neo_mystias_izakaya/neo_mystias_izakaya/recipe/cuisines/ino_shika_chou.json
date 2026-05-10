@@ -1,6 +1,8 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/boar_meat"
+    "neo_mystias_izakaya:ingredient/boar_meat",
+    "neo_mystias_izakaya:ingredient/venison",
+    "neo_mystias_izakaya:ingredient/lunar_herb"
   ],
   "kitchenware": "neo_mystias_izakaya:steamer",
   "output": {

@@ -1,6 +1,10 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/chili"
+    "neo_mystias_izakaya:ingredient/chili",
+    "neo_mystias_izakaya:ingredient/radish",
+    "neo_mystias_izakaya:ingredient/truffle",
+    "minecraft:beef",
+    "neo_mystias_izakaya:ingredient/wagyu_beef"
   ],
   "kitchenware": "neo_mystias_izakaya:boiling_pot",
   "output": {

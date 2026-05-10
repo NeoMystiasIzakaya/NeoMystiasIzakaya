@@ -1,6 +1,9 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/dew"
+    "neo_mystias_izakaya:ingredient/dew",
+    "minecraft:pumpkin",
+    "minecraft:potato",
+    "minecraft:honey_bottle"
   ],
   "kitchenware": "neo_mystias_izakaya:cutting_board",
   "output": {

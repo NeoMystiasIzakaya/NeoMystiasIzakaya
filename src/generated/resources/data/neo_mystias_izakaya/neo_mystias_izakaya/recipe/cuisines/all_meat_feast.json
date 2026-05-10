@@ -1,6 +1,9 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/boar_meat"
+    "neo_mystias_izakaya:ingredient/boar_meat",
+    "neo_mystias_izakaya:ingredient/venison",
+    "neo_mystias_izakaya:ingredient/iberico_pork",
+    "neo_mystias_izakaya:ingredient/wagyu_beef"
   ],
   "kitchenware": "neo_mystias_izakaya:grill",
   "output": {

@@ -1,6 +1,8 @@
 {
   "input": [
-    "minecraft:cocoa_beans"
+    "minecraft:cocoa_beans",
+    "minecraft:pumpkin",
+    "neo_mystias_izakaya:ingredient/cream"
   ],
   "kitchenware": "neo_mystias_izakaya:cutting_board",
   "output": {

@@ -1,0 +1,174 @@
+this.builder(NMICuisinesItems.PORK_TROUT_KEBAB)
+        .input(NMIIngredientItems.TROUT)
+        .input(猪肉)
+        .kitchenware(烧烤架)
+        .time(7)
+        .build();
+
+this.builder(NMICuisinesItems.GRILLED_LAMPREY)
+        .input(NMIIngredientItems.LAMPREY)
+        .kitchenware(烧烤架)
+        .time(7)
+        .build();
+
+this.builder(NMICuisinesItems.ENERGY_SKEWER)
+        .input(牛肉)
+        .input(NMIIngredientItems.ONION)
+        .input(南瓜)
+        .kitchenware(烧烤架)
+        .time(12)
+        .build();
+
+this.builder(NMICuisinesItems.NITEN_ICHIRYU)
+        .input(NMIIngredientItems.IBERICO_PORK)
+        .input(NMIIngredientItems.BOAR_MEAT)
+        .kitchenware(烧烤架)
+        .time(18)
+        .build();
+
+this.builder(NMICuisinesItems.ROASTED_MUSHROOM)
+        .input(蘑菇)
+        .kitchenware(烧烤架)
+        .time(6)
+        .build();
+
+this.builder(NMICuisinesItems.CANTONESE_CHAR_SIU)
+        .input(猪肉)
+        .input(蜂蜜)
+        .kitchenware(烧烤架)
+        .time(7)
+        .build();
+
+this.builder(NMICuisinesItems.IMMORTAL_TURKEY)
+        .input(NMIIngredientItems.FLOUR)
+        .input(蜂蜜)
+        .input(土豆)
+        .input(NMIIngredientItems.ONION)
+        .input(NMIIngredientItems.RADISH)
+        .kitchenware(烧烤架)
+        .time(12)
+        .build();
+
+this.builder(NMICuisinesItems.HOURAI_BRANCH)
+        .input(竹子)
+        .input(猪肉)
+        .input(NMIIngredientItems.SALMON)
+        .input(NMIIngredientItems.WAGYU_BEEF)
+        .input(NMIIngredientItems.VENISON)
+        .kitchenware(烧烤架)
+        .time(13)
+        .build();
+
+this.builder(NMICuisinesItems.ALL_MEAT_FEAST)
+        .input(NMIIngredientItems.BOAR_MEAT)
+        .input(NMIIngredientItems.VENISON)
+        .input(NMIIngredientItems.IBERICO_PORK)
+        .input(NMIIngredientItems.WAGYU_BEEF)
+        .kitchenware(烧烤架)
+        .time(14)
+        .build();
+
+this.builder(一击☆必杀)
+        .input(NMIIngredientItems.BOAR_MEAT)
+        .input(NMIIngredientItems.VENISON)
+        .input(NMIIngredientItems.ONION)
+        .kitchenware(烧烤架)
+        .time(9)
+        .build();
+
+this.builder(NMICuisinesItems.BAKED_SWEET_POTATO)
+        .input(NMIIngredientItems.SWEET_POTATO)
+        .kitchenware(烧烤架)
+        .time(6)
+        .build();
+
+this.builder(NMICuisinesItems.BISCAY_BISCUITS)
+        .input(NMIIngredientItems.FLOUR)
+        .input(NMIIngredientItems.CHEESE)
+        .kitchenware(烧烤架)
+        .time(5)
+        .build();
+
+this.builder(NMICuisinesItems.SMOKED_BUCCANEER)
+        .input(牛肉)
+        .input(NMIIngredientItems.BLACK_SALT)
+        .input(NMIIngredientItems.CHILI)
+        .input(蜂蜜)
+        .kitchenware(烧烤架)
+        .time(9)
+        .build();
+
+this.builder(NMICuisinesItems.SCRUMPTIOUS_STORM)
+        .input(NMIIngredientItems.ONION)
+        .input(NMIIngredientItems.BOAR_MEAT)
+        .input(牛肉)
+        .input(NMIIngredientItems.TRUFFLE)
+        .input(NMIIngredientItems.TOMATO)
+        .kitchenware(烧烤架)
+        .time(18)
+        .build();
+
+this.builder(NMICuisinesItems.KITTEN_CANELE)
+        .input(可可豆)
+        .input(NMIIngredientItems.FLOUR)
+        .input(鸡蛋)
+        .kitchenware(烧烤架)
+        .time(7)
+        .build();
+
+this.builder(NMICuisinesItems.KITTEN_PIZZA)
+        .input(蘑菇)
+        .input(NMIIngredientItems.ONION)
+        .input(NMIIngredientItems.BROCCOLI)
+        .input(NMIIngredientItems.BOAR_MEAT)
+        .kitchenware(烧烤架)
+        .time(10)
+        .build();
+
+this.builder(烬色魔纹千层酥)
+        .input(NMIIngredientItems.FLOUR)
+        .input(鸡蛋)
+        .input(可可豆)
+        .input(NMIIngredientItems.BUTTER)
+        .kitchenware(烧烤架)
+        .time(8)
+        .build();
+
+this.builder(肉汁奶酪薯条)
+        .input(土豆)
+        .input(猪肉)
+        .input(NMIIngredientItems.CHEESE)
+        .kitchenware(烧烤架)
+        .time(5)
+        .build();
+
+this.builder(烤玉米)
+        .input(玉米)
+        .input(NMIIngredientItems.BUTTER)
+        .kitchenware(烧烤架)
+        .time(6)
+        .build();
+
+this.builder(板栗饼)
+        .input(NMIIngredientItems.BUTTER)
+        .input(NMIIngredientItems.FLOUR)
+        .input(NMIIngredientItems.CHESTNUT)
+        .kitchenware(烧烤架)
+        .time(6)
+        .build();
+
+this.builder(南瓜派)
+        .input(南瓜)
+        .input(NMIIngredientItems.BUTTER)
+        .kitchenware(烧烤架)
+        .time(5)
+        .build();
+
+this.builder(芝士玉米焗红薯)
+        .input(玉米)
+        .input(NMIIngredientItems.SWEET_POTATO)
+        .input(NMIIngredientItems.GRAPES)
+        .input(NMIIngredientItems.CHEESE)
+        .kitchenware(烧烤架)
+        .time(7)
+        .build();

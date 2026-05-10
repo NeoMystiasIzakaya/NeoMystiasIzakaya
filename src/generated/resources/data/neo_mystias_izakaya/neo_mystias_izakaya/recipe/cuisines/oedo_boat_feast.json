@@ -1,6 +1,14 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/salmon"
+    "neo_mystias_izakaya:ingredient/salmon",
+    "neo_mystias_izakaya:ingredient/tuna",
+    "neo_mystias_izakaya:ingredient/premium_tuna",
+    "neo_mystias_izakaya:ingredient/trout",
+    [
+      "minecraft:ice",
+      "minecraft:blue_ice",
+      "minecraft:packed_ice"
+    ]
   ],
   "kitchenware": "neo_mystias_izakaya:cutting_board",
   "output": {

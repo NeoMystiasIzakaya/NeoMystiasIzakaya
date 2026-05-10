@@ -1,6 +1,8 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/ginkgo_nut"
+    "neo_mystias_izakaya:ingredient/ginkgo_nut",
+    "neo_mystias_izakaya:ingredient/radish",
+    "minecraft:porkchop"
   ],
   "kitchenware": "neo_mystias_izakaya:boiling_pot",
   "output": {

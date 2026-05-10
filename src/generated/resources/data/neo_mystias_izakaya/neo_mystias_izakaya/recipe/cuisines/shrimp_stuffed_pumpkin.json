@@ -1,6 +1,8 @@
 {
   "input": [
-    "minecraft:pumpkin"
+    "minecraft:pumpkin",
+    "neo_mystias_izakaya:ingredient/shrimp",
+    "neo_mystias_izakaya:ingredient/tofu"
   ],
   "kitchenware": "neo_mystias_izakaya:steamer",
   "output": {

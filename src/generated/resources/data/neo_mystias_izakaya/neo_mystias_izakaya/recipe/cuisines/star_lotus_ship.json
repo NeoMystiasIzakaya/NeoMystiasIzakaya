@@ -1,6 +1,10 @@
 {
   "input": [
-    "minecraft:pumpkin"
+    "minecraft:pumpkin",
+    "neo_mystias_izakaya:ingredient/lotus_seed",
+    "neo_mystias_izakaya:ingredient/tuna",
+    "neo_mystias_izakaya:ingredient/bingdi_lotus",
+    "neo_mystias_izakaya:ingredient/lunar_herb"
   ],
   "kitchenware": "neo_mystias_izakaya:cutting_board",
   "output": {

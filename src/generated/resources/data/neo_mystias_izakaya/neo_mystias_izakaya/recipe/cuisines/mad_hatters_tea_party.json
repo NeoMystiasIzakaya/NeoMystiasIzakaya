@@ -1,6 +1,13 @@
 {
   "input": [
-    "minecraft:cocoa_beans"
+    "minecraft:cocoa_beans",
+    "neo_mystias_izakaya:ingredient/cream",
+    "neo_mystias_izakaya:ingredient/flour",
+    [
+      "minecraft:red_mushroom",
+      "minecraft:brown_mushroom"
+    ],
+    "neo_mystias_izakaya:ingredient/broccoli"
   ],
   "kitchenware": "neo_mystias_izakaya:steamer",
   "output": {

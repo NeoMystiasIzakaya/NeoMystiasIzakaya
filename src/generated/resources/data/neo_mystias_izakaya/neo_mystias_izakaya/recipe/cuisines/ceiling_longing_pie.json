@@ -1,6 +1,8 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/trout"
+    "neo_mystias_izakaya:ingredient/trout",
+    "neo_mystias_izakaya:ingredient/flour",
+    "neo_mystias_izakaya:ingredient/peach"
   ],
   "kitchenware": "neo_mystias_izakaya:steamer",
   "output": {

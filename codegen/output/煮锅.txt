@@ -1,0 +1,321 @@
+this.builder(NMICuisinesItems.SEAFOOD_MISO_SOUP)
+        .input(海苔)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(6)
+        .build();
+
+this.builder(NMICuisinesItems.MISO_TOFU)
+        .input(NMIIngredientItems.TOFU)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(7)
+        .build();
+
+this.builder(NMICuisinesItems.POWER_SOUP)
+        .input(海苔)
+        .input(NMIIngredientItems.BOAR_MEAT)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(12)
+        .build();
+
+this.builder(NMICuisinesItems.HUNTERS_CASSEROLE)
+        .input(土豆)
+        .input(南瓜)
+        .input(NMIIngredientItems.IBERICO_PORK)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(8)
+        .build();
+
+this.builder(NMICuisinesItems.PORK_BOWL)
+        .input(猪肉)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(7)
+        .build();
+
+this.builder(NMICuisinesItems.BEEF_BOWL)
+        .input(牛肉)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(7)
+        .build();
+
+this.builder(NMICuisinesItems.SHIRAYUKI)
+        .input(河豚)
+        .input(NMIIngredientItems.LAMPREY)
+        .input(海苔)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(12)
+        .build();
+
+this.builder(NMICuisinesItems.TOFU_STEW)
+        .input(NMIIngredientItems.TOFU)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(5)
+        .build();
+
+this.builder(NMICuisinesItems.HODGEPODGE)
+        .input(海苔)
+        .input(NMIIngredientItems.TOFU)
+        .input(NMIIngredientItems.TROUT)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(5)
+        .build();
+
+this.builder(NMICuisinesItems.DAIMYOS_FEAST)
+        .input(NMIIngredientItems.IBERICO_PORK)
+        .input(NMIIngredientItems.WAGYU_BEEF)
+        .input(河豚)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(10)
+        .build();
+
+this.builder(NMICuisinesItems.TONKOTSU_RAMEN)
+        .input(猪肉)
+        .input(鸡蛋)
+        .input(海苔)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(8)
+        .build();
+
+this.builder(NMICuisinesItems.FUJIS_LAVA)
+        .input(牛肉)
+        .input(NMIIngredientItems.WAGYU_BEEF)
+        .input(河豚)
+        .input(NMIIngredientItems.TRUFFLE)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(8)
+        .build();
+
+this.builder(NMICuisinesItems.PEACH_TAPIOCA)
+        .input(NMIIngredientItems.PEACH)
+        .input(冰块)
+        .input(NMIIngredientItems.DEW)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(7)
+        .build();
+
+this.builder(真·海鲜味噌汤)
+        .input(NMIIngredientItems.SALMON)
+        .input(NMIIngredientItems.TROUT)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(8)
+        .build();
+
+this.builder(NMICuisinesItems.BOILED_TOFU)
+        .input(NMIIngredientItems.TOFU)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(7)
+        .build();
+
+this.builder(NMICuisinesItems.GOLDEN_RIBS_SOUP)
+        .input(NMIIngredientItems.GINKGO_NUT)
+        .input(NMIIngredientItems.RADISH)
+        .input(猪肉)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(6)
+        .build();
+
+this.builder(NMICuisinesItems.SICHUAN_BOILED_FISH)
+        .input(NMIIngredientItems.TROUT)
+        .input(NMIIngredientItems.CHILI)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(8)
+        .build();
+
+this.builder(NMICuisinesItems.DUMPLINGS)
+        .input(NMIIngredientItems.FLOUR)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(5)
+        .build();
+
+this.builder(NMICuisinesItems.TANGYUAN)
+        .input(NMIIngredientItems.STICKY_RICE)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(5)
+        .build();
+
+this.builder(NMICuisinesItems.IMITATION_SHIRIKODAMA)
+        .input(NMIIngredientItems.VENISON)
+        .input(NMIIngredientItems.TRUFFLE)
+        .input(NMIIngredientItems.CICADA_SLOUGH)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(12)
+        .build();
+
+this.builder(NMICuisinesItems.SECRET_SAVORY_MUSHROOM_HOTPOT)
+        .input(NMIIngredientItems.TRUFFLE)
+        .input(蘑菇)
+        .input(NMIIngredientItems.DEW)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(9)
+        .build();
+
+this.builder(NMICuisinesItems.MUSHROOM_MAIDENS_TIP_TAP_POT)
+        .input(蘑菇)
+        .input(NMIIngredientItems.SHRIMP)
+        .input(NMIIngredientItems.OCTOPUS)
+        .input(NMIIngredientItems.CHILI)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(14)
+        .build();
+
+this.builder(NMICuisinesItems.CREAM_OF_MUSHROOM_SOUP)
+        .input(蘑菇)
+        .input(土豆)
+        .input(NMIIngredientItems.CREAM)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(8)
+        .build();
+
+this.builder(NMICuisinesItems.BUDDHA_JUMPS_OVER_THE_WALL)
+        .input(NMIIngredientItems.WAGYU_BEEF)
+        .input(NMIIngredientItems.PREMIUM_TUNA)
+        .input(NMIIngredientItems.IBERICO_PORK)
+        .input(河豚)
+        .input(NMIIngredientItems.TRUFFLE)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(18)
+        .build();
+
+this.builder(NMICuisinesItems.AGONY_ODEN)
+        .input(NMIIngredientItems.CHILI)
+        .input(NMIIngredientItems.CHILI)
+        .input(牛肉)
+        .input(NMIIngredientItems.RADISH)
+        .input(NMIIngredientItems.TOFU)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(12)
+        .build();
+
+this.builder(NMICuisinesItems.LIONS_HEAD)
+        .input(牛肉)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(7)
+        .build();
+
+this.builder(NMICuisinesItems.BUDDHAS_DELIGHT)
+        .input(NMIIngredientItems.UDUMBARA)
+        .input(NMIIngredientItems.BAMBOO_SHOOT)
+        .input(NMIIngredientItems.TRUFFLE)
+        .input(NMIIngredientItems.PINE_NUT)
+        .input(NMIIngredientItems.LOTUS_SEED)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(12)
+        .build();
+
+this.builder(NMICuisinesItems.EIGHT_TRIGRAM_FISH_MAWS)
+        .input(NMIIngredientItems.PREMIUM_TUNA)
+        .input(蘑菇)
+        .input(NMIIngredientItems.RADISH)
+        .input(鸡蛋)
+        .input(NMIIngredientItems.GINKGO_NUT)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(14)
+        .build();
+
+this.builder(NMICuisinesItems.TIANSHIS_STEWED_MUSHROOMS)
+        .input(NMIIngredientItems.CHESTNUT)
+        .input(蘑菇)
+        .input(NMIIngredientItems.TRUFFLE)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(8)
+        .build();
+
+this.builder(NMICuisinesItems.PALACE_OF_THE_HAN)
+        .input(NMIIngredientItems.LAMPREY)
+        .input(NMIIngredientItems.TOFU)
+        .input(NMIIngredientItems.CRAB)
+        .input(竹子)
+        .input(NMIIngredientItems.DEW)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(12)
+        .build();
+
+this.builder(NMICuisinesItems.BAMBOO_MEAT_POT)
+        .input(竹子)
+        .input(NMIIngredientItems.BAMBOO_SHOOT)
+        .input(牛肉)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(7)
+        .build();
+
+this.builder(NMICuisinesItems.PLUM_TEA_RICE)
+        .input(NMIIngredientItems.PLUM)
+        .input(海苔)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(4)
+        .build();
+
+this.builder(NMICuisinesItems.MUSHROOM_HERB_ROAD)
+        .input(NMIIngredientItems.RED_TOON)
+        .input(蘑菇)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(6)
+        .build();
+
+this.builder(NMICuisinesItems.MIASMA_GARDEN)
+        .input(河豚)
+        .input(NMIIngredientItems.PLUM)
+        .input(NMIIngredientItems.LAMPREY)
+        .input(NMIIngredientItems.GINKGO_NUT)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(8)
+        .build();
+
+this.builder(NMICuisinesItems.TWO_FLAVOR_BEEF_HOTPOT)
+        .input(NMIIngredientItems.CHILI)
+        .input(NMIIngredientItems.RADISH)
+        .input(NMIIngredientItems.TRUFFLE)
+        .input(牛肉)
+        .input(NMIIngredientItems.WAGYU_BEEF)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(5)
+        .build();
+
+this.builder(NMICuisinesItems.URCHIN_RAINDROP_CAKE)
+        .input(NMIIngredientItems.SEA_URCHIN)
+        .input(NMIIngredientItems.TUNA)
+        .input(NMIIngredientItems.SNOW_FUNGUS)
+        .input(NMIIngredientItems.DEW)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(12)
+        .build();
+
+this.builder(NMICuisinesItems.HEART_WARMING_CONGEE)
+        .input(NMIIngredientItems.SNOW_FUNGUS)
+        .input(NMIIngredientItems.LOTUS_SEED)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(5)
+        .build();
+
+this.builder(NMICuisinesItems.SUPREME_SEAFOOD_NOODLES)
+        .input(NMIIngredientItems.PREMIUM_TUNA)
+        .input(海苔)
+        .input(NMIIngredientItems.OCTOPUS)
+        .input(NMIIngredientItems.CRAB)
+        .input(NMIIngredientItems.SHRIMP)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(10)
+        .build();
+
+this.builder(NMICuisinesItems.DARK_MATTER)
+        .input(UNKNOWN)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(0)
+        .build();
+
+this.builder(毛茸茸蘑菇汤)
+        .input(棉花糖)
+        .input(NMIIngredientItems.IBERICO_PORK)
+        .input(蘑菇)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(6)
+        .build();
+
+this.builder(俄罗斯酸辣汤)
+        .input(NMIIngredientItems.ONION)
+        .input(牛肉)
+        .input(土豆)
+        .input(NMIIngredientItems.LEMON)
+        .input(NMIIngredientItems.CUCUMBER)
+        .kitchenware(NMIBlockTags.BOILING_POT)
+        .time(10)
+        .build();

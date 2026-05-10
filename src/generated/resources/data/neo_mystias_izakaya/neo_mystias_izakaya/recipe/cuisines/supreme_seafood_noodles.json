@@ -1,6 +1,13 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/premium_tuna"
+    "neo_mystias_izakaya:ingredient/premium_tuna",
+    [
+      "minecraft:kelp",
+      "minecraft:dried_kelp"
+    ],
+    "neo_mystias_izakaya:ingredient/octopus",
+    "neo_mystias_izakaya:ingredient/crab",
+    "neo_mystias_izakaya:ingredient/shrimp"
   ],
   "kitchenware": "neo_mystias_izakaya:boiling_pot",
   "output": {

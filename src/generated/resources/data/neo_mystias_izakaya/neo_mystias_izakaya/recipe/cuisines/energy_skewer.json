@@ -1,6 +1,8 @@
 {
   "input": [
-    "minecraft:beef"
+    "minecraft:beef",
+    "neo_mystias_izakaya:ingredient/onion",
+    "minecraft:pumpkin"
   ],
   "kitchenware": "neo_mystias_izakaya:grill",
   "output": {

@@ -3,7 +3,10 @@
     [
       "minecraft:red_mushroom",
       "minecraft:brown_mushroom"
-    ]
+    ],
+    "neo_mystias_izakaya:ingredient/udumbara",
+    "minecraft:honey_bottle",
+    "neo_mystias_izakaya:ingredient/cream"
   ],
   "kitchenware": "neo_mystias_izakaya:steamer",
   "output": {

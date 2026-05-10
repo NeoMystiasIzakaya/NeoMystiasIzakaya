@@ -3,7 +3,10 @@
     [
       "minecraft:red_mushroom",
       "minecraft:brown_mushroom"
-    ]
+    ],
+    "neo_mystias_izakaya:ingredient/shrimp",
+    "neo_mystias_izakaya:ingredient/octopus",
+    "neo_mystias_izakaya:ingredient/chili"
   ],
   "kitchenware": "neo_mystias_izakaya:boiling_pot",
   "output": {

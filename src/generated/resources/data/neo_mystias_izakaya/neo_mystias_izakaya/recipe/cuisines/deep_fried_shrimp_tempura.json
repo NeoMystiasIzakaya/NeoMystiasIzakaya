@@ -1,6 +1,7 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/shrimp"
+    "neo_mystias_izakaya:ingredient/shrimp",
+    "neo_mystias_izakaya:ingredient/flour"
   ],
   "kitchenware": "neo_mystias_izakaya:frying_pan",
   "output": {

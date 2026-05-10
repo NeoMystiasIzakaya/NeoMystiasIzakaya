@@ -1,6 +1,19 @@
 {
   "input": [
-    "minecraft:bamboo"
+    "minecraft:bamboo",
+    [
+      "minecraft:egg",
+      "minecraft:blue_egg",
+      "minecraft:brown_egg"
+    ],
+    [
+      "minecraft:kelp",
+      "minecraft:dried_kelp"
+    ],
+    [
+      "minecraft:red_mushroom",
+      "minecraft:brown_mushroom"
+    ]
   ],
   "kitchenware": "neo_mystias_izakaya:steamer",
   "output": {

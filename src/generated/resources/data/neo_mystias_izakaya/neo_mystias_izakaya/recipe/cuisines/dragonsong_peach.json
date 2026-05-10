@@ -1,6 +1,10 @@
 {
   "input": [
-    "minecraft:cocoa_beans"
+    "minecraft:cocoa_beans",
+    "neo_mystias_izakaya:ingredient/peach",
+    "neo_mystias_izakaya:ingredient/peach",
+    "neo_mystias_izakaya:ingredient/peach",
+    "neo_mystias_izakaya:ingredient/peach"
   ],
   "kitchenware": "neo_mystias_izakaya:cutting_board",
   "output": {

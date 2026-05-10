@@ -1,6 +1,12 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/onion"
+    "neo_mystias_izakaya:ingredient/onion",
+    [
+      "minecraft:red_mushroom",
+      "minecraft:brown_mushroom"
+    ],
+    "neo_mystias_izakaya:ingredient/bamboo_shoot",
+    "neo_mystias_izakaya:ingredient/butter"
   ],
   "kitchenware": "neo_mystias_izakaya:steamer",
   "output": {

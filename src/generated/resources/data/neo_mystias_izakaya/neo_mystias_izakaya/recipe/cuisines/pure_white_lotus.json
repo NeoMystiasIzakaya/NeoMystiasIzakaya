@@ -1,6 +1,9 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/ginkgo_nut"
+    "neo_mystias_izakaya:ingredient/ginkgo_nut",
+    "neo_mystias_izakaya:ingredient/lotus_seed",
+    "neo_mystias_izakaya:ingredient/flour",
+    "neo_mystias_izakaya:ingredient/butter"
   ],
   "kitchenware": "neo_mystias_izakaya:steamer",
   "output": {

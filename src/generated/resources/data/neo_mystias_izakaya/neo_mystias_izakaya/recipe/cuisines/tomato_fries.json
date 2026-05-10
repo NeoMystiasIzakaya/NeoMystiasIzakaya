@@ -1,6 +1,7 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/tomato"
+    "neo_mystias_izakaya:ingredient/tomato",
+    "minecraft:potato"
   ],
   "kitchenware": "neo_mystias_izakaya:frying_pan",
   "output": {

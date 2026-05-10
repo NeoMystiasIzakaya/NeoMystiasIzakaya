@@ -1,6 +1,11 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/flour"
+    "neo_mystias_izakaya:ingredient/flour",
+    [
+      "minecraft:kelp",
+      "minecraft:dried_kelp"
+    ],
+    "neo_mystias_izakaya:ingredient/octopus"
   ],
   "kitchenware": "neo_mystias_izakaya:frying_pan",
   "output": {

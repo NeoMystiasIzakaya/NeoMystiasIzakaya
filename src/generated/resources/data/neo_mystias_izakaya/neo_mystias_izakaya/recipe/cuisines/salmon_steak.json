@@ -1,6 +1,7 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/salmon"
+    "neo_mystias_izakaya:ingredient/salmon",
+    "neo_mystias_izakaya:ingredient/bamboo_shoot"
   ],
   "kitchenware": "neo_mystias_izakaya:frying_pan",
   "output": {

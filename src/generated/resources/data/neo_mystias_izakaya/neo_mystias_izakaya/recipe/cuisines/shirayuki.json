@@ -1,6 +1,11 @@
 {
   "input": [
-    "minecraft:pufferfish"
+    "minecraft:pufferfish",
+    "neo_mystias_izakaya:ingredient/lamprey",
+    [
+      "minecraft:kelp",
+      "minecraft:dried_kelp"
+    ]
   ],
   "kitchenware": "neo_mystias_izakaya:boiling_pot",
   "output": {

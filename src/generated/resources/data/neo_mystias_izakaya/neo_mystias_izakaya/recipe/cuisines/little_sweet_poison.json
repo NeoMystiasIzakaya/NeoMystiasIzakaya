@@ -1,6 +1,9 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/udumbara"
+    "neo_mystias_izakaya:ingredient/udumbara",
+    "neo_mystias_izakaya:ingredient/cream",
+    "neo_mystias_izakaya:ingredient/grapes",
+    "neo_mystias_izakaya:ingredient/ginkgo_nut"
   ],
   "kitchenware": "neo_mystias_izakaya:steamer",
   "output": {

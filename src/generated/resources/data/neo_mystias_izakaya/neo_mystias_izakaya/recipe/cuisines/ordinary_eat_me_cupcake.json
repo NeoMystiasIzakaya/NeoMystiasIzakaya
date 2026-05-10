@@ -4,7 +4,9 @@
       "minecraft:egg",
       "minecraft:blue_egg",
       "minecraft:brown_egg"
-    ]
+    ],
+    "neo_mystias_izakaya:ingredient/grapes",
+    "neo_mystias_izakaya:ingredient/cream"
   ],
   "kitchenware": "neo_mystias_izakaya:steamer",
   "output": {

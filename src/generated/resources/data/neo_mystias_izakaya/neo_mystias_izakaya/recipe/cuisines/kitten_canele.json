@@ -1,6 +1,12 @@
 {
   "input": [
-    "minecraft:cocoa_beans"
+    "minecraft:cocoa_beans",
+    "neo_mystias_izakaya:ingredient/flour",
+    [
+      "minecraft:egg",
+      "minecraft:blue_egg",
+      "minecraft:brown_egg"
+    ]
   ],
   "kitchenware": "neo_mystias_izakaya:grill",
   "output": {

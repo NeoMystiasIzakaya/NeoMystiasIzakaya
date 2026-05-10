@@ -1,6 +1,10 @@
 {
   "input": [
-    "minecraft:bamboo"
+    "minecraft:bamboo",
+    "neo_mystias_izakaya:ingredient/flower",
+    "neo_mystias_izakaya:ingredient/plum",
+    "neo_mystias_izakaya:ingredient/iberico_pork",
+    "neo_mystias_izakaya:ingredient/truffle"
   ],
   "kitchenware": "neo_mystias_izakaya:cutting_board",
   "output": {

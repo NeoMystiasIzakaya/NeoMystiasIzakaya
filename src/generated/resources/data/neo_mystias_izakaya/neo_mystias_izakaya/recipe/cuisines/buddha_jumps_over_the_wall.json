@@ -1,6 +1,10 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/wagyu_beef"
+    "neo_mystias_izakaya:ingredient/wagyu_beef",
+    "neo_mystias_izakaya:ingredient/premium_tuna",
+    "neo_mystias_izakaya:ingredient/iberico_pork",
+    "minecraft:pufferfish",
+    "neo_mystias_izakaya:ingredient/truffle"
   ],
   "kitchenware": "neo_mystias_izakaya:boiling_pot",
   "output": {

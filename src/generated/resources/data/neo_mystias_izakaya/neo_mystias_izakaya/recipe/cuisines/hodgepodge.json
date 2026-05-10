@@ -3,7 +3,9 @@
     [
       "minecraft:kelp",
       "minecraft:dried_kelp"
-    ]
+    ],
+    "neo_mystias_izakaya:ingredient/tofu",
+    "neo_mystias_izakaya:ingredient/trout"
   ],
   "kitchenware": "neo_mystias_izakaya:boiling_pot",
   "output": {

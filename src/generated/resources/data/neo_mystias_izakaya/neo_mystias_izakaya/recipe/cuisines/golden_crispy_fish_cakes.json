@@ -1,6 +1,8 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/trout"
+    "neo_mystias_izakaya:ingredient/trout",
+    "neo_mystias_izakaya:ingredient/flour",
+    "minecraft:honey_bottle"
   ],
   "kitchenware": "neo_mystias_izakaya:frying_pan",
   "output": {

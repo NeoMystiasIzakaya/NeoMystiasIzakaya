@@ -1,0 +1,380 @@
+this.builder(NMICuisinesItems.RICE_BALL)
+        .input(海苔)
+        .kitchenware(料理台)
+        .time(5)
+        .build();
+
+this.builder(NMICuisinesItems.PORK_RICE_BALL)
+        .input(猪肉)
+        .kitchenware(料理台)
+        .time(6)
+        .build();
+
+this.builder(NMICuisinesItems.PINK_RICE_BALL)
+        .input(NMIIngredientItems.ONION)
+        .input(NMIIngredientItems.TROUT)
+        .kitchenware(料理台)
+        .time(8)
+        .build();
+
+this.builder(NMICuisinesItems.FALLING_BLOSSOMS)
+        .input(NMIIngredientItems.PREMIUM_TUNA)
+        .kitchenware(料理台)
+        .time(12)
+        .build();
+
+this.builder(NMICuisinesItems.FRESH_TOFU)
+        .input(NMIIngredientItems.RADISH)
+        .input(NMIIngredientItems.TOFU)
+        .kitchenware(料理台)
+        .time(5)
+        .build();
+
+this.builder(NMICuisinesItems.VEGETABLE_SALAD)
+        .input(土豆)
+        .input(NMIIngredientItems.ONION)
+        .input(南瓜)
+        .kitchenware(料理台)
+        .time(5)
+        .build();
+
+this.builder(NMICuisinesItems.SASHIMI_PLATTER)
+        .input(NMIIngredientItems.SALMON)
+        .input(NMIIngredientItems.TUNA)
+        .kitchenware(料理台)
+        .time(5)
+        .build();
+
+this.builder(NMICuisinesItems.SECRET_DRIED_FISH_CRISPS)
+        .input(NMIIngredientItems.TROUT)
+        .kitchenware(料理台)
+        .time(8)
+        .build();
+
+this.builder(NMICuisinesItems.CARVED_ROSE_SALAD)
+        .input(NMIIngredientItems.RADISH)
+        .kitchenware(料理台)
+        .time(5)
+        .build();
+
+this.builder(NMICuisinesItems.PEACH_SHRIMP_SALAD)
+        .input(NMIIngredientItems.PEACH)
+        .input(冰块)
+        .input(NMIIngredientItems.SHRIMP)
+        .kitchenware(料理台)
+        .time(10)
+        .build();
+
+this.builder(NMICuisinesItems.LUNAR_DANGO)
+        .input(NMIIngredientItems.LUNAR_HERB)
+        .input(NMIIngredientItems.STICKY_RICE)
+        .kitchenware(料理台)
+        .time(8)
+        .build();
+
+this.builder(NMICuisinesItems.MOCHI)
+        .input(NMIIngredientItems.STICKY_RICE)
+        .kitchenware(料理台)
+        .time(7)
+        .build();
+
+this.builder(NMICuisinesItems.PEACH_YATSUHASHI)
+        .input(NMIIngredientItems.STICKY_RICE)
+        .input(NMIIngredientItems.PEACH)
+        .kitchenware(料理台)
+        .time(5)
+        .build();
+
+this.builder(NMICuisinesItems.LUNAR_LOVER_BISCUITS)
+        .input(NMIIngredientItems.BUTTER)
+        .input(NMIIngredientItems.FLOUR)
+        .input(鸡蛋)
+        .input(NMIIngredientItems.LUNAR_HERB)
+        .kitchenware(料理台)
+        .time(10)
+        .build();
+
+this.builder(NMICuisinesItems.FLOWING_SOMEN)
+        .input(NMIIngredientItems.FLOUR)
+        .input(竹子)
+        .kitchenware(料理台)
+        .time(7)
+        .build();
+
+this.builder(NMICuisinesItems.CUBIC_KEDAMA_ICE_CREAM)
+        .input(NMIIngredientItems.DEW)
+        .input(NMIIngredientItems.TOFU)
+        .input(蜂蜜)
+        .input(鸡蛋)
+        .kitchenware(料理台)
+        .time(8)
+        .build();
+
+this.builder(NMICuisinesItems.CUBIC_KEDAMA_VOLCANIC_TOFU)
+        .input(NMIIngredientItems.TOFU)
+        .input(NMIIngredientItems.CHILI)
+        .input(牛肉)
+        .input(NMIIngredientItems.ONION)
+        .kitchenware(料理台)
+        .time(8)
+        .build();
+
+this.builder(NMICuisinesItems.SCARLET_DEVIL_CAKE)
+        .input(NMIIngredientItems.DEW)
+        .input(南瓜)
+        .input(土豆)
+        .input(蜂蜜)
+        .kitchenware(料理台)
+        .time(8)
+        .build();
+
+this.builder(NMICuisinesItems.UNCONSCIOUS_YOUKAI_MOUSSE)
+        .input(NMIIngredientItems.TOFU)
+        .input(NMIIngredientItems.BUTTER)
+        .input(蜂蜜)
+        .input(NMIIngredientItems.ONION)
+        .kitchenware(料理台)
+        .time(8)
+        .build();
+
+this.builder(NMICuisinesItems.PICKLES)
+        .input(NMIIngredientItems.CUCUMBER)
+        .input(NMIIngredientItems.BLACK_SALT)
+        .kitchenware(料理台)
+        .time(6)
+        .build();
+
+this.builder(NMICuisinesItems.SEA_URCHIN_SASHIMI)
+        .input(NMIIngredientItems.SEA_URCHIN)
+        .input(NMIIngredientItems.DEW)
+        .kitchenware(料理台)
+        .time(8)
+        .build();
+
+this.builder(NMICuisinesItems.NIGIRI_SUSHI)
+        .input(NMIIngredientItems.SALMON)
+        .input(NMIIngredientItems.TUNA)
+        .kitchenware(料理台)
+        .time(6)
+        .build();
+
+this.builder(NMICuisinesItems.GLOOMY_FRUIT_PIE)
+        .input(NMIIngredientItems.LEMON)
+        .input(NMIIngredientItems.GRAPES)
+        .input(NMIIngredientItems.CHEESE)
+        .kitchenware(料理台)
+        .time(8)
+        .build();
+
+this.builder(NMICuisinesItems.CRISPY_SPIRALS)
+        .input(NMIIngredientItems.FLOUR)
+        .input(蜂蜜)
+        .input(NMIIngredientItems.CICADA_SLOUGH)
+        .kitchenware(料理台)
+        .time(5)
+        .build();
+
+this.builder(NMICuisinesItems.OEDO_BOAT_FEAST)
+        .input(NMIIngredientItems.SALMON)
+        .input(NMIIngredientItems.TUNA)
+        .input(NMIIngredientItems.PREMIUM_TUNA)
+        .input(NMIIngredientItems.TROUT)
+        .input(冰块)
+        .kitchenware(料理台)
+        .time(24)
+        .build();
+
+this.builder(NMICuisinesItems.NEKO_MANMA)
+        .input(NMIIngredientItems.TROUT)
+        .input(NMIIngredientItems.DEW)
+        .input(NMIIngredientItems.FLOUR)
+        .kitchenware(料理台)
+        .time(5)
+        .build();
+
+this.builder(NMICuisinesItems.YASHOUMA_DANGO)
+        .input(NMIIngredientItems.STICKY_RICE)
+        .input(NMIIngredientItems.STICKY_RICE)
+        .kitchenware(料理台)
+        .time(9)
+        .build();
+
+this.builder(NMICuisinesItems.STAR_LOTUS_SHIP)
+        .input(南瓜)
+        .input(NMIIngredientItems.LOTUS_SEED)
+        .input(NMIIngredientItems.TUNA)
+        .input(NMIIngredientItems.BINGDI_LOTUS)
+        .input(NMIIngredientItems.LUNAR_HERB)
+        .kitchenware(料理台)
+        .time(13)
+        .build();
+
+this.builder(NMICuisinesItems.HONEYED_CHESTNUT)
+        .input(蜂蜜)
+        .input(NMIIngredientItems.CHESTNUT)
+        .kitchenware(料理台)
+        .time(6)
+        .build();
+
+this.builder(逆转天地！)
+        .input(竹子)
+        .input(NMIIngredientItems.FLOWER)
+        .input(NMIIngredientItems.PLUM)
+        .input(NMIIngredientItems.IBERICO_PORK)
+        .input(NMIIngredientItems.TRUFFLE)
+        .kitchenware(料理台)
+        .time(12)
+        .build();
+
+this.builder(NMICuisinesItems.RED_BEAN_DAIFUKU)
+        .input(NMIIngredientItems.RED_BEAN)
+        .input(NMIIngredientItems.STICKY_RICE)
+        .kitchenware(料理台)
+        .time(7)
+        .build();
+
+this.builder(NMICuisinesItems.DRUNK_SHRIMP_IN_BAMBOO)
+        .input(竹子)
+        .input(NMIIngredientItems.SHRIMP)
+        .input(NMIIngredientItems.BROCCOLI)
+        .kitchenware(料理台)
+        .time(5)
+        .build();
+
+this.builder(NMICuisinesItems.KITTENS_WATER_PLAY)
+        .input(NMIIngredientItems.PEACH)
+        .input(薜茘)
+        .input(NMIIngredientItems.CREAM)
+        .input(NMIIngredientItems.FLOUR)
+        .input(可可豆)
+        .kitchenware(料理台)
+        .time(12)
+        .build();
+
+this.builder(NMICuisinesItems.MOONLIGHT_OVER_THE_LOTUS_POND)
+        .input(NMIIngredientItems.GRAPES)
+        .input(薜茘)
+        .input(NMIIngredientItems.CREAM)
+        .input(NMIIngredientItems.SNOW_FUNGUS)
+        .kitchenware(料理台)
+        .time(12)
+        .build();
+
+this.builder(NMICuisinesItems.DRAGONSONG_PEACH)
+        .input(可可豆)
+        .input(NMIIngredientItems.PEACH)
+        .input(NMIIngredientItems.PEACH)
+        .input(NMIIngredientItems.PEACH)
+        .input(NMIIngredientItems.PEACH)
+        .kitchenware(料理台)
+        .time(18)
+        .build();
+
+this.builder(NMICuisinesItems.MOLECULAR_EGG)
+        .input(可可豆)
+        .input(南瓜)
+        .input(NMIIngredientItems.CREAM)
+        .kitchenware(料理台)
+        .time(7)
+        .build();
+
+this.builder(山泉双色果盘)
+        .input(NMIIngredientItems.PEACH)
+        .input(NMIIngredientItems.GRAPES)
+        .kitchenware(料理台)
+        .time(3)
+        .build();
+
+this.builder(正义执行雕塑)
+        .input(可可豆)
+        .input(可可豆)
+        .input(炼乳)
+        .kitchenware(料理台)
+        .time(5)
+        .build();
+
+this.builder(超位·业火烧烤宴)
+        .input(牛肉)
+        .input(NMIIngredientItems.VENISON)
+        .input(NMIIngredientItems.WAGYU_BEEF)
+        .input(金箔)
+        .kitchenware(料理台)
+        .time(5)
+        .build();
+
+this.builder(甜心三明治)
+        .input(NMIIngredientItems.TUNA)
+        .input(NMIIngredientItems.GRAPES)
+        .input(NMIIngredientItems.CHILI)
+        .kitchenware(料理台)
+        .time(3)
+        .build();
+
+this.builder(月见饼)
+        .input(NMIIngredientItems.LUNAR_HERB)
+        .input(NMIIngredientItems.FLOUR)
+        .kitchenware(料理台)
+        .time(4)
+        .build();
+
+this.builder(星月桃子糕)
+        .input(NMIIngredientItems.PEACH)
+        .input(NMIIngredientItems.UDUMBARA)
+        .input(NMIIngredientItems.LUNAR_HERB)
+        .input(NMIIngredientItems.DEW)
+        .kitchenware(料理台)
+        .time(4)
+        .build();
+
+this.builder(黯月魔境慕斯)
+        .input(鸡蛋)
+        .input(NMIIngredientItems.CREAM)
+        .kitchenware(料理台)
+        .time(8)
+        .build();
+
+this.builder(俄罗斯冻汤)
+        .input(大葱)
+        .input(NMIIngredientItems.CUCUMBER)
+        .input(炼乳)
+        .input(土豆)
+        .kitchenware(料理台)
+        .time(10)
+        .build();
+
+this.builder(西班牙冷汤)
+        .input(大蒜)
+        .input(NMIIngredientItems.FLOWER)
+        .input(NMIIngredientItems.TOMATO)
+        .input(NMIIngredientItems.CUCUMBER)
+        .kitchenware(料理台)
+        .time(13)
+        .build();
+
+this.builder(胜春朝)
+        .input(NMIIngredientItems.GRAPES)
+        .input(NMIIngredientItems.SWEET_POTATO)
+        .input(NMIIngredientItems.CHESTNUT)
+        .input(炼乳)
+        .kitchenware(料理台)
+        .time(10)
+        .build();
+
+this.builder(秋神的工作)
+        .input(蜂蜜)
+        .input(NMIIngredientItems.SWEET_POTATO)
+        .input(NMIIngredientItems.CHESTNUT)
+        .input(金箔)
+        .kitchenware(料理台)
+        .time(16)
+        .build();
+
+this.builder(惊吓万圣夜)
+        .input(南瓜)
+        .input(可可豆)
+        .input(棉花糖)
+        .input(NMIIngredientItems.TRUFFLE)
+        .input(玉米)
+        .kitchenware(料理台)
+        .time(12)
+        .build();

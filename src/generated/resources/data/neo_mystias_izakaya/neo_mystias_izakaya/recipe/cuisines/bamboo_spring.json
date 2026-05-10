@@ -1,6 +1,14 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/cucumber"
+    "neo_mystias_izakaya:ingredient/cucumber",
+    [
+      "minecraft:egg",
+      "minecraft:blue_egg",
+      "minecraft:brown_egg"
+    ],
+    "neo_mystias_izakaya:ingredient/radish",
+    "neo_mystias_izakaya:ingredient/venison",
+    "neo_mystias_izakaya:ingredient/lunar_herb"
   ],
   "kitchenware": "neo_mystias_izakaya:steamer",
   "output": {

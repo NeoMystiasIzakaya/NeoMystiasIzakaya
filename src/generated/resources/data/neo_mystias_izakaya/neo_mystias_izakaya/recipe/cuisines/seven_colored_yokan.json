@@ -3,7 +3,10 @@
     [
       "minecraft:kelp",
       "minecraft:dried_kelp"
-    ]
+    ],
+    "neo_mystias_izakaya:ingredient/grapes",
+    "neo_mystias_izakaya:ingredient/dew",
+    "neo_mystias_izakaya:ingredient/udumbara"
   ],
   "kitchenware": "neo_mystias_izakaya:steamer",
   "output": {

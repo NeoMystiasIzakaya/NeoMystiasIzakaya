@@ -1,6 +1,10 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/flour"
+    "neo_mystias_izakaya:ingredient/flour",
+    "minecraft:honey_bottle",
+    "minecraft:potato",
+    "neo_mystias_izakaya:ingredient/onion",
+    "neo_mystias_izakaya:ingredient/radish"
   ],
   "kitchenware": "neo_mystias_izakaya:grill",
   "output": {

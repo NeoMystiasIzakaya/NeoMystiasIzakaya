@@ -1,6 +1,9 @@
 {
   "input": [
-    "minecraft:beef"
+    "minecraft:beef",
+    "neo_mystias_izakaya:ingredient/black_salt",
+    "neo_mystias_izakaya:ingredient/chili",
+    "minecraft:honey_bottle"
   ],
   "kitchenware": "neo_mystias_izakaya:grill",
   "output": {

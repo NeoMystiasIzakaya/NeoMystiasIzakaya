@@ -1,0 +1,324 @@
+this.builder(NMICuisinesItems.DEW_RUNNY_EGGS)
+        .input(NMIIngredientItems.DEW)
+        .input(鸡蛋)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(3)
+        .build();
+
+this.builder(NMICuisinesItems.UDUMBARA_CAKE)
+        .input(NMIIngredientItems.UDUMBARA)
+        .input(NMIIngredientItems.DEW)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(7)
+        .build();
+
+this.builder(NMICuisinesItems.IMITATION_BEAR_PAW)
+        .input(NMIIngredientItems.IBERICO_PORK)
+        .input(NMIIngredientItems.BAMBOO_SHOOT)
+        .input(河豚)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(12)
+        .build();
+
+this.builder(NMICuisinesItems.SCHOLARS_GINKGO)
+        .input(NMIIngredientItems.GINKGO_NUT)
+        .input(蜂蜜)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(8)
+        .build();
+
+this.builder(NMICuisinesItems.ITALIAN_RISOTTO)
+        .input(NMIIngredientItems.ONION)
+        .input(蘑菇)
+        .input(NMIIngredientItems.BAMBOO_SHOOT)
+        .input(NMIIngredientItems.BUTTER)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(6)
+        .build();
+
+this.builder(NMICuisinesItems.SCONE)
+        .input(NMIIngredientItems.BUTTER)
+        .input(NMIIngredientItems.FLOUR)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(7)
+        .build();
+
+this.builder(NMICuisinesItems.CREAMY_VEGETABLE_CHOWDER)
+        .input(蘑菇)
+        .input(NMIIngredientItems.ONION)
+        .input(NMIIngredientItems.BUTTER)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(9)
+        .build();
+
+this.builder(NMICuisinesItems.KAGUYA_HIME)
+        .input(竹子)
+        .input(NMIIngredientItems.BAMBOO_SHOOT)
+        .input(NMIIngredientItems.TRUFFLE)
+        .input(NMIIngredientItems.GINKGO_NUT)
+        .input(NMIIngredientItems.IBERICO_PORK)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(12)
+        .build();
+
+this.builder(NMICuisinesItems.INO_SHIKA_CHOU)
+        .input(NMIIngredientItems.BOAR_MEAT)
+        .input(NMIIngredientItems.VENISON)
+        .input(NMIIngredientItems.LUNAR_HERB)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(8)
+        .build();
+
+this.builder(NMICuisinesItems.STEAMED_EGG_BAMBOO_SHOOTS)
+        .input(竹子)
+        .input(鸡蛋)
+        .input(海苔)
+        .input(蘑菇)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(6)
+        .build();
+
+this.builder(NMICuisinesItems.MOON_CAKE)
+        .input(NMIIngredientItems.LUNAR_HERB)
+        .input(NMIIngredientItems.FLOUR)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(10)
+        .build();
+
+this.builder(NMICuisinesItems.ORDINARY_EAT_ME_CUPCAKE)
+        .input(鸡蛋)
+        .input(NMIIngredientItems.GRAPES)
+        .input(NMIIngredientItems.CREAM)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(8)
+        .build();
+
+this.builder(NMICuisinesItems.SEVEN_COLORED_YOKAN)
+        .input(海苔)
+        .input(NMIIngredientItems.GRAPES)
+        .input(NMIIngredientItems.DEW)
+        .input(NMIIngredientItems.UDUMBARA)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(8)
+        .build();
+
+this.builder(NMICuisinesItems.SHRIMP_STUFFED_PUMPKIN)
+        .input(南瓜)
+        .input(NMIIngredientItems.SHRIMP)
+        .input(NMIIngredientItems.TOFU)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(9)
+        .build();
+
+this.builder(NMICuisinesItems.MISERY_CHEESE_STICKS)
+        .input(NMIIngredientItems.CHEESE)
+        .input(NMIIngredientItems.GINKGO_NUT)
+        .input(NMIIngredientItems.GINKGO_NUT)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(6)
+        .build();
+
+this.builder(NMICuisinesItems.CEILING_LONGING_PIE)
+        .input(NMIIngredientItems.TROUT)
+        .input(NMIIngredientItems.FLOUR)
+        .input(NMIIngredientItems.PEACH)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(9)
+        .build();
+
+this.builder(NMICuisinesItems.KABUTO_STEAMED_CAKE)
+        .input(NMIIngredientItems.FLOUR)
+        .input(NMIIngredientItems.IBERICO_PORK)
+        .input(蜂蜜)
+        .input(NMIIngredientItems.CICADA_SLOUGH)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(12)
+        .build();
+
+this.builder(NMICuisinesItems.SAKURA_PUDDING)
+        .input(蜂蜜)
+        .input(NMIIngredientItems.PEACH)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(6)
+        .build();
+
+this.builder(NMICuisinesItems.ENERGY_PUDDING)
+        .input(NMIIngredientItems.GRAPES)
+        .input(NMIIngredientItems.GRAPES)
+        .input(NMIIngredientItems.LEMON)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(8)
+        .build();
+
+this.builder(NMICuisinesItems.BURN_OUT_PUDDING)
+        .input(NMIIngredientItems.GRAPES)
+        .input(蜂蜜)
+        .input(NMIIngredientItems.LEMON)
+        .input(NMIIngredientItems.LEMON)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(8)
+        .build();
+
+this.builder(NMICuisinesItems.DRAGON_CARP)
+        .input(NMIIngredientItems.PREMIUM_TUNA)
+        .input(NMIIngredientItems.VENISON)
+        .input(蜂蜜)
+        .input(NMIIngredientItems.LUNAR_HERB)
+        .input(NMIIngredientItems.TRUFFLE)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(12)
+        .build();
+
+this.builder(惊吓！大冒险)
+        .input(蘑菇)
+        .input(NMIIngredientItems.UDUMBARA)
+        .input(蜂蜜)
+        .input(NMIIngredientItems.CREAM)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(12)
+        .build();
+
+this.builder(NMICuisinesItems.PURE_WHITE_LOTUS)
+        .input(NMIIngredientItems.GINKGO_NUT)
+        .input(NMIIngredientItems.LOTUS_SEED)
+        .input(NMIIngredientItems.FLOUR)
+        .input(NMIIngredientItems.BUTTER)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(10)
+        .build();
+
+this.builder(NMICuisinesItems.PINE_NUT_CAKE)
+        .input(NMIIngredientItems.STICKY_RICE)
+        .input(NMIIngredientItems.PINE_NUT)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(8)
+        .build();
+
+this.builder(NMICuisinesItems.WHITE_DEER_UNYIELDING_PINE)
+        .input(NMIIngredientItems.VENISON)
+        .input(NMIIngredientItems.GINKGO_NUT)
+        .input(NMIIngredientItems.PINE_NUT)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(12)
+        .build();
+
+this.builder(NMICuisinesItems.LOTUS_FISH_LAMPS)
+        .input(NMIIngredientItems.PREMIUM_TUNA)
+        .input(NMIIngredientItems.BINGDI_LOTUS)
+        .input(NMIIngredientItems.LOTUS_SEED)
+        .input(NMIIngredientItems.DEW)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(11)
+        .build();
+
+this.builder(NMICuisinesItems.RICE_POWDER_MEAT)
+        .input(竹子)
+        .input(NMIIngredientItems.DEW)
+        .input(NMIIngredientItems.IBERICO_PORK)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(9)
+        .build();
+
+this.builder(NMICuisinesItems.BAMBOO_SPRING)
+        .input(NMIIngredientItems.CUCUMBER)
+        .input(鸡蛋)
+        .input(NMIIngredientItems.RADISH)
+        .input(NMIIngredientItems.VENISON)
+        .input(NMIIngredientItems.LUNAR_HERB)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(14)
+        .build();
+
+this.builder(NMICuisinesItems.URCHIN_STEAMED_EGG)
+        .input(NMIIngredientItems.SEA_URCHIN)
+        .input(鸡蛋)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(7)
+        .build();
+
+this.builder(NMICuisinesItems.NATURES_BEAUTY)
+        .input(NMIIngredientItems.FLOWER)
+        .input(NMIIngredientItems.LUNAR_HERB)
+        .input(NMIIngredientItems.CREAM)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(9)
+        .build();
+
+this.builder(NMICuisinesItems.FAINT_DREAM)
+        .input(NMIIngredientItems.FLOWER)
+        .input(NMIIngredientItems.UDUMBARA)
+        .input(NMIIngredientItems.LUNAR_HERB)
+        .input(NMIIngredientItems.DEW)
+        .input(NMIIngredientItems.CREAM)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(12)
+        .build();
+
+this.builder(小小的甜蜜「毒药」)
+        .input(NMIIngredientItems.UDUMBARA)
+        .input(NMIIngredientItems.CREAM)
+        .input(NMIIngredientItems.GRAPES)
+        .input(NMIIngredientItems.GINKGO_NUT)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(10)
+        .build();
+
+this.builder(NMICuisinesItems.LONG_HAIR_PRINCESS)
+        .input(南瓜)
+        .input(NMIIngredientItems.SHRIMP)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(5)
+        .build();
+
+this.builder(NMICuisinesItems.MAD_HATTERS_TEA_PARTY)
+        .input(可可豆)
+        .input(NMIIngredientItems.CREAM)
+        .input(NMIIngredientItems.FLOUR)
+        .input(蘑菇)
+        .input(NMIIngredientItems.BROCCOLI)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(15)
+        .build();
+
+this.builder(NMICuisinesItems.PEACH_FLOWER_CRYSTAL_ROLL)
+        .input(NMIIngredientItems.PEACH)
+        .input(NMIIngredientItems.RED_BEAN)
+        .input(薜茘)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(8)
+        .build();
+
+this.builder(NMICuisinesItems.ORIGIN_OF_LIFE)
+        .input(可可豆)
+        .input(NMIIngredientItems.SNOW_FUNGUS)
+        .input(南瓜)
+        .input(NMIIngredientItems.DEW)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(13)
+        .build();
+
+this.builder(NMICuisinesItems.PLANET_MARS)
+        .input(薜茘)
+        .input(NMIIngredientItems.GRAPES)
+        .input(NMIIngredientItems.CRAB)
+        .input(NMIIngredientItems.DEW)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(24)
+        .build();
+
+this.builder(白果灵盅)
+        .input(鸡蛋)
+        .input(NMIIngredientItems.GINKGO_NUT)
+        .input(NMIIngredientItems.LUNAR_HERB)
+        .input(竹子)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(5)
+        .build();
+
+this.builder(玉色良汤)
+        .input(蜂蜜)
+        .input(NMIIngredientItems.GINKGO_NUT)
+        .input(NMIIngredientItems.DEW)
+        .kitchenware(NMIBlockTags.STEAMER)
+        .time(7)
+        .build();

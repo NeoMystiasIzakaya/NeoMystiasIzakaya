@@ -1,6 +1,10 @@
 {
   "input": [
-    "minecraft:bamboo"
+    "minecraft:bamboo",
+    "neo_mystias_izakaya:ingredient/bamboo_shoot",
+    "neo_mystias_izakaya:ingredient/truffle",
+    "neo_mystias_izakaya:ingredient/ginkgo_nut",
+    "neo_mystias_izakaya:ingredient/iberico_pork"
   ],
   "kitchenware": "neo_mystias_izakaya:steamer",
   "output": {

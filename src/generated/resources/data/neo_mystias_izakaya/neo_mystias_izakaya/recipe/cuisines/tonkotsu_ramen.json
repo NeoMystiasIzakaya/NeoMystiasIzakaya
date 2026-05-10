@@ -1,6 +1,15 @@
 {
   "input": [
-    "minecraft:porkchop"
+    "minecraft:porkchop",
+    [
+      "minecraft:egg",
+      "minecraft:blue_egg",
+      "minecraft:brown_egg"
+    ],
+    [
+      "minecraft:kelp",
+      "minecraft:dried_kelp"
+    ]
   ],
   "kitchenware": "neo_mystias_izakaya:boiling_pot",
   "output": {

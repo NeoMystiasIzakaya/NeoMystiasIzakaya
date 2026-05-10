@@ -1,6 +1,9 @@
 {
   "input": [
-    "minecraft:pufferfish"
+    "minecraft:pufferfish",
+    "neo_mystias_izakaya:ingredient/plum",
+    "neo_mystias_izakaya:ingredient/lamprey",
+    "neo_mystias_izakaya:ingredient/ginkgo_nut"
   ],
   "kitchenware": "neo_mystias_izakaya:boiling_pot",
   "output": {

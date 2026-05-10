@@ -1,6 +1,8 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/venison"
+    "neo_mystias_izakaya:ingredient/venison",
+    "neo_mystias_izakaya:ingredient/truffle",
+    "neo_mystias_izakaya:ingredient/cicada_slough"
   ],
   "kitchenware": "neo_mystias_izakaya:boiling_pot",
   "output": {

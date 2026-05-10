@@ -1,6 +1,10 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/red_toon"
+    "neo_mystias_izakaya:ingredient/red_toon",
+    [
+      "minecraft:red_mushroom",
+      "minecraft:brown_mushroom"
+    ]
   ],
   "kitchenware": "neo_mystias_izakaya:boiling_pot",
   "output": {

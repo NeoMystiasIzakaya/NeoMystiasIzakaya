@@ -1,6 +1,9 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/tofu"
+    "neo_mystias_izakaya:ingredient/tofu",
+    "neo_mystias_izakaya:ingredient/butter",
+    "minecraft:honey_bottle",
+    "neo_mystias_izakaya:ingredient/onion"
   ],
   "kitchenware": "neo_mystias_izakaya:cutting_board",
   "output": {

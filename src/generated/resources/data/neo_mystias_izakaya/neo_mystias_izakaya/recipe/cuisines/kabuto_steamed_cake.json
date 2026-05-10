@@ -1,6 +1,9 @@
 {
   "input": [
-    "neo_mystias_izakaya:ingredient/flour"
+    "neo_mystias_izakaya:ingredient/flour",
+    "neo_mystias_izakaya:ingredient/iberico_pork",
+    "minecraft:honey_bottle",
+    "neo_mystias_izakaya:ingredient/cicada_slough"
   ],
   "kitchenware": "neo_mystias_izakaya:steamer",
   "output": {

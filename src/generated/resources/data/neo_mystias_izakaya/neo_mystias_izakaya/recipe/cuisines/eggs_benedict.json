@@ -4,7 +4,10 @@
       "minecraft:egg",
       "minecraft:blue_egg",
       "minecraft:brown_egg"
-    ]
+    ],
+    "neo_mystias_izakaya:ingredient/bamboo_shoot",
+    "neo_mystias_izakaya:ingredient/butter",
+    "neo_mystias_izakaya:ingredient/flour"
   ],
   "kitchenware": "neo_mystias_izakaya:frying_pan",
   "output": {
