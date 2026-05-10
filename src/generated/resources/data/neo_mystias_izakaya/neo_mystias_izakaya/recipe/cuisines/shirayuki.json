@@ -1,0 +1,10 @@
+{
+  "input": [
+    "minecraft:pufferfish"
+  ],
+  "kitchenware": "neo_mystias_izakaya:boiling_pot",
+  "output": {
+    "id": "neo_mystias_izakaya:cuisines/shirayuki"
+  },
+  "time": 12
+}

@@ -1,0 +1,10 @@
+{
+  "input": [
+    "neo_mystias_izakaya:ingredient/venison"
+  ],
+  "kitchenware": "neo_mystias_izakaya:steamer",
+  "output": {
+    "id": "neo_mystias_izakaya:cuisines/white_deer_unyielding_pine"
+  },
+  "time": 12
+}

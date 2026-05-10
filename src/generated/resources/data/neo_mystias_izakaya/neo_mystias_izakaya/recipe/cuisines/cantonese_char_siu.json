@@ -1,0 +1,10 @@
+{
+  "input": [
+    "minecraft:porkchop"
+  ],
+  "kitchenware": "neo_mystias_izakaya:grill",
+  "output": {
+    "id": "neo_mystias_izakaya:cuisines/cantonese_char_siu"
+  },
+  "time": 7
+}

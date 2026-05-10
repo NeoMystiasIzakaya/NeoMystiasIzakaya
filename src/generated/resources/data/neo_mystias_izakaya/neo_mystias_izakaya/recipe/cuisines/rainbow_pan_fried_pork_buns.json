@@ -1,0 +1,13 @@
+{
+  "input": [
+    [
+      "minecraft:red_mushroom",
+      "minecraft:brown_mushroom"
+    ]
+  ],
+  "kitchenware": "neo_mystias_izakaya:frying_pan",
+  "output": {
+    "id": "neo_mystias_izakaya:cuisines/rainbow_pan_fried_pork_buns"
+  },
+  "time": 8
+}

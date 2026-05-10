@@ -1,0 +1,10 @@
+{
+  "input": [
+    "minecraft:potato"
+  ],
+  "kitchenware": "neo_mystias_izakaya:boiling_pot",
+  "output": {
+    "id": "neo_mystias_izakaya:cuisines/hunters_casserole"
+  },
+  "time": 8
+}

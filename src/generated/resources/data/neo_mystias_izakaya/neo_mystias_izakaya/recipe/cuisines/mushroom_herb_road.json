@@ -1,0 +1,10 @@
+{
+  "input": [
+    "neo_mystias_izakaya:ingredient/red_toon"
+  ],
+  "kitchenware": "neo_mystias_izakaya:boiling_pot",
+  "output": {
+    "id": "neo_mystias_izakaya:cuisines/mushroom_herb_road"
+  },
+  "time": 6
+}

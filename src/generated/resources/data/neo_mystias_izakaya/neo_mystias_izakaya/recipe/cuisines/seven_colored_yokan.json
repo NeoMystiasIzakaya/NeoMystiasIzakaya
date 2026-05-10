@@ -1,0 +1,13 @@
+{
+  "input": [
+    [
+      "minecraft:kelp",
+      "minecraft:dried_kelp"
+    ]
+  ],
+  "kitchenware": "neo_mystias_izakaya:steamer",
+  "output": {
+    "id": "neo_mystias_izakaya:cuisines/seven_colored_yokan"
+  },
+  "time": 8
+}

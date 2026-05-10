@@ -1,0 +1,10 @@
+{
+  "input": [
+    "minecraft:cocoa_beans"
+  ],
+  "kitchenware": "neo_mystias_izakaya:steamer",
+  "output": {
+    "id": "neo_mystias_izakaya:cuisines/mad_hatters_tea_party"
+  },
+  "time": 15
+}

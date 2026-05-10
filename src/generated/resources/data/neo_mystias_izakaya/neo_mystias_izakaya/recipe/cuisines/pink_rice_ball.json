@@ -1,0 +1,10 @@
+{
+  "input": [
+    "neo_mystias_izakaya:ingredient/onion"
+  ],
+  "kitchenware": "neo_mystias_izakaya:cutting_board",
+  "output": {
+    "id": "neo_mystias_izakaya:cuisines/pink_rice_ball"
+  },
+  "time": 8
+}

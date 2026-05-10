@@ -1,0 +1,13 @@
+{
+  "input": [
+    [
+      "minecraft:red_mushroom",
+      "minecraft:brown_mushroom"
+    ]
+  ],
+  "kitchenware": "neo_mystias_izakaya:grill",
+  "output": {
+    "id": "neo_mystias_izakaya:cuisines/kitten_pizza"
+  },
+  "time": 10
+}

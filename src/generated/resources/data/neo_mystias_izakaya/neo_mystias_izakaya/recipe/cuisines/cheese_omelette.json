@@ -1,0 +1,14 @@
+{
+  "input": [
+    [
+      "minecraft:egg",
+      "minecraft:blue_egg",
+      "minecraft:brown_egg"
+    ]
+  ],
+  "kitchenware": "neo_mystias_izakaya:frying_pan",
+  "output": {
+    "id": "neo_mystias_izakaya:cuisines/cheese_omelette"
+  },
+  "time": 6
+}

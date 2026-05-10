@@ -99,6 +99,12 @@ public abstract class NMIRecipeProvider implements DataProvider {
             return this;
         }
 
+        public Builder input(Ingredient ingredient) {
+            this.fillNull();
+            this.input.add(ingredient);
+            return this;
+        }
+
         public Builder input(List<Ingredient> ingredients) {
             this.fillNull();
             this.input.addAll(ingredients);
@@ -128,6 +134,9 @@ public abstract class NMIRecipeProvider implements DataProvider {
         public void build() {
             if (this.input.isEmpty()) {
                 throw new RuntimeException("The input in the recipe cannot be empty. by key: %s".formatted(this.key));
+            }
+            if (this.input.size() > 5) {
+                throw new RuntimeException("The input size in the recipe cannot be great than 5. by key: %s".formatted(this.key));
             }
             if (this.output == null) {
                 throw new RuntimeException("The output in the recipe cannot be null. by key: %s".formatted(this.key));

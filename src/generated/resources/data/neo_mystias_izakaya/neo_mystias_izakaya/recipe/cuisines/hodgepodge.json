@@ -1,0 +1,13 @@
+{
+  "input": [
+    [
+      "minecraft:kelp",
+      "minecraft:dried_kelp"
+    ]
+  ],
+  "kitchenware": "neo_mystias_izakaya:boiling_pot",
+  "output": {
+    "id": "neo_mystias_izakaya:cuisines/hodgepodge"
+  },
+  "time": 5
+}

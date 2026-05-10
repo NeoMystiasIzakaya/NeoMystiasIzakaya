@@ -1,0 +1,10 @@
+{
+  "input": [
+    "neo_mystias_izakaya:ingredient/trout"
+  ],
+  "kitchenware": "neo_mystias_izakaya:steamer",
+  "output": {
+    "id": "neo_mystias_izakaya:cuisines/ceiling_longing_pie"
+  },
+  "time": 9
+}
