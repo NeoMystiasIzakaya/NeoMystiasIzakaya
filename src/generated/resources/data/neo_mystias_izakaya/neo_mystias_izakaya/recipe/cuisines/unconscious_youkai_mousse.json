@@ -1,0 +1,10 @@
+{
+  "input": [
+    "neo_mystias_izakaya:ingredient/tofu"
+  ],
+  "kitchenware": "neo_mystias_izakaya:cutting_board",
+  "output": {
+    "id": "neo_mystias_izakaya:cuisines/unconscious_youkai_mousse"
+  },
+  "time": 8
+}

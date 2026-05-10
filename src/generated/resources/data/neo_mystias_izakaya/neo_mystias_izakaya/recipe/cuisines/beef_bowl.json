@@ -1,0 +1,10 @@
+{
+  "input": [
+    "minecraft:beef"
+  ],
+  "kitchenware": "neo_mystias_izakaya:boiling_pot",
+  "output": {
+    "id": "neo_mystias_izakaya:cuisines/beef_bowl"
+  },
+  "time": 7
+}

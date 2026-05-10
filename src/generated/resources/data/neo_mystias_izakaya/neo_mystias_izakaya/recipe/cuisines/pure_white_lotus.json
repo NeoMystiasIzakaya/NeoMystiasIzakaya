@@ -1,0 +1,10 @@
+{
+  "input": [
+    "neo_mystias_izakaya:ingredient/ginkgo_nut"
+  ],
+  "kitchenware": "neo_mystias_izakaya:steamer",
+  "output": {
+    "id": "neo_mystias_izakaya:cuisines/pure_white_lotus"
+  },
+  "time": 10
+}

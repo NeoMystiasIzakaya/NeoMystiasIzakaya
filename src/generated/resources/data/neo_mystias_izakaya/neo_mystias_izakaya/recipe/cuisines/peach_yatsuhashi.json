@@ -1,0 +1,10 @@
+{
+  "input": [
+    "neo_mystias_izakaya:ingredient/sticky_rice"
+  ],
+  "kitchenware": "neo_mystias_izakaya:cutting_board",
+  "output": {
+    "id": "neo_mystias_izakaya:cuisines/peach_yatsuhashi"
+  },
+  "time": 5
+}

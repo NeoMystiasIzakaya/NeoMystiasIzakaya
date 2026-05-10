@@ -1,0 +1,14 @@
+{
+  "input": [
+    "minecraft:barrier",
+    "minecraft:barrier",
+    "minecraft:barrier",
+    "minecraft:barrier",
+    "minecraft:barrier"
+  ],
+  "kitchenware": "neo_mystias_izakaya:kitchenware",
+  "output": {
+    "id": "neo_mystias_izakaya:cuisines/dark_matter"
+  },
+  "time": 0
+}

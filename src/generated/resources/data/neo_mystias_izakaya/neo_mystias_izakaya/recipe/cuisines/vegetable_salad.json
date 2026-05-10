@@ -1,0 +1,10 @@
+{
+  "input": [
+    "minecraft:potato"
+  ],
+  "kitchenware": "neo_mystias_izakaya:cutting_board",
+  "output": {
+    "id": "neo_mystias_izakaya:cuisines/vegetable_salad"
+  },
+  "time": 5
+}

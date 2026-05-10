@@ -1,0 +1,10 @@
+{
+  "input": [
+    "minecraft:bamboo"
+  ],
+  "kitchenware": "neo_mystias_izakaya:steamer",
+  "output": {
+    "id": "neo_mystias_izakaya:cuisines/kaguya_hime"
+  },
+  "time": 12
+}

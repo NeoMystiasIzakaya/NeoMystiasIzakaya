@@ -1,0 +1,10 @@
+{
+  "input": [
+    "neo_mystias_izakaya:ingredient/iberico_pork"
+  ],
+  "kitchenware": "neo_mystias_izakaya:grill",
+  "output": {
+    "id": "neo_mystias_izakaya:cuisines/niten_ichiryu"
+  },
+  "time": 18
+}

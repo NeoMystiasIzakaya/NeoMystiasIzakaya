@@ -1,0 +1,10 @@
+{
+  "input": [
+    "neo_mystias_izakaya:ingredient/cicada_slough"
+  ],
+  "kitchenware": "neo_mystias_izakaya:frying_pan",
+  "output": {
+    "id": "neo_mystias_izakaya:cuisines/fried_cicada_sloughs"
+  },
+  "time": 8
+}

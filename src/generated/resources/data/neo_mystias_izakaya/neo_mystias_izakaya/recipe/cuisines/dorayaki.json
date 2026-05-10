@@ -1,0 +1,10 @@
+{
+  "input": [
+    "neo_mystias_izakaya:ingredient/red_bean"
+  ],
+  "kitchenware": "neo_mystias_izakaya:frying_pan",
+  "output": {
+    "id": "neo_mystias_izakaya:cuisines/dorayaki"
+  },
+  "time": 6
+}

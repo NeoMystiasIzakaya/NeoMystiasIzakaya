@@ -1,0 +1,13 @@
+{
+  "input": [
+    [
+      "minecraft:kelp",
+      "minecraft:dried_kelp"
+    ]
+  ],
+  "kitchenware": "neo_mystias_izakaya:cutting_board",
+  "output": {
+    "id": "neo_mystias_izakaya:cuisines/rice_ball"
+  },
+  "time": 5
+}
