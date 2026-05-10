@@ -12,7 +12,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 
-public record RareCustomerHolder(Identifier key, RareCustomer customer) implements NMICustomerHolder {
+public record RareCustomerHolder(Identifier key, RareCustomer customer) implements CustomerHolder {
 
     public static final Codec<RareCustomerHolder> CODEC = RecordCodecBuilder.create(
             instance -> instance.group(

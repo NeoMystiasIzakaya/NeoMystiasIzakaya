@@ -18,7 +18,7 @@ public record CommonCustomer(CustomerBudget budget,
                              List<Identifier> locations,
                              List<Identifier> likes,
                              List<Identifier> dislikes,
-                             List<Identifier> beverage) implements NMICustomer {
+                             List<Identifier> beverage) implements Customer {
 
 
     @Override

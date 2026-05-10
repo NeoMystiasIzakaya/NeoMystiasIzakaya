@@ -7,9 +7,9 @@ package icu.gensoukyo.neo_mystias_izakaya.content.customer;
 
 import net.minecraft.resources.Identifier;
 
-public interface NMICustomerHolder {
+public interface CustomerHolder {
 
     Identifier key();
 
-    NMICustomer customer();
+    Customer customer();
 }

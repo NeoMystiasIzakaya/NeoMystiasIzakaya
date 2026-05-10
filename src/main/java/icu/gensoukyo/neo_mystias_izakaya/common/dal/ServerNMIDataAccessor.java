@@ -6,7 +6,7 @@
 package icu.gensoukyo.neo_mystias_izakaya.common.dal;
 
 import icu.gensoukyo.neo_mystias_izakaya.api.dal.NMIDataAccessor;
-import icu.gensoukyo.neo_mystias_izakaya.content.customer.NMICustomerMap;
+import icu.gensoukyo.neo_mystias_izakaya.content.customer.CustomerMap;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeMap;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.TagItemListMap;
 import lombok.Getter;
@@ -22,5 +22,5 @@ public class ServerNMIDataAccessor implements NMIDataAccessor {
 
     private NMIRecipeMap recipeMap;
 
-    private NMICustomerMap customerMap;
+    private CustomerMap customerMap;
 }

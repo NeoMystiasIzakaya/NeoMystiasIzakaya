@@ -72,7 +72,7 @@ public abstract class NMIRecipeProvider implements DataProvider {
         return "neo_mystias_izakaya:recipe:" + modid;
     }
 
-    public static class Builder {
+    protected static class Builder {
         private final Identifier key;
         private final Map<Identifier, NMIRecipe> recipeMap;
         private List<Ingredient> input = new ArrayList<>();

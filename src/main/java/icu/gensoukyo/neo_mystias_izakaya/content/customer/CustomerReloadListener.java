@@ -29,20 +29,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class NMICustomerReloadListener extends SimplePreparableReloadListener<NMICustomerMap> {
+public class CustomerReloadListener extends SimplePreparableReloadListener<CustomerMap> {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final FileToIdConverter COMMON_CUSTOMER = FileToIdConverter.json(NeoMystiasIzakaya.path("common_customer"));
     private static final FileToIdConverter RARE_CUSTOMER = FileToIdConverter.json(NeoMystiasIzakaya.path("rare_customer"));
     private final HolderLookup.Provider registries;
     @Getter
-    private NMICustomerMap nmiCustomerMap = NMICustomerMap.EMPTY;
+    private CustomerMap customerMap = CustomerMap.EMPTY;
 
-    public NMICustomerReloadListener(HolderLookup.Provider registries) {
+    public CustomerReloadListener(HolderLookup.Provider registries) {
         this.registries = registries;
     }
 
     @Override
-    protected NMICustomerMap prepare(ResourceManager resourceManager, ProfilerFiller profilerFiller) {
+    protected CustomerMap prepare(ResourceManager resourceManager, ProfilerFiller profilerFiller) {
 
         long loadStartTime = System.currentTimeMillis();
 
@@ -76,15 +76,15 @@ public class NMICustomerReloadListener extends SimplePreparableReloadListener<NM
         long loadEndTime = System.currentTimeMillis();
         LOGGER.info("Finished loading NMI customers in {} ms", loadEndTime - loadStartTime);
         long buildStartTime = System.currentTimeMillis();
-        NMICustomerMap map = NMICustomerMap.create(commonCustomerHolders, rareCustomerHolders);
+        CustomerMap map = CustomerMap.create(commonCustomerHolders, rareCustomerHolders);
         long buildEndTime = System.currentTimeMillis();
         LOGGER.info("Finished building NMI customers in {} ms", buildEndTime - buildStartTime);
         return map;
     }
 
     @Override
-    protected void apply(NMICustomerMap customerMap, ResourceManager resourceManager, ProfilerFiller profilerFiller) {
-        this.nmiCustomerMap = customerMap;
+    protected void apply(CustomerMap customerMap, ResourceManager resourceManager, ProfilerFiller profilerFiller) {
+        this.customerMap = customerMap;
         LOGGER.info("Loaded {} common customers and {} rare customers", customerMap.getCommonCustomers().size(), customerMap.getRareCustomers().size());
         if (FMLEnvironment.getDist().isDedicatedServer()) {
             ServerNMIDataAccessor.INSTANCE.setCustomerMap(customerMap);

@@ -5,7 +5,7 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.common.network;
 
-import icu.gensoukyo.neo_mystias_izakaya.content.customer.NMICustomerMap;
+import icu.gensoukyo.neo_mystias_izakaya.content.customer.CustomerMap;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeMap;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.TagItemListMap;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -20,7 +20,7 @@ public class ServerPayloadSender {
         PacketDistributor.sendToAllPlayers(new NMIRecipeMapSyncMessage(map));
     }
 
-    public static void sendCustomerDataSyncMessage(NMICustomerMap message) {
+    public static void sendCustomerDataSyncMessage(CustomerMap message) {
         PacketDistributor.sendToAllPlayers(new NMICustomerMapSyncMessage(message));
     }
 }

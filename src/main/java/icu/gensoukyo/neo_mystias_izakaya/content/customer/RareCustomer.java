@@ -20,7 +20,7 @@ public record RareCustomer(CustomerBudget budget,
                            List<Identifier> dislikes,
                            List<Identifier> beverage,
                            List<Identifier> tagRequests,
-                           List<Identifier> spellCards) implements NMICustomer {
+                           List<Identifier> spellCards) implements Customer {
 
     public static final Codec<RareCustomer> CODEC = RecordCodecBuilder.create(
             instance -> instance.group(
@@ -46,4 +46,8 @@ public record RareCustomer(CustomerBudget budget,
     );
 
     public static final RareCustomer EMPTY = new RareCustomer(new CustomerBudget(0, 0), List.of(), List.of(), List.of(), List.of(), List.of(), List.of());
+
+    public CommonCustomer asCommonCustomer(){
+        return new CommonCustomer(budget, locations, likes, dislikes, beverage);
+    }
 }

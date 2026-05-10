@@ -9,7 +9,7 @@ import net.minecraft.resources.Identifier;
 
 import java.util.List;
 
-public interface NMICustomer {
+public interface Customer {
 
     CustomerBudget budget();
 
