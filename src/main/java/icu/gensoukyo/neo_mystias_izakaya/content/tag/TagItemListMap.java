@@ -40,8 +40,8 @@ public class TagItemListMap {
     );
 
     private TagItemListMap(List<TagItemListHolder> positiveTags, List<TagItemListHolder> negativeTags) {
-        this.positiveTags = positiveTags;
-        this.negativeTags = negativeTags;
+        this.positiveTags = List.copyOf(positiveTags);
+        this.negativeTags = List.copyOf(negativeTags);
         this.positiveTagToItemMap = positiveTags.stream().collect(Collectors.toMap(TagItemListHolder::key, t -> t));
         this.negativeTagToItemMap = negativeTags.stream().collect(Collectors.toMap(TagItemListHolder::key, t -> t));
         this.itemToPositiveTagMap = buildSingleItemMap(positiveTags);

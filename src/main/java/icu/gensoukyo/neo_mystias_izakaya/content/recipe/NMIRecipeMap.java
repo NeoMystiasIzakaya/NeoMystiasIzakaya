@@ -39,7 +39,7 @@ public class NMIRecipeMap {
     );
 
     private NMIRecipeMap(List<NMIRecipeHolder> recipes) {
-        this.recipes = recipes;
+        this.recipes = List.copyOf(recipes);
         this.recipeMap = buildRecipeMap(recipes);
         this.inputItemToRecipeMap = buildInputItemToRecipeMap(recipes);
         this.outputItemToRecipeMap = buildOutputItemToRecipeMap(recipes);
