@@ -21,7 +21,7 @@ public record NMIRecipeMapSyncMessage(NMIRecipeMap map) implements CustomPacketP
     );
 
     @Override
-    public Type<? extends CustomPacketPayload> type() {
+    public Type<NMIRecipeMapSyncMessage> type() {
         return TYPE;
     }
 }

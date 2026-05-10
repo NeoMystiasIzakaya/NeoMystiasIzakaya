@@ -26,9 +26,8 @@ import net.neoforged.neoforge.common.conditions.ConditionalOps;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 public class NMIRecipeReloadListener extends SimplePreparableReloadListener<NMIRecipeMap> {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -46,7 +45,7 @@ public class NMIRecipeReloadListener extends SimplePreparableReloadListener<NMIR
 
         long loadStartTime = System.currentTimeMillis();
 
-        SortedMap<Identifier, NMIRecipe> recipeHolderTreeMap = new TreeMap<>();
+        HashMap<Identifier, NMIRecipe> recipeHolderTreeMap = new HashMap<>();
         var conditionalOps = new ConditionalOps<>(this.registries.createSerializationContext(JsonOps.INSTANCE), getContext());
         SimpleJsonResourceReloadListener.scanDirectoryWithModifier(
                 resourceManager, NMI_RECIPE, conditionalOps, NMIRecipe.CODEC, recipeHolderTreeMap, recipeJsons -> {

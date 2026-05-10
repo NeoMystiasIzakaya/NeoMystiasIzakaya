@@ -7,8 +7,8 @@ package icu.gensoukyo.neo_mystias_izakaya.common.event;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.api.event.server.ServerTagFoodItemEvent;
-import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMIServerItemTagUtil;
+import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;

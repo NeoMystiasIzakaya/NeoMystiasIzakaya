@@ -5,7 +5,12 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.content.customer;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.netty.buffer.ByteBuf;
 import lombok.Getter;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 
 import java.util.List;
@@ -40,4 +45,19 @@ public class NMICustomerMap {
     private List<NMICustomerHolder> buildAllCustomerList(List<CommonCustomerHolder> commonCustomers, List<RareCustomerHolder> rareCustomers) {
         return Stream.<NMICustomerHolder>concat(commonCustomers.stream(), rareCustomers.stream()).toList();
     }
+
+    public static final Codec<NMICustomerMap> CODEC = RecordCodecBuilder.create(
+            instance -> instance.group(
+                    CommonCustomerHolder.CODEC.listOf().fieldOf("commonCustomers").forGetter(NMICustomerMap::getCommonCustomers),
+                    RareCustomerHolder.CODEC.listOf().fieldOf("rareCustomers").forGetter(NMICustomerMap::getRareCustomers)
+            ).apply(instance, NMICustomerMap::new)
+    );
+
+    public static final StreamCodec<ByteBuf, NMICustomerMap> STREAM_CODEC = StreamCodec.composite(
+            ByteBufCodecs.<ByteBuf, CommonCustomerHolder>list().apply(CommonCustomerHolder.STREAM_CODEC), NMICustomerMap::getCommonCustomers,
+            ByteBufCodecs.<ByteBuf, RareCustomerHolder>list().apply(RareCustomerHolder.STREAM_CODEC), NMICustomerMap::getRareCustomers,
+            NMICustomerMap::new
+    );
+
+    public static final NMICustomerMap EMPTY = new NMICustomerMap(List.of(), List.of());
 }

@@ -6,11 +6,11 @@
 package icu.gensoukyo.neo_mystias_izakaya.compat.jei;
 
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonRecipeUtil;
+import icu.gensoukyo.neo_mystias_izakaya.common.util.NMIServerRecipeUtil;
 import icu.gensoukyo.neo_mystias_izakaya.compat.jei.recipe.*;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipe;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockTags;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMainItems;
-import icu.gensoukyo.neo_mystias_izakaya.common.util.NMIServerRecipeUtil;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;

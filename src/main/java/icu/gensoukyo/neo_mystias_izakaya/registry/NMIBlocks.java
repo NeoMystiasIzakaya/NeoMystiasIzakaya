@@ -6,11 +6,7 @@
 package icu.gensoukyo.neo_mystias_izakaya.registry;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
-import icu.gensoukyo.neo_mystias_izakaya.common.block.BoilingPotBlock;
-import icu.gensoukyo.neo_mystias_izakaya.common.block.GrillBlock;
-import icu.gensoukyo.neo_mystias_izakaya.common.block.FryingPanBlock;
-import icu.gensoukyo.neo_mystias_izakaya.common.block.SteamerBlock;
-import icu.gensoukyo.neo_mystias_izakaya.common.block.CuttingBoardBlock;
+import icu.gensoukyo.neo_mystias_izakaya.common.block.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.neoforge.registries.DeferredBlock;

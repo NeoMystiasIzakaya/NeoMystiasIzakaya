@@ -6,11 +6,11 @@
 package icu.gensoukyo.neo_mystias_izakaya.registry;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
+import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonComponentUtil;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIBeveragesItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMICuisinesItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIIngredientItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMainItems;
-import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonComponentUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.CreativeModeTab;

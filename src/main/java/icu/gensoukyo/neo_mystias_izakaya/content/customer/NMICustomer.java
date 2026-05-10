@@ -5,9 +5,6 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.content.customer;
 
-import com.mojang.serialization.Codec;
-import io.netty.buffer.ByteBuf;
-import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 
 import java.util.List;

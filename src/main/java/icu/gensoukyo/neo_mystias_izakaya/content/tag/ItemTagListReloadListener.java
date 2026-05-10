@@ -26,9 +26,8 @@ import net.neoforged.neoforge.common.conditions.ConditionalOps;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 public class ItemTagListReloadListener extends SimplePreparableReloadListener<TagItemListMap> {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -47,8 +46,8 @@ public class ItemTagListReloadListener extends SimplePreparableReloadListener<Ta
 
         long loadStartTime = System.currentTimeMillis();
 
-        SortedMap<Identifier, TagItemList> pItemTagTreeMap = new TreeMap<>();
-        SortedMap<Identifier, TagItemList> nItemTagTreeMap = new TreeMap<>();
+        HashMap<Identifier, TagItemList> pItemTagTreeMap = new HashMap<>();
+        HashMap<Identifier, TagItemList> nItemTagTreeMap = new HashMap<>();
         var conditionalOps = new ConditionalOps<>(this.registries.createSerializationContext(JsonOps.INSTANCE), getContext());
         SimpleJsonResourceReloadListener.scanDirectoryWithModifier(
                 resourceManager, POSITIVE_TAG_LISTER, conditionalOps, TagItemList.CODEC, pItemTagTreeMap, recipeJsons -> {

@@ -21,7 +21,7 @@ public record TagItemListMapSyncMessage(TagItemListMap map) implements CustomPac
     );
 
     @Override
-    public Type<? extends CustomPacketPayload> type() {
+    public Type<TagItemListMapSyncMessage> type() {
         return TYPE;
     }
 }
