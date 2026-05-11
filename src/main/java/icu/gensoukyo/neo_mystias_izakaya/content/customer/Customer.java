@@ -21,8 +21,6 @@ public interface Customer {
 
     List<Identifier> beverage();
 
-    List<Identifier> tagRequests();
-
     List<Identifier> spellCards();
 
     List<Identifier> chats();

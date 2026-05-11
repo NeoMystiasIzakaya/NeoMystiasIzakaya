@@ -27,11 +27,6 @@ public record CommonCustomer(List<Identifier> locations,
     }
 
     @Override
-    public List<Identifier> tagRequests() {
-        return List.of();
-    }
-
-    @Override
     public List<Identifier> spellCards() {
         return List.of();
     }
