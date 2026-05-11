@@ -1,0 +1,32 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/sweet",
+    "neo_mystias_izakaya:beverages/dry"
+  ],
+  "chats": [
+    "neo_mystias_izakaya:customer/youkai_tanuki/chat_0",
+    "neo_mystias_izakaya:customer/youkai_tanuki/chat_1",
+    "neo_mystias_izakaya:customer/youkai_tanuki/chat_2",
+    "neo_mystias_izakaya:customer/youkai_tanuki/chat_3",
+    "neo_mystias_izakaya:customer/youkai_tanuki/chat_4"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/meat",
+    "neo_mystias_izakaya:cuisines/greasy",
+    "neo_mystias_izakaya:cuisines/filling",
+    "neo_mystias_izakaya:cuisines/mountain_delicacy",
+    "neo_mystias_izakaya:cuisines/salty",
+    "neo_mystias_izakaya:cuisines/signature",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:youkai_trail",
+    "neo_mystias_izakaya:hakurei_shrine",
+    "neo_mystias_izakaya:scarlet_devil_mansion",
+    "neo_mystias_izakaya:bamboo_forest_of_the_lost",
+    "neo_mystias_izakaya:forest_of_magic",
+    "neo_mystias_izakaya:youkai_mountain",
+    "neo_mystias_izakaya:myouren_temple"
+  ]
+}

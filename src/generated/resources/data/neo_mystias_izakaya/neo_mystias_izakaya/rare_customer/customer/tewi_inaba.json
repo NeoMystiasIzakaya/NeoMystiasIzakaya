@@ -1,0 +1,37 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/no_alcohol",
+    "neo_mystias_izakaya:beverages/fruity",
+    "neo_mystias_izakaya:beverages/sweet"
+  ],
+  "budget": {
+    "max": 400,
+    "min": 200
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/tewi_inaba/chat_0",
+    "neo_mystias_izakaya:customer/tewi_inaba/chat_1",
+    "neo_mystias_izakaya:customer/tewi_inaba/chat_2",
+    "neo_mystias_izakaya:customer/tewi_inaba/chat_3",
+    "neo_mystias_izakaya:customer/tewi_inaba/chat_4"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/greasy",
+    "neo_mystias_izakaya:cuisines/mountain_delicacy",
+    "neo_mystias_izakaya:cuisines/peculiar",
+    "neo_mystias_izakaya:cuisines/trend_unpopular"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/legendary",
+    "neo_mystias_izakaya:cuisines/sweet",
+    "neo_mystias_izakaya:cuisines/refreshing",
+    "neo_mystias_izakaya:cuisines/small_portion",
+    "neo_mystias_izakaya:cuisines/dreamy",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:bamboo_forest_of_the_lost"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

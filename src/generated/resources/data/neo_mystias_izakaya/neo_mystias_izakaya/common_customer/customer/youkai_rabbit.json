@@ -1,0 +1,32 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/no_alcohol"
+  ],
+  "chats": [
+    "neo_mystias_izakaya:customer/youkai_rabbit/chat_0",
+    "neo_mystias_izakaya:customer/youkai_rabbit/chat_1",
+    "neo_mystias_izakaya:customer/youkai_rabbit/chat_2",
+    "neo_mystias_izakaya:customer/youkai_rabbit/chat_3",
+    "neo_mystias_izakaya:customer/youkai_rabbit/chat_4"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/homecooking",
+    "neo_mystias_izakaya:cuisines/salty",
+    "neo_mystias_izakaya:cuisines/fresh",
+    "neo_mystias_izakaya:cuisines/sweet",
+    "neo_mystias_izakaya:cuisines/signature",
+    "neo_mystias_izakaya:cuisines/refreshing",
+    "neo_mystias_izakaya:cuisines/strength_boosting",
+    "neo_mystias_izakaya:cuisines/fruity",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:youkai_trail",
+    "neo_mystias_izakaya:scarlet_devil_mansion",
+    "neo_mystias_izakaya:bamboo_forest_of_the_lost",
+    "neo_mystias_izakaya:forest_of_magic",
+    "neo_mystias_izakaya:youkai_mountain",
+    "neo_mystias_izakaya:palace_of_the_earth_spirits"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/heatable",
+    "neo_mystias_izakaya:beverages/shochu"
+  ],
+  "chats": [
+    "neo_mystias_izakaya:customer/human_male/chat_0",
+    "neo_mystias_izakaya:customer/human_male/chat_1",
+    "neo_mystias_izakaya:customer/human_male/chat_2",
+    "neo_mystias_izakaya:customer/human_male/chat_3",
+    "neo_mystias_izakaya:customer/human_male/chat_4"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/meat",
+    "neo_mystias_izakaya:cuisines/good_with_alcohol",
+    "neo_mystias_izakaya:cuisines/japanese",
+    "neo_mystias_izakaya:cuisines/salty",
+    "neo_mystias_izakaya:cuisines/fresh",
+    "neo_mystias_izakaya:cuisines/hot",
+    "neo_mystias_izakaya:cuisines/cultural_heritage",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:human_village",
+    "neo_mystias_izakaya:myouren_temple",
+    "neo_mystias_izakaya:divine_spirit_mausoleum"
+  ]
+}

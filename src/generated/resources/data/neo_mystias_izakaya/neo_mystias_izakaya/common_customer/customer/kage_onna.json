@@ -1,0 +1,29 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/high_alcohol",
+    "neo_mystias_izakaya:beverages/chillable",
+    "neo_mystias_izakaya:beverages/bitter",
+    "neo_mystias_izakaya:beverages/vintage",
+    "neo_mystias_izakaya:beverages/stimulating"
+  ],
+  "chats": [
+    "neo_mystias_izakaya:customer/kage_onna/chat_0",
+    "neo_mystias_izakaya:customer/kage_onna/chat_1",
+    "neo_mystias_izakaya:customer/kage_onna/chat_2",
+    "neo_mystias_izakaya:customer/kage_onna/chat_3",
+    "neo_mystias_izakaya:customer/kage_onna/chat_4"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/homecooking",
+    "neo_mystias_izakaya:cuisines/japanese",
+    "neo_mystias_izakaya:cuisines/raw",
+    "neo_mystias_izakaya:cuisines/refreshing",
+    "neo_mystias_izakaya:cuisines/peculiar",
+    "neo_mystias_izakaya:cuisines/wonderful",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:garden_of_the_sun"
+  ]
+}

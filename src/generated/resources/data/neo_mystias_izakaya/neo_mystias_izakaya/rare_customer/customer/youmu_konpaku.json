@@ -1,0 +1,37 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/no_alcohol",
+    "neo_mystias_izakaya:beverages/heatable",
+    "neo_mystias_izakaya:beverages/fruity"
+  ],
+  "budget": {
+    "max": 400,
+    "min": 300
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/youmu_konpaku/chat_0",
+    "neo_mystias_izakaya:customer/youmu_konpaku/chat_1",
+    "neo_mystias_izakaya:customer/youmu_konpaku/chat_2",
+    "neo_mystias_izakaya:customer/youmu_konpaku/chat_3",
+    "neo_mystias_izakaya:customer/youmu_konpaku/chat_4"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/greasy",
+    "neo_mystias_izakaya:cuisines/salty",
+    "neo_mystias_izakaya:cuisines/peculiar"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/homecooking",
+    "neo_mystias_izakaya:cuisines/mild",
+    "neo_mystias_izakaya:cuisines/fresh",
+    "neo_mystias_izakaya:cuisines/strength_boosting"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:youkai_trail",
+    "neo_mystias_izakaya:human_village",
+    "neo_mystias_izakaya:hakurei_shrine",
+    "neo_mystias_izakaya:bamboo_forest_of_the_lost"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

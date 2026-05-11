@@ -1,0 +1,35 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/mid_alcohol",
+    "neo_mystias_izakaya:beverages/heatable",
+    "neo_mystias_izakaya:beverages/cocktail"
+  ],
+  "budget": {
+    "max": 800,
+    "min": 500
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/utsuho_reiuji/chat_0",
+    "neo_mystias_izakaya:customer/utsuho_reiuji/chat_1",
+    "neo_mystias_izakaya:customer/utsuho_reiuji/chat_2",
+    "neo_mystias_izakaya:customer/utsuho_reiuji/chat_3"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/mild",
+    "neo_mystias_izakaya:cuisines/fungus"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/meat",
+    "neo_mystias_izakaya:cuisines/greasy",
+    "neo_mystias_izakaya:cuisines/salty",
+    "neo_mystias_izakaya:cuisines/hot",
+    "neo_mystias_izakaya:cuisines/strength_boosting",
+    "neo_mystias_izakaya:cuisines/spicy"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:palace_of_the_earth_spirits",
+    "neo_mystias_izakaya:youkai_mountain"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

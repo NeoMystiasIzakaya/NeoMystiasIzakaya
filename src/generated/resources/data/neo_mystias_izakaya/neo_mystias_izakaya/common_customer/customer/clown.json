@@ -1,0 +1,27 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/chillable",
+    "neo_mystias_izakaya:beverages/liquor",
+    "neo_mystias_izakaya:beverages/neat",
+    "neo_mystias_izakaya:beverages/dry"
+  ],
+  "chats": [
+    "neo_mystias_izakaya:customer/clown/chat_0",
+    "neo_mystias_izakaya:customer/clown/chat_1",
+    "neo_mystias_izakaya:customer/clown/chat_2",
+    "neo_mystias_izakaya:customer/clown/chat_3"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/premium",
+    "neo_mystias_izakaya:cuisines/good_with_alcohol",
+    "neo_mystias_izakaya:cuisines/raw",
+    "neo_mystias_izakaya:cuisines/photogenic",
+    "neo_mystias_izakaya:cuisines/peculiar",
+    "neo_mystias_izakaya:cuisines/fungus",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:makai"
+  ]
+}

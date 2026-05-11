@@ -1,0 +1,36 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/high_alcohol",
+    "neo_mystias_izakaya:beverages/neat"
+  ],
+  "budget": {
+    "max": 800,
+    "min": 600
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/ibuki_suika/chat_0",
+    "neo_mystias_izakaya:customer/ibuki_suika/chat_1",
+    "neo_mystias_izakaya:customer/ibuki_suika/chat_2",
+    "neo_mystias_izakaya:customer/ibuki_suika/chat_3",
+    "neo_mystias_izakaya:customer/ibuki_suika/chat_4"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/greasy",
+    "neo_mystias_izakaya:cuisines/trend_unpopular"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/meat",
+    "neo_mystias_izakaya:cuisines/good_with_alcohol",
+    "neo_mystias_izakaya:cuisines/japanese",
+    "neo_mystias_izakaya:cuisines/strength_boosting",
+    "neo_mystias_izakaya:cuisines/small_portion",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:hakurei_shrine",
+    "neo_mystias_izakaya:youkai_mountain",
+    "neo_mystias_izakaya:shining_needle_castle"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

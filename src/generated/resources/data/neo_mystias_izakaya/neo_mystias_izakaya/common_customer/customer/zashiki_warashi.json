@@ -1,0 +1,26 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/no_alcohol",
+    "neo_mystias_izakaya:beverages/low_alcohol"
+  ],
+  "chats": [
+    "neo_mystias_izakaya:customer/zashiki_warashi/chat_0",
+    "neo_mystias_izakaya:customer/zashiki_warashi/chat_1",
+    "neo_mystias_izakaya:customer/zashiki_warashi/chat_2",
+    "neo_mystias_izakaya:customer/zashiki_warashi/chat_3",
+    "neo_mystias_izakaya:customer/zashiki_warashi/chat_4"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/mountain_delicacy",
+    "neo_mystias_izakaya:cuisines/japanese",
+    "neo_mystias_izakaya:cuisines/sweet",
+    "neo_mystias_izakaya:cuisines/raw",
+    "neo_mystias_izakaya:cuisines/signature",
+    "neo_mystias_izakaya:cuisines/refreshing",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:hakurei_shrine"
+  ]
+}

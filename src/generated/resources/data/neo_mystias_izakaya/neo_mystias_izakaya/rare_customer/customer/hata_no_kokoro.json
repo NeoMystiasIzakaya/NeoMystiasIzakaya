@@ -1,0 +1,42 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/mid_alcohol",
+    "neo_mystias_izakaya:beverages/shochu",
+    "neo_mystias_izakaya:beverages/sweet",
+    "neo_mystias_izakaya:beverages/vintage"
+  ],
+  "budget": {
+    "max": 850,
+    "min": 514
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/hata_no_kokoro/chat_0",
+    "neo_mystias_izakaya:customer/hata_no_kokoro/chat_1",
+    "neo_mystias_izakaya:customer/hata_no_kokoro/chat_2",
+    "neo_mystias_izakaya:customer/hata_no_kokoro/chat_3"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/greasy",
+    "neo_mystias_izakaya:cuisines/salty",
+    "neo_mystias_izakaya:cuisines/hot",
+    "neo_mystias_izakaya:cuisines/trend_unpopular"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/legendary",
+    "neo_mystias_izakaya:cuisines/japanese",
+    "neo_mystias_izakaya:cuisines/signature",
+    "neo_mystias_izakaya:cuisines/photogenic",
+    "neo_mystias_izakaya:cuisines/refreshing",
+    "neo_mystias_izakaya:cuisines/dreamy",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:human_village",
+    "neo_mystias_izakaya:hakurei_shrine",
+    "neo_mystias_izakaya:youkai_mountain",
+    "neo_mystias_izakaya:myouren_temple",
+    "neo_mystias_izakaya:divine_spirit_mausoleum"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

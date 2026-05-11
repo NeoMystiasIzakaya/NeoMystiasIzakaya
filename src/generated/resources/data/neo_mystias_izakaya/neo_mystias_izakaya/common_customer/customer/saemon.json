@@ -1,0 +1,24 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/high_alcohol"
+  ],
+  "chats": [
+    "neo_mystias_izakaya:customer/saemon/chat_0",
+    "neo_mystias_izakaya:customer/saemon/chat_1",
+    "neo_mystias_izakaya:customer/saemon/chat_2",
+    "neo_mystias_izakaya:customer/saemon/chat_3",
+    "neo_mystias_izakaya:customer/saemon/chat_4"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/premium",
+    "neo_mystias_izakaya:cuisines/raw",
+    "neo_mystias_izakaya:cuisines/strength_boosting",
+    "neo_mystias_izakaya:cuisines/peculiar",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:human_village",
+    "neo_mystias_izakaya:hakurei_shrine"
+  ]
+}

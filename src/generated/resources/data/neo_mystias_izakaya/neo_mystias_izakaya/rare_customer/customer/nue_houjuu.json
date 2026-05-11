@@ -1,0 +1,40 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/heatable",
+    "neo_mystias_izakaya:beverages/shochu",
+    "neo_mystias_izakaya:beverages/neat",
+    "neo_mystias_izakaya:beverages/vintage"
+  ],
+  "budget": {
+    "max": 500,
+    "min": 300
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/nue_houjuu/chat_0",
+    "neo_mystias_izakaya:customer/nue_houjuu/chat_1",
+    "neo_mystias_izakaya:customer/nue_houjuu/chat_2",
+    "neo_mystias_izakaya:customer/nue_houjuu/chat_3"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/western",
+    "neo_mystias_izakaya:cuisines/sour",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/meat",
+    "neo_mystias_izakaya:cuisines/fresh",
+    "neo_mystias_izakaya:cuisines/raw",
+    "neo_mystias_izakaya:cuisines/signature",
+    "neo_mystias_izakaya:cuisines/photogenic",
+    "neo_mystias_izakaya:cuisines/peculiar",
+    "neo_mystias_izakaya:cuisines/wonderful",
+    "neo_mystias_izakaya:cuisines/specialty",
+    "neo_mystias_izakaya:cuisines/trend_unpopular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:myouren_temple",
+    "neo_mystias_izakaya:shining_needle_castle"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

@@ -1,0 +1,47 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/high_alcohol",
+    "neo_mystias_izakaya:beverages/shochu",
+    "neo_mystias_izakaya:beverages/bitter",
+    "neo_mystias_izakaya:beverages/soda"
+  ],
+  "budget": {
+    "max": 1200,
+    "min": 800
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/koishi_komeiji/chat_0",
+    "neo_mystias_izakaya:customer/koishi_komeiji/chat_1",
+    "neo_mystias_izakaya:customer/koishi_komeiji/chat_2",
+    "neo_mystias_izakaya:customer/koishi_komeiji/chat_3"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/salty",
+    "neo_mystias_izakaya:cuisines/sweet",
+    "neo_mystias_izakaya:cuisines/raw",
+    "neo_mystias_izakaya:cuisines/peculiar",
+    "neo_mystias_izakaya:cuisines/wonderful",
+    "neo_mystias_izakaya:cuisines/dreamy",
+    "neo_mystias_izakaya:cuisines/trend_unpopular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:palace_of_the_earth_spirits",
+    "neo_mystias_izakaya:youkai_trail",
+    "neo_mystias_izakaya:human_village",
+    "neo_mystias_izakaya:hakurei_shrine",
+    "neo_mystias_izakaya:scarlet_devil_mansion",
+    "neo_mystias_izakaya:bamboo_forest_of_the_lost",
+    "neo_mystias_izakaya:forest_of_magic",
+    "neo_mystias_izakaya:youkai_mountain",
+    "neo_mystias_izakaya:former_hell",
+    "neo_mystias_izakaya:myouren_temple",
+    "neo_mystias_izakaya:divine_spirit_mausoleum",
+    "neo_mystias_izakaya:garden_of_the_sun",
+    "neo_mystias_izakaya:shining_needle_castle",
+    "neo_mystias_izakaya:lunar_capital",
+    "neo_mystias_izakaya:makai"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

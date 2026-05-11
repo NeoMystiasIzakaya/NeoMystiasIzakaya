@@ -15,6 +15,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 import org.jspecify.annotations.NonNull;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -23,8 +24,8 @@ public abstract class CustomerProvider implements DataProvider {
 
     private final String modid;
     private final PackOutput output;
-    private Map<Identifier, CommonCustomer> commonCustomerMap;
-    private Map<Identifier, RareCustomer> rareCustomerMap;
+    private final Map<Identifier, CommonCustomer> commonCustomerMap = new HashMap<>();
+    private final Map<Identifier, RareCustomer> rareCustomerMap = new HashMap<>();
 
     protected CustomerProvider(PackOutput output, String modid) {
         this.modid = modid;
@@ -78,13 +79,13 @@ public abstract class CustomerProvider implements DataProvider {
         private final Identifier key;
 
         private CustomerBudget budget;
-        private List<Identifier> locations;
-        private List<Identifier> likes;
-        private List<Identifier> dislikes;
-        private List<Identifier> beverage;
-        private List<Identifier> tagRequests;
-        private List<Identifier> spellCards;
-        private List<Identifier> chats;
+        private List<Identifier> locations = List.of();
+        private List<Identifier> likes = List.of();
+        private List<Identifier> dislikes = List.of();
+        private List<Identifier> beverage = List.of();
+        private List<Identifier> tagRequests = List.of();
+        private List<Identifier> spellCards = List.of();
+        private List<Identifier> chats = List.of();
         private boolean isCommon;
 
         protected Builder(Map<Identifier, CommonCustomer> commonCustomerMap, Map<Identifier, RareCustomer> rareCustomerMap, Identifier key) {
@@ -144,7 +145,7 @@ public abstract class CustomerProvider implements DataProvider {
         }
 
         public void build() {
-            if (this.isCommon || (tagRequests == null && spellCards == null && budget == null)) {
+            if (this.isCommon || (tagRequests.isEmpty() && spellCards.isEmpty() && budget == null)) {
                 commonCustomerMap.put(key, new CommonCustomer(locations, likes, dislikes, beverage, chats));
             } else {
                 rareCustomerMap.put(key, new RareCustomer(budget, locations, likes, dislikes, beverage, tagRequests, spellCards, chats));

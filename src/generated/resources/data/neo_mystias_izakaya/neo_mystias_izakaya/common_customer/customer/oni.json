@@ -1,0 +1,29 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/mid_alcohol",
+    "neo_mystias_izakaya:beverages/high_alcohol",
+    "neo_mystias_izakaya:beverages/shochu",
+    "neo_mystias_izakaya:beverages/neat"
+  ],
+  "chats": [
+    "neo_mystias_izakaya:customer/oni/chat_0",
+    "neo_mystias_izakaya:customer/oni/chat_1",
+    "neo_mystias_izakaya:customer/oni/chat_2",
+    "neo_mystias_izakaya:customer/oni/chat_3"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/meat",
+    "neo_mystias_izakaya:cuisines/premium",
+    "neo_mystias_izakaya:cuisines/legendary",
+    "neo_mystias_izakaya:cuisines/good_with_alcohol",
+    "neo_mystias_izakaya:cuisines/fresh",
+    "neo_mystias_izakaya:cuisines/strength_boosting",
+    "neo_mystias_izakaya:cuisines/specialty",
+    "neo_mystias_izakaya:cuisines/aura_bursting",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:former_hell"
+  ]
+}

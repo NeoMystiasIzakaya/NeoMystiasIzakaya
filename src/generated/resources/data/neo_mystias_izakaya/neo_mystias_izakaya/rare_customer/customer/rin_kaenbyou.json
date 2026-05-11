@@ -1,0 +1,41 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/low_alcohol",
+    "neo_mystias_izakaya:beverages/sake",
+    "neo_mystias_izakaya:beverages/fruity"
+  ],
+  "budget": {
+    "max": 700,
+    "min": 500
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/rin_kaenbyou/chat_0",
+    "neo_mystias_izakaya:customer/rin_kaenbyou/chat_1",
+    "neo_mystias_izakaya:customer/rin_kaenbyou/chat_2",
+    "neo_mystias_izakaya:customer/rin_kaenbyou/chat_3"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/raw",
+    "neo_mystias_izakaya:cuisines/hot"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/aquatic",
+    "neo_mystias_izakaya:cuisines/sea_delicacy",
+    "neo_mystias_izakaya:cuisines/fresh",
+    "neo_mystias_izakaya:cuisines/sweet",
+    "neo_mystias_izakaya:cuisines/peculiar",
+    "neo_mystias_izakaya:cuisines/dreamy",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:palace_of_the_earth_spirits",
+    "neo_mystias_izakaya:human_village",
+    "neo_mystias_izakaya:hakurei_shrine",
+    "neo_mystias_izakaya:youkai_mountain",
+    "neo_mystias_izakaya:former_hell",
+    "neo_mystias_izakaya:myouren_temple",
+    "neo_mystias_izakaya:divine_spirit_mausoleum"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

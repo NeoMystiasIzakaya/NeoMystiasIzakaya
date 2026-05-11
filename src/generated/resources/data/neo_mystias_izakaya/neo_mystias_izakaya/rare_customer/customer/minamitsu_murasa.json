@@ -1,0 +1,38 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/high_alcohol",
+    "neo_mystias_izakaya:beverages/chillable",
+    "neo_mystias_izakaya:beverages/western",
+    "neo_mystias_izakaya:beverages/dry"
+  ],
+  "budget": {
+    "max": 600,
+    "min": 400
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/minamitsu_murasa/chat_0",
+    "neo_mystias_izakaya:customer/minamitsu_murasa/chat_1",
+    "neo_mystias_izakaya:customer/minamitsu_murasa/chat_2",
+    "neo_mystias_izakaya:customer/minamitsu_murasa/chat_3"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/vegetarian",
+    "neo_mystias_izakaya:cuisines/peculiar",
+    "neo_mystias_izakaya:cuisines/small_portion",
+    "neo_mystias_izakaya:cuisines/sour"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/meat",
+    "neo_mystias_izakaya:cuisines/premium",
+    "neo_mystias_izakaya:cuisines/filling",
+    "neo_mystias_izakaya:cuisines/salty",
+    "neo_mystias_izakaya:cuisines/fresh",
+    "neo_mystias_izakaya:cuisines/strength_boosting",
+    "neo_mystias_izakaya:cuisines/specialty"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:myouren_temple"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

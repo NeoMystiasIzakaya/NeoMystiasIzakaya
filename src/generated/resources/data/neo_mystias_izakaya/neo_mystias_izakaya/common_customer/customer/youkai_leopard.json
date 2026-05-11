@@ -1,0 +1,29 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/mid_alcohol",
+    "neo_mystias_izakaya:beverages/high_alcohol",
+    "neo_mystias_izakaya:beverages/neat",
+    "neo_mystias_izakaya:beverages/dry"
+  ],
+  "chats": [
+    "neo_mystias_izakaya:customer/youkai_leopard/chat_0",
+    "neo_mystias_izakaya:customer/youkai_leopard/chat_1",
+    "neo_mystias_izakaya:customer/youkai_leopard/chat_2",
+    "neo_mystias_izakaya:customer/youkai_leopard/chat_3"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/meat",
+    "neo_mystias_izakaya:cuisines/premium",
+    "neo_mystias_izakaya:cuisines/greasy",
+    "neo_mystias_izakaya:cuisines/mountain_delicacy",
+    "neo_mystias_izakaya:cuisines/sea_delicacy",
+    "neo_mystias_izakaya:cuisines/raw",
+    "neo_mystias_izakaya:cuisines/hot",
+    "neo_mystias_izakaya:cuisines/specialty",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:palace_of_the_earth_spirits"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/cocktail",
+    "neo_mystias_izakaya:beverages/liquor",
+    "neo_mystias_izakaya:beverages/soda"
+  ],
+  "budget": {
+    "max": 1000,
+    "min": 600
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/patchouli_knowledge/chat_0",
+    "neo_mystias_izakaya:customer/patchouli_knowledge/chat_1",
+    "neo_mystias_izakaya:customer/patchouli_knowledge/chat_2",
+    "neo_mystias_izakaya:customer/patchouli_knowledge/chat_3",
+    "neo_mystias_izakaya:customer/patchouli_knowledge/chat_4"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/salty",
+    "neo_mystias_izakaya:cuisines/raw",
+    "neo_mystias_izakaya:cuisines/hot",
+    "neo_mystias_izakaya:cuisines/peculiar"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/premium",
+    "neo_mystias_izakaya:cuisines/western",
+    "neo_mystias_izakaya:cuisines/sweet",
+    "neo_mystias_izakaya:cuisines/photogenic",
+    "neo_mystias_izakaya:cuisines/dreamy"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:scarlet_devil_mansion",
+    "neo_mystias_izakaya:forest_of_magic",
+    "neo_mystias_izakaya:palace_of_the_earth_spirits"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

@@ -1,0 +1,35 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/mid_alcohol",
+    "neo_mystias_izakaya:beverages/high_alcohol",
+    "neo_mystias_izakaya:beverages/neat"
+  ],
+  "budget": {
+    "max": 400,
+    "min": 300
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/momiji_inubashiri/chat_0",
+    "neo_mystias_izakaya:customer/momiji_inubashiri/chat_1",
+    "neo_mystias_izakaya:customer/momiji_inubashiri/chat_2",
+    "neo_mystias_izakaya:customer/momiji_inubashiri/chat_3",
+    "neo_mystias_izakaya:customer/momiji_inubashiri/chat_4"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/vegetarian",
+    "neo_mystias_izakaya:cuisines/mild",
+    "neo_mystias_izakaya:cuisines/peculiar"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/meat",
+    "neo_mystias_izakaya:cuisines/greasy",
+    "neo_mystias_izakaya:cuisines/good_with_alcohol",
+    "neo_mystias_izakaya:cuisines/mountain_delicacy",
+    "neo_mystias_izakaya:cuisines/large_portion"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:youkai_mountain"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

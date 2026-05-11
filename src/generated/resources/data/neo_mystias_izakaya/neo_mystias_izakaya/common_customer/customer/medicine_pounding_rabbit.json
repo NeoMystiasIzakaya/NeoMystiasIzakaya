@@ -1,0 +1,28 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/mid_alcohol",
+    "neo_mystias_izakaya:beverages/shochu",
+    "neo_mystias_izakaya:beverages/beer",
+    "neo_mystias_izakaya:beverages/sweet",
+    "neo_mystias_izakaya:beverages/stimulating"
+  ],
+  "chats": [
+    "neo_mystias_izakaya:customer/medicine_pounding_rabbit/chat_0",
+    "neo_mystias_izakaya:customer/medicine_pounding_rabbit/chat_1",
+    "neo_mystias_izakaya:customer/medicine_pounding_rabbit/chat_2",
+    "neo_mystias_izakaya:customer/medicine_pounding_rabbit/chat_3"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/filling",
+    "neo_mystias_izakaya:cuisines/mountain_delicacy",
+    "neo_mystias_izakaya:cuisines/japanese",
+    "neo_mystias_izakaya:cuisines/chinese",
+    "neo_mystias_izakaya:cuisines/sweet",
+    "neo_mystias_izakaya:cuisines/refreshing",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:lunar_capital"
+  ]
+}

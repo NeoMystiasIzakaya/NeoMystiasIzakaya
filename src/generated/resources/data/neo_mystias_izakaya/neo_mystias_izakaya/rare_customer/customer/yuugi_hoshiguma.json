@@ -1,0 +1,41 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/high_alcohol",
+    "neo_mystias_izakaya:beverages/sake",
+    "neo_mystias_izakaya:beverages/beer",
+    "neo_mystias_izakaya:beverages/vintage"
+  ],
+  "budget": {
+    "max": 1000,
+    "min": 600
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/yuugi_hoshiguma/chat_0",
+    "neo_mystias_izakaya:customer/yuugi_hoshiguma/chat_1",
+    "neo_mystias_izakaya:customer/yuugi_hoshiguma/chat_2",
+    "neo_mystias_izakaya:customer/yuugi_hoshiguma/chat_3"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/vegetarian",
+    "neo_mystias_izakaya:cuisines/peculiar",
+    "neo_mystias_izakaya:cuisines/small_portion"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/legendary",
+    "neo_mystias_izakaya:cuisines/good_with_alcohol",
+    "neo_mystias_izakaya:cuisines/japanese",
+    "neo_mystias_izakaya:cuisines/signature",
+    "neo_mystias_izakaya:cuisines/strength_boosting",
+    "neo_mystias_izakaya:cuisines/aura_bursting",
+    "neo_mystias_izakaya:cuisines/large_portion",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:former_hell",
+    "neo_mystias_izakaya:hakurei_shrine",
+    "neo_mystias_izakaya:youkai_mountain",
+    "neo_mystias_izakaya:palace_of_the_earth_spirits"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

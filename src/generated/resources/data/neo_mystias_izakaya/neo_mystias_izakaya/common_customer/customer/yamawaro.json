@@ -1,0 +1,26 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/mid_alcohol",
+    "neo_mystias_izakaya:beverages/bitter"
+  ],
+  "chats": [
+    "neo_mystias_izakaya:customer/yamawaro/chat_0",
+    "neo_mystias_izakaya:customer/yamawaro/chat_1",
+    "neo_mystias_izakaya:customer/yamawaro/chat_2",
+    "neo_mystias_izakaya:customer/yamawaro/chat_3"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/premium",
+    "neo_mystias_izakaya:cuisines/mountain_delicacy",
+    "neo_mystias_izakaya:cuisines/signature",
+    "neo_mystias_izakaya:cuisines/hot",
+    "neo_mystias_izakaya:cuisines/peculiar",
+    "neo_mystias_izakaya:cuisines/small_portion",
+    "neo_mystias_izakaya:cuisines/large_portion",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:youkai_mountain"
+  ]
+}

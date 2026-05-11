@@ -1,0 +1,30 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/heatable",
+    "neo_mystias_izakaya:beverages/cocktail",
+    "neo_mystias_izakaya:beverages/western",
+    "neo_mystias_izakaya:beverages/stimulating"
+  ],
+  "chats": [
+    "neo_mystias_izakaya:customer/magician/chat_0",
+    "neo_mystias_izakaya:customer/magician/chat_1",
+    "neo_mystias_izakaya:customer/magician/chat_2",
+    "neo_mystias_izakaya:customer/magician/chat_3"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/vegetarian",
+    "neo_mystias_izakaya:cuisines/homecooking",
+    "neo_mystias_izakaya:cuisines/premium",
+    "neo_mystias_izakaya:cuisines/legendary",
+    "neo_mystias_izakaya:cuisines/mild",
+    "neo_mystias_izakaya:cuisines/western",
+    "neo_mystias_izakaya:cuisines/fresh",
+    "neo_mystias_izakaya:cuisines/photogenic",
+    "neo_mystias_izakaya:cuisines/refreshing",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:forest_of_magic"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/western",
+    "neo_mystias_izakaya:beverages/liquor",
+    "neo_mystias_izakaya:beverages/neat",
+    "neo_mystias_izakaya:beverages/modern"
+  ],
+  "chats": [
+    "neo_mystias_izakaya:customer/toy_soldier/chat_0",
+    "neo_mystias_izakaya:customer/toy_soldier/chat_1",
+    "neo_mystias_izakaya:customer/toy_soldier/chat_2",
+    "neo_mystias_izakaya:customer/toy_soldier/chat_3"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/sea_delicacy",
+    "neo_mystias_izakaya:cuisines/western",
+    "neo_mystias_izakaya:cuisines/signature",
+    "neo_mystias_izakaya:cuisines/refreshing",
+    "neo_mystias_izakaya:cuisines/wonderful",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:shining_needle_castle"
+  ]
+}

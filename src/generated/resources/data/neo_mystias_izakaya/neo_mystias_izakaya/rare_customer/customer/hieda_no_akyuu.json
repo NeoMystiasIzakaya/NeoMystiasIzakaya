@@ -1,0 +1,38 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/heatable",
+    "neo_mystias_izakaya:beverages/sake"
+  ],
+  "budget": {
+    "max": 800,
+    "min": 500
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/hieda_no_akyuu/chat_0",
+    "neo_mystias_izakaya:customer/hieda_no_akyuu/chat_1",
+    "neo_mystias_izakaya:customer/hieda_no_akyuu/chat_2",
+    "neo_mystias_izakaya:customer/hieda_no_akyuu/chat_3",
+    "neo_mystias_izakaya:customer/hieda_no_akyuu/chat_4"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/greasy",
+    "neo_mystias_izakaya:cuisines/salty",
+    "neo_mystias_izakaya:cuisines/hot",
+    "neo_mystias_izakaya:cuisines/trend_unpopular"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/premium",
+    "neo_mystias_izakaya:cuisines/mild",
+    "neo_mystias_izakaya:cuisines/japanese",
+    "neo_mystias_izakaya:cuisines/sweet",
+    "neo_mystias_izakaya:cuisines/cultural_heritage",
+    "neo_mystias_izakaya:cuisines/soup",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:human_village",
+    "neo_mystias_izakaya:myouren_temple"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

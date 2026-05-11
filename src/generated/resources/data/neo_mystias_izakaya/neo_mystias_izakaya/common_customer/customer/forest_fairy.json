@@ -1,0 +1,31 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/no_alcohol",
+    "neo_mystias_izakaya:beverages/low_alcohol",
+    "neo_mystias_izakaya:beverages/sake",
+    "neo_mystias_izakaya:beverages/fruity",
+    "neo_mystias_izakaya:beverages/sweet"
+  ],
+  "chats": [
+    "neo_mystias_izakaya:customer/forest_fairy/chat_0",
+    "neo_mystias_izakaya:customer/forest_fairy/chat_1",
+    "neo_mystias_izakaya:customer/forest_fairy/chat_2",
+    "neo_mystias_izakaya:customer/forest_fairy/chat_3"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/homecooking",
+    "neo_mystias_izakaya:cuisines/japanese",
+    "neo_mystias_izakaya:cuisines/chinese",
+    "neo_mystias_izakaya:cuisines/fresh",
+    "neo_mystias_izakaya:cuisines/sweet",
+    "neo_mystias_izakaya:cuisines/signature",
+    "neo_mystias_izakaya:cuisines/refreshing",
+    "neo_mystias_izakaya:cuisines/small_portion",
+    "neo_mystias_izakaya:cuisines/dreamy",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:forest_of_magic"
+  ]
+}

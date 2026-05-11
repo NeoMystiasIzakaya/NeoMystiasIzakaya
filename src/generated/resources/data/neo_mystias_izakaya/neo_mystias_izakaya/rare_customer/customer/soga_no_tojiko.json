@@ -1,0 +1,36 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/high_alcohol",
+    "neo_mystias_izakaya:beverages/shochu",
+    "neo_mystias_izakaya:beverages/beer",
+    "neo_mystias_izakaya:beverages/bitter"
+  ],
+  "budget": {
+    "max": 600,
+    "min": 500
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/soga_no_tojiko/chat_0",
+    "neo_mystias_izakaya:customer/soga_no_tojiko/chat_1",
+    "neo_mystias_izakaya:customer/soga_no_tojiko/chat_2",
+    "neo_mystias_izakaya:customer/soga_no_tojiko/chat_3"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/sweet",
+    "neo_mystias_izakaya:cuisines/refreshing"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/homecooking",
+    "neo_mystias_izakaya:cuisines/greasy",
+    "neo_mystias_izakaya:cuisines/filling",
+    "neo_mystias_izakaya:cuisines/japanese",
+    "neo_mystias_izakaya:cuisines/signature",
+    "neo_mystias_izakaya:cuisines/strength_boosting",
+    "neo_mystias_izakaya:cuisines/grilled"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:divine_spirit_mausoleum"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

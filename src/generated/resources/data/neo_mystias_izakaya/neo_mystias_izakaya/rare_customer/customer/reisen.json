@@ -1,0 +1,37 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/high_alcohol",
+    "neo_mystias_izakaya:beverages/heatable",
+    "neo_mystias_izakaya:beverages/shochu",
+    "neo_mystias_izakaya:beverages/beer",
+    "neo_mystias_izakaya:beverages/bitter"
+  ],
+  "budget": {
+    "max": 350,
+    "min": 200
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/reisen/chat_0",
+    "neo_mystias_izakaya:customer/reisen/chat_1",
+    "neo_mystias_izakaya:customer/reisen/chat_2",
+    "neo_mystias_izakaya:customer/reisen/chat_3"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/wonderful",
+    "neo_mystias_izakaya:cuisines/expensive"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/homecooking",
+    "neo_mystias_izakaya:cuisines/mountain_delicacy",
+    "neo_mystias_izakaya:cuisines/sea_delicacy",
+    "neo_mystias_izakaya:cuisines/chinese",
+    "neo_mystias_izakaya:cuisines/sweet",
+    "neo_mystias_izakaya:cuisines/small_portion",
+    "neo_mystias_izakaya:cuisines/specialty"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:lunar_capital"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

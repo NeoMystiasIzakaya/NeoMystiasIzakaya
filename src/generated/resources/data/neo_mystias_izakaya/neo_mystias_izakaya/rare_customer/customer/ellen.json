@@ -1,0 +1,38 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/low_alcohol",
+    "neo_mystias_izakaya:beverages/heatable",
+    "neo_mystias_izakaya:beverages/beer",
+    "neo_mystias_izakaya:beverages/sweet",
+    "neo_mystias_izakaya:beverages/vintage"
+  ],
+  "budget": {
+    "max": 500,
+    "min": 300
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/ellen/chat_0",
+    "neo_mystias_izakaya:customer/ellen/chat_1",
+    "neo_mystias_izakaya:customer/ellen/chat_2",
+    "neo_mystias_izakaya:customer/ellen/chat_3"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/aquatic",
+    "neo_mystias_izakaya:cuisines/greasy",
+    "neo_mystias_izakaya:cuisines/raw"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/homecooking",
+    "neo_mystias_izakaya:cuisines/filling",
+    "neo_mystias_izakaya:cuisines/western",
+    "neo_mystias_izakaya:cuisines/sweet",
+    "neo_mystias_izakaya:cuisines/refreshing",
+    "neo_mystias_izakaya:cuisines/dreamy",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:makai"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

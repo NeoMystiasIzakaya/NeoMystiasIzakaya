@@ -1,0 +1,41 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/high_alcohol",
+    "neo_mystias_izakaya:beverages/heatable",
+    "neo_mystias_izakaya:beverages/shochu",
+    "neo_mystias_izakaya:beverages/vintage"
+  ],
+  "budget": {
+    "max": 1200,
+    "min": 1000
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/mamizou_futatsuiwa/chat_0",
+    "neo_mystias_izakaya:customer/mamizou_futatsuiwa/chat_1",
+    "neo_mystias_izakaya:customer/mamizou_futatsuiwa/chat_2",
+    "neo_mystias_izakaya:customer/mamizou_futatsuiwa/chat_3"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/hot",
+    "neo_mystias_izakaya:cuisines/spicy"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/meat",
+    "neo_mystias_izakaya:cuisines/aquatic",
+    "neo_mystias_izakaya:cuisines/homecooking",
+    "neo_mystias_izakaya:cuisines/legendary",
+    "neo_mystias_izakaya:cuisines/good_with_alcohol",
+    "neo_mystias_izakaya:cuisines/japanese",
+    "neo_mystias_izakaya:cuisines/fruity",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:youkai_trail",
+    "neo_mystias_izakaya:human_village",
+    "neo_mystias_izakaya:hakurei_shrine",
+    "neo_mystias_izakaya:myouren_temple",
+    "neo_mystias_izakaya:divine_spirit_mausoleum"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

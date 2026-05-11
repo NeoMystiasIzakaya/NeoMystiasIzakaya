@@ -1,0 +1,26 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/liquor",
+    "neo_mystias_izakaya:beverages/fruity",
+    "neo_mystias_izakaya:beverages/sweet",
+    "neo_mystias_izakaya:beverages/soda"
+  ],
+  "chats": [
+    "neo_mystias_izakaya:customer/sunflower_fairy/chat_0",
+    "neo_mystias_izakaya:customer/sunflower_fairy/chat_1",
+    "neo_mystias_izakaya:customer/sunflower_fairy/chat_2",
+    "neo_mystias_izakaya:customer/sunflower_fairy/chat_3"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/fresh",
+    "neo_mystias_izakaya:cuisines/sweet",
+    "neo_mystias_izakaya:cuisines/strength_boosting",
+    "neo_mystias_izakaya:cuisines/wonderful",
+    "neo_mystias_izakaya:cuisines/specialty",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:garden_of_the_sun"
+  ]
+}

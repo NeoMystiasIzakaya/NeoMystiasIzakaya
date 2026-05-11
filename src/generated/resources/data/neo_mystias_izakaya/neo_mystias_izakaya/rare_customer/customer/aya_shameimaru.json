@@ -1,0 +1,50 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/high_alcohol",
+    "neo_mystias_izakaya:beverages/chillable",
+    "neo_mystias_izakaya:beverages/shochu",
+    "neo_mystias_izakaya:beverages/stimulating"
+  ],
+  "budget": {
+    "max": 600,
+    "min": 500
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/aya_shameimaru/chat_0",
+    "neo_mystias_izakaya:customer/aya_shameimaru/chat_1",
+    "neo_mystias_izakaya:customer/aya_shameimaru/chat_2",
+    "neo_mystias_izakaya:customer/aya_shameimaru/chat_3"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/western",
+    "neo_mystias_izakaya:cuisines/trend_unpopular"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/meat",
+    "neo_mystias_izakaya:cuisines/homecooking",
+    "neo_mystias_izakaya:cuisines/good_with_alcohol",
+    "neo_mystias_izakaya:cuisines/japanese",
+    "neo_mystias_izakaya:cuisines/signature",
+    "neo_mystias_izakaya:cuisines/photogenic",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:garden_of_the_sun",
+    "neo_mystias_izakaya:youkai_trail",
+    "neo_mystias_izakaya:human_village",
+    "neo_mystias_izakaya:hakurei_shrine",
+    "neo_mystias_izakaya:scarlet_devil_mansion",
+    "neo_mystias_izakaya:bamboo_forest_of_the_lost",
+    "neo_mystias_izakaya:forest_of_magic",
+    "neo_mystias_izakaya:youkai_mountain",
+    "neo_mystias_izakaya:former_hell",
+    "neo_mystias_izakaya:palace_of_the_earth_spirits",
+    "neo_mystias_izakaya:myouren_temple",
+    "neo_mystias_izakaya:divine_spirit_mausoleum",
+    "neo_mystias_izakaya:shining_needle_castle",
+    "neo_mystias_izakaya:lunar_capital",
+    "neo_mystias_izakaya:makai"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

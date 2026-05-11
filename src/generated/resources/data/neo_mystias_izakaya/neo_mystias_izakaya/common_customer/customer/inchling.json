@@ -1,0 +1,28 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/chillable",
+    "neo_mystias_izakaya:beverages/heatable",
+    "neo_mystias_izakaya:beverages/beer",
+    "neo_mystias_izakaya:beverages/sweet",
+    "neo_mystias_izakaya:beverages/vintage"
+  ],
+  "chats": [
+    "neo_mystias_izakaya:customer/inchling/chat_0",
+    "neo_mystias_izakaya:customer/inchling/chat_1",
+    "neo_mystias_izakaya:customer/inchling/chat_2",
+    "neo_mystias_izakaya:customer/inchling/chat_3"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/legendary",
+    "neo_mystias_izakaya:cuisines/japanese",
+    "neo_mystias_izakaya:cuisines/strength_boosting",
+    "neo_mystias_izakaya:cuisines/small_portion",
+    "neo_mystias_izakaya:cuisines/dreamy",
+    "neo_mystias_izakaya:cuisines/aura_bursting",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:shining_needle_castle"
+  ]
+}

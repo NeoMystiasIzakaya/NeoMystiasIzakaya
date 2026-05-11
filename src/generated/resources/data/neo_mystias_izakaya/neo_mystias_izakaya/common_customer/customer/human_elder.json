@@ -1,0 +1,25 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/low_alcohol"
+  ],
+  "chats": [
+    "neo_mystias_izakaya:customer/human_elder/chat_0",
+    "neo_mystias_izakaya:customer/human_elder/chat_1",
+    "neo_mystias_izakaya:customer/human_elder/chat_2",
+    "neo_mystias_izakaya:customer/human_elder/chat_3",
+    "neo_mystias_izakaya:customer/human_elder/chat_4"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/premium",
+    "neo_mystias_izakaya:cuisines/signature",
+    "neo_mystias_izakaya:cuisines/photogenic",
+    "neo_mystias_izakaya:cuisines/hot",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:human_village",
+    "neo_mystias_izakaya:hakurei_shrine",
+    "neo_mystias_izakaya:divine_spirit_mausoleum"
+  ]
+}

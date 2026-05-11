@@ -1,0 +1,37 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/mid_alcohol",
+    "neo_mystias_izakaya:beverages/shochu",
+    "neo_mystias_izakaya:beverages/neat",
+    "neo_mystias_izakaya:beverages/dry"
+  ],
+  "budget": {
+    "max": 600,
+    "min": 300
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/seija_kijin/chat_0",
+    "neo_mystias_izakaya:customer/seija_kijin/chat_1",
+    "neo_mystias_izakaya:customer/seija_kijin/chat_2",
+    "neo_mystias_izakaya:customer/seija_kijin/chat_3"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/premium",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/greasy",
+    "neo_mystias_izakaya:cuisines/good_with_alcohol",
+    "neo_mystias_izakaya:cuisines/hot",
+    "neo_mystias_izakaya:cuisines/strength_boosting",
+    "neo_mystias_izakaya:cuisines/peculiar",
+    "neo_mystias_izakaya:cuisines/wonderful",
+    "neo_mystias_izakaya:cuisines/aura_bursting",
+    "neo_mystias_izakaya:cuisines/trend_unpopular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:shining_needle_castle"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

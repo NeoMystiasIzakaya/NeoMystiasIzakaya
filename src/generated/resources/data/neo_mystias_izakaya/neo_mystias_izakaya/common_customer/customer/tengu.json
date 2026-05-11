@@ -1,0 +1,27 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/shochu",
+    "neo_mystias_izakaya:beverages/sake"
+  ],
+  "chats": [
+    "neo_mystias_izakaya:customer/tengu/chat_0",
+    "neo_mystias_izakaya:customer/tengu/chat_1",
+    "neo_mystias_izakaya:customer/tengu/chat_2",
+    "neo_mystias_izakaya:customer/tengu/chat_3",
+    "neo_mystias_izakaya:customer/tengu/chat_4"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/premium",
+    "neo_mystias_izakaya:cuisines/signature",
+    "neo_mystias_izakaya:cuisines/photogenic",
+    "neo_mystias_izakaya:cuisines/fungus",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:hakurei_shrine",
+    "neo_mystias_izakaya:scarlet_devil_mansion",
+    "neo_mystias_izakaya:bamboo_forest_of_the_lost",
+    "neo_mystias_izakaya:youkai_mountain"
+  ]
+}

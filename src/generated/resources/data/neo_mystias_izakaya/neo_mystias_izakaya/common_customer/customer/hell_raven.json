@@ -1,0 +1,30 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/mid_alcohol",
+    "neo_mystias_izakaya:beverages/heatable",
+    "neo_mystias_izakaya:beverages/beer",
+    "neo_mystias_izakaya:beverages/dry",
+    "neo_mystias_izakaya:beverages/bitter"
+  ],
+  "chats": [
+    "neo_mystias_izakaya:customer/hell_raven/chat_0",
+    "neo_mystias_izakaya:customer/hell_raven/chat_1",
+    "neo_mystias_izakaya:customer/hell_raven/chat_2",
+    "neo_mystias_izakaya:customer/hell_raven/chat_3"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/meat",
+    "neo_mystias_izakaya:cuisines/homecooking",
+    "neo_mystias_izakaya:cuisines/mountain_delicacy",
+    "neo_mystias_izakaya:cuisines/sea_delicacy",
+    "neo_mystias_izakaya:cuisines/salty",
+    "neo_mystias_izakaya:cuisines/small_portion",
+    "neo_mystias_izakaya:cuisines/aura_bursting",
+    "neo_mystias_izakaya:cuisines/sour",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:palace_of_the_earth_spirits"
+  ]
+}

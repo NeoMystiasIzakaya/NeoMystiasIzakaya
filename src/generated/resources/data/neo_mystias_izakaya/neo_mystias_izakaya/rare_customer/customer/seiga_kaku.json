@@ -1,0 +1,37 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/low_alcohol",
+    "neo_mystias_izakaya:beverages/sake",
+    "neo_mystias_izakaya:beverages/fruity",
+    "neo_mystias_izakaya:beverages/modern"
+  ],
+  "budget": {
+    "max": 900,
+    "min": 400
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/seiga_kaku/chat_0",
+    "neo_mystias_izakaya:customer/seiga_kaku/chat_1",
+    "neo_mystias_izakaya:customer/seiga_kaku/chat_2",
+    "neo_mystias_izakaya:customer/seiga_kaku/chat_3"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/greasy",
+    "neo_mystias_izakaya:cuisines/filling"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/vegetarian",
+    "neo_mystias_izakaya:cuisines/legendary",
+    "neo_mystias_izakaya:cuisines/chinese",
+    "neo_mystias_izakaya:cuisines/sweet",
+    "neo_mystias_izakaya:cuisines/wonderful",
+    "neo_mystias_izakaya:cuisines/small_portion",
+    "neo_mystias_izakaya:cuisines/specialty",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:divine_spirit_mausoleum"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

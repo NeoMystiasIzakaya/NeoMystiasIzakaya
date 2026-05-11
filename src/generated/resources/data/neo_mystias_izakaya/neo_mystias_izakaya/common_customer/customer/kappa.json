@@ -1,0 +1,29 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/sweet"
+  ],
+  "chats": [
+    "neo_mystias_izakaya:customer/kappa/chat_0",
+    "neo_mystias_izakaya:customer/kappa/chat_1",
+    "neo_mystias_izakaya:customer/kappa/chat_2",
+    "neo_mystias_izakaya:customer/kappa/chat_3",
+    "neo_mystias_izakaya:customer/kappa/chat_4"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/premium",
+    "neo_mystias_izakaya:cuisines/sea_delicacy",
+    "neo_mystias_izakaya:cuisines/signature",
+    "neo_mystias_izakaya:cuisines/hot",
+    "neo_mystias_izakaya:cuisines/peculiar",
+    "neo_mystias_izakaya:cuisines/small_portion",
+    "neo_mystias_izakaya:cuisines/large_portion",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:hakurei_shrine",
+    "neo_mystias_izakaya:scarlet_devil_mansion",
+    "neo_mystias_izakaya:forest_of_magic",
+    "neo_mystias_izakaya:youkai_mountain"
+  ]
+}

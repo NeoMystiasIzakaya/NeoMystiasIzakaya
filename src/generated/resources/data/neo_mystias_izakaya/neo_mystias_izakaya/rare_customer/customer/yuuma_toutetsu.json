@@ -1,0 +1,49 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/high_alcohol",
+    "neo_mystias_izakaya:beverages/shochu",
+    "neo_mystias_izakaya:beverages/neat",
+    "neo_mystias_izakaya:beverages/dry"
+  ],
+  "budget": {
+    "max": 9999,
+    "min": 9999
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/yuuma_toutetsu/chat_0",
+    "neo_mystias_izakaya:customer/yuuma_toutetsu/chat_1",
+    "neo_mystias_izakaya:customer/yuuma_toutetsu/chat_2",
+    "neo_mystias_izakaya:customer/yuuma_toutetsu/chat_3",
+    "neo_mystias_izakaya:customer/yuuma_toutetsu/chat_4"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/meat",
+    "neo_mystias_izakaya:cuisines/premium",
+    "neo_mystias_izakaya:cuisines/legendary",
+    "neo_mystias_izakaya:cuisines/filling",
+    "neo_mystias_izakaya:cuisines/fresh",
+    "neo_mystias_izakaya:cuisines/raw",
+    "neo_mystias_izakaya:cuisines/strength_boosting",
+    "neo_mystias_izakaya:cuisines/wonderful",
+    "neo_mystias_izakaya:cuisines/large_portion"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:youkai_mountain",
+    "neo_mystias_izakaya:youkai_trail",
+    "neo_mystias_izakaya:hakurei_shrine",
+    "neo_mystias_izakaya:scarlet_devil_mansion",
+    "neo_mystias_izakaya:forest_of_magic",
+    "neo_mystias_izakaya:bamboo_forest_of_the_lost",
+    "neo_mystias_izakaya:former_hell",
+    "neo_mystias_izakaya:palace_of_the_earth_spirits",
+    "neo_mystias_izakaya:myouren_temple",
+    "neo_mystias_izakaya:divine_spirit_mausoleum",
+    "neo_mystias_izakaya:garden_of_the_sun",
+    "neo_mystias_izakaya:shining_needle_castle",
+    "neo_mystias_izakaya:lunar_capital",
+    "neo_mystias_izakaya:makai"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

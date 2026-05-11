@@ -1,9 +1,9 @@
-package icu.gensoukyo.neo_mystias_izakaya.content.customer;
+package icu.gensoukyo.neo_mystias_izakaya.content.customer.consts;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import net.minecraft.resources.Identifier;
 
-public class CustomerLocations {
+public final class CustomerLocations {
 
     public static final Identifier YOUKAI_TRAIL = NeoMystiasIzakaya.id("youkai_trail");
     public static final Identifier HUMAN_VILLAGE = NeoMystiasIzakaya.id("human_village");

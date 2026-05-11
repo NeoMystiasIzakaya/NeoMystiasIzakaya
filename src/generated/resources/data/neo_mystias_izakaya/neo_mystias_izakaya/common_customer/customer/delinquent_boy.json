@@ -1,0 +1,28 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/high_alcohol",
+    "neo_mystias_izakaya:beverages/heatable",
+    "neo_mystias_izakaya:beverages/shochu",
+    "neo_mystias_izakaya:beverages/beer",
+    "neo_mystias_izakaya:beverages/bitter",
+    "neo_mystias_izakaya:beverages/stimulating"
+  ],
+  "chats": [
+    "neo_mystias_izakaya:customer/delinquent_boy/chat_0",
+    "neo_mystias_izakaya:customer/delinquent_boy/chat_1",
+    "neo_mystias_izakaya:customer/delinquent_boy/chat_2",
+    "neo_mystias_izakaya:customer/delinquent_boy/chat_3"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/homecooking",
+    "neo_mystias_izakaya:cuisines/good_with_alcohol",
+    "neo_mystias_izakaya:cuisines/filling",
+    "neo_mystias_izakaya:cuisines/japanese",
+    "neo_mystias_izakaya:cuisines/strength_boosting",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:shining_needle_castle"
+  ]
+}

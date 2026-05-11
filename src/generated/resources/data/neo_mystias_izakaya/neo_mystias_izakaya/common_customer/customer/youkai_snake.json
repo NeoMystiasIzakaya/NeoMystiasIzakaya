@@ -1,0 +1,26 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/shochu",
+    "neo_mystias_izakaya:beverages/sake"
+  ],
+  "chats": [
+    "neo_mystias_izakaya:customer/youkai_snake/chat_0",
+    "neo_mystias_izakaya:customer/youkai_snake/chat_1",
+    "neo_mystias_izakaya:customer/youkai_snake/chat_2",
+    "neo_mystias_izakaya:customer/youkai_snake/chat_3",
+    "neo_mystias_izakaya:customer/youkai_snake/chat_4"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/meat",
+    "neo_mystias_izakaya:cuisines/good_with_alcohol",
+    "neo_mystias_izakaya:cuisines/mountain_delicacy",
+    "neo_mystias_izakaya:cuisines/strength_boosting",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:youkai_trail",
+    "neo_mystias_izakaya:youkai_mountain",
+    "neo_mystias_izakaya:former_hell"
+  ]
+}

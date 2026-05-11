@@ -1,0 +1,38 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/mid_alcohol",
+    "neo_mystias_izakaya:beverages/high_alcohol",
+    "neo_mystias_izakaya:beverages/sake",
+    "neo_mystias_izakaya:beverages/neat"
+  ],
+  "budget": {
+    "max": 500,
+    "min": 400
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/nitori_kawashiro/chat_0",
+    "neo_mystias_izakaya:customer/nitori_kawashiro/chat_1",
+    "neo_mystias_izakaya:customer/nitori_kawashiro/chat_2",
+    "neo_mystias_izakaya:customer/nitori_kawashiro/chat_3",
+    "neo_mystias_izakaya:customer/nitori_kawashiro/chat_4",
+    "neo_mystias_izakaya:customer/nitori_kawashiro/chat_5"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/vegetarian",
+    "neo_mystias_izakaya:cuisines/mountain_delicacy",
+    "neo_mystias_izakaya:cuisines/cultural_heritage"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/aquatic",
+    "neo_mystias_izakaya:cuisines/premium",
+    "neo_mystias_izakaya:cuisines/good_with_alcohol",
+    "neo_mystias_izakaya:cuisines/salty",
+    "neo_mystias_izakaya:cuisines/signature",
+    "neo_mystias_izakaya:cuisines/peculiar"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:youkai_mountain"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

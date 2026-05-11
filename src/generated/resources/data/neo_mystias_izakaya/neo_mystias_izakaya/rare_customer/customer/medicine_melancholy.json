@@ -1,0 +1,36 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/no_alcohol",
+    "neo_mystias_izakaya:beverages/fruity",
+    "neo_mystias_izakaya:beverages/sweet",
+    "neo_mystias_izakaya:beverages/bitter"
+  ],
+  "budget": {
+    "max": 400,
+    "min": 200
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/medicine_melancholy/chat_0",
+    "neo_mystias_izakaya:customer/medicine_melancholy/chat_1",
+    "neo_mystias_izakaya:customer/medicine_melancholy/chat_2",
+    "neo_mystias_izakaya:customer/medicine_melancholy/chat_3"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/cultural_heritage"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/sweet",
+    "neo_mystias_izakaya:cuisines/signature",
+    "neo_mystias_izakaya:cuisines/photogenic",
+    "neo_mystias_izakaya:cuisines/refreshing",
+    "neo_mystias_izakaya:cuisines/fungus",
+    "neo_mystias_izakaya:cuisines/small_portion",
+    "neo_mystias_izakaya:cuisines/dreamy",
+    "neo_mystias_izakaya:cuisines/poison"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:garden_of_the_sun"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

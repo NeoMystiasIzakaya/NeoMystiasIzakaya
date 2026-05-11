@@ -24,7 +24,7 @@ public class DataGenerator {
         event.createProvider(output -> new NMILanguageProvider(output, "zh_cn"));
         event.createProvider(output -> new NMITagItemListProvider(output, NeoMystiasIzakaya.MODID));
         event.createProvider(output -> new NMINMIRecipeProvider(output, NeoMystiasIzakaya.MODID));
-//        event.createProvider(output -> new NMICustomerProvider(output, NeoMystiasIzakaya.MODID));
+        event.createProvider(output -> new NMICustomerProvider(output, NeoMystiasIzakaya.MODID));
 
         event.createProvider(NMIItemModelProvider::new);
     }

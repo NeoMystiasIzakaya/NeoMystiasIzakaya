@@ -1,0 +1,36 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/shochu",
+    "neo_mystias_izakaya:beverages/beer"
+  ],
+  "budget": {
+    "max": 400,
+    "min": 250
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/rinnosuke_morichika/chat_0",
+    "neo_mystias_izakaya:customer/rinnosuke_morichika/chat_1",
+    "neo_mystias_izakaya:customer/rinnosuke_morichika/chat_2",
+    "neo_mystias_izakaya:customer/rinnosuke_morichika/chat_3",
+    "neo_mystias_izakaya:customer/rinnosuke_morichika/chat_4"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/greasy",
+    "neo_mystias_izakaya:cuisines/good_with_alcohol",
+    "neo_mystias_izakaya:cuisines/peculiar",
+    "neo_mystias_izakaya:cuisines/trend_unpopular"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/homecooking",
+    "neo_mystias_izakaya:cuisines/filling",
+    "neo_mystias_izakaya:cuisines/fresh",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:human_village",
+    "neo_mystias_izakaya:forest_of_magic",
+    "neo_mystias_izakaya:garden_of_the_sun"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

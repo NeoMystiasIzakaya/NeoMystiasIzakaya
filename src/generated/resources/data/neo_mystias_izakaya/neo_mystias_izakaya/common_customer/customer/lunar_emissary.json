@@ -1,0 +1,26 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/no_alcohol",
+    "neo_mystias_izakaya:beverages/heatable",
+    "neo_mystias_izakaya:beverages/bitter",
+    "neo_mystias_izakaya:beverages/modern",
+    "neo_mystias_izakaya:beverages/stimulating"
+  ],
+  "chats": [
+    "neo_mystias_izakaya:customer/lunar_emissary/chat_0",
+    "neo_mystias_izakaya:customer/lunar_emissary/chat_1"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/legendary",
+    "neo_mystias_izakaya:cuisines/filling",
+    "neo_mystias_izakaya:cuisines/western",
+    "neo_mystias_izakaya:cuisines/signature",
+    "neo_mystias_izakaya:cuisines/strength_boosting",
+    "neo_mystias_izakaya:cuisines/specialty",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:lunar_capital"
+  ]
+}

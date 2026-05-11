@@ -1,0 +1,36 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/low_alcohol",
+    "neo_mystias_izakaya:beverages/western",
+    "neo_mystias_izakaya:beverages/modern"
+  ],
+  "budget": {
+    "max": 800,
+    "min": 500
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/alice/chat_0",
+    "neo_mystias_izakaya:customer/alice/chat_1",
+    "neo_mystias_izakaya:customer/alice/chat_2",
+    "neo_mystias_izakaya:customer/alice/chat_3"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/meat",
+    "neo_mystias_izakaya:cuisines/greasy",
+    "neo_mystias_izakaya:cuisines/filling",
+    "neo_mystias_izakaya:cuisines/peculiar"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/homecooking",
+    "neo_mystias_izakaya:cuisines/premium",
+    "neo_mystias_izakaya:cuisines/western",
+    "neo_mystias_izakaya:cuisines/sweet",
+    "neo_mystias_izakaya:cuisines/cultural_heritage"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:forest_of_magic",
+    "neo_mystias_izakaya:garden_of_the_sun"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

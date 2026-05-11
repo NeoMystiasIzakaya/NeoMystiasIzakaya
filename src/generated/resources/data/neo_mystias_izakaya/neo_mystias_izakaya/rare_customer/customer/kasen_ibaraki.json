@@ -1,0 +1,36 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/mid_alcohol",
+    "neo_mystias_izakaya:beverages/neat",
+    "neo_mystias_izakaya:beverages/vintage"
+  ],
+  "budget": {
+    "max": 600,
+    "min": 400
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/kasen_ibaraki/chat_0",
+    "neo_mystias_izakaya:customer/kasen_ibaraki/chat_1",
+    "neo_mystias_izakaya:customer/kasen_ibaraki/chat_2",
+    "neo_mystias_izakaya:customer/kasen_ibaraki/chat_3",
+    "neo_mystias_izakaya:customer/kasen_ibaraki/chat_4"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/raw",
+    "neo_mystias_izakaya:cuisines/spicy",
+    "neo_mystias_izakaya:cuisines/economical"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/homecooking",
+    "neo_mystias_izakaya:cuisines/good_with_alcohol",
+    "neo_mystias_izakaya:cuisines/japanese",
+    "neo_mystias_izakaya:cuisines/cultural_heritage"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:human_village",
+    "neo_mystias_izakaya:former_hell",
+    "neo_mystias_izakaya:divine_spirit_mausoleum"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

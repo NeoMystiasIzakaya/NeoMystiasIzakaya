@@ -1,0 +1,38 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/heatable",
+    "neo_mystias_izakaya:beverages/shochu",
+    "neo_mystias_izakaya:beverages/neat",
+    "neo_mystias_izakaya:beverages/dry",
+    "neo_mystias_izakaya:beverages/stimulating"
+  ],
+  "budget": {
+    "max": 1200,
+    "min": 1000
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/watatsuki_no_yorihime/chat_0",
+    "neo_mystias_izakaya:customer/watatsuki_no_yorihime/chat_1",
+    "neo_mystias_izakaya:customer/watatsuki_no_yorihime/chat_2",
+    "neo_mystias_izakaya:customer/watatsuki_no_yorihime/chat_3"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/mountain_delicacy",
+    "neo_mystias_izakaya:cuisines/fungus"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/premium",
+    "neo_mystias_izakaya:cuisines/legendary",
+    "neo_mystias_izakaya:cuisines/mild",
+    "neo_mystias_izakaya:cuisines/chinese",
+    "neo_mystias_izakaya:cuisines/hot",
+    "neo_mystias_izakaya:cuisines/strength_boosting",
+    "neo_mystias_izakaya:cuisines/cultural_heritage",
+    "neo_mystias_izakaya:cuisines/small_portion"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:lunar_capital"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

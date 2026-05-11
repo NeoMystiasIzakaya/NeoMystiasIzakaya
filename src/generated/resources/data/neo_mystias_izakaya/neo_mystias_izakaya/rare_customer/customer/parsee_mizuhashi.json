@@ -1,0 +1,37 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/no_alcohol",
+    "neo_mystias_izakaya:beverages/heatable",
+    "neo_mystias_izakaya:beverages/neat",
+    "neo_mystias_izakaya:beverages/dry",
+    "neo_mystias_izakaya:beverages/bitter"
+  ],
+  "budget": {
+    "max": 400,
+    "min": 300
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/parsee_mizuhashi/chat_0",
+    "neo_mystias_izakaya:customer/parsee_mizuhashi/chat_1",
+    "neo_mystias_izakaya:customer/parsee_mizuhashi/chat_2",
+    "neo_mystias_izakaya:customer/parsee_mizuhashi/chat_3"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/sweet",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/meat",
+    "neo_mystias_izakaya:cuisines/salty",
+    "neo_mystias_izakaya:cuisines/fresh",
+    "neo_mystias_izakaya:cuisines/fruity",
+    "neo_mystias_izakaya:cuisines/spicy",
+    "neo_mystias_izakaya:cuisines/sour",
+    "neo_mystias_izakaya:cuisines/trend_unpopular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:former_hell"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

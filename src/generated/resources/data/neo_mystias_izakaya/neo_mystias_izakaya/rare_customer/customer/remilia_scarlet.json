@@ -1,0 +1,39 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/high_alcohol",
+    "neo_mystias_izakaya:beverages/western",
+    "neo_mystias_izakaya:beverages/fruity",
+    "neo_mystias_izakaya:beverages/sweet",
+    "neo_mystias_izakaya:beverages/vintage"
+  ],
+  "budget": {
+    "max": 5000,
+    "min": 4950
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/remilia_scarlet/chat_0",
+    "neo_mystias_izakaya:customer/remilia_scarlet/chat_1",
+    "neo_mystias_izakaya:customer/remilia_scarlet/chat_2",
+    "neo_mystias_izakaya:customer/remilia_scarlet/chat_3"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/salty",
+    "neo_mystias_izakaya:cuisines/spicy",
+    "neo_mystias_izakaya:cuisines/sour",
+    "neo_mystias_izakaya:cuisines/economical"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/premium",
+    "neo_mystias_izakaya:cuisines/legendary",
+    "neo_mystias_izakaya:cuisines/western",
+    "neo_mystias_izakaya:cuisines/sweet",
+    "neo_mystias_izakaya:cuisines/raw",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:hakurei_shrine",
+    "neo_mystias_izakaya:scarlet_devil_mansion"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

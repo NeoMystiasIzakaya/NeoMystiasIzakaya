@@ -1,0 +1,28 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/low_alcohol",
+    "neo_mystias_izakaya:beverages/bitter",
+    "neo_mystias_izakaya:beverages/modern",
+    "neo_mystias_izakaya:beverages/stimulating"
+  ],
+  "chats": [
+    "neo_mystias_izakaya:customer/taoist/chat_0",
+    "neo_mystias_izakaya:customer/taoist/chat_1",
+    "neo_mystias_izakaya:customer/taoist/chat_2",
+    "neo_mystias_izakaya:customer/taoist/chat_3",
+    "neo_mystias_izakaya:customer/taoist/chat_4"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/homecooking",
+    "neo_mystias_izakaya:cuisines/mild",
+    "neo_mystias_izakaya:cuisines/mountain_delicacy",
+    "neo_mystias_izakaya:cuisines/signature",
+    "neo_mystias_izakaya:cuisines/small_portion",
+    "neo_mystias_izakaya:cuisines/specialty",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:divine_spirit_mausoleum"
+  ]
+}

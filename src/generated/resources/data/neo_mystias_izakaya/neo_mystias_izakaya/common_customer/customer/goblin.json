@@ -1,0 +1,24 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/sake",
+    "neo_mystias_izakaya:beverages/western"
+  ],
+  "chats": [
+    "neo_mystias_izakaya:customer/goblin/chat_0",
+    "neo_mystias_izakaya:customer/goblin/chat_1",
+    "neo_mystias_izakaya:customer/goblin/chat_2",
+    "neo_mystias_izakaya:customer/goblin/chat_3",
+    "neo_mystias_izakaya:customer/goblin/chat_4"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/premium",
+    "neo_mystias_izakaya:cuisines/greasy",
+    "neo_mystias_izakaya:cuisines/mountain_delicacy",
+    "neo_mystias_izakaya:cuisines/refreshing",
+    "neo_mystias_izakaya:cuisines/hot",
+    "neo_mystias_izakaya:cuisines/strength_boosting",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": []
+}

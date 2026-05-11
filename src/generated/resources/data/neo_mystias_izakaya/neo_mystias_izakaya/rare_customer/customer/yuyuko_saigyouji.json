@@ -1,0 +1,41 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/high_alcohol",
+    "neo_mystias_izakaya:beverages/chillable",
+    "neo_mystias_izakaya:beverages/cocktail"
+  ],
+  "budget": {
+    "max": 2000,
+    "min": 1500
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/yuyuko_saigyouji/chat_0",
+    "neo_mystias_izakaya:customer/yuyuko_saigyouji/chat_1",
+    "neo_mystias_izakaya:customer/yuyuko_saigyouji/chat_2",
+    "neo_mystias_izakaya:customer/yuyuko_saigyouji/chat_3",
+    "neo_mystias_izakaya:customer/yuyuko_saigyouji/chat_4"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/vegetarian",
+    "neo_mystias_izakaya:cuisines/mild",
+    "neo_mystias_izakaya:cuisines/small_portion"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/meat",
+    "neo_mystias_izakaya:cuisines/aquatic",
+    "neo_mystias_izakaya:cuisines/premium",
+    "neo_mystias_izakaya:cuisines/legendary",
+    "neo_mystias_izakaya:cuisines/filling",
+    "neo_mystias_izakaya:cuisines/japanese",
+    "neo_mystias_izakaya:cuisines/chinese",
+    "neo_mystias_izakaya:cuisines/large_portion"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:hakurei_shrine",
+    "neo_mystias_izakaya:scarlet_devil_mansion",
+    "neo_mystias_izakaya:bamboo_forest_of_the_lost",
+    "neo_mystias_izakaya:divine_spirit_mausoleum"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

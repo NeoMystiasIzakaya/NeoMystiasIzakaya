@@ -1,0 +1,37 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/sake",
+    "neo_mystias_izakaya:beverages/vintage",
+    "neo_mystias_izakaya:beverages/modern"
+  ],
+  "budget": {
+    "max": 1500,
+    "min": 1000
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/kaguya_houraisan/chat_0",
+    "neo_mystias_izakaya:customer/kaguya_houraisan/chat_1",
+    "neo_mystias_izakaya:customer/kaguya_houraisan/chat_2",
+    "neo_mystias_izakaya:customer/kaguya_houraisan/chat_3",
+    "neo_mystias_izakaya:customer/kaguya_houraisan/chat_4"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/signature",
+    "neo_mystias_izakaya:cuisines/peculiar",
+    "neo_mystias_izakaya:cuisines/large_portion",
+    "neo_mystias_izakaya:cuisines/trend_unpopular"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/legendary",
+    "neo_mystias_izakaya:cuisines/japanese",
+    "neo_mystias_izakaya:cuisines/cultural_heritage",
+    "neo_mystias_izakaya:cuisines/wonderful",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:bamboo_forest_of_the_lost",
+    "neo_mystias_izakaya:shining_needle_castle"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

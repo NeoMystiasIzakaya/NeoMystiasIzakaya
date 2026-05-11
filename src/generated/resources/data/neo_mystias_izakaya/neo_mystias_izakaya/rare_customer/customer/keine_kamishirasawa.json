@@ -1,0 +1,40 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/shochu",
+    "neo_mystias_izakaya:beverages/sake",
+    "neo_mystias_izakaya:beverages/liquor"
+  ],
+  "budget": {
+    "max": 800,
+    "min": 400
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/keine_kamishirasawa/chat_0",
+    "neo_mystias_izakaya:customer/keine_kamishirasawa/chat_1",
+    "neo_mystias_izakaya:customer/keine_kamishirasawa/chat_2",
+    "neo_mystias_izakaya:customer/keine_kamishirasawa/chat_3",
+    "neo_mystias_izakaya:customer/keine_kamishirasawa/chat_4"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/greasy",
+    "neo_mystias_izakaya:cuisines/salty",
+    "neo_mystias_izakaya:cuisines/large_portion",
+    "neo_mystias_izakaya:cuisines/trend_unpopular"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/vegetarian",
+    "neo_mystias_izakaya:cuisines/homecooking",
+    "neo_mystias_izakaya:cuisines/mild",
+    "neo_mystias_izakaya:cuisines/japanese",
+    "neo_mystias_izakaya:cuisines/chinese",
+    "neo_mystias_izakaya:cuisines/cultural_heritage",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:human_village",
+    "neo_mystias_izakaya:forest_of_magic",
+    "neo_mystias_izakaya:myouren_temple"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

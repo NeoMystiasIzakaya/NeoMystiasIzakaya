@@ -1,0 +1,39 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/high_alcohol",
+    "neo_mystias_izakaya:beverages/chillable",
+    "neo_mystias_izakaya:beverages/sake",
+    "neo_mystias_izakaya:beverages/fruity",
+    "neo_mystias_izakaya:beverages/vintage"
+  ],
+  "budget": {
+    "max": 1500,
+    "min": 1200
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/watatsuki_no_toyohime/chat_0",
+    "neo_mystias_izakaya:customer/watatsuki_no_toyohime/chat_1",
+    "neo_mystias_izakaya:customer/watatsuki_no_toyohime/chat_2",
+    "neo_mystias_izakaya:customer/watatsuki_no_toyohime/chat_3"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/mountain_delicacy",
+    "neo_mystias_izakaya:cuisines/salty",
+    "neo_mystias_izakaya:cuisines/strength_boosting"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/vegetarian",
+    "neo_mystias_izakaya:cuisines/premium",
+    "neo_mystias_izakaya:cuisines/japanese",
+    "neo_mystias_izakaya:cuisines/sweet",
+    "neo_mystias_izakaya:cuisines/refreshing",
+    "neo_mystias_izakaya:cuisines/cultural_heritage",
+    "neo_mystias_izakaya:cuisines/fruity",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:lunar_capital"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

@@ -1,0 +1,30 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/low_alcohol",
+    "neo_mystias_izakaya:beverages/heatable",
+    "neo_mystias_izakaya:beverages/beer",
+    "neo_mystias_izakaya:beverages/fruity",
+    "neo_mystias_izakaya:beverages/bitter"
+  ],
+  "chats": [
+    "neo_mystias_izakaya:customer/hone_onna/chat_0",
+    "neo_mystias_izakaya:customer/hone_onna/chat_1",
+    "neo_mystias_izakaya:customer/hone_onna/chat_2",
+    "neo_mystias_izakaya:customer/hone_onna/chat_3"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/vegetarian",
+    "neo_mystias_izakaya:cuisines/mild",
+    "neo_mystias_izakaya:cuisines/fresh",
+    "neo_mystias_izakaya:cuisines/raw",
+    "neo_mystias_izakaya:cuisines/refreshing",
+    "neo_mystias_izakaya:cuisines/peculiar",
+    "neo_mystias_izakaya:cuisines/fungus",
+    "neo_mystias_izakaya:cuisines/sour",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:former_hell"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/mid_alcohol",
+    "neo_mystias_izakaya:beverages/neat",
+    "neo_mystias_izakaya:beverages/dry",
+    "neo_mystias_izakaya:beverages/soda"
+  ],
+  "chats": [
+    "neo_mystias_izakaya:customer/convalla_fairy/chat_0",
+    "neo_mystias_izakaya:customer/convalla_fairy/chat_1",
+    "neo_mystias_izakaya:customer/convalla_fairy/chat_2",
+    "neo_mystias_izakaya:customer/convalla_fairy/chat_3"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/good_with_alcohol",
+    "neo_mystias_izakaya:cuisines/raw",
+    "neo_mystias_izakaya:cuisines/small_portion",
+    "neo_mystias_izakaya:cuisines/dreamy",
+    "neo_mystias_izakaya:cuisines/poison",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:garden_of_the_sun"
+  ]
+}

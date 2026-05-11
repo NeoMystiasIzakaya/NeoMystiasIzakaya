@@ -1,0 +1,39 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/mid_alcohol",
+    "neo_mystias_izakaya:beverages/chillable",
+    "neo_mystias_izakaya:beverages/fruity",
+    "neo_mystias_izakaya:beverages/vintage"
+  ],
+  "budget": {
+    "max": 300,
+    "min": 150
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/kogasa_tatara/chat_0",
+    "neo_mystias_izakaya:customer/kogasa_tatara/chat_1",
+    "neo_mystias_izakaya:customer/kogasa_tatara/chat_2",
+    "neo_mystias_izakaya:customer/kogasa_tatara/chat_3"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/hot",
+    "neo_mystias_izakaya:cuisines/soup",
+    "neo_mystias_izakaya:cuisines/spicy"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/homecooking",
+    "neo_mystias_izakaya:cuisines/filling",
+    "neo_mystias_izakaya:cuisines/sweet",
+    "neo_mystias_izakaya:cuisines/photogenic",
+    "neo_mystias_izakaya:cuisines/strength_boosting",
+    "neo_mystias_izakaya:cuisines/peculiar",
+    "neo_mystias_izakaya:cuisines/wonderful",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:myouren_temple",
+    "neo_mystias_izakaya:shining_needle_castle"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

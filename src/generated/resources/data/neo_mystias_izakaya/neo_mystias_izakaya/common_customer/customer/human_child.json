@@ -1,0 +1,27 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/no_alcohol"
+  ],
+  "chats": [
+    "neo_mystias_izakaya:customer/human_child/chat_0",
+    "neo_mystias_izakaya:customer/human_child/chat_1",
+    "neo_mystias_izakaya:customer/human_child/chat_2",
+    "neo_mystias_izakaya:customer/human_child/chat_3",
+    "neo_mystias_izakaya:customer/human_child/chat_4"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/meat",
+    "neo_mystias_izakaya:cuisines/homecooking",
+    "neo_mystias_izakaya:cuisines/filling",
+    "neo_mystias_izakaya:cuisines/chinese",
+    "neo_mystias_izakaya:cuisines/salty",
+    "neo_mystias_izakaya:cuisines/sweet",
+    "neo_mystias_izakaya:cuisines/signature",
+    "neo_mystias_izakaya:cuisines/refreshing",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:human_village"
+  ]
+}

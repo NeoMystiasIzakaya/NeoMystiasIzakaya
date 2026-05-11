@@ -1,0 +1,36 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/heatable",
+    "neo_mystias_izakaya:beverages/vintage",
+    "neo_mystias_izakaya:beverages/stimulating"
+  ],
+  "budget": {
+    "max": 400,
+    "min": 200
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/hong_meiling/chat_0",
+    "neo_mystias_izakaya:customer/hong_meiling/chat_1",
+    "neo_mystias_izakaya:customer/hong_meiling/chat_2",
+    "neo_mystias_izakaya:customer/hong_meiling/chat_3",
+    "neo_mystias_izakaya:customer/hong_meiling/chat_4"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/western",
+    "neo_mystias_izakaya:cuisines/peculiar",
+    "neo_mystias_izakaya:cuisines/fruity",
+    "neo_mystias_izakaya:cuisines/trend_unpopular"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/meat",
+    "neo_mystias_izakaya:cuisines/filling",
+    "neo_mystias_izakaya:cuisines/chinese",
+    "neo_mystias_izakaya:cuisines/strength_boosting",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:scarlet_devil_mansion"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

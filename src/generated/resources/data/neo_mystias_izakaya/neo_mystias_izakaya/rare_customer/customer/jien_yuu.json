@@ -1,0 +1,38 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/mid_alcohol",
+    "neo_mystias_izakaya:beverages/chillable",
+    "neo_mystias_izakaya:beverages/cocktail",
+    "neo_mystias_izakaya:beverages/western"
+  ],
+  "budget": {
+    "max": 1800,
+    "min": 1300
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/jien_yuu/chat_0",
+    "neo_mystias_izakaya:customer/jien_yuu/chat_1",
+    "neo_mystias_izakaya:customer/jien_yuu/chat_2",
+    "neo_mystias_izakaya:customer/jien_yuu/chat_3",
+    "neo_mystias_izakaya:customer/jien_yuu/chat_4"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/aquatic",
+    "neo_mystias_izakaya:cuisines/greasy",
+    "neo_mystias_izakaya:cuisines/filling"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/legendary",
+    "neo_mystias_izakaya:cuisines/good_with_alcohol",
+    "neo_mystias_izakaya:cuisines/western",
+    "neo_mystias_izakaya:cuisines/chinese",
+    "neo_mystias_izakaya:cuisines/cultural_heritage",
+    "neo_mystias_izakaya:cuisines/specialty"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:human_village",
+    "neo_mystias_izakaya:hakurei_shrine"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

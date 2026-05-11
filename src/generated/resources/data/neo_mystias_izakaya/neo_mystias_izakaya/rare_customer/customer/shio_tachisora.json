@@ -1,0 +1,41 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/high_alcohol",
+    "neo_mystias_izakaya:beverages/chillable",
+    "neo_mystias_izakaya:beverages/heatable"
+  ],
+  "budget": {
+    "max": 800,
+    "min": 500
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/shio_tachisora/chat_0",
+    "neo_mystias_izakaya:customer/shio_tachisora/chat_1",
+    "neo_mystias_izakaya:customer/shio_tachisora/chat_2",
+    "neo_mystias_izakaya:customer/shio_tachisora/chat_3",
+    "neo_mystias_izakaya:customer/shio_tachisora/chat_4"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/vegetarian",
+    "neo_mystias_izakaya:cuisines/mild",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/meat",
+    "neo_mystias_izakaya:cuisines/good_with_alcohol",
+    "neo_mystias_izakaya:cuisines/mountain_delicacy",
+    "neo_mystias_izakaya:cuisines/japanese",
+    "neo_mystias_izakaya:cuisines/strength_boosting",
+    "neo_mystias_izakaya:cuisines/expensive",
+    "neo_mystias_izakaya:cuisines/trend_unpopular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:youkai_trail",
+    "neo_mystias_izakaya:hakurei_shrine",
+    "neo_mystias_izakaya:scarlet_devil_mansion",
+    "neo_mystias_izakaya:bamboo_forest_of_the_lost",
+    "neo_mystias_izakaya:youkai_mountain"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

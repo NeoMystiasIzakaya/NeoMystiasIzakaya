@@ -1,0 +1,40 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/no_alcohol",
+    "neo_mystias_izakaya:beverages/low_alcohol",
+    "neo_mystias_izakaya:beverages/heatable"
+  ],
+  "budget": {
+    "max": 300,
+    "min": 150
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/hakurei_reimu/chat_0",
+    "neo_mystias_izakaya:customer/hakurei_reimu/chat_1",
+    "neo_mystias_izakaya:customer/hakurei_reimu/chat_2",
+    "neo_mystias_izakaya:customer/hakurei_reimu/chat_3",
+    "neo_mystias_izakaya:customer/hakurei_reimu/chat_4"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/good_with_alcohol",
+    "neo_mystias_izakaya:cuisines/expensive",
+    "neo_mystias_izakaya:cuisines/trend_unpopular"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/premium",
+    "neo_mystias_izakaya:cuisines/filling",
+    "neo_mystias_izakaya:cuisines/sweet",
+    "neo_mystias_izakaya:cuisines/wonderful",
+    "neo_mystias_izakaya:cuisines/economical",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:hakurei_shrine",
+    "neo_mystias_izakaya:youkai_trail",
+    "neo_mystias_izakaya:human_village",
+    "neo_mystias_izakaya:forest_of_magic",
+    "neo_mystias_izakaya:youkai_mountain"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

@@ -1,0 +1,50 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/mid_alcohol",
+    "neo_mystias_izakaya:beverages/high_alcohol",
+    "neo_mystias_izakaya:beverages/shochu",
+    "neo_mystias_izakaya:beverages/vintage"
+  ],
+  "budget": {
+    "max": 6000,
+    "min": 4000
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/yukari_yakumo/chat_0",
+    "neo_mystias_izakaya:customer/yukari_yakumo/chat_1",
+    "neo_mystias_izakaya:customer/yukari_yakumo/chat_2",
+    "neo_mystias_izakaya:customer/yukari_yakumo/chat_3"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/filling",
+    "neo_mystias_izakaya:cuisines/fungus"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/homecooking",
+    "neo_mystias_izakaya:cuisines/premium",
+    "neo_mystias_izakaya:cuisines/legendary",
+    "neo_mystias_izakaya:cuisines/photogenic",
+    "neo_mystias_izakaya:cuisines/refreshing",
+    "neo_mystias_izakaya:cuisines/peculiar",
+    "neo_mystias_izakaya:cuisines/soup"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:youkai_trail",
+    "neo_mystias_izakaya:human_village",
+    "neo_mystias_izakaya:hakurei_shrine",
+    "neo_mystias_izakaya:scarlet_devil_mansion",
+    "neo_mystias_izakaya:bamboo_forest_of_the_lost",
+    "neo_mystias_izakaya:forest_of_magic",
+    "neo_mystias_izakaya:youkai_mountain",
+    "neo_mystias_izakaya:former_hell",
+    "neo_mystias_izakaya:palace_of_the_earth_spirits",
+    "neo_mystias_izakaya:myouren_temple",
+    "neo_mystias_izakaya:divine_spirit_mausoleum",
+    "neo_mystias_izakaya:garden_of_the_sun",
+    "neo_mystias_izakaya:shining_needle_castle",
+    "neo_mystias_izakaya:lunar_capital",
+    "neo_mystias_izakaya:makai"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}

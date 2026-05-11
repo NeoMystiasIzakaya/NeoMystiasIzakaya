@@ -1,0 +1,28 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/high_alcohol",
+    "neo_mystias_izakaya:beverages/shochu",
+    "neo_mystias_izakaya:beverages/neat",
+    "neo_mystias_izakaya:beverages/vintage"
+  ],
+  "chats": [
+    "neo_mystias_izakaya:customer/yamanba/chat_0",
+    "neo_mystias_izakaya:customer/yamanba/chat_1",
+    "neo_mystias_izakaya:customer/yamanba/chat_2",
+    "neo_mystias_izakaya:customer/yamanba/chat_3"
+  ],
+  "dislikes": [],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/meat",
+    "neo_mystias_izakaya:cuisines/homecooking",
+    "neo_mystias_izakaya:cuisines/premium",
+    "neo_mystias_izakaya:cuisines/filling",
+    "neo_mystias_izakaya:cuisines/fresh",
+    "neo_mystias_izakaya:cuisines/strength_boosting",
+    "neo_mystias_izakaya:cuisines/peculiar",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:youkai_mountain"
+  ]
+}

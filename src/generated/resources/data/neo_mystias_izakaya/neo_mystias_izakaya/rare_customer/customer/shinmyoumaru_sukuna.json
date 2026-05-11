@@ -1,0 +1,37 @@
+{
+  "beverage": [
+    "neo_mystias_izakaya:beverages/low_alcohol",
+    "neo_mystias_izakaya:beverages/heatable",
+    "neo_mystias_izakaya:beverages/soda",
+    "neo_mystias_izakaya:beverages/vintage"
+  ],
+  "budget": {
+    "max": 1200,
+    "min": 600
+  },
+  "chats": [
+    "neo_mystias_izakaya:customer/shinmyoumaru_sukuna/chat_0",
+    "neo_mystias_izakaya:customer/shinmyoumaru_sukuna/chat_1",
+    "neo_mystias_izakaya:customer/shinmyoumaru_sukuna/chat_2",
+    "neo_mystias_izakaya:customer/shinmyoumaru_sukuna/chat_3"
+  ],
+  "dislikes": [
+    "neo_mystias_izakaya:cuisines/western",
+    "neo_mystias_izakaya:cuisines/large_portion"
+  ],
+  "likes": [
+    "neo_mystias_izakaya:cuisines/legendary",
+    "neo_mystias_izakaya:cuisines/japanese",
+    "neo_mystias_izakaya:cuisines/sweet",
+    "neo_mystias_izakaya:cuisines/photogenic",
+    "neo_mystias_izakaya:cuisines/cultural_heritage",
+    "neo_mystias_izakaya:cuisines/small_portion",
+    "neo_mystias_izakaya:cuisines/aura_bursting",
+    "neo_mystias_izakaya:cuisines/trend_popular"
+  ],
+  "locations": [
+    "neo_mystias_izakaya:shining_needle_castle"
+  ],
+  "spellCards": [],
+  "tagRequests": []
+}
