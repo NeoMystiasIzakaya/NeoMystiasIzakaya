@@ -25,4 +25,6 @@ public record CustomerBudget(int min, int max) {
             ByteBufCodecs.INT, CustomerBudget::max,
             CustomerBudget::new
     );
+
+    public static final CustomerBudget MAX = new CustomerBudget(Integer.MAX_VALUE, Integer.MAX_VALUE);
 }

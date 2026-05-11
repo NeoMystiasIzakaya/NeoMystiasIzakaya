@@ -25,4 +25,6 @@ public interface Customer {
 
     List<Identifier> spellCards();
 
+    List<Identifier> chats();
+
 }

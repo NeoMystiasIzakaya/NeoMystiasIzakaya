@@ -84,6 +84,7 @@ public abstract class CustomerProvider implements DataProvider {
         private List<Identifier> beverage;
         private List<Identifier> tagRequests;
         private List<Identifier> spellCards;
+        private List<Identifier> chats;
         private boolean isCommon;
 
         protected Builder(Map<Identifier, CommonCustomer> commonCustomerMap, Map<Identifier, RareCustomer> rareCustomerMap, Identifier key) {
@@ -127,6 +128,11 @@ public abstract class CustomerProvider implements DataProvider {
             return this;
         }
 
+        public Builder chats(Identifier... chats) {
+            this.chats = List.of(chats);
+            return this;
+        }
+
         public Builder common() {
             this.isCommon = true;
             return this;
@@ -138,10 +144,10 @@ public abstract class CustomerProvider implements DataProvider {
         }
 
         public void build() {
-            if (this.isCommon || (tagRequests == null && spellCards == null)) {
-                commonCustomerMap.put(key, new CommonCustomer(budget, locations, likes, dislikes, beverage));
+            if (this.isCommon || (tagRequests == null && spellCards == null && budget == null)) {
+                commonCustomerMap.put(key, new CommonCustomer(locations, likes, dislikes, beverage, chats));
             } else {
-                rareCustomerMap.put(key, new RareCustomer(budget, locations, likes, dislikes, beverage, tagRequests, spellCards));
+                rareCustomerMap.put(key, new RareCustomer(budget, locations, likes, dislikes, beverage, tagRequests, spellCards, chats));
             }
         }
 

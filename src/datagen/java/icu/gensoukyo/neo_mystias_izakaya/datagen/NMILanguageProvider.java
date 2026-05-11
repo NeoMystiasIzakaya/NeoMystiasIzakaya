@@ -7,6 +7,7 @@ package icu.gensoukyo.neo_mystias_izakaya.datagen;
 
 import com.google.gson.JsonObject;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
+import icu.gensoukyo.neo_mystias_izakaya.content.customer.CustomerLocations;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.NMIBeveragesTags;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.NMICuisinesTags;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlocks;
@@ -673,12 +674,33 @@ public class NMILanguageProvider implements DataProvider {
 
     }
 
+    private void addLocationTranslations() {
+        this.addLocation(CustomerLocations.YOUKAI_TRAIL, "Youkai Trail", "妖怪兽道");
+        this.addLocation(CustomerLocations.HUMAN_VILLAGE, "Human Village", "人间之里");
+        this.addLocation(CustomerLocations.HAKUREI_SHRINE, "Hakurei Shrine", "博丽神社");
+        this.addLocation(CustomerLocations.SCARLET_DEVIL_MANSION, "Scarlet Devil Mansion", "红魔馆");
+        this.addLocation(CustomerLocations.BAMBOO_FOREST_OF_THE_LOST, "Bamboo Forest of the Lost", "迷途竹林");
+        this.addLocation(CustomerLocations.HAKUGYOKUROU, "Hakugyokurou", "地灵殿");
+        this.addLocation(CustomerLocations.FOREST_OF_MAGIC, "Forest of Magic", "魔法森林");
+        this.addLocation(CustomerLocations.YOUKAI_MOUNTAIN, "Youkai Mountain", "妖怪之山");
+        this.addLocation(CustomerLocations.FORMER_HELL, "Former Hell", "旧地狱");
+        this.addLocation(CustomerLocations.PALACE_OF_THE_EARTH_SPIRITS, "Palace of the Earth Spirits", "地灵殿");
+        this.addLocation(CustomerLocations.MYOUREN_TEMPLE, "Myouren Temple", "命莲寺");
+        this.addLocation(CustomerLocations.DIVINE_SPIRIT_MAUSOLEUM, "Divine Spirit Mausoleum", "神灵庙");
+        this.addLocation(CustomerLocations.GARDEN_OF_THE_SUN, "Garden of the Sun", "太阳花田");
+        this.addLocation(CustomerLocations.SHINING_NEEDLE_CASTLE, "Shining Needle Castle", "辉针城");
+        this.addLocation(CustomerLocations.LUNAR_CAPITAL, "Lunar Capital", "月之都");
+        this.addLocation(CustomerLocations.MAKAI, "Makai", "魔界");
+
+    }
+
     @Override
     public @NotNull CompletableFuture<?> run(@NotNull CachedOutput cache) {
         this.addTranslations();
         this.addTagTranslations();
         this.addItemTranslations();
         this.addItemDescTranslations();
+        this.addLocationTranslations();
         Path path = this.output.getOutputFolder(PackOutput.Target.RESOURCE_PACK)
                 .resolve(NeoMystiasIzakaya.MODID).resolve("lang");
         if (this.locale.equals("en_us") && !this.enData.isEmpty()) {
@@ -748,6 +770,22 @@ public class NMILanguageProvider implements DataProvider {
 
     private void addItemGroup(Identifier key, String en, String cn) {
         this.add(key.toLanguageKey("item_group"), en, cn);
+    }
+
+    private void addLocation(Identifier key, String en, String cn) {
+        this.add(key.toLanguageKey("location"), en, cn);
+    }
+
+    private void addCustomer(Identifier key, String en, String cn) {
+        this.add(key.toLanguageKey("customer"), en, cn);
+    }
+
+    private void addCustomerChat(Identifier key,int id, String en, String cn) {
+        this.add(key.toLanguageKey("customer","chat_"+id), en, cn);
+    }
+
+    private void addCustomerDescription(Identifier key, String en, String cn) {
+        this.add(key.toLanguageKey("customer","desc"), en, cn);
     }
 
     @Override

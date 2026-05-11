@@ -20,7 +20,8 @@ public record RareCustomer(CustomerBudget budget,
                            List<Identifier> dislikes,
                            List<Identifier> beverage,
                            List<Identifier> tagRequests,
-                           List<Identifier> spellCards) implements Customer {
+                           List<Identifier> spellCards,
+                           List<Identifier> chats) implements Customer {
 
     public static final Codec<RareCustomer> CODEC = RecordCodecBuilder.create(
             instance -> instance.group(
@@ -30,7 +31,8 @@ public record RareCustomer(CustomerBudget budget,
                     Identifier.CODEC.listOf().fieldOf("dislikes").forGetter(RareCustomer::dislikes),
                     Identifier.CODEC.listOf().fieldOf("beverage").forGetter(RareCustomer::beverage),
                     Identifier.CODEC.listOf().fieldOf("tagRequests").forGetter(RareCustomer::tagRequests),
-                    Identifier.CODEC.listOf().fieldOf("spellCards").forGetter(RareCustomer::spellCards)
+                    Identifier.CODEC.listOf().fieldOf("spellCards").forGetter(RareCustomer::spellCards),
+                    Identifier.CODEC.listOf().fieldOf("chats").forGetter(RareCustomer::chats)
             ).apply(instance, RareCustomer::new)
     );
 
@@ -42,12 +44,13 @@ public record RareCustomer(CustomerBudget budget,
             ByteBufCodecs.<ByteBuf, Identifier>list().apply(Identifier.STREAM_CODEC), RareCustomer::beverage,
             ByteBufCodecs.<ByteBuf, Identifier>list().apply(Identifier.STREAM_CODEC), RareCustomer::tagRequests,
             ByteBufCodecs.<ByteBuf, Identifier>list().apply(Identifier.STREAM_CODEC), RareCustomer::spellCards,
+            ByteBufCodecs.<ByteBuf, Identifier>list().apply(Identifier.STREAM_CODEC), RareCustomer::chats,
             RareCustomer::new
     );
 
-    public static final RareCustomer EMPTY = new RareCustomer(new CustomerBudget(0, 0), List.of(), List.of(), List.of(), List.of(), List.of(), List.of());
+    public static final RareCustomer EMPTY = new RareCustomer(new CustomerBudget(0, 0), List.of(), List.of(), List.of(), List.of(), List.of(), List.of(), List.of());
 
     public CommonCustomer asCommonCustomer(){
-        return new CommonCustomer(budget, locations, likes, dislikes, beverage);
+        return new CommonCustomer(locations, likes, dislikes, beverage, chats);
     }
 }
