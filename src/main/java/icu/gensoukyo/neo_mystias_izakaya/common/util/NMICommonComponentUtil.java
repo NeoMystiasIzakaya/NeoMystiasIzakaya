@@ -23,4 +23,19 @@ public final class NMICommonComponentUtil {
     public static MutableComponent translatable(Identifier identifier,String prefix){
         return Component.translatable(identifier.toLanguageKey(prefix));
     }
+    public static MutableComponent translatableCustomer(Identifier customer){
+        return Component.translatable(customer.toLanguageKey("customer"));
+    }
+    public static MutableComponent translatableCustomerChat(Identifier chat){
+        return Component.translatable(chat.toLanguageKey("customer"));
+    }
+    public static MutableComponent translatableCustomerDescription(Identifier desc){
+        return Component.translatable(desc.toLanguageKey("customer","desc"));
+    }
+    public static MutableComponent translatableCustomerDescriptionWithLevel(Identifier desc,String level){
+        return Component.translatable(desc.toLanguageKey("customer","desc."+level));
+    }
+    public static MutableComponent translatableEvaluation(Identifier customer,String level){
+        return Component.translatable(customer.toLanguageKey("evaluation",level));
+    }
 }

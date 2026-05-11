@@ -9,6 +9,8 @@ import icu.gensoukyo.neo_mystias_izakaya.content.customer.consts.*;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.consts.NMIBeveragesTags;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.consts.NMICuisinesTags;
 import icu.gensoukyo.neo_mystias_izakaya.datagen.api.CustomerProvider;
+import icu.gensoukyo.neo_mystias_izakaya.datagen.consts.CommonCustomersChat;
+import icu.gensoukyo.neo_mystias_izakaya.datagen.consts.RareCustomersChat;
 import net.minecraft.data.PackOutput;
 
 public class NMICustomerProvider extends CustomerProvider {
