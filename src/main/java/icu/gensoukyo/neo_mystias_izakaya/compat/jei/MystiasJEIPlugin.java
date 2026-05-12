@@ -13,6 +13,7 @@ import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockTags;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMainItems;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
@@ -64,6 +65,10 @@ public class MystiasJEIPlugin implements IModPlugin {
         registration.addCraftingStation(CuttingBoardRecipe.CUTTING_BOARD, NMIMainItems.CUTTING_BOARD.toStack());
     }
 
+    @Override
+    public void registerGuiHandlers(IGuiHandlerRegistration registration) {
+
+    }
 
     @Override
     public Identifier getPluginUid() {

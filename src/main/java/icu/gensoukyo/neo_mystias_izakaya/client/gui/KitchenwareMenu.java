@@ -1,13 +1,16 @@
 package icu.gensoukyo.neo_mystias_izakaya.client.gui;
 
+import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.AbstractKitchenwareBE;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIMenus;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import org.jspecify.annotations.NonNull;
 
 public class KitchenwareMenu extends AbstractContainerMenu {
@@ -17,6 +20,45 @@ public class KitchenwareMenu extends AbstractContainerMenu {
 
     public KitchenwareMenu(int containerId, Inventory inventory, FriendlyByteBuf buf) {
         super(NMIMenus.KITCHENWARE_MENU.get(), containerId);
+    }
+
+    protected void addItems(Container items, AbstractKitchenwareBE cookerTE) {
+        for (int i = 0; i < 5; ++i) {
+            addSlot(new Slot(items, i, 17 + i * 25, 110) {
+                @Override
+                public int getMaxStackSize(ItemStack pStack) {
+                    return 1;
+                }
+
+                @Override
+                public boolean mayPlace(ItemStack pStack) {
+                    return true;
+//                    return pStack.tags()
+                }
+            });
+        }
+        addSlot(new Slot(items, 5, 180, 110) {
+            @Override
+            public boolean mayPlace(ItemStack pStack) {
+                return false;
+            }
+
+            @Override
+            public void setChanged() {
+                this.container.setChanged();
+                if (cookerTE.getLevel() != null) {
+                    cookerTE.getLevel().sendBlockUpdated(cookerTE.getBlockPos(), cookerTE.getBlockState(), cookerTE.getBlockState(), Block.UPDATE_CLIENTS);
+                }
+            }
+        });
+    }
+
+    protected void addPlayerInventory(Inventory inv) {
+        for (int i = 0; i < 3; i++)
+            for (int j = 0; j < 9; j++)
+                addSlot(new Slot(inv, j + i * 9 + 9, 36 + j * 18, 137 + i * 18));
+        for (int i = 0; i < 9; i++)
+            addSlot(new Slot(inv, i, 36 + i * 18, 195));
     }
 
     @Override

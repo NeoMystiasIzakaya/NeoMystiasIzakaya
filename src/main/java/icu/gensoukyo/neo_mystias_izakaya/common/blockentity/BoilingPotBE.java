@@ -9,6 +9,7 @@ import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jspecify.annotations.NonNull;
 
 public class BoilingPotBE extends AbstractKitchenwareBE {
     public BoilingPotBE(BlockPos worldPosition, BlockState blockState) {
@@ -16,7 +17,7 @@ public class BoilingPotBE extends AbstractKitchenwareBE {
     }
 
     @Override
-    protected Component getDefaultName() {
-        return null;
+    protected @NonNull Component getDefaultName() {
+        return Component.literal("Boiling Pot");
     }
 }
