@@ -6,7 +6,7 @@
 package icu.gensoukyo.neo_mystias_izakaya.datagen;
 
 import icu.gensoukyo.neo_mystias_izakaya.datagen.api.NMIRecipeProvider;
-import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockTags;
+import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockVanillaTags;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMICuisinesItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIIngredientItems;
 import net.minecraft.data.PackOutput;
@@ -48,20 +48,20 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
     private void addBoilingPotRecipes() {
         this.builder(NMICuisinesItems.SEAFOOD_MISO_SOUP)
                 .input(this.getKelp())
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(6)
                 .build();
 
         this.builder(NMICuisinesItems.MISO_TOFU)
                 .input(NMIIngredientItems.TOFU)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(7)
                 .build();
 
         this.builder(NMICuisinesItems.POWER_SOUP)
                 .input(this.getKelp())
                 .input(NMIIngredientItems.BOAR_MEAT)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(12)
                 .build();
 
@@ -69,19 +69,19 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(Items.POTATO)
                 .input(Items.PUMPKIN)
                 .input(NMIIngredientItems.IBERICO_PORK)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(8)
                 .build();
 
         this.builder(NMICuisinesItems.PORK_BOWL)
                 .input(Items.PORKCHOP)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(7)
                 .build();
 
         this.builder(NMICuisinesItems.BEEF_BOWL)
                 .input(Items.BEEF)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(7)
                 .build();
 
@@ -89,13 +89,13 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(Items.PUFFERFISH)
                 .input(NMIIngredientItems.LAMPREY)
                 .input(this.getKelp())
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(12)
                 .build();
 
         this.builder(NMICuisinesItems.TOFU_STEW)
                 .input(NMIIngredientItems.TOFU)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(5)
                 .build();
 
@@ -103,7 +103,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(this.getKelp())
                 .input(NMIIngredientItems.TOFU)
                 .input(NMIIngredientItems.TROUT)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(5)
                 .build();
 
@@ -111,7 +111,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.IBERICO_PORK)
                 .input(NMIIngredientItems.WAGYU_BEEF)
                 .input(Items.PUFFERFISH)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(10)
                 .build();
 
@@ -119,7 +119,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(Items.PORKCHOP)
                 .input(this.getEgg())
                 .input(this.getKelp())
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(8)
                 .build();
 
@@ -128,7 +128,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.WAGYU_BEEF)
                 .input(Items.PUFFERFISH)
                 .input(NMIIngredientItems.TRUFFLE)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(8)
                 .build();
 
@@ -136,20 +136,20 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.PEACH)
                 .input(this.getIce())
                 .input(NMIIngredientItems.DEW)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(7)
                 .build();
 
         this.builder(NMICuisinesItems.REAL_SEAFOOD_MISO_SOUP)
                 .input(NMIIngredientItems.SALMON)
                 .input(NMIIngredientItems.TROUT)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(8)
                 .build();
 
         this.builder(NMICuisinesItems.BOILED_TOFU)
                 .input(NMIIngredientItems.TOFU)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(7)
                 .build();
 
@@ -157,26 +157,26 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.GINKGO_NUT)
                 .input(NMIIngredientItems.RADISH)
                 .input(Items.PORKCHOP)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(6)
                 .build();
 
         this.builder(NMICuisinesItems.SICHUAN_BOILED_FISH)
                 .input(NMIIngredientItems.TROUT)
                 .input(NMIIngredientItems.CHILI)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(8)
                 .build();
 
         this.builder(NMICuisinesItems.DUMPLINGS)
                 .input(NMIIngredientItems.FLOUR)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(5)
                 .build();
 
         this.builder(NMICuisinesItems.TANGYUAN)
                 .input(NMIIngredientItems.STICKY_RICE)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(5)
                 .build();
 
@@ -184,7 +184,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.VENISON)
                 .input(NMIIngredientItems.TRUFFLE)
                 .input(NMIIngredientItems.CICADA_SLOUGH)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(12)
                 .build();
 
@@ -192,7 +192,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.TRUFFLE)
                 .input(this.getMushroom())
                 .input(NMIIngredientItems.DEW)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(9)
                 .build();
 
@@ -201,7 +201,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.SHRIMP)
                 .input(NMIIngredientItems.OCTOPUS)
                 .input(NMIIngredientItems.CHILI)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(14)
                 .build();
 
@@ -209,7 +209,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(this.getMushroom())
                 .input(Items.POTATO)
                 .input(NMIIngredientItems.CREAM)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(8)
                 .build();
 
@@ -219,7 +219,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.IBERICO_PORK)
                 .input(Items.PUFFERFISH)
                 .input(NMIIngredientItems.TRUFFLE)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(18)
                 .build();
 
@@ -229,13 +229,13 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(Items.BEEF)
                 .input(NMIIngredientItems.RADISH)
                 .input(NMIIngredientItems.TOFU)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(12)
                 .build();
 
         this.builder(NMICuisinesItems.LIONS_HEAD)
                 .input(Items.BEEF)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(7)
                 .build();
 
@@ -245,7 +245,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.TRUFFLE)
                 .input(NMIIngredientItems.PINE_NUT)
                 .input(NMIIngredientItems.LOTUS_SEED)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(12)
                 .build();
 
@@ -255,7 +255,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.RADISH)
                 .input(this.getEgg())
                 .input(NMIIngredientItems.GINKGO_NUT)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(14)
                 .build();
 
@@ -263,7 +263,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.CHESTNUT)
                 .input(this.getMushroom())
                 .input(NMIIngredientItems.TRUFFLE)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(8)
                 .build();
 
@@ -273,7 +273,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.CRAB)
                 .input(Items.BAMBOO)
                 .input(NMIIngredientItems.DEW)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(12)
                 .build();
 
@@ -281,21 +281,21 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(Items.BAMBOO)
                 .input(NMIIngredientItems.BAMBOO_SHOOT)
                 .input(Items.BEEF)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(7)
                 .build();
 
         this.builder(NMICuisinesItems.PLUM_TEA_RICE)
                 .input(NMIIngredientItems.PLUM)
                 .input(this.getKelp())
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(4)
                 .build();
 
         this.builder(NMICuisinesItems.MUSHROOM_HERB_ROAD)
                 .input(NMIIngredientItems.RED_TOON)
                 .input(this.getMushroom())
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(6)
                 .build();
 
@@ -304,7 +304,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.PLUM)
                 .input(NMIIngredientItems.LAMPREY)
                 .input(NMIIngredientItems.GINKGO_NUT)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(8)
                 .build();
 
@@ -314,7 +314,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.TRUFFLE)
                 .input(Items.BEEF)
                 .input(NMIIngredientItems.WAGYU_BEEF)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(5)
                 .build();
 
@@ -323,14 +323,14 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.TUNA)
                 .input(NMIIngredientItems.SNOW_FUNGUS)
                 .input(NMIIngredientItems.DEW)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(12)
                 .build();
 
         this.builder(NMICuisinesItems.HEART_WARMING_CONGEE)
                 .input(NMIIngredientItems.SNOW_FUNGUS)
                 .input(NMIIngredientItems.LOTUS_SEED)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(5)
                 .build();
 
@@ -340,7 +340,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.OCTOPUS)
                 .input(NMIIngredientItems.CRAB)
                 .input(NMIIngredientItems.SHRIMP)
-                .kitchenware(NMIBlockTags.BOILING_POT)
+                .kitchenware(NMIBlockVanillaTags.BOILING_POT)
                 .time(10)
                 .build();
 
@@ -366,33 +366,33 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
     private void addCuttingBoardRecipes() {
         this.builder(NMICuisinesItems.RICE_BALL)
                 .input(this.getKelp())
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(5)
                 .build();
 
         this.builder(NMICuisinesItems.PORK_RICE_BALL)
                 .input(Items.PORKCHOP)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(6)
                 .build();
 
         this.builder(NMICuisinesItems.PINK_RICE_BALL)
                 .input(NMIIngredientItems.ONION)
                 .input(NMIIngredientItems.TROUT)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(8)
                 .build();
 
         this.builder(NMICuisinesItems.FALLING_BLOSSOMS)
                 .input(NMIIngredientItems.PREMIUM_TUNA)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(12)
                 .build();
 
         this.builder(NMICuisinesItems.FRESH_TOFU)
                 .input(NMIIngredientItems.RADISH)
                 .input(NMIIngredientItems.TOFU)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(5)
                 .build();
 
@@ -400,26 +400,26 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(Items.POTATO)
                 .input(NMIIngredientItems.ONION)
                 .input(Items.PUMPKIN)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(5)
                 .build();
 
         this.builder(NMICuisinesItems.SASHIMI_PLATTER)
                 .input(NMIIngredientItems.SALMON)
                 .input(NMIIngredientItems.TUNA)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(5)
                 .build();
 
         this.builder(NMICuisinesItems.SECRET_DRIED_FISH_CRISPS)
                 .input(NMIIngredientItems.TROUT)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(8)
                 .build();
 
         this.builder(NMICuisinesItems.CARVED_ROSE_SALAD)
                 .input(NMIIngredientItems.RADISH)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(5)
                 .build();
 
@@ -427,27 +427,27 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.PEACH)
                 .input(this.getIce())
                 .input(NMIIngredientItems.SHRIMP)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(10)
                 .build();
 
         this.builder(NMICuisinesItems.LUNAR_DANGO)
                 .input(NMIIngredientItems.LUNAR_HERB)
                 .input(NMIIngredientItems.STICKY_RICE)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(8)
                 .build();
 
         this.builder(NMICuisinesItems.MOCHI)
                 .input(NMIIngredientItems.STICKY_RICE)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(7)
                 .build();
 
         this.builder(NMICuisinesItems.PEACH_YATSUHASHI)
                 .input(NMIIngredientItems.STICKY_RICE)
                 .input(NMIIngredientItems.PEACH)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(5)
                 .build();
 
@@ -456,14 +456,14 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.FLOUR)
                 .input(this.getEgg())
                 .input(NMIIngredientItems.LUNAR_HERB)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(10)
                 .build();
 
         this.builder(NMICuisinesItems.FLOWING_SOMEN)
                 .input(NMIIngredientItems.FLOUR)
                 .input(Items.BAMBOO)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(7)
                 .build();
 
@@ -472,7 +472,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.TOFU)
                 .input(Items.HONEY_BOTTLE)
                 .input(this.getEgg())
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(8)
                 .build();
 
@@ -481,7 +481,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.CHILI)
                 .input(Items.BEEF)
                 .input(NMIIngredientItems.ONION)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(8)
                 .build();
 
@@ -490,7 +490,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(Items.PUMPKIN)
                 .input(Items.POTATO)
                 .input(Items.HONEY_BOTTLE)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(8)
                 .build();
 
@@ -499,28 +499,28 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.BUTTER)
                 .input(Items.HONEY_BOTTLE)
                 .input(NMIIngredientItems.ONION)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(8)
                 .build();
 
         this.builder(NMICuisinesItems.PICKLES)
                 .input(NMIIngredientItems.CUCUMBER)
                 .input(NMIIngredientItems.BLACK_SALT)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(6)
                 .build();
 
         this.builder(NMICuisinesItems.SEA_URCHIN_SASHIMI)
                 .input(NMIIngredientItems.SEA_URCHIN)
                 .input(NMIIngredientItems.DEW)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(8)
                 .build();
 
         this.builder(NMICuisinesItems.NIGIRI_SUSHI)
                 .input(NMIIngredientItems.SALMON)
                 .input(NMIIngredientItems.TUNA)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(6)
                 .build();
 
@@ -528,7 +528,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.LEMON)
                 .input(NMIIngredientItems.GRAPES)
                 .input(NMIIngredientItems.CHEESE)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(8)
                 .build();
 
@@ -536,7 +536,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.FLOUR)
                 .input(Items.HONEY_BOTTLE)
                 .input(NMIIngredientItems.CICADA_SLOUGH)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(5)
                 .build();
 
@@ -546,7 +546,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.PREMIUM_TUNA)
                 .input(NMIIngredientItems.TROUT)
                 .input(this.getIce())
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(24)
                 .build();
 
@@ -554,14 +554,14 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.TROUT)
                 .input(NMIIngredientItems.DEW)
                 .input(NMIIngredientItems.FLOUR)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(5)
                 .build();
 
         this.builder(NMICuisinesItems.YASHOUMA_DANGO)
                 .input(NMIIngredientItems.STICKY_RICE)
                 .input(NMIIngredientItems.STICKY_RICE)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(9)
                 .build();
 
@@ -571,14 +571,14 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.TUNA)
                 .input(NMIIngredientItems.BINGDI_LOTUS)
                 .input(NMIIngredientItems.LUNAR_HERB)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(13)
                 .build();
 
         this.builder(NMICuisinesItems.HONEYED_CHESTNUT)
                 .input(Items.HONEY_BOTTLE)
                 .input(NMIIngredientItems.CHESTNUT)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(6)
                 .build();
 
@@ -588,14 +588,14 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.PLUM)
                 .input(NMIIngredientItems.IBERICO_PORK)
                 .input(NMIIngredientItems.TRUFFLE)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(12)
                 .build();
 
         this.builder(NMICuisinesItems.RED_BEAN_DAIFUKU)
                 .input(NMIIngredientItems.RED_BEAN)
                 .input(NMIIngredientItems.STICKY_RICE)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(7)
                 .build();
 
@@ -603,7 +603,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(Items.BAMBOO)
                 .input(NMIIngredientItems.SHRIMP)
                 .input(NMIIngredientItems.BROCCOLI)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(5)
                 .build();
 
@@ -613,7 +613,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.CREAM)
                 .input(NMIIngredientItems.FLOUR)
                 .input(Items.COCOA_BEANS)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(12)
                 .build();
 
@@ -622,7 +622,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.CREEPING_FIG)
                 .input(NMIIngredientItems.CREAM)
                 .input(NMIIngredientItems.SNOW_FUNGUS)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(12)
                 .build();
 
@@ -632,7 +632,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.PEACH)
                 .input(NMIIngredientItems.PEACH)
                 .input(NMIIngredientItems.PEACH)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(18)
                 .build();
 
@@ -640,7 +640,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(Items.COCOA_BEANS)
                 .input(Items.PUMPKIN)
                 .input(NMIIngredientItems.CREAM)
-                .kitchenware(NMIBlockTags.CUTTING_BOARD)
+                .kitchenware(NMIBlockVanillaTags.CUTTING_BOARD)
                 .time(7)
                 .build();
 
@@ -749,51 +749,51 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
     private void addFryingPanRecipes() {
         this.builder(NMICuisinesItems.PORK_STIR_FRY)
                 .input(Items.PORKCHOP)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(8)
                 .build();
 
         this.builder(NMICuisinesItems.KABAYAKI_LAMPREYS)
                 .input(NMIIngredientItems.ONION)
                 .input(NMIIngredientItems.LAMPREY)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(8)
                 .build();
 
         this.builder(NMICuisinesItems.POTATO_CROQUETTES)
                 .input(Items.POTATO)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(6)
                 .build();
 
         this.builder(NMICuisinesItems.FRIED_LAMPREYS)
                 .input(NMIIngredientItems.LAMPREY)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(7)
                 .build();
 
         this.builder(NMICuisinesItems.FRIED_CICADA_SLOUGHS)
                 .input(NMIIngredientItems.CICADA_SLOUGH)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(8)
                 .build();
 
         this.builder(NMICuisinesItems.DEEP_FRIED_TOFU)
                 .input(NMIIngredientItems.TOFU)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(7)
                 .build();
 
         this.builder(NMICuisinesItems.FRIED_PORK_CUTLET)
                 .input(Items.PORKCHOP)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(7)
                 .build();
 
         this.builder(NMICuisinesItems.CLASSIC_STEAK)
                 .input(NMIIngredientItems.WAGYU_BEEF)
                 .input(NMIIngredientItems.BUTTER)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(7)
                 .build();
 
@@ -803,7 +803,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(this.getEgg())
                 .input(NMIIngredientItems.BUTTER)
                 .input(NMIIngredientItems.TRUFFLE)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(14)
                 .build();
 
@@ -812,7 +812,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.BAMBOO_SHOOT)
                 .input(NMIIngredientItems.BUTTER)
                 .input(NMIIngredientItems.FLOUR)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(7)
                 .build();
 
@@ -820,35 +820,35 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(Items.HONEY_BOTTLE)
                 .input(NMIIngredientItems.FLOUR)
                 .input(this.getEgg())
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(9)
                 .build();
 
         this.builder(NMICuisinesItems.SALMON_STEAK)
                 .input(NMIIngredientItems.SALMON)
                 .input(NMIIngredientItems.BAMBOO_SHOOT)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(10)
                 .build();
 
         this.builder(NMICuisinesItems.PORK_BAMBOO_SHOOTS_STIR_FRY)
                 .input(NMIIngredientItems.BAMBOO_SHOOT)
                 .input(Items.PORKCHOP)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(10)
                 .build();
 
         this.builder(NMICuisinesItems.STINKY_TOFU)
                 .input(NMIIngredientItems.TOFU)
                 .input(NMIIngredientItems.CHILI)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(5)
                 .build();
 
         this.builder(NMICuisinesItems.RAINBOW_PAN_FRIED_PORK_BUNS)
                 .input(this.getMushroom())
                 .input(NMIIngredientItems.IBERICO_PORK)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(8)
                 .build();
 
@@ -856,14 +856,14 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.TOFU)
                 .input(Items.PORKCHOP)
                 .input(NMIIngredientItems.CHILI)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(6)
                 .build();
 
         this.builder(NMICuisinesItems.DEEP_FRIED_SHRIMP_TEMPURA)
                 .input(NMIIngredientItems.SHRIMP)
                 .input(NMIIngredientItems.FLOUR)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(6)
                 .build();
 
@@ -871,14 +871,14 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.TROUT)
                 .input(NMIIngredientItems.FLOUR)
                 .input(Items.HONEY_BOTTLE)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(9)
                 .build();
 
         this.builder(NMICuisinesItems.CREAMY_CRAB)
                 .input(NMIIngredientItems.CREAM)
                 .input(NMIIngredientItems.CRAB)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(12)
                 .build();
 
@@ -886,7 +886,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.FLOUR)
                 .input(this.getEgg())
                 .input(NMIIngredientItems.RADISH)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(6)
                 .build();
 
@@ -894,14 +894,14 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.FLOUR)
                 .input(this.getKelp())
                 .input(NMIIngredientItems.OCTOPUS)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(8)
                 .build();
 
         this.builder(NMICuisinesItems.PORK_MUSHROOM_STIR_FRY)
                 .input(this.getMushroom())
                 .input(Items.PORKCHOP)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(6)
                 .build();
 
@@ -910,7 +910,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.FLOUR)
                 .input(this.getEgg())
                 .input(this.getEgg())
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(12)
                 .build();
 
@@ -919,14 +919,14 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.BUTTER)
                 .input(this.getEgg())
                 .input(NMIIngredientItems.FLOUR)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(8)
                 .build();
 
         this.builder(NMICuisinesItems.CHEESE_OMELETTE)
                 .input(this.getEgg())
                 .input(NMIIngredientItems.CHEESE)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(6)
                 .build();
 
@@ -936,21 +936,21 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.CHILI)
                 .input(NMIIngredientItems.CHEESE)
                 .input(Items.BEEF)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(12)
                 .build();
 
         this.builder(NMICuisinesItems.UNZAN_COTTON_CANDY)
                 .input(Items.HONEY_BOTTLE)
                 .input(NMIIngredientItems.PEACH)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(8)
                 .build();
 
         this.builder(NMICuisinesItems.CANDIED_SWEET_POTATO)
                 .input(NMIIngredientItems.SWEET_POTATO)
                 .input(Items.HONEY_BOTTLE)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(6)
                 .build();
 
@@ -958,7 +958,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(Items.PORKCHOP)
                 .input(this.getMushroom())
                 .input(NMIIngredientItems.TRUFFLE)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(9)
                 .build();
 
@@ -967,14 +967,14 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.TRUFFLE)
                 .input(NMIIngredientItems.LAMPREY)
                 .input(NMIIngredientItems.LUNAR_HERB)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(7)
                 .build();
 
         this.builder(NMICuisinesItems.TOMATO_FRIES)
                 .input(NMIIngredientItems.TOMATO)
                 .input(Items.POTATO)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(6)
                 .build();
 
@@ -982,7 +982,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(Items.HONEY_BOTTLE)
                 .input(NMIIngredientItems.PEACH)
                 .input(Items.PORKCHOP)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(8)
                 .build();
 
@@ -990,21 +990,21 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.RED_BEAN)
                 .input(this.getEgg())
                 .input(NMIIngredientItems.FLOUR)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(6)
                 .build();
 
         this.builder(NMICuisinesItems.TOON_PANCAKE)
                 .input(NMIIngredientItems.RED_TOON)
                 .input(this.getEgg())
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(6)
                 .build();
 
         this.builder(NMICuisinesItems.EEL_BOWL_WITH_EGG)
                 .input(NMIIngredientItems.LAMPREY)
                 .input(this.getEgg())
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(5)
                 .build();
 
@@ -1012,7 +1012,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.CHILI)
                 .input(Items.BEEF)
                 .input(NMIIngredientItems.TOFU)
-                .kitchenware(NMIBlockTags.FRYING_PAN)
+                .kitchenware(NMIBlockVanillaTags.FRYING_PAN)
                 .time(8)
                 .build();
 
@@ -1065,13 +1065,13 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
         this.builder(NMICuisinesItems.PORK_TROUT_KEBAB)
                 .input(NMIIngredientItems.TROUT)
                 .input(Items.PORKCHOP)
-                .kitchenware(NMIBlockTags.GRILL)
+                .kitchenware(NMIBlockVanillaTags.GRILL)
                 .time(7)
                 .build();
 
         this.builder(NMICuisinesItems.GRILLED_LAMPREY)
                 .input(NMIIngredientItems.LAMPREY)
-                .kitchenware(NMIBlockTags.GRILL)
+                .kitchenware(NMIBlockVanillaTags.GRILL)
                 .time(7)
                 .build();
 
@@ -1079,27 +1079,27 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(Items.BEEF)
                 .input(NMIIngredientItems.ONION)
                 .input(Items.PUMPKIN)
-                .kitchenware(NMIBlockTags.GRILL)
+                .kitchenware(NMIBlockVanillaTags.GRILL)
                 .time(12)
                 .build();
 
         this.builder(NMICuisinesItems.NITEN_ICHIRYU)
                 .input(NMIIngredientItems.IBERICO_PORK)
                 .input(NMIIngredientItems.BOAR_MEAT)
-                .kitchenware(NMIBlockTags.GRILL)
+                .kitchenware(NMIBlockVanillaTags.GRILL)
                 .time(18)
                 .build();
 
         this.builder(NMICuisinesItems.ROASTED_MUSHROOM)
                 .input(this.getMushroom())
-                .kitchenware(NMIBlockTags.GRILL)
+                .kitchenware(NMIBlockVanillaTags.GRILL)
                 .time(6)
                 .build();
 
         this.builder(NMICuisinesItems.CANTONESE_CHAR_SIU)
                 .input(Items.PORKCHOP)
                 .input(Items.HONEY_BOTTLE)
-                .kitchenware(NMIBlockTags.GRILL)
+                .kitchenware(NMIBlockVanillaTags.GRILL)
                 .time(7)
                 .build();
 
@@ -1109,7 +1109,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(Items.POTATO)
                 .input(NMIIngredientItems.ONION)
                 .input(NMIIngredientItems.RADISH)
-                .kitchenware(NMIBlockTags.GRILL)
+                .kitchenware(NMIBlockVanillaTags.GRILL)
                 .time(12)
                 .build();
 
@@ -1119,7 +1119,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.SALMON)
                 .input(NMIIngredientItems.WAGYU_BEEF)
                 .input(NMIIngredientItems.VENISON)
-                .kitchenware(NMIBlockTags.GRILL)
+                .kitchenware(NMIBlockVanillaTags.GRILL)
                 .time(13)
                 .build();
 
@@ -1128,7 +1128,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.VENISON)
                 .input(NMIIngredientItems.IBERICO_PORK)
                 .input(NMIIngredientItems.WAGYU_BEEF)
-                .kitchenware(NMIBlockTags.GRILL)
+                .kitchenware(NMIBlockVanillaTags.GRILL)
                 .time(14)
                 .build();
 
@@ -1136,20 +1136,20 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.BOAR_MEAT)
                 .input(NMIIngredientItems.VENISON)
                 .input(NMIIngredientItems.ONION)
-                .kitchenware(NMIBlockTags.GRILL)
+                .kitchenware(NMIBlockVanillaTags.GRILL)
                 .time(9)
                 .build();
 
         this.builder(NMICuisinesItems.BAKED_SWEET_POTATO)
                 .input(NMIIngredientItems.SWEET_POTATO)
-                .kitchenware(NMIBlockTags.GRILL)
+                .kitchenware(NMIBlockVanillaTags.GRILL)
                 .time(6)
                 .build();
 
         this.builder(NMICuisinesItems.BISCAY_BISCUITS)
                 .input(NMIIngredientItems.FLOUR)
                 .input(NMIIngredientItems.CHEESE)
-                .kitchenware(NMIBlockTags.GRILL)
+                .kitchenware(NMIBlockVanillaTags.GRILL)
                 .time(5)
                 .build();
 
@@ -1158,7 +1158,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.BLACK_SALT)
                 .input(NMIIngredientItems.CHILI)
                 .input(Items.HONEY_BOTTLE)
-                .kitchenware(NMIBlockTags.GRILL)
+                .kitchenware(NMIBlockVanillaTags.GRILL)
                 .time(9)
                 .build();
 
@@ -1168,7 +1168,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(Items.BEEF)
                 .input(NMIIngredientItems.TRUFFLE)
                 .input(NMIIngredientItems.TOMATO)
-                .kitchenware(NMIBlockTags.GRILL)
+                .kitchenware(NMIBlockVanillaTags.GRILL)
                 .time(18)
                 .build();
 
@@ -1176,7 +1176,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(Items.COCOA_BEANS)
                 .input(NMIIngredientItems.FLOUR)
                 .input(this.getEgg())
-                .kitchenware(NMIBlockTags.GRILL)
+                .kitchenware(NMIBlockVanillaTags.GRILL)
                 .time(7)
                 .build();
 
@@ -1185,7 +1185,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.ONION)
                 .input(NMIIngredientItems.BROCCOLI)
                 .input(NMIIngredientItems.BOAR_MEAT)
-                .kitchenware(NMIBlockTags.GRILL)
+                .kitchenware(NMIBlockVanillaTags.GRILL)
                 .time(10)
                 .build();
 
@@ -1242,14 +1242,14 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
         this.builder(NMICuisinesItems.DEW_RUNNY_EGGS)
                 .input(NMIIngredientItems.DEW)
                 .input(this.getEgg())
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(3)
                 .build();
 
         this.builder(NMICuisinesItems.UDUMBARA_CAKE)
                 .input(NMIIngredientItems.UDUMBARA)
                 .input(NMIIngredientItems.DEW)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(7)
                 .build();
 
@@ -1257,14 +1257,14 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.IBERICO_PORK)
                 .input(NMIIngredientItems.BAMBOO_SHOOT)
                 .input(Items.PUFFERFISH)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(12)
                 .build();
 
         this.builder(NMICuisinesItems.SCHOLARS_GINKGO)
                 .input(NMIIngredientItems.GINKGO_NUT)
                 .input(Items.HONEY_BOTTLE)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(8)
                 .build();
 
@@ -1273,14 +1273,14 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(this.getMushroom())
                 .input(NMIIngredientItems.BAMBOO_SHOOT)
                 .input(NMIIngredientItems.BUTTER)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(6)
                 .build();
 
         this.builder(NMICuisinesItems.SCONE)
                 .input(NMIIngredientItems.BUTTER)
                 .input(NMIIngredientItems.FLOUR)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(7)
                 .build();
 
@@ -1288,7 +1288,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(this.getMushroom())
                 .input(NMIIngredientItems.ONION)
                 .input(NMIIngredientItems.BUTTER)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(9)
                 .build();
 
@@ -1298,7 +1298,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.TRUFFLE)
                 .input(NMIIngredientItems.GINKGO_NUT)
                 .input(NMIIngredientItems.IBERICO_PORK)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(12)
                 .build();
 
@@ -1306,7 +1306,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.BOAR_MEAT)
                 .input(NMIIngredientItems.VENISON)
                 .input(NMIIngredientItems.LUNAR_HERB)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(8)
                 .build();
 
@@ -1315,14 +1315,14 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(this.getEgg())
                 .input(this.getKelp())
                 .input(this.getMushroom())
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(6)
                 .build();
 
         this.builder(NMICuisinesItems.MOON_CAKE)
                 .input(NMIIngredientItems.LUNAR_HERB)
                 .input(NMIIngredientItems.FLOUR)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(10)
                 .build();
 
@@ -1330,7 +1330,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(this.getEgg())
                 .input(NMIIngredientItems.GRAPES)
                 .input(NMIIngredientItems.CREAM)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(8)
                 .build();
 
@@ -1339,7 +1339,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.GRAPES)
                 .input(NMIIngredientItems.DEW)
                 .input(NMIIngredientItems.UDUMBARA)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(8)
                 .build();
 
@@ -1347,7 +1347,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(Items.PUMPKIN)
                 .input(NMIIngredientItems.SHRIMP)
                 .input(NMIIngredientItems.TOFU)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(9)
                 .build();
 
@@ -1355,7 +1355,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.CHEESE)
                 .input(NMIIngredientItems.GINKGO_NUT)
                 .input(NMIIngredientItems.GINKGO_NUT)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(6)
                 .build();
 
@@ -1363,7 +1363,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.TROUT)
                 .input(NMIIngredientItems.FLOUR)
                 .input(NMIIngredientItems.PEACH)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(9)
                 .build();
 
@@ -1372,14 +1372,14 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.IBERICO_PORK)
                 .input(Items.HONEY_BOTTLE)
                 .input(NMIIngredientItems.CICADA_SLOUGH)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(12)
                 .build();
 
         this.builder(NMICuisinesItems.SAKURA_PUDDING)
                 .input(Items.HONEY_BOTTLE)
                 .input(NMIIngredientItems.PEACH)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(6)
                 .build();
 
@@ -1387,7 +1387,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.GRAPES)
                 .input(NMIIngredientItems.GRAPES)
                 .input(NMIIngredientItems.LEMON)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(8)
                 .build();
 
@@ -1396,7 +1396,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(Items.HONEY_BOTTLE)
                 .input(NMIIngredientItems.LEMON)
                 .input(NMIIngredientItems.LEMON)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(8)
                 .build();
 
@@ -1406,7 +1406,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(Items.HONEY_BOTTLE)
                 .input(NMIIngredientItems.LUNAR_HERB)
                 .input(NMIIngredientItems.TRUFFLE)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(12)
                 .build();
 
@@ -1415,7 +1415,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.UDUMBARA)
                 .input(Items.HONEY_BOTTLE)
                 .input(NMIIngredientItems.CREAM)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(12)
                 .build();
 
@@ -1424,14 +1424,14 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.LOTUS_SEED)
                 .input(NMIIngredientItems.FLOUR)
                 .input(NMIIngredientItems.BUTTER)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(10)
                 .build();
 
         this.builder(NMICuisinesItems.PINE_NUT_CAKE)
                 .input(NMIIngredientItems.STICKY_RICE)
                 .input(NMIIngredientItems.PINE_NUT)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(8)
                 .build();
 
@@ -1439,7 +1439,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.VENISON)
                 .input(NMIIngredientItems.GINKGO_NUT)
                 .input(NMIIngredientItems.PINE_NUT)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(12)
                 .build();
 
@@ -1448,7 +1448,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.BINGDI_LOTUS)
                 .input(NMIIngredientItems.LOTUS_SEED)
                 .input(NMIIngredientItems.DEW)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(11)
                 .build();
 
@@ -1456,7 +1456,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(Items.BAMBOO)
                 .input(NMIIngredientItems.DEW)
                 .input(NMIIngredientItems.IBERICO_PORK)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(9)
                 .build();
 
@@ -1466,14 +1466,14 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.RADISH)
                 .input(NMIIngredientItems.VENISON)
                 .input(NMIIngredientItems.LUNAR_HERB)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(14)
                 .build();
 
         this.builder(NMICuisinesItems.URCHIN_STEAMED_EGG)
                 .input(NMIIngredientItems.SEA_URCHIN)
                 .input(this.getEgg())
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(7)
                 .build();
 
@@ -1481,7 +1481,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.FLOWER)
                 .input(NMIIngredientItems.LUNAR_HERB)
                 .input(NMIIngredientItems.CREAM)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(9)
                 .build();
 
@@ -1491,7 +1491,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.LUNAR_HERB)
                 .input(NMIIngredientItems.DEW)
                 .input(NMIIngredientItems.CREAM)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(12)
                 .build();
 
@@ -1500,14 +1500,14 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.CREAM)
                 .input(NMIIngredientItems.GRAPES)
                 .input(NMIIngredientItems.GINKGO_NUT)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(10)
                 .build();
 
         this.builder(NMICuisinesItems.LONG_HAIR_PRINCESS)
                 .input(Items.PUMPKIN)
                 .input(NMIIngredientItems.SHRIMP)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(5)
                 .build();
 
@@ -1517,7 +1517,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.FLOUR)
                 .input(this.getMushroom())
                 .input(NMIIngredientItems.BROCCOLI)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(15)
                 .build();
 
@@ -1525,7 +1525,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.PEACH)
                 .input(NMIIngredientItems.RED_BEAN)
                 .input(NMIIngredientItems.CREEPING_FIG)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(8)
                 .build();
 
@@ -1534,7 +1534,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.SNOW_FUNGUS)
                 .input(Items.PUMPKIN)
                 .input(NMIIngredientItems.DEW)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(13)
                 .build();
 
@@ -1543,7 +1543,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(NMIIngredientItems.GRAPES)
                 .input(NMIIngredientItems.CRAB)
                 .input(NMIIngredientItems.DEW)
-                .kitchenware(NMIBlockTags.STEAMER)
+                .kitchenware(NMIBlockVanillaTags.STEAMER)
                 .time(24)
                 .build();
 
@@ -1568,7 +1568,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
     private void addOtherRecipes() {
         this.builder(NMICuisinesItems.DARK_MATTER)
                 .input(Items.BARRIER, Items.BARRIER, Items.BARRIER, Items.BARRIER, Items.BARRIER)
-                .kitchenware(NMIBlockTags.KITCHENWARE_BLOCK)
+                .kitchenware(NMIBlockVanillaTags.KITCHENWARE_BLOCK)
                 .time(0)
                 .build();
     }
