@@ -32,7 +32,7 @@ public abstract class AbstractKitchenware extends BaseEntityBlock {
         if (!level.isClientSide()) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof AbstractKitchenwareBE kitchenwareBE) {
-                player.openMenu(kitchenwareBE);
+                player.openMenu(kitchenwareBE, friendlyByteBuf -> friendlyByteBuf.writeBlockPos(kitchenwareBE.getBlockPos()));
             }
         }
         return super.useWithoutItem(state, level, pos, player, hitResult);

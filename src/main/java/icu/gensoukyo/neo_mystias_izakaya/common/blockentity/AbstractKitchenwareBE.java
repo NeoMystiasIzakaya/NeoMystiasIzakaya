@@ -30,7 +30,7 @@ public abstract class AbstractKitchenwareBE extends RandomizableContainerBlockEn
 
     @Override
     protected AbstractContainerMenu createMenu(int containerID, Inventory inventory) {
-        return new KitchenwareMenu(containerID, inventory, null);
+        return new KitchenwareMenu(containerID, inventory, this.getBlockPos());
     }
 
     @Override

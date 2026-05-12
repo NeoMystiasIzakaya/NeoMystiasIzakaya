@@ -48,6 +48,17 @@
     "neo_mystias_izakaya:ingredient/tuna",
     "neo_mystias_izakaya:ingredient/udumbara",
     "neo_mystias_izakaya:ingredient/venison",
-    "neo_mystias_izakaya:ingredient/wagyu_beef"
+    "neo_mystias_izakaya:ingredient/wagyu_beef",
+    "minecraft:pufferfish",
+    "minecraft:pumpkin",
+    "minecraft:kelp",
+    "minecraft:brown_mushroom",
+    "minecraft:potato",
+    "minecraft:porkchop",
+    "minecraft:beef",
+    "minecraft:egg",
+    "minecraft:ice",
+    "minecraft:honey_bottle",
+    "minecraft:cocoa_beans"
   ]
 }

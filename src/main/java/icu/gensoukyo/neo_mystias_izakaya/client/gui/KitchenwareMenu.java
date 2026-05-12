@@ -2,6 +2,8 @@ package icu.gensoukyo.neo_mystias_izakaya.client.gui;
 
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.AbstractKitchenwareBE;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIMenus;
+import icu.gensoukyo.neo_mystias_izakaya.registry.NMIVanillaTags;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -11,15 +13,27 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import org.jspecify.annotations.NonNull;
 
 public class KitchenwareMenu extends AbstractContainerMenu {
     private final ContainerLevelAccess access = ContainerLevelAccess.NULL;
+    private AbstractKitchenwareBE kitchenwareBE;
     protected final int INV_START = 6;
     protected static final int INV_SIZE = 36;
 
     public KitchenwareMenu(int containerId, Inventory inventory, FriendlyByteBuf buf) {
+        this(containerId, inventory, buf.readBlockPos());
+    }
+
+    public KitchenwareMenu(int containerId, Inventory inventory, BlockPos blockPos) {
         super(NMIMenus.KITCHENWARE_MENU.get(), containerId);
+        BlockEntity blockEntity = inventory.player.level().getBlockEntity(blockPos);
+        if (blockEntity instanceof AbstractKitchenwareBE kitchenwareBE) {
+            this.kitchenwareBE = kitchenwareBE;
+        }
+        addItems(kitchenwareBE, this.kitchenwareBE);
+        addPlayerInventory(inventory);
     }
 
     protected void addItems(Container items, AbstractKitchenwareBE cookerTE) {
@@ -32,8 +46,7 @@ public class KitchenwareMenu extends AbstractContainerMenu {
 
                 @Override
                 public boolean mayPlace(ItemStack pStack) {
-                    return true;
-//                    return pStack.tags()
+                    return pStack.tags().anyMatch(itemTagKey -> itemTagKey.equals(NMIVanillaTags.INGREDIENT));
                 }
             });
         }
