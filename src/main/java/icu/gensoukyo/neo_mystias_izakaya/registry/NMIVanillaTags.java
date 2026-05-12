@@ -12,7 +12,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
-public class NMIBlockVanillaTags {
+public class NMIVanillaTags {
     public static final TagKey<Block> KITCHENWARE_BLOCK = ofBlock("kitchenware");
     public static final TagKey<Block> BOILING_POT = ofBlock("boiling_pot");
     public static final TagKey<Block> CUTTING_BOARD = ofBlock("cutting_board");
@@ -20,7 +20,7 @@ public class NMIBlockVanillaTags {
     public static final TagKey<Block> GRILL = ofBlock("grill");
     public static final TagKey<Block> STEAMER = ofBlock("steamer");
 
-
+    public static final TagKey<Item> INGREDIENT  = ofItem("ingredient");
 
     public static TagKey<Block> ofBlock(String name) {
         return ofBlock(NeoMystiasIzakaya.id(name));
