@@ -13,7 +13,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 
 public record NMICustomerMapSyncMessage(CustomerMap map) implements CustomPacketPayload {
 
-    public static final CustomPacketPayload.Type<NMICustomerMapSyncMessage> TYPE = new CustomPacketPayload.Type<>(NeoMystiasIzakaya.id("recipe_map_sync"));
+    public static final CustomPacketPayload.Type<NMICustomerMapSyncMessage> TYPE = new CustomPacketPayload.Type<>(NeoMystiasIzakaya.id("customer_map_sync"));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, NMICustomerMapSyncMessage> STREAM_CODEC = StreamCodec.composite(
             CustomerMap.STREAM_CODEC, NMICustomerMapSyncMessage::map,

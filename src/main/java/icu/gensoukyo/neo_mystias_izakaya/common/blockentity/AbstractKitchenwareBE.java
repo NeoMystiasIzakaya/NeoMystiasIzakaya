@@ -5,6 +5,7 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.common.blockentity;
 
+import icu.gensoukyo.neo_mystias_izakaya.client.gui.KitchenwareMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.entity.player.Inventory;
@@ -13,29 +14,32 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jspecify.annotations.NonNull;
 
 public abstract class AbstractKitchenwareBE extends RandomizableContainerBlockEntity {
+    NonNullList<ItemStack> items = NonNullList.withSize(7, ItemStack.EMPTY);
+
     public AbstractKitchenwareBE(BlockEntityType<?> type, BlockPos worldPosition, BlockState blockState) {
         super(type, worldPosition, blockState);
     }
 
     @Override
     protected NonNullList<ItemStack> getItems() {
-        return null;
+        return items;
     }
 
     @Override
-    protected AbstractContainerMenu createMenu(int i, Inventory inventory) {
-        return null;
+    protected AbstractContainerMenu createMenu(int containerID, Inventory inventory) {
+        return new KitchenwareMenu(containerID, inventory, null);
     }
 
     @Override
-    protected void setItems(NonNullList<ItemStack> nonNullList) {
-
+    protected void setItems(@NonNull NonNullList<ItemStack> nonNullList) {
+        this.items = NonNullList.copyOf(nonNullList);
     }
 
     @Override
     public int getContainerSize() {
-        return 0;
+        return 7;
     }
 }
