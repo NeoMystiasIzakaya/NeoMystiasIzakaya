@@ -6,17 +6,14 @@ import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.AbstractKitchenwareB
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipe;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeHolder;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
-import net.minecraft.client.StringSplitter;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
-import net.minecraft.util.FormattedCharSink;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
 
@@ -101,21 +98,35 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
             NMIRecipe recipe = recipeHolder.recipe();
             Item cuisineItem = recipe.output().item().value();
             guiGraphics.text(font, Component.translatable(cuisineItem.getDescriptionId()), i + 15, j + 10, BLACK, false);
+            guiGraphics.text(font, Component.translatable("gui.neo_mystias_izakaya.time").append(": " + recipe.time()), i + 15, j + 20, BLACK, false);
+
+            FormattedCharSequence description = Component.translatable(cuisineItem.getDescriptionId() + ".desc").getVisualOrderText();
+            StringBuilder builder = new StringBuilder();
+            description.accept((index, style, charPoint) -> {
+                builder.append(Character.toChars(charPoint));
+                return true;
+            });
+            String substring = builder.subSequence(0, 10).toString();
+
+            guiGraphics.text(font, Component.literal(substring + "..."), i + 15, j + 30, BLACK, false);
             ItemTagList itemTagList = ClientNMIDataAccessor.INSTANCE.getTagItemListMap().getItemToTagMap().get(recipeHolder.key());
             if (itemTagList != null) {
-                StringBuilder builder = new StringBuilder();
+                int currentX = 0;
+                int lineHeight = font.lineHeight;
+                int startY = j + 40;
+                int maxWidth = 100;
                 for (int i1 = 0; i1 < itemTagList.positiveTags().size(); i1++) {
                     Identifier identifier = itemTagList.positiveTags().get(i1);
                     MutableComponent tag = Component.translatable(identifier.toLanguageKey("tag"));
                     FormattedCharSequence visualOrderText = tag.getVisualOrderText();
-                    visualOrderText.accept((int position, Style style, int codepoint) -> {
-                        builder.append(Character.toChars(codepoint));
-                        return true;
-                    });
-                    builder.append(" ");
+                    int fontWidth = font.width(visualOrderText);
+                    if (currentX + fontWidth > maxWidth) {
+                        currentX = 0;
+                        startY += lineHeight;
+                    }
+                    guiGraphics.text(font, visualOrderText, i + 15 + currentX, startY, BLACK, false);
+                    currentX += (fontWidth + 4);
                 }
-
-                guiGraphics.text(font, Component.literal(builder.toString()), i + 15, j + 40, GREEN, false);
             }
         }
     }

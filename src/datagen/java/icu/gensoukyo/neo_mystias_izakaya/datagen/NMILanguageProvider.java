@@ -64,6 +64,8 @@ public class NMILanguageProvider implements DataProvider {
         this.add(NMIMainItems.STEAMER, "Steamer", "蒸锅");
         this.add(NMIMainItems.CUTTING_BOARD, "Cutting Board", "料理台");
 
+        this.add("gui.neo_mystias_izakaya.time", "Time", "时间");
+
         this.add(NMIMainItems.CHROME_BALL, "Chrome Ball", "土球");
     }
 
