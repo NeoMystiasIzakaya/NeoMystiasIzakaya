@@ -19,14 +19,14 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
 public abstract class AbstractKitchenwareBE extends RandomizableContainerBlockEntity {
-    NonNullList<ItemStack> items = NonNullList.withSize(7, ItemStack.EMPTY);
+    NonNullList<ItemStack> items = NonNullList.withSize(5, ItemStack.EMPTY);
 
     public AbstractKitchenwareBE(BlockEntityType<?> type, BlockPos worldPosition, BlockState blockState) {
         super(type, worldPosition, blockState);
     }
 
     @Override
-    protected NonNullList<ItemStack> getItems() {
+    public NonNullList<ItemStack> getItems() {
         return items;
     }
 
@@ -42,7 +42,7 @@ public abstract class AbstractKitchenwareBE extends RandomizableContainerBlockEn
 
     @Override
     public int getContainerSize() {
-        return 7;
+        return 5;
     }
 
     @Override

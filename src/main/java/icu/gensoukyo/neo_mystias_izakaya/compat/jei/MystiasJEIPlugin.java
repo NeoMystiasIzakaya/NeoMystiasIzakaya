@@ -5,8 +5,8 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.compat.jei;
 
+import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientRecipeUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonRecipeUtil;
-import icu.gensoukyo.neo_mystias_izakaya.common.util.NMIServerRecipeUtil;
 import icu.gensoukyo.neo_mystias_izakaya.compat.jei.recipe.*;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipe;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIVanillaTags;
@@ -40,19 +40,19 @@ public class MystiasJEIPlugin implements IModPlugin {
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         List<NMIRecipe> recipes;
-        recipes = NMICommonRecipeUtil.unWarp(NMIServerRecipeUtil.getRecipesByKitchenware(NMIVanillaTags.BOILING_POT));
+        recipes = NMICommonRecipeUtil.unWarp(NMIClientRecipeUtil.getRecipesByKitchenware(NMIVanillaTags.BOILING_POT));
         registration.addRecipes(BoilingPotRecipe.BOILING_POT, recipes);
 
-        recipes = NMICommonRecipeUtil.unWarp(NMIServerRecipeUtil.getRecipesByKitchenware(NMIVanillaTags.GRILL));
+        recipes = NMICommonRecipeUtil.unWarp(NMIClientRecipeUtil.getRecipesByKitchenware(NMIVanillaTags.GRILL));
         registration.addRecipes(GrillRecipe.GRILL, recipes);
 
-        recipes = NMICommonRecipeUtil.unWarp(NMIServerRecipeUtil.getRecipesByKitchenware(NMIVanillaTags.FRYING_PAN));
+        recipes = NMICommonRecipeUtil.unWarp(NMIClientRecipeUtil.getRecipesByKitchenware(NMIVanillaTags.FRYING_PAN));
         registration.addRecipes(FryingPanRecipe.FRYING_PAN, recipes);
 
-        recipes = NMICommonRecipeUtil.unWarp(NMIServerRecipeUtil.getRecipesByKitchenware(NMIVanillaTags.STEAMER));
+        recipes = NMICommonRecipeUtil.unWarp(NMIClientRecipeUtil.getRecipesByKitchenware(NMIVanillaTags.STEAMER));
         registration.addRecipes(SteamerRecipe.STEAMER, recipes);
 
-        recipes = NMICommonRecipeUtil.unWarp(NMIServerRecipeUtil.getRecipesByKitchenware(NMIVanillaTags.CUTTING_BOARD));
+        recipes = NMICommonRecipeUtil.unWarp(NMIClientRecipeUtil.getRecipesByKitchenware(NMIVanillaTags.CUTTING_BOARD));
         registration.addRecipes(CuttingBoardRecipe.CUTTING_BOARD, recipes);
     }
 

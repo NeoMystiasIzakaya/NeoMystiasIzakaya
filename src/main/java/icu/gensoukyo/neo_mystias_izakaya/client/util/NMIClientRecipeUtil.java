@@ -41,6 +41,25 @@ public final class NMIClientRecipeUtil {
         return getRecipes(recipesIds);
     }
 
+    public static List<NMIRecipeHolder> getRecipesByInputAndKitchenware(List<ItemStack> input, TagKey<Block> kitchenware) {
+        Set<Identifier> inputRecipeIds = new HashSet<>();
+        for (ItemStack stack : input) {
+            List<Identifier> identifiers = NMIDataAccessor.client().getRecipeMap().getInputItemToRecipeMap().get(NMICommonItemStackUtil.get(stack));
+            if (identifiers != null) {
+                inputRecipeIds.addAll(identifiers);
+            }
+        }
+
+        List<Identifier> kitchenwareRecipeIds = NMIDataAccessor.client().getRecipeMap().getKitchenwareToRecipeMap().get(kitchenware);
+        if (kitchenwareRecipeIds != null) {
+            inputRecipeIds.retainAll(kitchenwareRecipeIds);
+        } else {
+            inputRecipeIds.clear();
+        }
+
+        return getRecipes(new ArrayList<>(inputRecipeIds));
+    }
+
     public static List<NMIRecipeHolder> getRecipes(List<Identifier> recipesIds) {
         if (recipesIds == null) {
             return List.of();

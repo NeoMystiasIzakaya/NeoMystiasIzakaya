@@ -1,13 +1,12 @@
 package icu.gensoukyo.neo_mystias_izakaya.client.gui;
 
-import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
+import icu.gensoukyo.neo_mystias_izakaya.client.util.ClientUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.AbstractKitchenwareBE;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIMenus;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIVanillaTags;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -18,14 +17,13 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
-
-import java.util.List;
+import net.neoforged.fml.loading.FMLEnvironment;
 
 @Getter
 public class KitchenwareMenu extends AbstractContainerMenu {
     private final ContainerLevelAccess access = ContainerLevelAccess.NULL;
     private AbstractKitchenwareBE kitchenwareBE;
-    private List<Identifier> recipes;
+
     protected final int INV_START = 6;
     protected static final int INV_SIZE = 36;
 
@@ -38,7 +36,6 @@ public class KitchenwareMenu extends AbstractContainerMenu {
         BlockEntity blockEntity = inventory.player.level().getBlockEntity(blockPos);
         if (blockEntity instanceof AbstractKitchenwareBE kitchenware) {
             this.kitchenwareBE = kitchenware;
-            this.recipes = ClientNMIDataAccessor.INSTANCE.getRecipeMap().getKitchenwareToRecipeMap().get(kitchenware.getKitchenwareType().KITCHENWARE_TYPE);
             addItems(kitchenwareBE, this.kitchenwareBE);
             addPlayerInventory(inventory);
         }
@@ -56,22 +53,16 @@ public class KitchenwareMenu extends AbstractContainerMenu {
                 public boolean mayPlace(ItemStack pStack) {
                     return pStack.tags().anyMatch(itemTagKey -> itemTagKey.equals(NMIVanillaTags.INGREDIENT));
                 }
+
+                @Override
+                public void setChanged() {
+                    super.setChanged();
+                    if (FMLEnvironment.getDist().isClient()) {
+                        ClientUtil.updateKitchenwareScreen();
+                    }
+                }
             });
         }
-        addSlot(new Slot(items, 5, 180, 110) {
-            @Override
-            public boolean mayPlace(ItemStack pStack) {
-                return false;
-            }
-
-            @Override
-            public void setChanged() {
-                this.container.setChanged();
-                if (cookerTE.getLevel() != null) {
-                    cookerTE.getLevel().sendBlockUpdated(cookerTE.getBlockPos(), cookerTE.getBlockState(), cookerTE.getBlockState(), Block.UPDATE_CLIENTS);
-                }
-            }
-        });
     }
 
     protected void addPlayerInventory(Inventory inv) {
