@@ -3,13 +3,22 @@ package icu.gensoukyo.neo_mystias_izakaya.client.gui;
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientRecipeUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.AbstractKitchenwareBE;
+import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipe;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeHolder;
+import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
+import net.minecraft.client.StringSplitter;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.util.FormattedCharSink;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.Item;
 
 import java.awt.*;
 import java.util.List;
@@ -21,6 +30,8 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
     private static final Identifier BACKGROUND = id("textures/gui/kitchenware_bg.png");
     final int YELLOW = Color.YELLOW.getRGB();
     final int BLACK = Color.BLACK.getRGB();
+    final int GREEN = Color.GREEN.getRGB();
+    final int RED = Color.RED.getRGB();
     final int MIN_X = 120;
     final int MIN_Y = 10;
     final int MAX_X = 215;
@@ -40,25 +51,72 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
         this.renderRecipes(graphics, mouseX, mouseY, a);
     }
 
-    protected void renderRecipes(GuiGraphicsExtractor guiGraphics, int pMouseX, int pMouseY, float a) {
+    @Override
+    public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
+        int hoveredRecipeIndex = getHoveredRecipeIndex((int) event.x(), (int) event.y());
+        if (hoveredRecipeIndex >= 0 && hoveredRecipeIndex < possibleRecipes.size()) {
+
+        }
+        return super.mouseClicked(event, doubleClick);
+    }
+
+    private int getHoveredRecipeIndex(int pMouseX, int pMouseY) {
         int i = (this.width - this.imageWidth) / 2;
         int j = (this.height - this.imageHeight) / 2;
-        int index = 0;
-
         if (pMouseX > (i + MIN_X) && pMouseX < (i + MAX_X) && pMouseY > (j + MIN_Y) && pMouseY < (j + MAX_Y)) {
             int dx = pMouseX - i;
             int dy = pMouseY - j;
             int x = dx - (dx) % 20 + i;
             int y = dy - (dy - 11) % 20 + j;
+            return (x - i - 120) / 20 + (y - j - 10) / 20 * 5;
+        }
+        return -1;
+    }
+
+    private void renderHighlight(GuiGraphicsExtractor guiGraphics, int index, int i, int j) {
+        if (index >= 0) {
+            int x = i + 120 + index % 5 * 20;
+            int y = j + 11 + index / 5 * 20;
             guiGraphics.fill(x, y, x + 20, y + 2, YELLOW);
             guiGraphics.fill(x, y, x + 2, y + 20, YELLOW);
             guiGraphics.fill(x + 18, y, x + 20, y + 20, YELLOW);
             guiGraphics.fill(x, y + 18, x + 20, y + 20, YELLOW);
-            index = (x - i - 120) / 20 + (y - j - 10) / 20 * 5;
         }
+    }
+
+    protected void renderRecipes(GuiGraphicsExtractor guiGraphics, int pMouseX, int pMouseY, float a) {
+        int i = (this.width - this.imageWidth) / 2;
+        int j = (this.height - this.imageHeight) / 2;
+
+        int hoveredIndex = getHoveredRecipeIndex(pMouseX, pMouseY);
+        renderHighlight(guiGraphics, hoveredIndex, i, j);
 
         for (int k = 0; k < possibleRecipes.size(); k++) {
             guiGraphics.item(possibleRecipes.get(k).recipe().output().create(), i + 122 + k % 5 * 20, j + 13 + k / 5 * 20);
+        }
+
+        int hoveredRecipeIndex = getHoveredRecipeIndex(pMouseX, pMouseY);
+        if (hoveredRecipeIndex >= 0 && hoveredRecipeIndex < possibleRecipes.size()) {
+            NMIRecipeHolder recipeHolder = possibleRecipes.get(hoveredRecipeIndex);
+            NMIRecipe recipe = recipeHolder.recipe();
+            Item cuisineItem = recipe.output().item().value();
+            guiGraphics.text(font, Component.translatable(cuisineItem.getDescriptionId()), i + 15, j + 10, BLACK, false);
+            ItemTagList itemTagList = ClientNMIDataAccessor.INSTANCE.getTagItemListMap().getItemToTagMap().get(recipeHolder.key());
+            if (itemTagList != null) {
+                StringBuilder builder = new StringBuilder();
+                for (int i1 = 0; i1 < itemTagList.positiveTags().size(); i1++) {
+                    Identifier identifier = itemTagList.positiveTags().get(i1);
+                    MutableComponent tag = Component.translatable(identifier.toLanguageKey("tag"));
+                    FormattedCharSequence visualOrderText = tag.getVisualOrderText();
+                    visualOrderText.accept((int position, Style style, int codepoint) -> {
+                        builder.append(Character.toChars(codepoint));
+                        return true;
+                    });
+                    builder.append(" ");
+                }
+
+                guiGraphics.text(font, Component.literal(builder.toString()), i + 15, j + 40, GREEN, false);
+            }
         }
     }
 
