@@ -56,4 +56,6 @@ public abstract class AbstractKitchenwareBE extends RandomizableContainerBlockEn
         super.saveAdditional(output);
         ContainerHelper.saveAllItems(output, this.items);
     }
+
+    public abstract KitchenwareMenu.KitchenwareType getKitchenwareType();
 }

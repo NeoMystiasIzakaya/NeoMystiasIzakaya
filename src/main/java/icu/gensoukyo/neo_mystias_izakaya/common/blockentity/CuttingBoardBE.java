@@ -5,11 +5,11 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.common.blockentity;
 
+import icu.gensoukyo.neo_mystias_izakaya.client.gui.KitchenwareMenu;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jspecify.annotations.NonNull;
 
 public class CuttingBoardBE extends AbstractKitchenwareBE {
     public CuttingBoardBE(BlockPos worldPosition, BlockState blockState) {
@@ -17,7 +17,12 @@ public class CuttingBoardBE extends AbstractKitchenwareBE {
     }
 
     @Override
-    protected @NonNull Component getDefaultName() {
+    protected Component getDefaultName() {
         return Component.literal("Cutting Board");
+    }
+
+    @Override
+    public KitchenwareMenu.KitchenwareType getKitchenwareType() {
+        return KitchenwareMenu.KitchenwareType.CUTTING_BOARD;
     }
 }

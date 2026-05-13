@@ -1,10 +1,14 @@
 package icu.gensoukyo.neo_mystias_izakaya.client.gui;
 
+import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.AbstractKitchenwareBE;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIMenus;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIVanillaTags;
+import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.Identifier;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -15,9 +19,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
+import java.util.List;
+
+@Getter
 public class KitchenwareMenu extends AbstractContainerMenu {
     private final ContainerLevelAccess access = ContainerLevelAccess.NULL;
     private AbstractKitchenwareBE kitchenwareBE;
+    private List<Identifier> recipes;
     protected final int INV_START = 6;
     protected static final int INV_SIZE = 36;
 
@@ -30,9 +38,10 @@ public class KitchenwareMenu extends AbstractContainerMenu {
         BlockEntity blockEntity = inventory.player.level().getBlockEntity(blockPos);
         if (blockEntity instanceof AbstractKitchenwareBE kitchenware) {
             this.kitchenwareBE = kitchenware;
+            this.recipes = ClientNMIDataAccessor.INSTANCE.getRecipeMap().getKitchenwareToRecipeMap().get(kitchenware.getKitchenwareType().KITCHENWARE_TYPE);
+            addItems(kitchenwareBE, this.kitchenwareBE);
+            addPlayerInventory(inventory);
         }
-        addItems(kitchenwareBE, this.kitchenwareBE);
-        addPlayerInventory(inventory);
     }
 
     protected void addItems(Container items, AbstractKitchenwareBE cookerTE) {
@@ -109,6 +118,16 @@ public class KitchenwareMenu extends AbstractContainerMenu {
     }
 
     public enum KitchenwareType {
-        BOILING_POT, CUTTING_BOARD, FRYING_PAN, GRILL, STEAMER
+        BOILING_POT(NMIVanillaTags.BOILING_POT),
+        CUTTING_BOARD(NMIVanillaTags.CUTTING_BOARD),
+        FRYING_PAN(NMIVanillaTags.FRYING_PAN),
+        GRILL(NMIVanillaTags.GRILL),
+        STEAMER(NMIVanillaTags.STEAMER);
+
+        public final TagKey<Block> KITCHENWARE_TYPE;
+
+        KitchenwareType(TagKey<Block> tag) {
+            this.KITCHENWARE_TYPE = tag;
+        }
     }
 }
