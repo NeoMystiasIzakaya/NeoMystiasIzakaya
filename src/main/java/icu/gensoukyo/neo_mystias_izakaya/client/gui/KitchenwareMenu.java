@@ -14,7 +14,6 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import org.jspecify.annotations.NonNull;
 
 public class KitchenwareMenu extends AbstractContainerMenu {
     private final ContainerLevelAccess access = ContainerLevelAccess.NULL;
@@ -29,8 +28,8 @@ public class KitchenwareMenu extends AbstractContainerMenu {
     public KitchenwareMenu(int containerId, Inventory inventory, BlockPos blockPos) {
         super(NMIMenus.KITCHENWARE_MENU.get(), containerId);
         BlockEntity blockEntity = inventory.player.level().getBlockEntity(blockPos);
-        if (blockEntity instanceof AbstractKitchenwareBE kitchenwareBE) {
-            this.kitchenwareBE = kitchenwareBE;
+        if (blockEntity instanceof AbstractKitchenwareBE kitchenware) {
+            this.kitchenwareBE = kitchenware;
         }
         addItems(kitchenwareBE, this.kitchenwareBE);
         addPlayerInventory(inventory);
@@ -105,11 +104,11 @@ public class KitchenwareMenu extends AbstractContainerMenu {
     }
 
     @Override
-    public boolean stillValid(@NonNull Player player) {
+    public boolean stillValid(Player player) {
         return access.evaluate((level, pos) -> player.isWithinBlockInteractionRange(pos, 4.0F), true);
     }
 
     public enum KitchenwareType {
-        BOILING_POT, CUTTING_BOARD, FRYING_PAN, GRILL, STEAMER;
+        BOILING_POT, CUTTING_BOARD, FRYING_PAN, GRILL, STEAMER
     }
 }
