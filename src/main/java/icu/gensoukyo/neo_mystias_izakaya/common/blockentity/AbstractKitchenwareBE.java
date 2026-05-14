@@ -23,6 +23,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
+import java.util.List;
+
 public abstract class AbstractKitchenwareBE extends RandomizableContainerBlockEntity {
     /**
      * 0-4为食材格
@@ -129,6 +131,10 @@ public abstract class AbstractKitchenwareBE extends RandomizableContainerBlockEn
 
     public void setResultItem(ItemStack stack) {
         items.set(5, stack);
+    }
+
+    public List<ItemStack> getIngredientItems() {
+        return items.subList(0, 5);
     }
 
     public abstract KitchenwareMenu.KitchenwareType getKitchenwareType();

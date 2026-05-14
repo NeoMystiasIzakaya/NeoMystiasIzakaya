@@ -66,7 +66,7 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
         int hoveredRecipeIndex = getHoveredRecipeIndex((int) event.x(), (int) event.y());
         if (hoveredRecipeIndex >= 0 && hoveredRecipeIndex < possibleRecipes.size() && kitchenwareBE.canStartCooking()) {
             NMIRecipe recipe = this.possibleRecipes.get(hoveredRecipeIndex).recipe();
-            ClientPayloadSender.sendKitchenwareCookMessage(new NMIKitchenwareCookMessage(recipe.output().create(), recipe.time(), kitchenwareBE.getBlockPos()));
+            ClientPayloadSender.sendKitchenwareCookMessage(new NMIKitchenwareCookMessage(recipe, recipe.time(), kitchenwareBE.getBlockPos()));
         }
         return super.mouseClicked(event, doubleClick);
     }
