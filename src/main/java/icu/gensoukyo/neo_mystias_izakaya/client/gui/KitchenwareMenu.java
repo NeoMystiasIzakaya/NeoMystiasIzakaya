@@ -36,12 +36,12 @@ public class KitchenwareMenu extends AbstractContainerMenu {
         BlockEntity blockEntity = inventory.player.level().getBlockEntity(blockPos);
         if (blockEntity instanceof AbstractKitchenwareBE kitchenware) {
             this.kitchenwareBE = kitchenware;
-            addItems(kitchenwareBE, this.kitchenwareBE);
+            addItems(kitchenwareBE);
             addPlayerInventory(inventory);
         }
     }
 
-    protected void addItems(Container items, AbstractKitchenwareBE cookerTE) {
+    protected void addItems(Container items) {
         for (int i = 0; i < 5; ++i) {
             addSlot(new Slot(items, i, 17 + i * 25, 110) {
                 @Override
@@ -63,6 +63,18 @@ public class KitchenwareMenu extends AbstractContainerMenu {
                 }
             });
         }
+
+        addSlot(new Slot(items, 5, 180, 110) {
+            @Override
+            public boolean mayPlace(ItemStack pStack) {
+                return false;
+            }
+
+            @Override
+            public void setChanged() {
+                this.container.setChanged();
+            }
+        });
     }
 
     protected void addPlayerInventory(Inventory inv) {

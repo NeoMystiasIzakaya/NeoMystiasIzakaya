@@ -6,9 +6,7 @@
 package icu.gensoukyo.neo_mystias_izakaya.registry;
 
 import icu.gensoukyo.neo_mystias_izakaya.client.network.ClientPayloadHandler;
-import icu.gensoukyo.neo_mystias_izakaya.common.network.NMICustomerMapSyncMessage;
-import icu.gensoukyo.neo_mystias_izakaya.common.network.NMIRecipeMapSyncMessage;
-import icu.gensoukyo.neo_mystias_izakaya.common.network.TagItemListMapSyncMessage;
+import icu.gensoukyo.neo_mystias_izakaya.common.network.*;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
@@ -37,6 +35,12 @@ public class NMINetwork {
                 NMICustomerMapSyncMessage.TYPE,
                 NMICustomerMapSyncMessage.STREAM_CODEC,
                 ClientPayloadHandler::handleCustomerMapSyncMessage
+        );
+
+        registrar.playToServer(
+                NMIKitchenwareCookMessage.TYPE,
+                NMIKitchenwareCookMessage.STREAM_CODEC,
+                ServerPayloadHandler::handleKitchenwareCookMessage
         );
     }
 }

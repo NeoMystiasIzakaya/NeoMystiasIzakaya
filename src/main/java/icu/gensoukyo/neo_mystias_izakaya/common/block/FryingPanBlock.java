@@ -8,13 +8,17 @@ package icu.gensoukyo.neo_mystias_izakaya.common.block;
 import com.mojang.serialization.MapCodec;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.FryingPanBE;
+import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -35,6 +39,12 @@ public class FryingPanBlock extends AbstractKitchenware {
                 .lightLevel(litBlockEmission(8))
                 .requiresCorrectToolForDrops());
     }
+
+    @Override
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> type) {
+        return createCookTicker(level, type, NMIBlockEntities.FRYING_PAN.get());
+    }
+
 
     @Override
     protected MapCodec<? extends BaseEntityBlock> codec() {

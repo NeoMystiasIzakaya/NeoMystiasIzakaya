@@ -1,8 +1,10 @@
 package icu.gensoukyo.neo_mystias_izakaya.client.gui;
 
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
+import icu.gensoukyo.neo_mystias_izakaya.client.network.ClientPayloadSender;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientRecipeUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.AbstractKitchenwareBE;
+import icu.gensoukyo.neo_mystias_izakaya.common.network.NMIKitchenwareCookMessage;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipe;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeHolder;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
@@ -25,6 +27,7 @@ import static icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya.id;
 
 public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> {
     private static final Identifier BACKGROUND = id("textures/gui/kitchenware_bg.png");
+    private final AbstractKitchenwareBE kitchenwareBE;
     final int YELLOW = Color.YELLOW.getRGB();
     final int BLACK = Color.BLACK.getRGB();
     final int GREEN = Color.GREEN.getRGB();
@@ -38,7 +41,7 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
     public KitchenwareScreen(KitchenwareMenu menu, Inventory inv, Component title) {
         super(menu, inv, title, 230, 219);
         Map<Identifier, NMIRecipeHolder> recipeMap = ClientNMIDataAccessor.INSTANCE.getRecipeMap().getRecipeMap();
-        AbstractKitchenwareBE kitchenwareBE = this.getMenu().getKitchenwareBE();
+        this.kitchenwareBE = this.getMenu().getKitchenwareBE();
         this.possibleRecipes = NMIClientRecipeUtil.getRecipesByInputAndKitchenware(List.copyOf(kitchenwareBE.getItems()), kitchenwareBE.getKitchenwareType().KITCHENWARE_TYPE);
     }
 
@@ -51,8 +54,9 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
     @Override
     public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
         int hoveredRecipeIndex = getHoveredRecipeIndex((int) event.x(), (int) event.y());
-        if (hoveredRecipeIndex >= 0 && hoveredRecipeIndex < possibleRecipes.size()) {
-
+        if (hoveredRecipeIndex >= 0 && hoveredRecipeIndex < possibleRecipes.size() && kitchenwareBE.canStartCooking()) {
+            NMIRecipe recipe = this.possibleRecipes.get(hoveredRecipeIndex).recipe();
+            ClientPayloadSender.sendKitchenwareCookMessage(new NMIKitchenwareCookMessage(recipe.output().create(), recipe.time(), kitchenwareBE.getBlockPos()));
         }
         return super.mouseClicked(event, doubleClick);
     }
@@ -216,7 +220,6 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
 //    }
 
     public void updateRecipes() {
-        AbstractKitchenwareBE kitchenwareBE = this.menu.getKitchenwareBE();
         this.possibleRecipes = NMIClientRecipeUtil.getRecipesByInputAndKitchenware(List.copyOf(kitchenwareBE.getItems()), kitchenwareBE.getKitchenwareType().KITCHENWARE_TYPE);
     }
 
