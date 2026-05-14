@@ -19,6 +19,7 @@ public class ServerPayloadHandler {
                 kitchenware.getItems().clear();
                 kitchenware.setTargetItem(message.cuisine());
                 kitchenware.setCookingTime(message.time() * 20);
+                kitchenware.setTotalCookingTime(message.time() * 20);
                 if (blockEntity.getLevel() != null) {
                     blockEntity.getLevel().setBlock(message.blockPos(), blockEntity.getBlockState().setValue(BlockStateProperties.LIT, true), Block.UPDATE_CLIENTS);
                 }

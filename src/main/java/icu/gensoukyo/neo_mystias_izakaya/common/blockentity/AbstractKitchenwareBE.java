@@ -32,20 +32,29 @@ public abstract class AbstractKitchenwareBE extends RandomizableContainerBlockEn
     NonNullList<ItemStack> items = NonNullList.withSize(7, ItemStack.EMPTY);
     @Setter
     private int cookingTime = 0;
+    @Setter
+    private int totalCookingTime = 0;
     private final ContainerData dataAccess = new ContainerData() {
         @Override
         public int get(int pIndex) {
-            return AbstractKitchenwareBE.this.cookingTime;
+            return switch (pIndex) {
+                case 0 -> AbstractKitchenwareBE.this.cookingTime;
+                case 1 -> AbstractKitchenwareBE.this.totalCookingTime;
+                default -> 0;
+            };
         }
 
         @Override
         public void set(int pIndex, int pValue) {
-            AbstractKitchenwareBE.this.cookingTime = pValue;
+            switch (pIndex) {
+                case 0 -> AbstractKitchenwareBE.this.cookingTime = pValue;
+                case 1 -> AbstractKitchenwareBE.this.totalCookingTime = pValue;
+            }
         }
 
         @Override
         public int getCount() {
-            return 1;
+            return 2;
         }
     };
 
@@ -91,6 +100,7 @@ public abstract class AbstractKitchenwareBE extends RandomizableContainerBlockEn
         super.loadAdditional(input);
         ContainerHelper.loadAllItems(input, this.items);
         this.cookingTime = input.getIntOr("CookingTime", 0);
+        this.totalCookingTime = input.getIntOr("TotalCookingTime", 0);
     }
 
     @Override
@@ -98,6 +108,7 @@ public abstract class AbstractKitchenwareBE extends RandomizableContainerBlockEn
         super.saveAdditional(output);
         ContainerHelper.saveAllItems(output, this.items);
         output.putInt("CookingTime", this.cookingTime);
+        output.putInt("TotalCookingTime", this.totalCookingTime);
     }
 
     public boolean canStartCooking() {

@@ -28,7 +28,6 @@ import static icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya.id;
 
 public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> {
     private static final Identifier BACKGROUND = id("textures/gui/kitchenware_bg.png");
-    private final AbstractKitchenwareBE kitchenwareBE;
     final int YELLOW = Color.YELLOW.getRGB();
     final int BLACK = Color.BLACK.getRGB();
     final int GREEN = Color.GREEN.getRGB();
@@ -37,6 +36,7 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
     final int MIN_Y = 10;
     final int MAX_X = 215;
     final int MAX_Y = 90;
+    private final AbstractKitchenwareBE kitchenwareBE;
     List<NMIRecipeHolder> possibleRecipes;
 
     public KitchenwareScreen(KitchenwareMenu menu, Inventory inv, Component title) {
@@ -50,8 +50,14 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
     public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
         super.extractRenderState(graphics, mouseX, mouseY, a);
         boolean isLit = kitchenwareBE.getBlockState().getValue(BlockStateProperties.LIT);
-        if (!isLit) {
-            this.renderRecipes(graphics, mouseX, mouseY, a);
+        if (isLit) {
+            renderProgress(graphics, mouseX, mouseY);
+            return;
+        }
+        if (kitchenwareBE.getResultItem().isEmpty()) {
+            this.renderRecipes(graphics, mouseX, mouseY);
+        } else {
+            this.renderResult(graphics, mouseX, mouseY);
         }
     }
 
@@ -89,7 +95,7 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
         }
     }
 
-    protected void renderRecipes(GuiGraphicsExtractor guiGraphics, int pMouseX, int pMouseY, float a) {
+    protected void renderRecipes(GuiGraphicsExtractor guiGraphics, int pMouseX, int pMouseY) {
         int i = (this.width - this.imageWidth) / 2;
         int j = (this.height - this.imageHeight) / 2;
 
@@ -103,52 +109,23 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
         int hoveredRecipeIndex = getHoveredRecipeIndex(pMouseX, pMouseY);
         if (hoveredRecipeIndex >= 0 && hoveredRecipeIndex < possibleRecipes.size()) {
             NMIRecipeHolder recipeHolder = possibleRecipes.get(hoveredRecipeIndex);
-            NMIRecipe recipe = recipeHolder.recipe();
-            Item cuisineItem = recipe.output().item().value();
-            guiGraphics.text(font, Component.translatable(cuisineItem.getDescriptionId()), i + 15, j + 10, BLACK, false);
-            guiGraphics.text(font, Component.translatable("gui.neo_mystias_izakaya.time").append(": " + recipe.time()), i + 15, j + 20, BLACK, false);
+            renderCuisineInfo(guiGraphics, recipeHolder, i, j);
+        }
+    }
 
-            FormattedCharSequence description = Component.translatable(cuisineItem.getDescriptionId() + ".desc").getVisualOrderText();
-            StringBuilder builder = new StringBuilder();
-            description.accept((index, style, charPoint) -> {
-                builder.append(Character.toChars(charPoint));
-                return true;
-            });
-            String substring = builder.subSequence(0, 10).toString();
+    protected void renderResult(GuiGraphicsExtractor guiGraphics, int pMouseX, int pMouseY) {
 
-            guiGraphics.text(font, Component.literal(substring + "..."), i + 15, j + 30, BLACK, false);
-            ItemTagList itemTagList = ClientNMIDataAccessor.INSTANCE.getTagItemListMap().getItemToTagMap().get(recipeHolder.key());
-            if (itemTagList != null) {
-                int currentX = 0;
-                int lineHeight = font.lineHeight;
-                int startY = j + 40;
-                int maxWidth = 100;
-                for (int i1 = 0; i1 < itemTagList.positiveTags().size(); i1++) {
-                    Identifier identifier = itemTagList.positiveTags().get(i1);
-                    MutableComponent tag = Component.translatable(identifier.toLanguageKey("tag"));
-                    FormattedCharSequence visualOrderText = tag.getVisualOrderText();
-                    int fontWidth = font.width(visualOrderText);
-                    if (currentX + fontWidth > maxWidth) {
-                        currentX = 0;
-                        startY += lineHeight;
-                    }
-                    guiGraphics.text(font, visualOrderText, i + 15 + currentX, startY, GREEN, false);
-                    currentX += (fontWidth + 4);
-                }
+    }
 
-                for (int i1 = 0; i1 < itemTagList.negativeTags().size(); i1++) {
-                    Identifier identifier = itemTagList.negativeTags().get(i1);
-                    MutableComponent tag = Component.translatable(identifier.toLanguageKey("tag"));
-                    FormattedCharSequence visualOrderText = tag.getVisualOrderText();
-                    int fontWidth = font.width(visualOrderText);
-                    if (currentX + fontWidth > maxWidth) {
-                        currentX = 0;
-                        startY += lineHeight;
-                    }
-                    guiGraphics.text(font, visualOrderText, i + 15 + currentX, startY, RED, false);
-                    currentX += (fontWidth + 4);
-                }
-            }
+    protected void renderProgress(GuiGraphicsExtractor guiGraphics, int pMouseX, int pMouseY) {
+        int i = (this.width - this.imageWidth) / 2;
+        int j = (this.height - this.imageHeight) / 2;
+        float cookTime = this.menu.getData().get(0);
+        float totalTime = this.menu.getData().get(1);
+        float process = (totalTime - cookTime) / 20;
+        if (cookTime > 0) {
+            guiGraphics.text(font, Component.translatable("gui.neo_mystias_izakaya.progress").append(Component.literal(" : " + String.format("%.2f / %.2f s", process, (totalTime / 20)))), i + 120, j + 10, BLACK, false);
+            guiGraphics.text(font, Component.literal(String.format("%.2f", (1 - cookTime / totalTime) * 100) +" %"), i + 120, j + 25, BLACK, false);
         }
     }
 
@@ -166,5 +143,51 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
 
     @Override
     protected void extractLabels(GuiGraphicsExtractor graphics, int xm, int ym) {
+    }
+
+    private void renderCuisineInfo(GuiGraphicsExtractor guiGraphics, NMIRecipeHolder recipeHolder, int i, int j) {
+        NMIRecipe recipe = recipeHolder.recipe();
+        Item cuisineItem = recipe.output().item().value();
+        guiGraphics.text(font, Component.translatable(cuisineItem.getDescriptionId()), i + 15, j + 10, BLACK, false);
+        guiGraphics.text(font, Component.translatable("gui.neo_mystias_izakaya.time").append(": " + recipe.time()), i + 15, j + 20, BLACK, false);
+
+        FormattedCharSequence description = Component.translatable(cuisineItem.getDescriptionId() + ".desc").getVisualOrderText();
+        StringBuilder builder = new StringBuilder();
+        description.accept((index, style, charPoint) -> {
+            builder.append(Character.toChars(charPoint));
+            return true;
+        });
+        String substring = builder.subSequence(0, 10).toString();
+
+        guiGraphics.text(font, Component.literal(substring + "..."), i + 15, j + 30, BLACK, false);
+        ItemTagList itemTagList = ClientNMIDataAccessor.INSTANCE.getTagItemListMap().getItemToTagMap().get(recipeHolder.key());
+        if (itemTagList != null) {
+            TagRenderState state = new TagRenderState(0, j + 40);
+            state = renderTags(itemTagList.positiveTags(), GREEN, state, guiGraphics, i + 15);
+            state = renderTags(itemTagList.negativeTags(), RED, state, guiGraphics, i + 15);
+        }
+    }
+
+    private TagRenderState renderTags(List<Identifier> tags, int color, TagRenderState state, GuiGraphicsExtractor guiGraphics, int baseX) {
+        int currentX = state.currentX();
+        int startY = state.startY();
+        int lineHeight = font.lineHeight;
+        int maxWidth = 100;
+
+        for (Identifier identifier : tags) {
+            MutableComponent tag = Component.translatable(identifier.toLanguageKey("tag"));
+            FormattedCharSequence visualOrderText = tag.getVisualOrderText();
+            int fontWidth = font.width(visualOrderText);
+            if (currentX + fontWidth > maxWidth) {
+                currentX = 0;
+                startY += lineHeight;
+            }
+            guiGraphics.text(font, visualOrderText, baseX + currentX, startY, color, false);
+            currentX += (fontWidth + 4);
+        }
+        return new TagRenderState(currentX, startY);
+    }
+
+    private record TagRenderState(int currentX, int startY) {
     }
 }

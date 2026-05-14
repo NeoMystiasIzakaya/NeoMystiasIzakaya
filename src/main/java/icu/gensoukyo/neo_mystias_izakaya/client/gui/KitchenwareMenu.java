@@ -28,12 +28,13 @@ public class KitchenwareMenu extends AbstractContainerMenu {
 
 
     public KitchenwareMenu(int containerId, Inventory inventory, FriendlyByteBuf buf) {
-        this(containerId, inventory, buf.readBlockPos(), new SimpleContainerData(1));
+        this(containerId, inventory, buf.readBlockPos(), new SimpleContainerData(2));
     }
 
     public KitchenwareMenu(int containerId, Inventory inventory, BlockPos blockPos, ContainerData data) {
         super(NMIMenus.KITCHENWARE_MENU.get(), containerId);
         this.data = data;
+        this.addDataSlots(data);
         BlockEntity blockEntity = inventory.player.level().getBlockEntity(blockPos);
         if (blockEntity instanceof AbstractKitchenwareBE kitchenware) {
             this.kitchenwareBE = kitchenware;
