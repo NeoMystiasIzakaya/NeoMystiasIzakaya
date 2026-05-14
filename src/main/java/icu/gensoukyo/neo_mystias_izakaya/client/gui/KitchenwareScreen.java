@@ -18,6 +18,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 import java.awt.*;
 import java.util.List;
@@ -48,7 +49,10 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
     @Override
     public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
         super.extractRenderState(graphics, mouseX, mouseY, a);
-        this.renderRecipes(graphics, mouseX, mouseY, a);
+        boolean isLit = kitchenwareBE.getBlockState().getValue(BlockStateProperties.LIT);
+        if (!isLit) {
+            this.renderRecipes(graphics, mouseX, mouseY, a);
+        }
     }
 
     @Override
@@ -128,96 +132,25 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
                         currentX = 0;
                         startY += lineHeight;
                     }
-                    guiGraphics.text(font, visualOrderText, i + 15 + currentX, startY, BLACK, false);
+                    guiGraphics.text(font, visualOrderText, i + 15 + currentX, startY, GREEN, false);
+                    currentX += (fontWidth + 4);
+                }
+
+                for (int i1 = 0; i1 < itemTagList.negativeTags().size(); i1++) {
+                    Identifier identifier = itemTagList.negativeTags().get(i1);
+                    MutableComponent tag = Component.translatable(identifier.toLanguageKey("tag"));
+                    FormattedCharSequence visualOrderText = tag.getVisualOrderText();
+                    int fontWidth = font.width(visualOrderText);
+                    if (currentX + fontWidth > maxWidth) {
+                        currentX = 0;
+                        startY += lineHeight;
+                    }
+                    guiGraphics.text(font, visualOrderText, i + 15 + currentX, startY, RED, false);
                     currentX += (fontWidth + 4);
                 }
             }
         }
     }
-
-//    protected void renderMealItem(GuiGraphicsExtractor guiGraphics, int pMouseX, int pMouseY, int i, int j) {
-//        if (this.menu instanceof AbstractCookMenu cookMenu) {
-//            boolean isMenuItemEqual = menuItems.equals(menu.getIngredientList());
-//            ItemStack target = cookMenu.cookerTE.getItem(6);
-//            if (target.isEmpty()) {
-//                int index = 0;
-//                //渲染选中方框
-//                if (pMouseX > (i + minX) && pMouseX < (i + maxX) && pMouseY > (j + minY) && pMouseY < (j + maxY)) {
-//                    int dx = pMouseX - i;
-//                    int dy = pMouseY - j;
-//                    int x = dx - (dx) % 20 + i;
-//                    int y = dy - (dy - 11) % 20 + j;
-//                    guiGraphics.fill(x, y, x + 20, y + 2, YELLOW);
-//                    guiGraphics.fill(x, y, x + 2, y + 20, YELLOW);
-//                    guiGraphics.fill(x + 18, y, x + 20, y + 20, YELLOW);
-//                    guiGraphics.fill(x, y + 18, x + 20, y + 20, YELLOW);
-//                    index = (x - i - 120) / 20 + (y - j - 10) / 20 * 5;
-//                }
-//                //渲染可制作菜肴列表
-//                if (!isMenuItemEqual) {
-//                    possibleMeals = UtilMethod.getItems(menu.getItems(), MealList.getInstance().getMealList(), menu.cookerType);
-//                }
-//                menuItems = new ArrayList<>(menu.getIngredientList());
-//                if (!possibleMeals.isEmpty()) {
-//                    for (int k = 0; k < possibleMeals.size(); k++) {
-//                        guiGraphics.renderItem(possibleMeals.get(k).result, i + 122 + k % 5 * 20, j + 13 + k / 5 * 20);
-//                    }
-//                    if (index < possibleMeals.size()) {
-//                        targetItemNew = possibleMeals.get(index);
-//                    }
-//                } else {
-//                    targetItemNew = MealRecipe.EMPTY;
-//                }
-//            } else {
-//                targetItemNew = MealList.getInstance().getRecipeMap().get(target.getItem());
-//            }
-//            if (targetItemNew.result.getItem() instanceof CookedMealItem cookedMealItem) {
-//                if (!targetItemNew.equals(targetItemOld) || !isMenuItemEqual) {
-//                    negativeStrings = cookedMealItem.negativeTag.stream()
-//                            .map(foodTagEnum -> Component.translatable("mystia_izakaya." + foodTagEnum.name()).getString())
-//                            .collect(Collectors.toCollection(ArrayList::new));
-//                    positiveStings = UtilMethod.getPositiveStings(cookMenu, targetItemNew);
-//                }
-//                targetItemOld = targetItemNew;
-//
-//                guiGraphics.drawString(font, Component.translatable(cookedMealItem.getDescriptionId()), i + 15, j + 10, BLACK, false);
-//                guiGraphics.drawString(font, Component.translatable("gui.mystia_izakaya.level").append(": " + cookedMealItem.level), i + 15, j + 20, BLACK, false);
-//                guiGraphics.drawString(font, Component.translatable("gui.mystia_izakaya.cooking_time").append(": " + cookedMealItem.cookingTime), i + 15, j + 30, BLACK, false);
-//                guiGraphics.drawString(font, Component.translatable("gui.mystia_izakaya.tags").append(":"), i + 15, j + 40, BLACK, false);
-//
-//                int stringLength = 0;
-//                int stringHeight = 0;
-//                for (int k = 0; k < positiveStings.size(); k++) {
-//                    //guiGraphics.fill(i + 15 + stringLength * 10 - 2, j + 50 + stringHeight * 10 - 1,i + 15 + stringLength * 10 + positiveStings.get(k).length() * 9 + 1, j + 50 + stringHeight * 10 + 9,positiveOutColor);
-//                    //guiGraphics.fill(i + 15 + stringLength * 10 - 1, j + 50 + stringHeight * 10,i + 15 + stringLength * 10 + positiveStings.get(k).length() * 9, j + 50 + stringHeight * 10 + 8,positiveInColor);
-//                    guiGraphics.drawString(font, positiveStings.get(k), i + 15 + stringLength * 10, j + 50 + stringHeight * 10, positiveOutColor, false);
-//                    stringLength += positiveStings.get(k).length();
-//                    if (positiveStings.size() > k + 1) {
-//                        if (stringLength + positiveStings.get(k + 1).length() > 10) {
-//                            stringLength = 0;
-//                            stringHeight++;
-//                        }
-//                    }
-//                }
-//                if (!negativeStrings.isEmpty()) {
-//                    if (stringLength + negativeStrings.getFirst().length() > 10) {
-//                        stringLength = 0;
-//                        stringHeight++;
-//                    }
-//                    for (int k = 0; k < negativeStrings.size(); k++) {
-//                        guiGraphics.drawString(font, negativeStrings.get(k), i + 15 + stringLength * 10, j + 50 + stringHeight * 10, Color.RED.getRGB(), false);
-//                        stringLength += negativeStrings.get(k).length();
-//                        if (negativeStrings.size() > k + 1) {
-//                            if (stringLength + negativeStrings.get(k + 1).length() > 10) {
-//                                stringLength = 0;
-//                                stringHeight++;
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
 
     public void updateRecipes() {
         this.possibleRecipes = NMIClientRecipeUtil.getRecipesByInputAndKitchenware(List.copyOf(kitchenwareBE.getItems()), kitchenwareBE.getKitchenwareType().KITCHENWARE_TYPE);

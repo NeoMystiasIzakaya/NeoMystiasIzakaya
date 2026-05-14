@@ -6,13 +6,16 @@
 package icu.gensoukyo.neo_mystias_izakaya.common.blockentity;
 
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.KitchenwareMenu;
+import lombok.Setter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -27,14 +30,40 @@ public abstract class AbstractKitchenwareBE extends RandomizableContainerBlockEn
      * 6为保存烹饪过程中的目标物品
      */
     NonNullList<ItemStack> items = NonNullList.withSize(7, ItemStack.EMPTY);
-    public int cookingTime = 0;
+    @Setter
+    private int cookingTime = 0;
+    private final ContainerData dataAccess = new ContainerData() {
+        @Override
+        public int get(int pIndex) {
+            return AbstractKitchenwareBE.this.cookingTime;
+        }
+
+        @Override
+        public void set(int pIndex, int pValue) {
+            AbstractKitchenwareBE.this.cookingTime = pValue;
+        }
+
+        @Override
+        public int getCount() {
+            return 1;
+        }
+    };
 
     public AbstractKitchenwareBE(BlockEntityType<?> type, BlockPos worldPosition, BlockState blockState) {
         super(type, worldPosition, blockState);
     }
 
     public static void serverTick(Level pLevel, BlockPos pPos, BlockState pState, AbstractKitchenwareBE pBlockEntity) {
-
+        if (pState.getValue(BlockStateProperties.LIT)) {
+            pBlockEntity.cookingTime--;
+            if (pBlockEntity.cookingTime <= 0) {
+                pBlockEntity.cookingTime = 0;
+                ItemStack copy = pBlockEntity.getTargetItem().copy();
+                pBlockEntity.getItems().clear();
+                pBlockEntity.setResultItem(copy);
+                pLevel.setBlock(pPos, pState.setValue(BlockStateProperties.LIT, false), Block.UPDATE_CLIENTS);
+            }
+        }
     }
 
     @Override
@@ -44,7 +73,7 @@ public abstract class AbstractKitchenwareBE extends RandomizableContainerBlockEn
 
     @Override
     protected AbstractContainerMenu createMenu(int containerID, Inventory inventory) {
-        return new KitchenwareMenu(containerID, inventory, this.getBlockPos());
+        return new KitchenwareMenu(containerID, inventory, this.getBlockPos(), dataAccess);
     }
 
     @Override
@@ -72,7 +101,7 @@ public abstract class AbstractKitchenwareBE extends RandomizableContainerBlockEn
     }
 
     public boolean canStartCooking() {
-        return this.items.stream().allMatch(ItemStack::isEmpty) && !this.getBlockState().getValue(BlockStateProperties.LIT);
+        return this.getTargetItem().isEmpty() && this.getResultItem().isEmpty() && !this.getBlockState().getValue(BlockStateProperties.LIT);
     }
 
     public ItemStack getTargetItem() {

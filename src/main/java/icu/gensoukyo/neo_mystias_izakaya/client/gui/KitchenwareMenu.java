@@ -11,28 +11,29 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.fml.loading.FMLEnvironment;
 
 @Getter
 public class KitchenwareMenu extends AbstractContainerMenu {
+    protected static final int INV_SIZE = 36;
+    protected final int INV_START = 6;
     private final ContainerLevelAccess access = ContainerLevelAccess.NULL;
+    private final ContainerData data;
     private AbstractKitchenwareBE kitchenwareBE;
 
-    protected final int INV_START = 6;
-    protected static final int INV_SIZE = 36;
 
     public KitchenwareMenu(int containerId, Inventory inventory, FriendlyByteBuf buf) {
-        this(containerId, inventory, buf.readBlockPos());
+        this(containerId, inventory, buf.readBlockPos(), new SimpleContainerData(1));
     }
 
-    public KitchenwareMenu(int containerId, Inventory inventory, BlockPos blockPos) {
+    public KitchenwareMenu(int containerId, Inventory inventory, BlockPos blockPos, ContainerData data) {
         super(NMIMenus.KITCHENWARE_MENU.get(), containerId);
+        this.data = data;
         BlockEntity blockEntity = inventory.player.level().getBlockEntity(blockPos);
         if (blockEntity instanceof AbstractKitchenwareBE kitchenware) {
             this.kitchenwareBE = kitchenware;
@@ -51,7 +52,8 @@ public class KitchenwareMenu extends AbstractContainerMenu {
 
                 @Override
                 public boolean mayPlace(ItemStack pStack) {
-                    return pStack.tags().anyMatch(itemTagKey -> itemTagKey.equals(NMIVanillaTags.INGREDIENT));
+                    return pStack.tags().anyMatch(itemTagKey -> itemTagKey.equals(NMIVanillaTags.INGREDIENT))
+                            && !kitchenwareBE.getBlockState().getValue(BlockStateProperties.LIT);
                 }
 
                 @Override
