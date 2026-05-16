@@ -48,7 +48,7 @@ public class ItemEventHandler {
         itemTagList.positiveTags().forEach(e->toolTip.add(Component.literal("+ ").append(NMICommonComponentUtil.translatableTag(e))));
         itemTagList.negativeTags().forEach(e->toolTip.add(Component.literal("- ").append(NMICommonComponentUtil.translatableTag(e))));
 
-        Integer price = NMIClientEconomyUtil.getItemPrice(event.getItemStack());
+        Integer price = NMIClientEconomyUtil.getItemStackPriceBase(event.getItemStack());
         if (price != null){
             int count = event.getItemStack().getCount();
             MutableComponent unitEn = NMICommonComponentUtil.unitEn();
