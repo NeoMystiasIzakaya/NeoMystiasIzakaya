@@ -67,6 +67,11 @@ public class NMILanguageProvider implements DataProvider {
         this.add("gui.neo_mystias_izakaya.time", "Time", "时间");
         this.add("gui.neo_mystias_izakaya.progress", "Progress", "进度");
 
+
+        this.add("tooltip.neo_mystias_izakaya.price", "Price: %d %s", "价格：%s %s");
+        this.add("tooltip.neo_mystias_izakaya.price.total", "Total Price: %d %s", "总价格：%s %s");
+        this.add("unit.neo_mystias_izakaya.en", "円", "円");
+
         this.add(NMIMainItems.CHROME_BALL, "Chrome Ball", "土球");
     }
 

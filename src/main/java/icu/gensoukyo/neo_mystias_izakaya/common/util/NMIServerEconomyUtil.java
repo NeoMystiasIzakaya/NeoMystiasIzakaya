@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack;
 public class NMIServerEconomyUtil {
 
     public static int getPrice(Identifier itemId) {
-        return NMIDataAccessor.server().getEconomyMap().getItemPriceMap().get(itemId);
+        return NMIDataAccessor.server().getEconomyMap().getItemPriceMap().getOrDefault(itemId, 0);
     }
 
     public static int getPrice(Item item) {

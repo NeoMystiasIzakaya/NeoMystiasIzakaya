@@ -37,6 +37,12 @@ public class NMINetwork {
                 ClientPayloadHandler::handleCustomerMapSyncMessage
         );
 
+        registrar.playToClient(
+                NMIEconomyMapSyncMessage.TYPE,
+                NMIEconomyMapSyncMessage.STREAM_CODEC,
+                ClientPayloadHandler::handleEconomyMapSyncMessage
+        );
+
         registrar.playToServer(
                 NMIKitchenwareCookMessage.TYPE,
                 NMIKitchenwareCookMessage.STREAM_CODEC,

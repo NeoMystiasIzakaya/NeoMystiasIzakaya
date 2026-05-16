@@ -19,11 +19,11 @@ public class ServerNMIDataAccessor implements NMIDataAccessor {
 
     public static final ServerNMIDataAccessor INSTANCE = new ServerNMIDataAccessor();
 
-    private TagItemListMap tagItemListMap;
+    private TagItemListMap tagItemListMap = TagItemListMap.EMPTY;
 
-    private NMIRecipeMap recipeMap;
+    private NMIRecipeMap recipeMap = NMIRecipeMap.EMPTY;
 
-    private CustomerMap customerMap;
+    private CustomerMap customerMap = CustomerMap.EMPTY;
 
-    private NMIEconomyMap economyMap;
+    private NMIEconomyMap economyMap = NMIEconomyMap.EMPTY;
 }

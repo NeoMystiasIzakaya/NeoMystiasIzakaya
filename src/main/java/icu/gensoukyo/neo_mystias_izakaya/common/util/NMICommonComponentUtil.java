@@ -38,4 +38,8 @@ public final class NMICommonComponentUtil {
     public static MutableComponent translatableEvaluation(Identifier customer,String level){
         return Component.translatable(customer.toLanguageKey("evaluation",level));
     }
+
+    public static MutableComponent unitEn(){
+        return Component.translatable("unit.neo_mystias_izakaya.en");
+    }
 }

@@ -1953,5 +1953,8 @@
   "tag.neo_mystias_izakaya.cuisines/trend_unpopular": "Trend - Unpopular",
   "tag.neo_mystias_izakaya.cuisines/vegetarian": "Vegetarian",
   "tag.neo_mystias_izakaya.cuisines/western": "Western",
-  "tag.neo_mystias_izakaya.cuisines/wonderful": "Wonderful"
+  "tag.neo_mystias_izakaya.cuisines/wonderful": "Wonderful",
+  "tooltip.neo_mystias_izakaya.price": "Price: %d %s",
+  "tooltip.neo_mystias_izakaya.price.total": "Total Price: %d %s",
+  "unit.neo_mystias_izakaya.en": "円"
 }

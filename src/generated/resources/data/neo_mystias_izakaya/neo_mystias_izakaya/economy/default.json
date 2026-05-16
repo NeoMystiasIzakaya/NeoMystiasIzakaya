@@ -1,0 +1,1038 @@
+[
+  {
+    "item": "neo_mystias_izakaya:beverages/affogato",
+    "price": 35
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/against_the_world",
+    "price": 124
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/agony_oden",
+    "price": 92
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/akatsuki",
+    "price": 400
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/all_meat_feast",
+    "price": 115
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/baked_sweet_potato",
+    "price": 25
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/bamboo_meat_pot",
+    "price": 42
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/bamboo_shoot",
+    "price": 40
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/bamboo_spring",
+    "price": 99
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/beef_bowl",
+    "price": 20
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/beef_wellington",
+    "price": 150
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/bingdi_lotus",
+    "price": 36
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/biscay_biscuits",
+    "price": 26
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/black_salt",
+    "price": 3
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/bloody_remy",
+    "price": 45
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/boar_meat",
+    "price": 25
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/boiled_tofu",
+    "price": 22
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/broccoli",
+    "price": 18
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/buddhas_delight",
+    "price": 97
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/buddha_jumps_over_the_wall",
+    "price": 160
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/burn_out_pudding",
+    "price": 73
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/butter",
+    "price": 8
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/candied_sweet_potato",
+    "price": 30
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/cantonese_char_siu",
+    "price": 70
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/carved_rose_salad",
+    "price": 20
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/cassia_wine",
+    "price": 60
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/caution_hellish_spice",
+    "price": 108
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/ceiling_longing_pie",
+    "price": 66
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/cheese",
+    "price": 18
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/cheese_omelette",
+    "price": 26
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/chestnut",
+    "price": 10
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/chili",
+    "price": 2
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/cicada_slough",
+    "price": 5
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/classic_steak",
+    "price": 60
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/coffee",
+    "price": 62
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/crab",
+    "price": 10
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/cream",
+    "price": 9
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/creamy_crab",
+    "price": 88
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/creamy_vegetable_chowder",
+    "price": 20
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/cream_of_mushroom_soup",
+    "price": 28
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/creeping_fig",
+    "price": 21
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/crispy_spirals",
+    "price": 42
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/cubic_kedama_ice_cream",
+    "price": 75
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/cubic_kedama_volcanic_tofu",
+    "price": 85
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/cucumber",
+    "price": 7
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/daiginjo",
+    "price": 210
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/daimyos_feast",
+    "price": 105
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/dark_matter",
+    "price": 1
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/dassai",
+    "price": 130
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/daughter_of_the_sea",
+    "price": 80
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/deep_fried_shrimp_tempura",
+    "price": 22
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/deep_fried_tofu",
+    "price": 16
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/dew",
+    "price": 10
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/dew_runny_eggs",
+    "price": 18
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/divine_wheat",
+    "price": 45
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/dorayaki",
+    "price": 40
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/dragonsong_peach",
+    "price": 199
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/dragon_carp",
+    "price": 142
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/drunken_bard",
+    "price": 100
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/drunk_shrimp_in_bamboo",
+    "price": 60
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/dumplings",
+    "price": 35
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/eel_bowl_with_egg",
+    "price": 45
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/eggs_benedict",
+    "price": 35
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/eight_trigram_fish_maws",
+    "price": 136
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/energy_pudding",
+    "price": 42
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/energy_skewer",
+    "price": 50
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/faint_dream",
+    "price": 133
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/fairy_dew",
+    "price": 80
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/falling_blossoms",
+    "price": 50
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/fire_rats_robe",
+    "price": 420
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/flour",
+    "price": 10
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/flower",
+    "price": 45
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/flowing_somen",
+    "price": 40
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/fresh_tofu",
+    "price": 21
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/fried_cicada_sloughs",
+    "price": 19
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/fried_lampreys",
+    "price": 27
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/fried_pork_cutlet",
+    "price": 25
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/fruity_highball",
+    "price": 12
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/fruity_sour",
+    "price": 12
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/fujis_lava",
+    "price": 125
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/full_moons_eve",
+    "price": 440
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/giant_tamagoyaki",
+    "price": 60
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/giant_popsicle",
+    "price": 35
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/ginkgo_nut",
+    "price": 7
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/gloomy_fruit_pie",
+    "price": 36
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/godfather",
+    "price": 180
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/golden_crispy_fish_cakes",
+    "price": 40
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/golden_ribs_soup",
+    "price": 65
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/golden_two_shroom_wrap",
+    "price": 63
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/grapefruit_juice",
+    "price": 24
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/grapes",
+    "price": 5
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/green_tea",
+    "price": 1
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/grilled_lamprey",
+    "price": 22
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/heart_throbbing_surprise",
+    "price": 90
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/heart_warming_congee",
+    "price": 35
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/hodgepodge",
+    "price": 40
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/honeyed_chestnut",
+    "price": 30
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/hot_pepper_soup",
+    "price": 60
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/hourai_branch",
+    "price": 125
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/hunters_casserole",
+    "price": 66
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/iberico_pork",
+    "price": 35
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/iceberg_kedama_lemonade",
+    "price": 45
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/ice_cream_smoothie",
+    "price": 42
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/imitation_bear_paw",
+    "price": 70
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/imitation_shirikodama",
+    "price": 120
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/immortal_turkey",
+    "price": 65
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/ino_shika_chou",
+    "price": 78
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/instantdeath",
+    "price": 62
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/italian_risotto",
+    "price": 70
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/jade_dew_tea",
+    "price": 50
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/jiguru_berry",
+    "price": 10
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/kabayaki_lampreys",
+    "price": 42
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/kabuto_steamed_cake",
+    "price": 105
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/kaguya_hime",
+    "price": 65
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/kittens_water_play",
+    "price": 120
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/kitten_canele",
+    "price": 45
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/kitten_pizza",
+    "price": 75
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/komeiji_ice_cream",
+    "price": 35
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/lamprey",
+    "price": 14
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/lemon",
+    "price": 8
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/lions_head",
+    "price": 28
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/little_sweet_poison",
+    "price": 87
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/long_hair_princess",
+    "price": 36
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/lotus_fish_lamps",
+    "price": 94
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/lotus_seed",
+    "price": 22
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/lunar_dango",
+    "price": 80
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/lunar_herb",
+    "price": 70
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/lunar_lover_biscuits",
+    "price": 66
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/mad_hatters_tea_party",
+    "price": 188
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/makai_coffee",
+    "price": 210
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/mango_pomelo_sago",
+    "price": 50
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/mapo_tofu",
+    "price": 32
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/miasma_garden",
+    "price": 58
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/milk",
+    "price": 16
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/mio",
+    "price": 18
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/misery_cheese_sticks",
+    "price": 25
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/miso_tofu",
+    "price": 21
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/mochi",
+    "price": 30
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/mojito_sphere",
+    "price": 300
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/molecular_egg",
+    "price": 80
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/moonlight_over_the_lotus_pond",
+    "price": 128
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/moon_cake",
+    "price": 35
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/moon_rocket",
+    "price": 45
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/mushroom_herb_road",
+    "price": 24
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/mushroom_maidens_tip_tap_pot",
+    "price": 112
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/natures_beauty",
+    "price": 78
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/negroni",
+    "price": 100
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/neko_manma",
+    "price": 26
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/nigiri_sushi",
+    "price": 28
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/niten_ichiryu",
+    "price": 90
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/octopus",
+    "price": 12
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/oedo_boat_feast",
+    "price": 206
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/okonomiyaki",
+    "price": 24
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/onion",
+    "price": 12
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/oni_killer",
+    "price": 320
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/ordinary_eat_me_cupcake",
+    "price": 56
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/ordinary_fitness_tea",
+    "price": 32
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/origin_of_life",
+    "price": 124
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/palace_of_the_han",
+    "price": 115
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/pancakes_with_syrup",
+    "price": 22
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/peach",
+    "price": 10
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/peach_braised_pork",
+    "price": 42
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/peach_flower_crystal_roll",
+    "price": 60
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/peach_shrimp_salad",
+    "price": 25
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/peach_tapioca",
+    "price": 55
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/peach_yatsuhashi",
+    "price": 55
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/pickles",
+    "price": 16
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/pine_nut",
+    "price": 15
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/pine_nut_cake",
+    "price": 46
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/pink_rice_ball",
+    "price": 30
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/planet_mars",
+    "price": 198
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/plum",
+    "price": 12
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/plum_tea_rice",
+    "price": 32
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/pork_bamboo_shoots_stir_fry",
+    "price": 25
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/pork_bowl",
+    "price": 20
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/pork_mushroom_stir_fry",
+    "price": 20
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/pork_rice_ball",
+    "price": 14
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/pork_stir_fry",
+    "price": 15
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/pork_trout_kebab",
+    "price": 26
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/potato_croquettes",
+    "price": 22
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/power_soup",
+    "price": 34
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/premium_tuna",
+    "price": 34
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/pure_white_lotus",
+    "price": 56
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/qilin",
+    "price": 180
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/radish",
+    "price": 16
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/rainbow_pan_fried_pork_buns",
+    "price": 128
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/ramune",
+    "price": 30
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/real_seafood_miso_soup",
+    "price": 55
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/red_bean",
+    "price": 18
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/red_bean_daifuku",
+    "price": 28
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/red_toon",
+    "price": 20
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/ribovitan",
+    "price": 45
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/rice_ball",
+    "price": 6
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/rice_powder_meat",
+    "price": 72
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/roasted_mushroom",
+    "price": 18
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/sakura_pudding",
+    "price": 32
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/salmon",
+    "price": 24
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/salmon_steak",
+    "price": 58
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/salmon_tempura",
+    "price": 44
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/sangetsusei",
+    "price": 34
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/sashimi_platter",
+    "price": 88
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/satellite_ice_coffee",
+    "price": 96
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/scarlet_devil_cake",
+    "price": 60
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/scarlet_mist",
+    "price": 75
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/scarlet_tea",
+    "price": 25
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/scholars_ginkgo",
+    "price": 60
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/scone",
+    "price": 8
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/scrumptious_storm",
+    "price": 185
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/seafood_miso_soup",
+    "price": 8
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/sea_urchin",
+    "price": 18
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/sea_urchin_sashimi",
+    "price": 108
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/secret_dried_fish_crisps",
+    "price": 30
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/secret_savory_mushroom_hotpot",
+    "price": 62
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/seven_colored_yokan",
+    "price": 92
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/shirayuki",
+    "price": 98
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/shrimp",
+    "price": 30
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/shrimp_stuffed_pumpkin",
+    "price": 55
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/sichuan_boiled_fish",
+    "price": 68
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/smoked_buccaneer",
+    "price": 58
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/snow_fungus",
+    "price": 14
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/space_beer",
+    "price": 42
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/sparrow_sake",
+    "price": 50
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/star_lotus_ship",
+    "price": 132
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/steamed_egg_bamboo_shoots",
+    "price": 40
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/sticky_rice",
+    "price": 15
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/stinky_tofu",
+    "price": 24
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/strong_capsaicin",
+    "price": 0
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/supreme_seafood_noodles",
+    "price": 135
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/sweet_potato",
+    "price": 8
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/takoyaki",
+    "price": 36
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/tangyuan",
+    "price": 35
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/tempura_platter",
+    "price": 72
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/tengu_tango",
+    "price": 70
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/this_side_up",
+    "price": 150
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/tianshis_stewed_mushrooms",
+    "price": 55
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/tofu",
+    "price": 8
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/tofu_stew",
+    "price": 19
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/tomato",
+    "price": 8
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/tomato_fries",
+    "price": 26
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/tonkotsu_ramen",
+    "price": 60
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/toon_pancake",
+    "price": 30
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/trout",
+    "price": 8
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/truffle",
+    "price": 50
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/tuna",
+    "price": 30
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/two_flavor_beef_hotpot",
+    "price": 188
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/udumbara",
+    "price": 70
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/udumbara_cake",
+    "price": 78
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/umeshu",
+    "price": 32
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/unconscious_youkai_mousse",
+    "price": 60
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/unzan_cotton_candy",
+    "price": 20
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/urchin_raindrop_cake",
+    "price": 128
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/urchin_steamed_egg",
+    "price": 112
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/vegetable_salad",
+    "price": 56
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/venison",
+    "price": 20
+  },
+  {
+    "item": "neo_mystias_izakaya:ingredient/wagyu_beef",
+    "price": 40
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/white_deer_unyielding_pine",
+    "price": 72
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/wind_priestess",
+    "price": 130
+  },
+  {
+    "item": "neo_mystias_izakaya:cuisines/yashouma_dango",
+    "price": 45
+  },
+  {
+    "item": "neo_mystias_izakaya:beverages/zun_beer",
+    "price": 18
+  }
+]
