@@ -16,7 +16,7 @@ public record TagItemListHolder(Identifier key, TagItemList tag) {
 
     public static final Codec<TagItemListHolder> CODEC = RecordCodecBuilder.create(
             instance -> instance.group(
-                    Identifier.CODEC.fieldOf("key").forGetter(TagItemListHolder::key),
+                    Identifier.CODEC.fieldOf("item").forGetter(TagItemListHolder::key),
                     TagItemList.CODEC.fieldOf("tag").forGetter(TagItemListHolder::tag)
             ).apply(instance, TagItemListHolder::new)
     );
@@ -30,7 +30,7 @@ public record TagItemListHolder(Identifier key, TagItemList tag) {
     @Override
     public String toString() {
         return "TagItemListHolder{" +
-                "key=" + key +
+                "item=" + key +
                 ", tag=" + tag +
                 '}';
     }

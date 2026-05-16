@@ -16,14 +16,14 @@ import net.neoforged.bus.api.Event;
 import java.util.Map;
 import java.util.Optional;
 
-public class ModifyNMIRecipeEvent extends Event {
+public class ModifyNMIRecipeJsonEvent extends Event {
     private final RegistryOps.RegistryInfoLookup registryInfoLookup;
     @Getter
     private final RegistryOps<JsonElement> ops;
     @Getter
     private final Map<Identifier, JsonElement> jsons;
 
-    public ModifyNMIRecipeEvent(final RegistryOps<JsonElement> ops, final Map<Identifier, JsonElement> jsons) {
+    public ModifyNMIRecipeJsonEvent(final RegistryOps<JsonElement> ops, final Map<Identifier, JsonElement> jsons) {
         this.registryInfoLookup = ops.lookupProvider;
         this.ops = ops;
         this.jsons = jsons;

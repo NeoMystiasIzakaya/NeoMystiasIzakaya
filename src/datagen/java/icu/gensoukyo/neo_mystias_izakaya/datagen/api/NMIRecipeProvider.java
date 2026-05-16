@@ -133,16 +133,16 @@ public abstract class NMIRecipeProvider implements DataProvider {
 
         public void build() {
             if (this.input.isEmpty()) {
-                throw new RuntimeException("The input in the recipe cannot be empty. by key: %s".formatted(this.key));
+                throw new RuntimeException("The input in the recipe cannot be empty. by item: %s".formatted(this.key));
             }
             if (this.input.size() > 5) {
-                throw new RuntimeException("The input size in the recipe cannot be great than 5. by key: %s".formatted(this.key));
+                throw new RuntimeException("The input size in the recipe cannot be great than 5. by item: %s".formatted(this.key));
             }
             if (this.output == null) {
-                throw new RuntimeException("The output in the recipe cannot be null. by key: %s".formatted(this.key));
+                throw new RuntimeException("The output in the recipe cannot be null. by item: %s".formatted(this.key));
             }
             if (this.kitchenware == null) {
-                throw new RuntimeException("The kitchenware in the recipe cannot be null. by key: %s".formatted(this.key));
+                throw new RuntimeException("The kitchenware in the recipe cannot be null. by item: %s".formatted(this.key));
             }
             NMIRecipe recipe = new NMIRecipe(input, output, kitchenware, time);
             recipeMap.put(key, recipe);

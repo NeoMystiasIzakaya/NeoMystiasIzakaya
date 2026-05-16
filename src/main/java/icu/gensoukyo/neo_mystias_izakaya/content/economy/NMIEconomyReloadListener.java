@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-package icu.gensoukyo.neo_mystias_izakaya.content.recipe;
+package icu.gensoukyo.neo_mystias_izakaya.content.economy;
 
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.JsonOps;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
-import icu.gensoukyo.neo_mystias_izakaya.api.event.server.ModifyNMIRecipeJsonEvent;
+import icu.gensoukyo.neo_mystias_izakaya.api.event.server.ModifyNMIEconomyJsonEvent;
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.common.dal.ServerNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.common.network.ServerPayloadSender;
@@ -29,54 +29,54 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class NMIRecipeReloadListener extends SimplePreparableReloadListener<NMIRecipeMap> {
+public class NMIEconomyReloadListener extends SimplePreparableReloadListener<NMIEconomyMap> {
     private static final Logger LOGGER = LogUtils.getLogger();
-    private static final FileToIdConverter NMI_RECIPE = FileToIdConverter.json(NeoMystiasIzakaya.path("recipe"));
+    private static final FileToIdConverter ECONOMY = FileToIdConverter.json(NeoMystiasIzakaya.path("economy"));
     private final HolderLookup.Provider registries;
     @Getter
-    private NMIRecipeMap nmiRecipeMap = NMIRecipeMap.EMPTY;
+    private NMIEconomyMap economyMap = NMIEconomyMap.EMPTY;
 
-    public NMIRecipeReloadListener(HolderLookup.Provider registries) {
+    public NMIEconomyReloadListener(HolderLookup.Provider registries) {
         this.registries = registries;
     }
 
     @Override
-    protected NMIRecipeMap prepare(ResourceManager resourceManager, ProfilerFiller profilerFiller) {
+    protected NMIEconomyMap prepare(ResourceManager resourceManager, ProfilerFiller profilerFiller) {
 
         long loadStartTime = System.currentTimeMillis();
 
-        HashMap<Identifier, NMIRecipe> recipeHolderTreeMap = new HashMap<>();
+        HashMap<Identifier, NMIEconomyList> economyListHashMap = new HashMap<>();
         var conditionalOps = new ConditionalOps<>(this.registries.createSerializationContext(JsonOps.INSTANCE), getContext());
         SimpleJsonResourceReloadListener.scanDirectoryWithModifier(
-                resourceManager, NMI_RECIPE, conditionalOps, NMIRecipe.CODEC, recipeHolderTreeMap, recipeJsons -> {
-                    var event = new ModifyNMIRecipeJsonEvent(conditionalOps, recipeJsons);
+                resourceManager, ECONOMY, conditionalOps, NMIEconomyList.CODEC, economyListHashMap, recipeJsons -> {
+                    var event = new ModifyNMIEconomyJsonEvent(conditionalOps, recipeJsons);
                     NeoForge.EVENT_BUS.post(event);
                 }
         );
-        List<NMIRecipeHolder> recipeHolders = new ArrayList<>(recipeHolderTreeMap.size());
-        recipeHolderTreeMap.forEach((id, recipe) -> {
-            NMIRecipeHolder holder = new NMIRecipeHolder(id, recipe);
+        List<NMIEconomyListHolder> recipeHolders = new ArrayList<>(economyListHashMap.size());
+        economyListHashMap.forEach((id, recipe) -> {
+            NMIEconomyListHolder holder = new NMIEconomyListHolder(id, recipe);
             recipeHolders.add(holder);
         });
         long loadEndTime = System.currentTimeMillis();
-        LOGGER.info("Finished loading NMI recipes in {} ms", loadEndTime - loadStartTime);
+        LOGGER.info("Finished loading NMI economy in {} ms", loadEndTime - loadStartTime);
         long buildStartTime = System.currentTimeMillis();
-        NMIRecipeMap recipeMap = NMIRecipeMap.create(recipeHolders);
+        NMIEconomyMap recipeMap = NMIEconomyMap.create(recipeHolders);
         long buildEndTime = System.currentTimeMillis();
-        LOGGER.info("Finished building NMI recipe map in {} ms", buildEndTime - buildStartTime);
+        LOGGER.info("Finished building NMI economy map in {} ms", buildEndTime - buildStartTime);
         return recipeMap;
     }
 
     @Override
-    protected void apply(NMIRecipeMap map, ResourceManager resourceManager, ProfilerFiller profilerFiller) {
-        this.nmiRecipeMap = map;
-        LOGGER.info("Loaded {} NMI recipes", nmiRecipeMap.getRecipes().size());
+    protected void apply(NMIEconomyMap map, ResourceManager resourceManager, ProfilerFiller profilerFiller) {
+        this.economyMap = map;
+        LOGGER.info("Loaded {} NMI economy prices", economyMap.getItemPriceMap().size());
         if (FMLEnvironment.getDist().isDedicatedServer()) {
-            ServerNMIDataAccessor.INSTANCE.setRecipeMap(nmiRecipeMap);
-            ServerPayloadSender.sendRecipeMapSyncMessage(nmiRecipeMap);
+            ServerNMIDataAccessor.INSTANCE.setEconomyMap(economyMap);
+            ServerPayloadSender.sendEconomyMapSyncMessage(economyMap);
         }else {
-            ServerNMIDataAccessor.INSTANCE.setRecipeMap(nmiRecipeMap);
-            ClientNMIDataAccessor.INSTANCE.setRecipeMap(nmiRecipeMap);
+            ServerNMIDataAccessor.INSTANCE.setEconomyMap(economyMap);
+            ClientNMIDataAccessor.INSTANCE.setEconomyMap(economyMap);
         }
     }
 }

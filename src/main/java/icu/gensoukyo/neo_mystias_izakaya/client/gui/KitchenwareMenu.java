@@ -1,6 +1,6 @@
 package icu.gensoukyo.neo_mystias_izakaya.client.gui;
 
-import icu.gensoukyo.neo_mystias_izakaya.client.util.ClientUtil;
+import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.AbstractKitchenwareBE;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIMenus;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIVanillaTags;
@@ -61,7 +61,7 @@ public class KitchenwareMenu extends AbstractContainerMenu {
                 public void setChanged() {
                     super.setChanged();
                     if (FMLEnvironment.getDist().isClient()) {
-                        ClientUtil.updateKitchenwareScreen();
+                        NMIClientUtil.updateKitchenwareScreen();
                     }
                 }
             });

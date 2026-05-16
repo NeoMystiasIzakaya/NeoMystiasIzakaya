@@ -28,6 +28,6 @@ public  final class NMICommonItemUtil {
     }
 
     public static Item mustGet(Identifier id) {
-        return get(id).orElseThrow(() -> new IllegalArgumentException("No item found for key: " + id)).value();
+        return get(id).orElseThrow(() -> new IllegalArgumentException("No item found for item: " + id)).value();
     }
 }

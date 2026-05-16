@@ -15,7 +15,7 @@ public record NMIRecipeHolder(Identifier key, NMIRecipe recipe) {
 
     public static final Codec<NMIRecipeHolder> CODEC = RecordCodecBuilder.create(
             instance -> instance.group(
-                    Identifier.CODEC.fieldOf("key").forGetter(NMIRecipeHolder::key),
+                    Identifier.CODEC.fieldOf("item").forGetter(NMIRecipeHolder::key),
                     NMIRecipe.CODEC.fieldOf("recipe").forGetter(NMIRecipeHolder::recipe)
             ).apply(instance, NMIRecipeHolder::new)
     );
@@ -28,7 +28,7 @@ public record NMIRecipeHolder(Identifier key, NMIRecipe recipe) {
      @Override
      public String toString() {
           return "NMIRecipeHolder{" +
-                  "key=" + key +
+                  "item=" + key +
                   ", recipe=" + recipe +
                   '}';
      }
