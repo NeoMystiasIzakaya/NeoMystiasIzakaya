@@ -32,6 +32,7 @@ public class NeoMystiasIzakaya {
         NMIBlocks.BLOCKS.register(modEventBus);
         NMIBlockEntities.BLOCK_ENTITY_TYPES.register(modEventBus);
         NMIMenus.MENU_TYPE.register(modEventBus);
+        NMIAttachmentTypes.ATTACHMENT_TYPES.register(modEventBus);
     }
 
     public static Identifier id(String key){
