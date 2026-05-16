@@ -48,15 +48,17 @@ public class ItemEventHandler {
         itemTagList.positiveTags().forEach(e->toolTip.add(Component.literal("+ ").append(NMICommonComponentUtil.translatableTag(e))));
         itemTagList.negativeTags().forEach(e->toolTip.add(Component.literal("- ").append(NMICommonComponentUtil.translatableTag(e))));
 
-        int price = NMIClientEconomyUtil.getItemPrice(event.getItemStack());
-        int count = event.getItemStack().getCount();
-        MutableComponent unitEn = NMICommonComponentUtil.unitEn();
-        MutableComponent priceC = Component.translatable("tooltip.neo_mystias_izakaya.price", price, unitEn);
-        toolTip.add(priceC);
+        Integer price = NMIClientEconomyUtil.getItemPrice(event.getItemStack());
+        if (price != null){
+            int count = event.getItemStack().getCount();
+            MutableComponent unitEn = NMICommonComponentUtil.unitEn();
+            MutableComponent priceC = Component.translatable("tooltip.neo_mystias_izakaya.price", price, unitEn);
+            toolTip.add(priceC);
 
-        if (count > 1) {
-            MutableComponent totalPriceC = Component.translatable("tooltip.neo_mystias_izakaya.total_price", price * count, unitEn);
-            toolTip.add(totalPriceC);
+            if (count > 1) {
+                MutableComponent totalPriceC = Component.translatable("tooltip.neo_mystias_izakaya.price.total", price * count, unitEn);
+                toolTip.add(totalPriceC);
+            }
         }
 
 

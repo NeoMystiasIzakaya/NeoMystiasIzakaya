@@ -8,15 +8,15 @@ import net.minecraft.world.item.ItemStack;
 
 public class NMIClientEconomyUtil {
 
-    public static int getPrice(Identifier itemId) {
-        return NMIDataAccessor.client().getEconomyMap().getItemPriceMap().getOrDefault(itemId, 0);
+    public static Integer getPrice(Identifier itemId) {
+        return NMIDataAccessor.client().getEconomyMap().getItemPriceMap().get(itemId);
     }
 
-    public static int getItemPrice(Item item) {
+    public static Integer getItemPrice(Item item) {
         return getPrice(NMICommonItemUtil.get(item));
     }
 
-    public static int getItemPrice(ItemStack itemStack) {
+    public static Integer getItemPrice(ItemStack itemStack) {
         return getPrice(NMICommonItemUtil.get(itemStack.getItem()));
     }
 
