@@ -23,7 +23,6 @@ public class NMIBalance {
     public NMIBalance(List<NMIBalanceEntry> entries) {
         this.entries = entries;
         this.balanceMap = entries.stream().collect(java.util.stream.Collectors.toMap(NMIBalanceEntry::item, NMIBalanceEntry::count));
-        this.entryMap = entries.stream().collect(java.util.stream.Collectors.toMap(NMIBalanceEntry::item, entry -> entry));
     }
 
     public static final MapCodec<NMIBalance> MAP_CODEC = RecordCodecBuilder.mapCodec(
