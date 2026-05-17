@@ -2,9 +2,11 @@ package icu.gensoukyo.neo_mystias_izakaya.client.gui;
 
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.client.network.ClientPayloadSender;
+import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientEconomyUtil;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientRecipeUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.AbstractKitchenwareBE;
 import icu.gensoukyo.neo_mystias_izakaya.common.network.NMIKitchenwareCookMessage;
+import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonComponentUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipe;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeHolder;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
@@ -125,7 +127,7 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
         float process = (totalTime - cookTime) / 20;
         if (cookTime > 0) {
             guiGraphics.text(font, Component.translatable("gui.neo_mystias_izakaya.progress").append(Component.literal(" : " + String.format("%.2f / %.2f s", process, (totalTime / 20)))), i + 120, j + 10, BLACK, false);
-            guiGraphics.text(font, Component.literal(String.format("%.2f", (1 - cookTime / totalTime) * 100) +" %"), i + 120, j + 25, BLACK, false);
+            guiGraphics.text(font, Component.literal(String.format("%.2f", (1 - cookTime / totalTime) * 100) + " %"), i + 120, j + 25, BLACK, false);
         }
     }
 
@@ -148,8 +150,10 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
     private void renderCuisineInfo(GuiGraphicsExtractor guiGraphics, NMIRecipeHolder recipeHolder, int i, int j) {
         NMIRecipe recipe = recipeHolder.recipe();
         Item cuisineItem = recipe.output().item().value();
+        int price = NMIClientEconomyUtil.getItemStackPriceBase(recipe.output().create());
         guiGraphics.text(font, Component.translatable(cuisineItem.getDescriptionId()), i + 15, j + 10, BLACK, false);
         guiGraphics.text(font, Component.translatable("gui.neo_mystias_izakaya.time").append(": " + recipe.time()), i + 15, j + 20, BLACK, false);
+        guiGraphics.text(font, Component.translatable("ui.neo_mystias_izakaya.price").append(": " + price + " ").append(NMICommonComponentUtil.unitEn()), i + 50, j + 20, BLACK, false);
 
         FormattedCharSequence description = Component.translatable(cuisineItem.getDescriptionId() + ".desc").getVisualOrderText();
         StringBuilder builder = new StringBuilder();
