@@ -5,10 +5,15 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.common.blockentity;
 
+import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.KitchenwareMenu;
 import lombok.Setter;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -20,6 +25,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
@@ -100,6 +106,7 @@ public abstract class AbstractKitchenwareBE extends RandomizableContainerBlockEn
     @Override
     protected void loadAdditional(ValueInput input) {
         super.loadAdditional(input);
+        this.items.clear();
         ContainerHelper.loadAllItems(input, this.items);
         this.cookingTime = input.getIntOr("CookingTime", 0);
         this.totalCookingTime = input.getIntOr("TotalCookingTime", 0);
@@ -138,4 +145,20 @@ public abstract class AbstractKitchenwareBE extends RandomizableContainerBlockEn
     }
 
     public abstract KitchenwareMenu.KitchenwareType getKitchenwareType();
+
+    @Override
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        try (ProblemReporter.ScopedCollector reporter = new ProblemReporter.ScopedCollector(this.problemPath(), NeoMystiasIzakaya.LOGGER)) {
+            TagValueOutput output = TagValueOutput.createWithContext(reporter, registries);
+            ContainerHelper.saveAllItems(output, this.items);
+            output.putInt("CookingTime", this.cookingTime);
+            output.putInt("TotalCookingTime", this.totalCookingTime);
+            return output.buildResult();
+        }
+    }
 }
