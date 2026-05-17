@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 public class NMIClientEconomyUtil {
 
     public static Integer getPrice(Identifier itemId) {
-        return NMIDataAccessor.server().getEconomyMap().getItemPriceMap().get(itemId);
+        return NMIDataAccessor.client().getEconomyMap().getItemPriceMap().get(itemId);
     }
 
     public static Integer getItemPrice(Item item) {
