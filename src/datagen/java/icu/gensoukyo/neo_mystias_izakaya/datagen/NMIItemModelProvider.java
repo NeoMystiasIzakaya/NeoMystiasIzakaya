@@ -5,6 +5,7 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.datagen;
 
+import com.mojang.math.Quadrant;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlocks;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIBeveragesItems;
@@ -64,10 +65,10 @@ public class NMIItemModelProvider extends ModelProvider {
         blockModels.blockStateOutput.accept(MultiVariantGenerator
                 .dispatch(block, BlockModelGenerators.variant(variant))
                 .with(PropertyDispatch.modify(BlockStateProperties.HORIZONTAL_FACING)
-                        .select(Direction.EAST, BlockModelGenerators.NOP)
-                        .select(Direction.NORTH, BlockModelGenerators.NOP)
-                        .select(Direction.SOUTH, BlockModelGenerators.NOP)
-                        .select(Direction.WEST, BlockModelGenerators.NOP)
+                        .select(Direction.NORTH, v -> v.withYRot(Quadrant.R0))
+                        .select(Direction.EAST,  v -> v.withYRot(Quadrant.R90))
+                        .select(Direction.SOUTH, v -> v.withYRot(Quadrant.R180))
+                        .select(Direction.WEST,  v -> v.withYRot(Quadrant.R270))
                 ));
     }
 }

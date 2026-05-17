@@ -1,16 +1,19 @@
 {
   "variants": {
     "facing=east": {
-      "model": "neo_mystias_izakaya:block/steamer"
+      "model": "neo_mystias_izakaya:block/steamer",
+      "y": 90
     },
     "facing=north": {
       "model": "neo_mystias_izakaya:block/steamer"
     },
     "facing=south": {
-      "model": "neo_mystias_izakaya:block/steamer"
+      "model": "neo_mystias_izakaya:block/steamer",
+      "y": 180
     },
     "facing=west": {
-      "model": "neo_mystias_izakaya:block/steamer"
+      "model": "neo_mystias_izakaya:block/steamer",
+      "y": 270
     }
   }
 }
