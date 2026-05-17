@@ -23,6 +23,7 @@ public class NMIBalance {
     public NMIBalance(List<NMIBalanceEntry> entries) {
         this.entries = entries;
         this.balanceMap = entries.stream().collect(java.util.stream.Collectors.toMap(NMIBalanceEntry::item, NMIBalanceEntry::count));
+        this.entryMap = entries.stream().collect(java.util.stream.Collectors.toMap(NMIBalanceEntry::item, entry -> entry));
     }
 
     public static final MapCodec<NMIBalance> MAP_CODEC = RecordCodecBuilder.mapCodec(
@@ -99,6 +100,25 @@ public class NMIBalance {
             if (newCount > 0) {
                 newEntries.add(new NMIBalanceEntry(entry.item(), newCount));
             }
+        }
+        return new NMIBalance(newEntries);
+    }
+
+    public NMIBalance setCount(Identifier item, int count) {
+        List<NMIBalanceEntry> newEntries = new ArrayList<>();
+        boolean found = false;
+        for (NMIBalanceEntry entry : this.entries) {
+            if (entry.item().equals(item)) {
+                if (count > 0) {
+                    newEntries.add(new NMIBalanceEntry(item, count));
+                }
+                found = true;
+            } else {
+                newEntries.add(entry);
+            }
+        }
+        if (!found && count > 0) {
+            newEntries.add(new NMIBalanceEntry(item, count));
         }
         return new NMIBalance(newEntries);
     }

@@ -1956,5 +1956,6 @@
   "tag.neo_mystias_izakaya.cuisines/wonderful": "Wonderful",
   "tooltip.neo_mystias_izakaya.price": "Price: %d %s",
   "tooltip.neo_mystias_izakaya.price.total": "Total Price: %d %s",
+  "ui.neo_mystias_izakaya.price": "Price",
   "unit.neo_mystias_izakaya.en": "円"
 }
