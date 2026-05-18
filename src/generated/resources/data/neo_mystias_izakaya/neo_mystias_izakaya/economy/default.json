@@ -1034,5 +1034,49 @@
   {
     "item": "neo_mystias_izakaya:beverages/zun_beer",
     "price": 18
+  },
+  {
+    "item": "minecraft:pufferfish",
+    "price": 42
+  },
+  {
+    "item": "minecraft:pumpkin",
+    "price": 14
+  },
+  {
+    "item": "minecraft:kelp",
+    "price": 3
+  },
+  {
+    "item": "minecraft:brown_mushroom",
+    "price": 18
+  },
+  {
+    "item": "minecraft:potato",
+    "price": 10
+  },
+  {
+    "item": "minecraft:porkchop",
+    "price": 10
+  },
+  {
+    "item": "minecraft:beef",
+    "price": 15
+  },
+  {
+    "item": "minecraft:egg",
+    "price": 4
+  },
+  {
+    "item": "minecraft:ice",
+    "price": 2
+  },
+  {
+    "item": "minecraft:honey_bottle",
+    "price": 15
+  },
+  {
+    "item": "minecraft:cocoa_beans",
+    "price": 22
   }
 ]

@@ -2,6 +2,7 @@ package icu.gensoukyo.neo_mystias_izakaya.datagen;
 
 import icu.gensoukyo.neo_mystias_izakaya.datagen.api.EconomyProvider;
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.item.Items;
 
 import static icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIBeveragesItems.*;
 import static icu.gensoukyo.neo_mystias_izakaya.registry.item.NMICuisinesItems.*;
@@ -275,5 +276,17 @@ public class NMIEconomyProvider extends EconomyProvider {
         addEconomy(WIND_PRIESTESS,130);
         addEconomy(YASHOUMA_DANGO,45);
         addEconomy(ZUN_BEER,18);
+
+        addEconomy(Items.PUFFERFISH, 42);
+        addEconomy(Items.PUMPKIN, 14);
+        addEconomy(Items.KELP, 3);
+        addEconomy(Items.BROWN_MUSHROOM, 18);
+        addEconomy(Items.POTATO, 10);
+        addEconomy(Items.PORKCHOP, 10);
+        addEconomy(Items.BEEF, 15);
+        addEconomy(Items.EGG, 4);
+        addEconomy(Items.ICE, 2);
+        addEconomy(Items.HONEY_BOTTLE, 15);
+        addEconomy(Items.COCOA_BEANS, 22);
     }
 }
