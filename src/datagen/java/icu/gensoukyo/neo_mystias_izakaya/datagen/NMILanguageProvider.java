@@ -74,6 +74,7 @@ public class NMILanguageProvider implements DataProvider {
         this.add("unit.neo_mystias_izakaya.en", "円", "円");
 
         this.add(NMIMainItems.CHROME_BALL, "Chrome Ball", "土球");
+        this.add(NMIMainItems.RECIPE_BOOK, "Recipe Book", "食谱");
     }
 
     private void addTagTranslations() {

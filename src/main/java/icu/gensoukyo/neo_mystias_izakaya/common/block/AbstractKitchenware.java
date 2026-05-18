@@ -14,7 +14,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -22,7 +21,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jspecify.annotations.Nullable;
 
@@ -37,6 +35,17 @@ public abstract class AbstractKitchenware extends BaseEntityBlock {
         );
     }
 
+    @Nullable
+    protected static <T extends BlockEntity> BlockEntityTicker<T> createCookTicker(
+            Level pLevel, BlockEntityType<T> pServerType, BlockEntityType<? extends AbstractKitchenwareBE> pClientType
+    ) {
+        return pLevel.isClientSide() ? null : createTickerHelper(pServerType, pClientType, AbstractKitchenwareBE::serverTick);
+    }
+
+    protected static ToIntFunction<BlockState> litBlockEmission(int lightEmission) {
+        return state -> state.getValue(BlockStateProperties.LIT) ? lightEmission : 0;
+    }
+
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (!level.isClientSide()) {
@@ -46,7 +55,7 @@ public abstract class AbstractKitchenware extends BaseEntityBlock {
                 return InteractionResult.SUCCESS_SERVER;
             }
         }
-        return super.useWithoutItem(state, level, pos, player, hitResult);
+        return InteractionResult.SUCCESS;
     }
 
     @Override
@@ -65,17 +74,6 @@ public abstract class AbstractKitchenware extends BaseEntityBlock {
     @SuppressWarnings("all")
     protected RenderShape getRenderShape(BlockState pState) {
         return RenderShape.MODEL;
-    }
-
-    @Nullable
-    protected static <T extends BlockEntity> BlockEntityTicker<T> createCookTicker(
-            Level pLevel, BlockEntityType<T> pServerType, BlockEntityType<? extends AbstractKitchenwareBE> pClientType
-    ) {
-        return pLevel.isClientSide() ? null : createTickerHelper(pServerType, pClientType, AbstractKitchenwareBE::serverTick);
-    }
-
-    protected static ToIntFunction<BlockState> litBlockEmission(int lightEmission) {
-        return state -> state.getValue(BlockStateProperties.LIT) ? lightEmission : 0;
     }
 
 }
