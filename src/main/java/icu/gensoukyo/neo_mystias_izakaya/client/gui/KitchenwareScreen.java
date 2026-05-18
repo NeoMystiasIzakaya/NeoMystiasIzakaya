@@ -150,7 +150,11 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
     private void renderCuisineInfo(GuiGraphicsExtractor guiGraphics, NMIRecipeHolder recipeHolder, int i, int j) {
         NMIRecipe recipe = recipeHolder.recipe();
         Item cuisineItem = recipe.output().item().value();
-        int price = NMIClientEconomyUtil.getItemStackPriceBase(recipe.output().create());
+        Integer itemStackPriceBase = NMIClientEconomyUtil.getItemStackPriceBase(recipe.output().create());
+        int price = 0;
+        if (itemStackPriceBase != null) {
+            price = itemStackPriceBase;
+        }
         guiGraphics.text(font, Component.translatable(cuisineItem.getDescriptionId()), i + 15, j + 10, BLACK, false);
         guiGraphics.text(font, Component.translatable("gui.neo_mystias_izakaya.time").append(": " + recipe.time()), i + 15, j + 20, BLACK, false);
         guiGraphics.text(font, Component.translatable("ui.neo_mystias_izakaya.price").append(": " + price + " ").append(NMICommonComponentUtil.unitEn()), i + 50, j + 20, BLACK, false);
