@@ -7,7 +7,7 @@ package icu.gensoukyo.neo_mystias_izakaya.common.util;
 
 import net.minecraft.resources.Identifier;
 
-public class NMICommonTagUtil {
+public class NMICommonItemTagUtil {
 
     public static boolean isBeveragesTag(Identifier tag){
         return tag.getPath().startsWith("beverages/");
