@@ -8,6 +8,8 @@ package icu.gensoukyo.neo_mystias_izakaya.content.tag.consts;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import net.minecraft.resources.Identifier;
 
+import java.util.List;
+
 public class NMICuisinesTags {
 
     public static final Identifier Aquatic = NeoMystiasIzakaya.id("cuisines/aquatic");
@@ -62,4 +64,13 @@ public class NMICuisinesTags {
 
     public static final Identifier Trend_Popular = NeoMystiasIzakaya.id("cuisines/trend_popular");
     public static final Identifier Trend_Unpopular = NeoMystiasIzakaya.id("cuisines/trend_unpopular");
+
+    public static final List<Identifier> ALL = List.of(
+            Aquatic, Aura_Bursting, Chinese, Cultural_Heritage, Dark_Matter, Divine_Punishment, Dreamy, Economical,
+            Expensive, Filling, Fresh, Fruity, Fungus, Good_With_Alcohol, Greasy, Grilled, Homecooking, Hot,
+            Japanese, Large_Portion, Legendary, Meat, Mild, Mountain_Delicacy, Peculiar, Photogenic,
+            Poison, Premium, Raw, Refreshing, Salty, Sea_Delicacy, Signature, Small_Portion,
+            Soup, Sour, Specialty, Spicy, Strength_Boosting, Sweet, Vegetarian,
+            Western, Wonderful
+    );
 }

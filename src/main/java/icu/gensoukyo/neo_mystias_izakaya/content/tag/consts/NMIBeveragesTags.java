@@ -8,6 +8,8 @@ package icu.gensoukyo.neo_mystias_izakaya.content.tag.consts;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import net.minecraft.resources.Identifier;
 
+import java.util.List;
+
 public class NMIBeveragesTags {
 
     public static final Identifier Beer = NeoMystiasIzakaya.id("beverages/beer");
@@ -31,4 +33,9 @@ public class NMIBeveragesTags {
     public static final Identifier Sweet = NeoMystiasIzakaya.id("beverages/sweet");
     public static final Identifier Vintage = NeoMystiasIzakaya.id("beverages/vintage");
     public static final Identifier Western = NeoMystiasIzakaya.id("beverages/western");
+
+    public static final List<Identifier> ALL = List.of(
+            Beer, Bitter, Chillable, Cocktail, Dry, Fruity, Heatable, High_Alcohol, Liquor, Low_Alcohol, Mid_Alcohol,
+            Modern, Neat, No_Alcohol, Sake, Shochu, Soda, Stimulating, Sweet, Vintage, Western
+    );
 }
