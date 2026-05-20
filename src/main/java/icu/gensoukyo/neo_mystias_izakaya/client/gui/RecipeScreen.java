@@ -50,6 +50,7 @@ public class RecipeScreen extends Screen {
     Identifier BACKGROUND = id("textures/gui/recipe_bg.png");
     Identifier SIDE = id("textures/gui/recipe_side.png");
     ArrayList<Identifier> foodTagSelected = new ArrayList<>();
+    boolean isAllSelected = true; // 全选状态，默认为true
     List<NMIRecipeHolder> cookedMealItems = ClientNMIDataAccessor.INSTANCE.getRecipeMap().getRecipes();
     final List<NMIRecipeHolder> unsortedCookedMealItems = cookedMealItems;
     @Setter
@@ -57,6 +58,7 @@ public class RecipeScreen extends Screen {
     EditBox search;
     String lastFilterText = "";
     CuisineListWidget cuisineListWidget;
+    boolean tagChanged = false;
 
     public RecipeScreen() {
         super(Component.literal("Recipe Screen"));
@@ -77,10 +79,24 @@ public class RecipeScreen extends Screen {
         }
 
         List<Identifier> all = NMICuisinesTags.ALL;
+
+        // 渲染全选格子（索引-1表示全选）
+        int allSelectX = i + TAG_OFFSET_X;
+        int allSelectY = j + TAG_OFFSET_Y;
+        int allSelectBgColor = isAllSelected ? POSITIVE_IN_COLOR : POSITIVE_OUT_COLOR;
+        int allSelectTextColor = isAllSelected ? POSITIVE_OUT_COLOR : POSITIVE_IN_COLOR;
+        graphics.fill(allSelectX, allSelectY, allSelectX + TAG_ITEM_WIDTH, allSelectY + TAG_ITEM_HEIGHT, allSelectBgColor);
+        Component allSelectText = Component.literal("全选");
+        FormattedCharSequence allSelectToRender = allSelectText.getVisualOrderText();
+        graphics.text(font, allSelectToRender, allSelectX + 19 - font.width(allSelectToRender) / 2, allSelectY + 1, allSelectTextColor, false);
+
+        // 渲染其他标签格子（索引从0开始，在渲染时+1）
         for (int k = 0; k < all.size(); k++) {
             Identifier foodTagEnum = all.get(k);
-            int stringX = i + k % TAG_COLS_PER_ROW * TAG_COL_WIDTH + TAG_OFFSET_X;
-            int stringY = j + k / TAG_COLS_PER_ROW * TAG_ROW_HEIGHT + TAG_OFFSET_Y;
+            // 计算位置时+1，因为索引0被全选格子占用了
+            int adjustedIndex = k + 1;
+            int stringX = i + adjustedIndex % TAG_COLS_PER_ROW * TAG_COL_WIDTH + TAG_OFFSET_X;
+            int stringY = j + adjustedIndex / TAG_COLS_PER_ROW * TAG_ROW_HEIGHT + TAG_OFFSET_Y;
 
             // 根据选中状态使用不同颜色
             int bgColor = foodTagSelected.contains(foodTagEnum) ? POSITIVE_IN_COLOR : POSITIVE_OUT_COLOR;
@@ -99,15 +115,47 @@ public class RecipeScreen extends Screen {
         int i = (this.width - this.imageWidth) / 2 - 60;
         int j = (this.height - this.imageHeight) / 2;
         int index = getIndexFromPosition((int) event.x(), (int) event.y(), i, j);
-        if (index >= 0 && index < NMICuisinesTags.ALL.size()) {
+
+        // 点击全选格子
+        if (index == -1) {
+            if (!isAllSelected) {
+                // 如果全选格子未被选中，则选中它并清空其他所有格子
+                isAllSelected = true;
+                foodTagSelected.clear();
+                tagChanged = true;
+            }
+            // 如果全选格子已被选中，则不做任何操作（保持选中状态）
+        }
+        // 点击普通标签格子
+        else if (index >= 0 && index < NMICuisinesTags.ALL.size()) {
             Identifier clickedTag = NMICuisinesTags.ALL.get(index);
-            // 如果已选中则移除，否则添加
+
+            // 如果全选格子被选中，先取消全选格子
+            if (isAllSelected) {
+                isAllSelected = false;
+                tagChanged = true;
+            }
+
+            // 切换普通格子的选中状态
             if (foodTagSelected.contains(clickedTag)) {
                 foodTagSelected.remove(clickedTag);
+                // 如果取消后没有其他格子被选中，则自动选中全选格子
+                if (foodTagSelected.isEmpty()) {
+                    isAllSelected = true;
+                }
+                tagChanged = true;
             } else {
                 foodTagSelected.add(clickedTag);
+                tagChanged = true;
             }
         }
+
+        // 如果标签选择发生变化，则刷新列表
+        if (tagChanged) {
+            cuisineListWidget.refreshList();
+            cuisineListWidget.setScrollAmount(0);
+        }
+
         return super.mouseClicked(event, doubleClick);
     }
 
@@ -130,14 +178,22 @@ public class RecipeScreen extends Screen {
     @Override
     public void tick() {
         String value = search.getValue();
-        if (!lastFilterText.equals(value)) {
+        if (!lastFilterText.equals(value) || tagChanged) {
             this.cookedMealItems = unsortedCookedMealItems.stream().filter(recipeHolder -> {
                 NMIRecipe recipe = recipeHolder.recipe();
                 MutableComponent translatable = Component.translatable(recipe.output().item().value().getDescriptionId());
                 String string = getTranslatedString(translatable.getVisualOrderText()).toString();
-                return string.contains(value);
+                boolean containName = string.contains(value);
+
+                List<Identifier> identifiers = ClientNMIDataAccessor.INSTANCE.getTagItemListMap().getItemToTagMap().get(recipeHolder.key()).positiveTags();
+
+                // 标签过滤：如果是全选状态则直接通过，否则检查是否包含已选中的标签
+                boolean containTag = isAllSelected || identifiers.stream().anyMatch(foodTagSelected::contains);
+
+                return containName && containTag;
             }).toList();
             this.lastFilterText = value;
+            this.tagChanged = false;
             this.cuisineListWidget.refreshList();
             this.cuisineListWidget.setScrollAmount(0);
         }
@@ -149,7 +205,7 @@ public class RecipeScreen extends Screen {
      * @param mouseY 鼠标Y坐标
      * @param baseX 基准X坐标（即i的值）
      * @param baseY 基准Y坐标（即j的值）
-     * @return 对应的索引，如果坐标不在有效范围内则返回-1
+     * @return 对应的索引，-1表示全选格子，0-N表示普通标签格子，-2表示不在有效范围内
      */
     private static int getIndexFromPosition(int mouseX, int mouseY, int baseX, int baseY) {
         // 计算相对坐标
@@ -162,7 +218,7 @@ public class RecipeScreen extends Screen {
 
         // 检查是否在有效范围内
         if (col < 0 || col >= TAG_COLS_PER_ROW || row < 0) {
-            return -1;
+            return -2;
         }
 
         // 检查是否在具体的矩形区域内
@@ -170,9 +226,15 @@ public class RecipeScreen extends Screen {
         int itemY = row * TAG_ROW_HEIGHT;
         if (relativeX < itemX || relativeX >= itemX + TAG_ITEM_WIDTH ||
             relativeY < itemY || relativeY >= itemY + TAG_ITEM_HEIGHT) {
-            return -1;
+            return -2;
         }
 
-        return row * TAG_COLS_PER_ROW + col;
+        int index = row * TAG_COLS_PER_ROW + col;
+        // 索引0表示第一个格子，即全选格子，返回-1
+        if (index == 0) {
+            return -1;
+        }
+        // 其他格子返回实际索引-1（因为全选格子占用了位置0）
+        return index - 1;
     }
 }
