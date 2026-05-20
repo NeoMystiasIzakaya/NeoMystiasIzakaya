@@ -17,9 +17,10 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.FormattedCharSequence;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -31,8 +32,9 @@ import static icu.gensoukyo.neo_mystias_izakaya.client.gui.KitchenwareScreen.ren
 public class RecipeScreen extends Screen {
     private final int imageWidth;
     private final int imageHeight;
-    public static final int positiveInColor = new Color(230, 180, 166).getRGB();
-    public static final int positiveOutColor = new Color(157, 84, 55).getRGB();
+    public static final int POSITIVE_IN_COLOR = 0xFFFBEECB;
+    public static final int POSITIVE_OUT_COLOR = 0xFF593B1F;
+    public static final int TEXT_COLOR = 0xFFD0A680;
 
     // 标签列表布局常量
     public static final int TAG_OFFSET_X = 13;
@@ -44,6 +46,7 @@ public class RecipeScreen extends Screen {
     public static final int TAG_COLS_PER_ROW = 4;
 
     Identifier BACKGROUND = id("textures/gui/recipe_bg.png");
+    Identifier SIDE = id("textures/gui/recipe_side.png");
     ArrayList<Identifier> foodTagSelected = new ArrayList<>();
     List<NMIRecipeHolder> cookedMealItems = ClientNMIDataAccessor.INSTANCE.getRecipeMap().getRecipes();
     final List<NMIRecipeHolder> unsortedCookedMealItems = cookedMealItems;
@@ -64,10 +67,11 @@ public class RecipeScreen extends Screen {
         int i = (this.width - this.imageWidth) / 2 - 60;
         int j = (this.height - this.imageHeight) / 2;
         graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, i, j, 0.0F, 0.0F, 256, 256, 256, 256);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, SIDE, i + 256, j, 0.0F, 0.0F, 256, 256, 256, 256);
 
         if (this.selected != null) {
             NMIRecipeHolder cuisine = selected.getCuisine();
-            renderCuisineInfo(graphics, font, cuisine, i + 246, j);
+            renderCuisineInfo(graphics, font, cuisine, i + 254, j);
         }
 
         List<Identifier> all = NMICuisinesTags.ALL;
@@ -76,8 +80,13 @@ public class RecipeScreen extends Screen {
             int stringX = i + k % TAG_COLS_PER_ROW * TAG_COL_WIDTH + TAG_OFFSET_X;
             int stringY = j + k / TAG_COLS_PER_ROW * TAG_ROW_HEIGHT + TAG_OFFSET_Y;
 
-            graphics.fill(stringX, stringY, stringX + TAG_ITEM_WIDTH, stringY + TAG_ITEM_HEIGHT, positiveInColor);
-            graphics.text(font, Component.translatable(foodTagEnum.toLanguageKey("tag")), stringX, stringY, 0xFFFFFFFF);
+            // 根据选中状态使用不同颜色
+            int bgColor = foodTagSelected.contains(foodTagEnum) ? POSITIVE_IN_COLOR : POSITIVE_OUT_COLOR;
+            int textColor = foodTagSelected.contains(foodTagEnum) ? POSITIVE_OUT_COLOR : POSITIVE_IN_COLOR;
+            graphics.fill(stringX, stringY, stringX + TAG_ITEM_WIDTH, stringY + TAG_ITEM_HEIGHT, bgColor);
+            MutableComponent text = Component.translatable(foodTagEnum.toLanguageKey("tag"));
+            FormattedCharSequence toRender = text.getVisualOrderText();
+            graphics.text(font, toRender, stringX + 19 - font.width(toRender) / 2, stringY + 1, textColor, false);
         }
 
         super.extractRenderState(graphics, mouseX, mouseY, a);
@@ -89,7 +98,13 @@ public class RecipeScreen extends Screen {
         int j = (this.height - this.imageHeight) / 2;
         int index = getIndexFromPosition((int) event.x(), (int) event.y(), i, j);
         if (index >= 0 && index < NMICuisinesTags.ALL.size()) {
-            foodTagSelected.add(NMICuisinesTags.ALL.get(index));
+            Identifier clickedTag = NMICuisinesTags.ALL.get(index);
+            // 如果已选中则移除，否则添加
+            if (foodTagSelected.contains(clickedTag)) {
+                foodTagSelected.remove(clickedTag);
+            } else {
+                foodTagSelected.add(clickedTag);
+            }
         }
         return super.mouseClicked(event, doubleClick);
     }
@@ -100,7 +115,7 @@ public class RecipeScreen extends Screen {
         int j = (this.height - this.imageHeight) / 2;
         this.search = new EditBox(getFont(), i + 12, j + 9, 100, 15, Component.translatable("fml.menu.mods.search"));
         this.cuisineListWidget = new CuisineListWidget(this, minecraft, 100, 120, j + 87, getFont().lineHeight * 2);
-        this.cuisineListWidget.setX(i + 256);
+        this.cuisineListWidget.setX(i + 262);
         this.cuisineListWidget.refreshList();
         addRenderableWidget(this.search);
         addRenderableWidget(this.cuisineListWidget);
