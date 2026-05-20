@@ -15,6 +15,7 @@ import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonComponentUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipe;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeHolder;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.input.MouseButtonEvent;
@@ -35,14 +36,14 @@ import static icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya.id;
 
 public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> {
     private static final Identifier BACKGROUND = id("textures/gui/kitchenware_bg.png");
-    final int YELLOW = Color.YELLOW.getRGB();
-    final int BLACK = Color.BLACK.getRGB();
-    final int GREEN = Color.GREEN.getRGB();
-    final int RED = Color.RED.getRGB();
-    final int MIN_X = 120;
-    final int MIN_Y = 10;
-    final int MAX_X = 215;
-    final int MAX_Y = 90;
+    private static final int YELLOW = Color.YELLOW.getRGB();
+    private static final int BLACK = Color.BLACK.getRGB();
+    private final static int GREEN = Color.GREEN.getRGB();
+    private final static int RED = Color.RED.getRGB();
+    private final int MIN_X = 120;
+    private final int MIN_Y = 10;
+    private final int MAX_X = 215;
+    private final int MAX_Y = 90;
     private final AbstractKitchenwareBE kitchenwareBE;
     List<NMIRecipeHolder> possibleRecipes;
 
@@ -116,7 +117,7 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
         int hoveredRecipeIndex = getHoveredRecipeIndex(pMouseX, pMouseY);
         if (hoveredRecipeIndex >= 0 && hoveredRecipeIndex < possibleRecipes.size()) {
             NMIRecipeHolder recipeHolder = possibleRecipes.get(hoveredRecipeIndex);
-            renderCuisineInfo(guiGraphics, recipeHolder, i, j);
+            renderCuisineInfo(guiGraphics, font, recipeHolder, i, j);
         }
     }
 
@@ -152,7 +153,7 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
     protected void extractLabels(GuiGraphicsExtractor graphics, int xm, int ym) {
     }
 
-    private void renderCuisineInfo(GuiGraphicsExtractor guiGraphics, NMIRecipeHolder recipeHolder, int i, int j) {
+    public static void renderCuisineInfo(GuiGraphicsExtractor guiGraphics, Font font, NMIRecipeHolder recipeHolder, int i, int j) {
         NMIRecipe recipe = recipeHolder.recipe();
         Item cuisineItem = recipe.output().item().value();
         Integer itemStackPriceBase = NMIClientEconomyUtil.getItemStackPriceBase(recipe.output().create());
@@ -175,13 +176,17 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
         guiGraphics.text(font, Component.literal(substring + "..."), i + 15, j + 30, BLACK, false);
         ItemTagList itemTagList = ClientNMIDataAccessor.INSTANCE.getTagItemListMap().getItemToTagMap().get(recipeHolder.key());
         if (itemTagList != null) {
-            TagRenderState state = new TagRenderState(0, j + 40);
-            state = renderTags(itemTagList.positiveTags(), GREEN, state, guiGraphics, i + 15);
-            state = renderTags(itemTagList.negativeTags(), RED, state, guiGraphics, i + 15);
+            renderTags(guiGraphics, font, i, j, itemTagList);
         }
     }
 
-    private TagRenderState renderTags(List<Identifier> tags, int color, TagRenderState state, GuiGraphicsExtractor guiGraphics, int baseX) {
+    public static void renderTags(GuiGraphicsExtractor guiGraphics, Font font, int i, int j, ItemTagList itemTagList) {
+        TagRenderState state = new TagRenderState(0, j + 40);
+        state = renderTags(font, itemTagList.positiveTags(), GREEN, state, guiGraphics, i + 15);
+        state = renderTags(font, itemTagList.negativeTags(), RED, state, guiGraphics, i + 15);
+    }
+
+    public static TagRenderState renderTags(Font font , List<Identifier> tags, int color, TagRenderState state, GuiGraphicsExtractor guiGraphics, int baseX) {
         int currentX = state.currentX();
         int startY = state.startY();
         int lineHeight = font.lineHeight;
@@ -201,6 +206,6 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
         return new TagRenderState(currentX, startY);
     }
 
-    private record TagRenderState(int currentX, int startY) {
+    public record TagRenderState(int currentX, int startY) {
     }
 }
