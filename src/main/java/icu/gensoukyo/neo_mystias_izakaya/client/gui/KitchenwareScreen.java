@@ -166,11 +166,7 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
         guiGraphics.text(font, Component.translatable("ui.neo_mystias_izakaya.price").append(": " + price + " ").append(NMICommonComponentUtil.unitEn()), i + 50, j + 20, BLACK, false);
 
         FormattedCharSequence description = Component.translatable(cuisineItem.getDescriptionId() + ".desc").getVisualOrderText();
-        StringBuilder builder = new StringBuilder();
-        description.accept((index, style, charPoint) -> {
-            builder.append(Character.toChars(charPoint));
-            return true;
-        });
+        StringBuilder builder = getTranslatedString(description);
         String substring = builder.subSequence(0, 10).toString();
 
         guiGraphics.text(font, Component.literal(substring + "..."), i + 15, j + 30, BLACK, false);
@@ -178,6 +174,15 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
         if (itemTagList != null) {
             renderTags(guiGraphics, font, i, j, itemTagList);
         }
+    }
+
+    public static StringBuilder getTranslatedString(FormattedCharSequence description) {
+        StringBuilder builder = new StringBuilder();
+        description.accept((index, style, charPoint) -> {
+            builder.append(Character.toChars(charPoint));
+            return true;
+        });
+        return builder;
     }
 
     public static void renderTags(GuiGraphicsExtractor guiGraphics, Font font, int i, int j, ItemTagList itemTagList) {

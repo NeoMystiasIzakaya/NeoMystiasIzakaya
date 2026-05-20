@@ -7,6 +7,7 @@ package icu.gensoukyo.neo_mystias_izakaya.client.gui;
 
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.CuisineListWidget;
+import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipe;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeHolder;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.consts.NMICuisinesTags;
 import lombok.Setter;
@@ -27,6 +28,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import static icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya.id;
+import static icu.gensoukyo.neo_mystias_izakaya.client.gui.KitchenwareScreen.getTranslatedString;
 import static icu.gensoukyo.neo_mystias_izakaya.client.gui.KitchenwareScreen.renderCuisineInfo;
 
 public class RecipeScreen extends Screen {
@@ -127,7 +129,18 @@ public class RecipeScreen extends Screen {
 
     @Override
     public void tick() {
-
+        String value = search.getValue();
+        if (!lastFilterText.equals(value)) {
+            this.cookedMealItems = unsortedCookedMealItems.stream().filter(recipeHolder -> {
+                NMIRecipe recipe = recipeHolder.recipe();
+                MutableComponent translatable = Component.translatable(recipe.output().item().value().getDescriptionId());
+                String string = getTranslatedString(translatable.getVisualOrderText()).toString();
+                return string.contains(value);
+            }).toList();
+            this.lastFilterText = value;
+            this.cuisineListWidget.refreshList();
+            this.cuisineListWidget.setScrollAmount(0);
+        }
     }
 
     /**

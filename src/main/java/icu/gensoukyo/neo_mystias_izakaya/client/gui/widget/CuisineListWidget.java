@@ -45,6 +45,16 @@ public class CuisineListWidget extends ObjectSelectionList<CuisineListWidget.Cui
 
     }
 
+    @Override
+    protected void extractSelection(GuiGraphicsExtractor graphics, CuisineEntry entry, int outlineColor) {
+        int outlineX0 = entry.getX() + 16;
+        int outlineY0 = entry.getY();
+        int outlineX1 = outlineX0 + entry.getWidth() - 16;
+        int outlineY1 = outlineY0 + entry.getHeight();
+        graphics.fill(outlineX0, outlineY0, outlineX1, outlineY1, outlineColor);
+        graphics.fill(outlineX0 + 1, outlineY0 + 1, outlineX1 - 1, outlineY1 - 1, -16777216);
+    }
+
     public void refreshList() {
         this.clearEntries();
         parent.buildImageList(this::addEntry, cuisine -> new CuisineEntry(cuisine, this.parent));
