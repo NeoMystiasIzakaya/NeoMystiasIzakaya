@@ -7,16 +7,20 @@ package icu.gensoukyo.neo_mystias_izakaya.client.gui;
 
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.AbstractKitchenwareBE;
+import icu.gensoukyo.neo_mystias_izakaya.content.tag.consts.NMICuisinesTags;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIMenus;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIVanillaTags;
+import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMainItems;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -129,16 +133,20 @@ public class KitchenwareMenu extends AbstractContainerMenu {
     }
 
     public enum KitchenwareType {
-        BOILING_POT(NMIVanillaTags.BOILING_POT),
-        CUTTING_BOARD(NMIVanillaTags.CUTTING_BOARD),
-        FRYING_PAN(NMIVanillaTags.FRYING_PAN),
-        GRILL(NMIVanillaTags.GRILL),
-        STEAMER(NMIVanillaTags.STEAMER);
+        BOILING_POT(NMIVanillaTags.BOILING_POT, NMIMainItems.BOILING_POT.get(), NMICuisinesTags.Boiling_Pot),
+        CUTTING_BOARD(NMIVanillaTags.CUTTING_BOARD, NMIMainItems.CUTTING_BOARD.get(), NMICuisinesTags.Cutting_Board),
+        FRYING_PAN(NMIVanillaTags.FRYING_PAN, NMIMainItems.FRYING_PAN.get(), NMICuisinesTags.Frying_Pan),
+        GRILL(NMIVanillaTags.GRILL, NMIMainItems.GRILL.get(),  NMICuisinesTags.Grill),
+        STEAMER(NMIVanillaTags.STEAMER, NMIMainItems.STEAMER.get(), NMICuisinesTags.Streamer);
 
         public final TagKey<Block> KITCHENWARE_TYPE;
+        public final Identifier KITCHENWARE_TAG;
+        public final Item KITCHENWARE_ITEM;
 
-        KitchenwareType(TagKey<Block> tag) {
-            this.KITCHENWARE_TYPE = tag;
+        KitchenwareType(TagKey<Block> blockTagKey, Item kitchenwareItem, Identifier kitchenwareTag) {
+            this.KITCHENWARE_TYPE = blockTagKey;
+            this.KITCHENWARE_TAG = kitchenwareTag;
+            this.KITCHENWARE_ITEM = kitchenwareItem;
         }
     }
 }
