@@ -65,8 +65,12 @@ public class NMILanguageProvider implements DataProvider {
         this.add(NMIMainItems.CUTTING_BOARD, "Cutting Board", "料理台");
 
         this.add("gui.neo_mystias_izakaya.time", "Time", "时间");
-        this.add("ui.neo_mystias_izakaya.price","Price", "价格");
+        this.add("gui.neo_mystias_izakaya.price","Price", "价格");
         this.add("gui.neo_mystias_izakaya.progress", "Progress", "进度");
+        this.add("gui.neo_mystias_izakaya.recipe", "Recipe", "食谱");
+        this.add("gui.neo_mystias_izakaya.beverages", "Beverages", "酒水");
+        this.add("gui.neo_mystias_izakaya.rare_customer", "Rare Customer", "稀客");
+        this.add("gui.neo_mystias_izakaya.common_customer", "Common Customer", "普客");
 
 
         this.add("tooltip.neo_mystias_izakaya.price", "Price: %d %s", "价格：%s %s");

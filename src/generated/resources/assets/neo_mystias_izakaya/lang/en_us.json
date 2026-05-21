@@ -1336,7 +1336,12 @@
   "evaluation.neo_mystias_izakaya.customer/yuyuko_saigyouji.norm": "",
   "evaluation.neo_mystias_izakaya.customer/yuyuko_saigyouji.repell": "",
   "evaluation.neo_mystias_izakaya.customer/yuyuko_saigyouji.seen_repell": "",
+  "gui.neo_mystias_izakaya.beverages": "Beverages",
+  "gui.neo_mystias_izakaya.common_customer": "Common Customer",
+  "gui.neo_mystias_izakaya.price": "Price",
   "gui.neo_mystias_izakaya.progress": "Progress",
+  "gui.neo_mystias_izakaya.rare_customer": "Rare Customer",
+  "gui.neo_mystias_izakaya.recipe": "Recipe",
   "gui.neo_mystias_izakaya.time": "Time",
   "item.neo_mystias_izakaya.beverages.affogato": "Affogato",
   "item.neo_mystias_izakaya.beverages.affogato.desc": "Ice cream with coffee is great for people who are afraid of bitterness but still need caffeine. §n \"It's not like I can't handle the bitterness, I just need a boost.\"§n ——Patchouli",
@@ -1957,6 +1962,5 @@
   "tag.neo_mystias_izakaya.cuisines/wonderful": "Wonderful",
   "tooltip.neo_mystias_izakaya.price": "Price: %d %s",
   "tooltip.neo_mystias_izakaya.price.total": "Total Price: %d %s",
-  "ui.neo_mystias_izakaya.price": "Price",
   "unit.neo_mystias_izakaya.en": "円"
 }

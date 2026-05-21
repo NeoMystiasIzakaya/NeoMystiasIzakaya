@@ -163,7 +163,7 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
         }
         guiGraphics.text(font, Component.translatable(cuisineItem.getDescriptionId()), i + 15, j + 10, BLACK, false);
         guiGraphics.text(font, Component.translatable("gui.neo_mystias_izakaya.time").append(": " + recipe.time()), i + 15, j + 20, BLACK, false);
-        guiGraphics.text(font, Component.translatable("ui.neo_mystias_izakaya.price").append(": " + price + " ").append(NMICommonComponentUtil.unitEn()), i + 50, j + 20, BLACK, false);
+        guiGraphics.text(font, Component.translatable("gui.neo_mystias_izakaya.price").append(": " + price + " ").append(NMICommonComponentUtil.unitEn()), i + 50, j + 20, BLACK, false);
 
         FormattedCharSequence description = Component.translatable(cuisineItem.getDescriptionId() + ".desc").getVisualOrderText();
         StringBuilder builder = getTranslatedString(description);

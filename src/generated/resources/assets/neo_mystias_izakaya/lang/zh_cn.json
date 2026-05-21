@@ -1336,7 +1336,12 @@
   "evaluation.neo_mystias_izakaya.customer/yuyuko_saigyouji.norm": "和我印象中的味道还差了一点。",
   "evaluation.neo_mystias_izakaya.customer/yuyuko_saigyouji.repell": "我不会把你的店吃垮的啦。",
   "evaluation.neo_mystias_izakaya.customer/yuyuko_saigyouji.seen_repell": "诶？小麻雀真没劲…",
+  "gui.neo_mystias_izakaya.beverages": "酒水",
+  "gui.neo_mystias_izakaya.common_customer": "普客",
+  "gui.neo_mystias_izakaya.price": "价格",
   "gui.neo_mystias_izakaya.progress": "进度",
+  "gui.neo_mystias_izakaya.rare_customer": "稀客",
+  "gui.neo_mystias_izakaya.recipe": "食谱",
   "gui.neo_mystias_izakaya.time": "时间",
   "item.neo_mystias_izakaya.beverages.affogato": "阿芙加朵",
   "item.neo_mystias_izakaya.beverages.affogato.desc": "将冰淇淋融化在咖啡中的做法，对于怕苦又需要咖啡提神的人来说是再好不过的饮料。§n \"我只是需要提神，并不是怕苦。\" §n——帕秋莉",
@@ -1957,6 +1962,5 @@
   "tag.neo_mystias_izakaya.cuisines/wonderful": "不可思议",
   "tooltip.neo_mystias_izakaya.price": "价格：%s %s",
   "tooltip.neo_mystias_izakaya.price.total": "总价格：%s %s",
-  "ui.neo_mystias_izakaya.price": "价格",
   "unit.neo_mystias_izakaya.en": "円"
 }
