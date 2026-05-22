@@ -11,14 +11,14 @@ import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.CuisineListWidget.Dis
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.ImageStateButton;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.KitchenwareButton;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.TagButton;
-import icu.gensoukyo.neo_mystias_izakaya.content.customer.CommonCustomer;
 import icu.gensoukyo.neo_mystias_izakaya.content.customer.Customer;
 import icu.gensoukyo.neo_mystias_izakaya.content.customer.CustomerHolder;
-import icu.gensoukyo.neo_mystias_izakaya.content.customer.RareCustomer;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipe;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeHolder;
+import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.consts.NMIBeveragesTags;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.consts.NMICuisinesTags;
+import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIBeveragesItems;
 import lombok.Setter;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -26,9 +26,11 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -36,8 +38,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import static icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya.id;
-import static icu.gensoukyo.neo_mystias_izakaya.client.gui.KitchenwareScreen.getTranslatedString;
-import static icu.gensoukyo.neo_mystias_izakaya.client.gui.KitchenwareScreen.renderCuisineInfo;
+import static icu.gensoukyo.neo_mystias_izakaya.client.gui.KitchenwareScreen.*;
 
 public class RecipeScreen extends Screen {
     public static final int POSITIVE_IN_COLOR = 0xFFFBEECB;
@@ -58,45 +59,43 @@ public class RecipeScreen extends Screen {
     public static final int KITCHENWARE_ITEM_HEIGHT = 20;
     public static final int KITCHENWARE_ROW_HEIGHT = 24;
     protected static final Button.CreateNarration DEFAULT_NARRATION = Supplier::get;
-
+    final List<NMIRecipeHolder> allRecipes = ClientNMIDataAccessor.INSTANCE.getRecipeMap().getRecipes();
+    /**
+     * 从 NMIBeveragesItems 获取酒水物品列表
+     */
+    final List<ItemStack> allBeverages = NMIBeveragesItems.ITEM_LIST.stream()
+            .map(item -> new ItemStack(item.get()))
+            .toList();
+    final List<CustomerHolder> allCommonCustomers = ClientNMIDataAccessor.INSTANCE.getCustomerMap().getAllCustomers()
+            .stream().filter(c -> c instanceof icu.gensoukyo.neo_mystias_izakaya.content.customer.CommonCustomerHolder).toList();
+    final List<CustomerHolder> allRareCustomers = ClientNMIDataAccessor.INSTANCE.getCustomerMap().getAllCustomers()
+            .stream().filter(c -> c instanceof icu.gensoukyo.neo_mystias_izakaya.content.customer.RareCustomerHolder).toList();
     private final KitchenwareMenu.KitchenwareType[] kitchenwareTypes = KitchenwareMenu.KitchenwareType.values();
     private final ScreenMode[] ScreenModes = ScreenMode.values();
     private final int imageWidth;
     private final int imageHeight;
     Identifier BACKGROUND = id("textures/gui/recipe_bg.png");
     Identifier SIDE = id("textures/gui/recipe_side.png");
-
     // === 模式状态 ===
     ScreenMode selectedScreenMode = ScreenMode.RECIPE;
-
     // === 食谱/酒水模式过滤状态 ===
     ArrayList<Identifier> foodTagSelected = new ArrayList<>();
     boolean isAllSelected = true;
     ArrayList<KitchenwareMenu.KitchenwareType> selectedKitchenwareTypes = new ArrayList<>();
     boolean isAllKitchenwareSelected = true;
-
     // === 酒水模式过滤状态 ===
     ArrayList<Identifier> beverageTagSelected = new ArrayList<>();
     boolean isAllBeverageSelected = true;
-
     // === 顾客模式过滤状态 ===
     boolean isAllCustomerSelected = true;
-
     // === 按钮列表 ===
     TagButton allSelectTagButton;
     List<TagButton> tagButtons = new ArrayList<>();
     KitchenwareButton allSelectKitchenwareButton;
     List<KitchenwareButton> kitchenwareButtons = new ArrayList<>();
     List<ImageStateButton> screenModeButtons = new ArrayList<>();
-
     // === 当前展示的数据 ===
     List<Object> displayItems = new ArrayList<>();
-    final List<NMIRecipeHolder> allRecipes = ClientNMIDataAccessor.INSTANCE.getRecipeMap().getRecipes();
-    final List<CustomerHolder> allCommonCustomers = ClientNMIDataAccessor.INSTANCE.getCustomerMap().getAllCustomers()
-            .stream().filter(c -> c instanceof icu.gensoukyo.neo_mystias_izakaya.content.customer.CommonCustomerHolder).toList();
-    final List<CustomerHolder> allRareCustomers = ClientNMIDataAccessor.INSTANCE.getCustomerMap().getAllCustomers()
-            .stream().filter(c -> c instanceof icu.gensoukyo.neo_mystias_izakaya.content.customer.RareCustomerHolder).toList();
-
     @Setter
     DisplayEntry selected;
     EditBox search;
@@ -122,6 +121,8 @@ public class RecipeScreen extends Screen {
                 renderCuisineInfo(graphics, font, selected.getRecipe(), i + 254, j);
             } else if (selected.isCustomer()) {
                 renderCustomerInfo(graphics, font, selected.getCustomer(), i + 254, j);
+            } else if (selected.isItem()) {
+                renderBeverageInfo(graphics, font, selected.getItemStack(), i + 254, j);
             }
         }
 
@@ -411,7 +412,7 @@ public class RecipeScreen extends Screen {
         displayItems.clear();
         switch (selectedScreenMode) {
             case RECIPE -> displayItems.addAll(allRecipes);
-            case BEVERAGES -> displayItems.addAll(allRecipes); // 酒水也是 recipe，通过标签区分
+            case BEVERAGES -> displayItems.addAll(allBeverages);
             case COMMON_CUSTOMER -> displayItems.addAll(allCommonCustomers);
             case RARE_CUSTOMER -> displayItems.addAll(allRareCustomers);
         }
@@ -425,6 +426,8 @@ public class RecipeScreen extends Screen {
                 addEntry.accept(new DisplayEntry(recipe, this, selectedScreenMode));
             } else if (item instanceof CustomerHolder customer) {
                 addEntry.accept(new DisplayEntry(customer, this, selectedScreenMode));
+            } else if (item instanceof ItemStack stack) {
+                addEntry.accept(new DisplayEntry(stack, this, selectedScreenMode));
             }
         }
     }
@@ -448,7 +451,7 @@ public class RecipeScreen extends Screen {
     private void applyFilters(String searchText) {
         displayItems = switch (selectedScreenMode) {
             case RECIPE -> filterRecipes(allRecipes, searchText);
-            case BEVERAGES -> filterBeverages(allRecipes, searchText);
+            case BEVERAGES -> filterBeverages(allBeverages, searchText);
             case COMMON_CUSTOMER -> filterCustomers(allCommonCustomers, searchText);
             case RARE_CUSTOMER -> filterCustomers(allRareCustomers, searchText);
         };
@@ -475,25 +478,23 @@ public class RecipeScreen extends Screen {
     }
 
     /**
-     * 酒水模式过滤：按名称 + 酒水标签（无需厨具过滤）
+     * 酒水模式过滤：按名称 + 酒水标签（从 tagItemListMap 查找标签）
      */
-    private List<Object> filterBeverages(List<NMIRecipeHolder> source, String searchText) {
-        return source.stream().filter(recipeHolder -> {
-            NMIRecipe recipe = recipeHolder.recipe();
-            MutableComponent translatable = Component.translatable(recipe.output().item().value().getDescriptionId());
-            String name = getTranslatedString(translatable.getVisualOrderText()).toString();
-            if (!name.contains(searchText)) return false;
+    private List<Object> filterBeverages(List<ItemStack> source, String searchText) {
+        var tagMap = ClientNMIDataAccessor.INSTANCE.getTagItemListMap().getItemToTagMap();
+        List<Identifier> beverageTags = NMIBeveragesTags.ALL;
 
-            // 酒水模式：只保留有酒水标签的 recipe
-            List<Identifier> itemTags = ClientNMIDataAccessor.INSTANCE.getTagItemListMap()
-                    .getItemToTagMap().get(recipeHolder.key()).positiveTags();
-            List<Identifier> beverageTags = NMIBeveragesTags.ALL;
-            boolean isBeverage = itemTags.stream().anyMatch(beverageTags::contains);
-            if (!isBeverage) return false;
+        return source.stream().filter(stack -> {
+            String name = getTranslatedString(
+                    Component.translatable(stack.getItem().getDescriptionId()).getVisualOrderText()
+            ).toString();
+            if (!name.contains(searchText)) return false;
 
             // 酒水标签过滤
             if (isAllBeverageSelected) return true;
-            return itemTags.stream().anyMatch(beverageTagSelected::contains);
+            var itemTagList = tagMap.get(BuiltInRegistries.ITEM.getKey(stack.getItem()));
+            if (itemTagList == null) return false;
+            return itemTagList.positiveTags().stream().anyMatch(beverageTagSelected::contains);
         }).collect(java.util.stream.Collectors.toList());
     }
 
@@ -542,6 +543,22 @@ public class RecipeScreen extends Screen {
             guiGraphics.text(font, Component.translatable("gui.neo_mystias_izakaya.beverage_pref")
                             .append(": " + customer.beverage().size() + " 种"),
                     i + 15, j + 58, 0xFF000000, false);
+        }
+    }
+
+    // === 酒水详情渲染 ===
+
+    private void renderBeverageInfo(GuiGraphicsExtractor guiGraphics, Font font, ItemStack stack, int i, int j) {
+        guiGraphics.text(font, Component.translatable(stack.getItem().getDescriptionId()),
+                i + 15, j + 10, 0xFF000000, false);
+        guiGraphics.item(stack, i + 15, j + 20);
+
+        // 渲染酒水标签
+        var tagMap = ClientNMIDataAccessor.INSTANCE.getTagItemListMap().getItemToTagMap();
+        Identifier itemId = BuiltInRegistries.ITEM.getKey(stack.getItem());
+        ItemTagList itemTagList = tagMap.get(itemId);
+        if (itemTagList != null) {
+            renderTags(guiGraphics, font, i, j, itemTagList);
         }
     }
 
