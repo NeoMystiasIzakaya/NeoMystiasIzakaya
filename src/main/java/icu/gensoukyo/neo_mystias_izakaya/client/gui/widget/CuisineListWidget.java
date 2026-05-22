@@ -18,6 +18,7 @@ import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 public class CuisineListWidget extends ObjectSelectionList<CuisineListWidget.DisplayEntry> {
@@ -72,7 +73,7 @@ public class CuisineListWidget extends ObjectSelectionList<CuisineListWidget.Dis
         private final RecipeScreen parent;
         @Getter
         private final ScreenMode screenMode;
-        /** NMIRecipeHolder 或 CustomerHolder */
+        /** NMIRecipeHolder、CustomerHolder 或 ItemStack */
         @Getter
         private final Object data;
 
@@ -94,6 +95,12 @@ public class CuisineListWidget extends ObjectSelectionList<CuisineListWidget.Dis
             this.screenMode = mode;
         }
 
+        public DisplayEntry(ItemStack itemStack, RecipeScreen parent, ScreenMode mode) {
+            this.data = itemStack;
+            this.parent = parent;
+            this.screenMode = mode;
+        }
+
         public NMIRecipeHolder getRecipe() {
             return (NMIRecipeHolder) data;
         }
@@ -102,12 +109,20 @@ public class CuisineListWidget extends ObjectSelectionList<CuisineListWidget.Dis
             return (CustomerHolder) data;
         }
 
+        public ItemStack getItemStack() {
+            return (ItemStack) data;
+        }
+
         public boolean isRecipe() {
             return data instanceof NMIRecipeHolder;
         }
 
         public boolean isCustomer() {
             return data instanceof CustomerHolder;
+        }
+
+        public boolean isItem() {
+            return data instanceof ItemStack;
         }
 
         @Override
@@ -133,8 +148,11 @@ public class CuisineListWidget extends ObjectSelectionList<CuisineListWidget.Dis
                 CustomerHolder customer = getCustomer();
                 Identifier key = customer.key();
                 graphics.text(font, Component.translatable("customer.neo_mystias_izakaya." + key.getPath()), getX() + 18, getY() + 4, 0xFFFFFFFF);
-                // 顾客用玩家头或特殊图标
                 graphics.item(Items.PLAYER_HEAD.getDefaultInstance(), getX(), getY());
+            } else if (isItem()) {
+                ItemStack stack = getItemStack();
+                graphics.text(font, Component.translatable(stack.getItem().getDescriptionId()), getX() + 18, getY() + 4, 0xFFFFFFFF);
+                graphics.item(stack, getX(), getY());
             }
         }
     }
