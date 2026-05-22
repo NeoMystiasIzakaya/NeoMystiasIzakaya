@@ -6,6 +6,8 @@
 package icu.gensoukyo.neo_mystias_izakaya.client.gui.widget;
 
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.RecipeScreen;
+import icu.gensoukyo.neo_mystias_izakaya.client.gui.RecipeScreen.ScreenMode;
+import icu.gensoukyo.neo_mystias_izakaya.content.customer.CustomerHolder;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeHolder;
 import lombok.Getter;
 import net.minecraft.client.Minecraft;
@@ -14,12 +16,15 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.ObjectSelectionList;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 
-public class CuisineListWidget extends ObjectSelectionList<CuisineListWidget.CuisineEntry>{
+public class CuisineListWidget extends ObjectSelectionList<CuisineListWidget.DisplayEntry> {
     private final RecipeScreen parent;
     private final int listWidth;
-    public CuisineListWidget(RecipeScreen parent,Minecraft minecraft, int width, int height, int y, int itemHeight) {
+
+    public CuisineListWidget(RecipeScreen parent, Minecraft minecraft, int width, int height, int y, int itemHeight) {
         super(minecraft, width, height, y, itemHeight);
         this.parent = parent;
         this.listWidth = width;
@@ -46,7 +51,7 @@ public class CuisineListWidget extends ObjectSelectionList<CuisineListWidget.Cui
     }
 
     @Override
-    protected void extractSelection(GuiGraphicsExtractor graphics, CuisineEntry entry, int outlineColor) {
+    protected void extractSelection(GuiGraphicsExtractor graphics, DisplayEntry entry, int outlineColor) {
         int outlineX0 = entry.getX() + 16;
         int outlineY0 = entry.getY();
         int outlineX1 = outlineX0 + entry.getWidth() - 16;
@@ -57,16 +62,52 @@ public class CuisineListWidget extends ObjectSelectionList<CuisineListWidget.Cui
 
     public void refreshList() {
         this.clearEntries();
-        parent.buildImageList(this::addEntry, cuisine -> new CuisineEntry(cuisine, this.parent));
+        parent.buildImageList(this::addEntry);
     }
 
-    public static class CuisineEntry extends ObjectSelectionList.Entry<CuisineListWidget.CuisineEntry> {
-        @Getter
-        private final NMIRecipeHolder cuisine;
+    /**
+     * 通用展示条目，同时支持食谱/酒水(NMIRecipeHolder)和顾客(CustomerHolder)
+     */
+    public static class DisplayEntry extends ObjectSelectionList.Entry<DisplayEntry> {
         private final RecipeScreen parent;
-        public CuisineEntry(NMIRecipeHolder cuisine, RecipeScreen parent) {
-            this.cuisine = cuisine;
+        @Getter
+        private final ScreenMode screenMode;
+        /** NMIRecipeHolder 或 CustomerHolder */
+        @Getter
+        private final Object data;
+
+        public DisplayEntry(NMIRecipeHolder recipeHolder, RecipeScreen parent) {
+            this.data = recipeHolder;
             this.parent = parent;
+            this.screenMode = ScreenMode.RECIPE;
+        }
+
+        public DisplayEntry(NMIRecipeHolder recipeHolder, RecipeScreen parent, ScreenMode mode) {
+            this.data = recipeHolder;
+            this.parent = parent;
+            this.screenMode = mode;
+        }
+
+        public DisplayEntry(CustomerHolder customerHolder, RecipeScreen parent, ScreenMode mode) {
+            this.data = customerHolder;
+            this.parent = parent;
+            this.screenMode = mode;
+        }
+
+        public NMIRecipeHolder getRecipe() {
+            return (NMIRecipeHolder) data;
+        }
+
+        public CustomerHolder getCustomer() {
+            return (CustomerHolder) data;
+        }
+
+        public boolean isRecipe() {
+            return data instanceof NMIRecipeHolder;
+        }
+
+        public boolean isCustomer() {
+            return data instanceof CustomerHolder;
         }
 
         @Override
@@ -83,9 +124,18 @@ public class CuisineListWidget extends ObjectSelectionList<CuisineListWidget.Cui
         @Override
         public void extractContent(GuiGraphicsExtractor graphics, int mouseX, int mouseY, boolean hovered, float a) {
             Font font = Minecraft.getInstance().font;
-            Item value = cuisine.recipe().output().item().value();
-            graphics.text(font, Component.translatable(value.getDescriptionId()), getX() + 18, getY() + 4, 0xFFFFFFFF);
-            graphics.item(value.getDefaultInstance(), getX(), getY());
+            if (isRecipe()) {
+                NMIRecipeHolder recipe = getRecipe();
+                Item value = recipe.recipe().output().item().value();
+                graphics.text(font, Component.translatable(value.getDescriptionId()), getX() + 18, getY() + 4, 0xFFFFFFFF);
+                graphics.item(value.getDefaultInstance(), getX(), getY());
+            } else if (isCustomer()) {
+                CustomerHolder customer = getCustomer();
+                Identifier key = customer.key();
+                graphics.text(font, Component.translatable("customer.neo_mystias_izakaya." + key.getPath()), getX() + 18, getY() + 4, 0xFFFFFFFF);
+                // 顾客用玩家头或特殊图标
+                graphics.item(Items.PLAYER_HEAD.getDefaultInstance(), getX(), getY());
+            }
         }
     }
 }

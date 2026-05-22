@@ -7,29 +7,32 @@ package icu.gensoukyo.neo_mystias_izakaya.client.gui;
 
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.CuisineListWidget;
+import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.CuisineListWidget.DisplayEntry;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.ImageStateButton;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.KitchenwareButton;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.TagButton;
+import icu.gensoukyo.neo_mystias_izakaya.content.customer.CommonCustomer;
+import icu.gensoukyo.neo_mystias_izakaya.content.customer.Customer;
+import icu.gensoukyo.neo_mystias_izakaya.content.customer.CustomerHolder;
+import icu.gensoukyo.neo_mystias_izakaya.content.customer.RareCustomer;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipe;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeHolder;
+import icu.gensoukyo.neo_mystias_izakaya.content.tag.consts.NMIBeveragesTags;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.consts.NMICuisinesTags;
 import lombok.Setter;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.client.gui.components.ObjectSelectionList;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya.id;
@@ -55,6 +58,7 @@ public class RecipeScreen extends Screen {
     public static final int KITCHENWARE_ITEM_HEIGHT = 20;
     public static final int KITCHENWARE_ROW_HEIGHT = 24;
     protected static final Button.CreateNarration DEFAULT_NARRATION = Supplier::get;
+
     private final KitchenwareMenu.KitchenwareType[] kitchenwareTypes = KitchenwareMenu.KitchenwareType.values();
     private final ScreenMode[] ScreenModes = ScreenMode.values();
     private final int imageWidth;
@@ -62,25 +66,43 @@ public class RecipeScreen extends Screen {
     Identifier BACKGROUND = id("textures/gui/recipe_bg.png");
     Identifier SIDE = id("textures/gui/recipe_side.png");
 
+    // === 模式状态 ===
     ScreenMode selectedScreenMode = ScreenMode.RECIPE;
+
+    // === 食谱/酒水模式过滤状态 ===
     ArrayList<Identifier> foodTagSelected = new ArrayList<>();
-    boolean isAllSelected = true; // 全选状态，默认为true
+    boolean isAllSelected = true;
     ArrayList<KitchenwareMenu.KitchenwareType> selectedKitchenwareTypes = new ArrayList<>();
-    boolean isAllKitchenwareSelected = true; // 厨具全选状态，默认为true
-    // 按钮列表
+    boolean isAllKitchenwareSelected = true;
+
+    // === 酒水模式过滤状态 ===
+    ArrayList<Identifier> beverageTagSelected = new ArrayList<>();
+    boolean isAllBeverageSelected = true;
+
+    // === 顾客模式过滤状态 ===
+    boolean isAllCustomerSelected = true;
+
+    // === 按钮列表 ===
     TagButton allSelectTagButton;
     List<TagButton> tagButtons = new ArrayList<>();
     KitchenwareButton allSelectKitchenwareButton;
     List<KitchenwareButton> kitchenwareButtons = new ArrayList<>();
     List<ImageStateButton> screenModeButtons = new ArrayList<>();
-    List<NMIRecipeHolder> cookedMealItems = ClientNMIDataAccessor.INSTANCE.getRecipeMap().getRecipes();
-    final List<NMIRecipeHolder> unsortedCookedMealItems = cookedMealItems;
+
+    // === 当前展示的数据 ===
+    List<Object> displayItems = new ArrayList<>();
+    final List<NMIRecipeHolder> allRecipes = ClientNMIDataAccessor.INSTANCE.getRecipeMap().getRecipes();
+    final List<CustomerHolder> allCommonCustomers = ClientNMIDataAccessor.INSTANCE.getCustomerMap().getAllCustomers()
+            .stream().filter(c -> c instanceof icu.gensoukyo.neo_mystias_izakaya.content.customer.CommonCustomerHolder).toList();
+    final List<CustomerHolder> allRareCustomers = ClientNMIDataAccessor.INSTANCE.getCustomerMap().getAllCustomers()
+            .stream().filter(c -> c instanceof icu.gensoukyo.neo_mystias_izakaya.content.customer.RareCustomerHolder).toList();
+
     @Setter
-    CuisineListWidget.CuisineEntry selected;
+    DisplayEntry selected;
     EditBox search;
     String lastFilterText = "";
     CuisineListWidget cuisineListWidget;
-    boolean tagChanged = false;
+    boolean needsRefresh = false;
 
     public RecipeScreen() {
         super(Component.literal("Recipe Screen"));
@@ -96,8 +118,11 @@ public class RecipeScreen extends Screen {
         graphics.blit(RenderPipelines.GUI_TEXTURED, SIDE, i + 256, j, 0.0F, 0.0F, 256, 256, 256, 256);
 
         if (this.selected != null) {
-            NMIRecipeHolder cuisine = selected.getCuisine();
-            renderCuisineInfo(graphics, font, cuisine, i + 254, j);
+            if (selected.isRecipe()) {
+                renderCuisineInfo(graphics, font, selected.getRecipe(), i + 254, j);
+            } else if (selected.isCustomer()) {
+                renderCustomerInfo(graphics, font, selected.getCustomer(), i + 254, j);
+            }
         }
 
         super.extractRenderState(graphics, mouseX, mouseY, a);
@@ -115,137 +140,213 @@ public class RecipeScreen extends Screen {
         this.search = new EditBox(getFont(), i + 12, j + 9, 100, 15, Component.translatable("fml.menu.mods.search"));
         this.cuisineListWidget = new CuisineListWidget(this, minecraft, 100, 120, j + 87, getFont().lineHeight * 2);
         this.cuisineListWidget.setX(i + 262);
-        this.cuisineListWidget.refreshList();
         addRenderableWidget(this.search);
         addRenderableWidget(this.cuisineListWidget);
 
-        // 创建标签全选按钮
+        // 根据当前模式构建过滤器按钮
+        rebuildFilterButtons(i, j);
+
+        // 构建模式切换按钮
+        buildScreenModeButtons(i, j);
+
+        // 初始化数据
+        reloadData();
+        cuisineListWidget.refreshList();
+    }
+
+    /**
+     * 根据当前模式重建过滤器按钮
+     */
+    private void rebuildFilterButtons(int i, int j) {
+        // 清除旧按钮（从渲染列表中移除）
+        if (allSelectTagButton != null) removeWidget(allSelectTagButton);
+        for (TagButton btn : tagButtons) removeWidget(btn);
+        if (allSelectKitchenwareButton != null) removeWidget(allSelectKitchenwareButton);
+        for (KitchenwareButton btn : kitchenwareButtons) removeWidget(btn);
+        tagButtons.clear();
+        kitchenwareButtons.clear();
+        allSelectTagButton = null;
+        allSelectKitchenwareButton = null;
+
+        switch (selectedScreenMode) {
+            case RECIPE -> {
+                buildRecipeFilterButtons(i, j);
+                updateRecipeTagButtons();
+                updateKitchenwareButtons();
+            }
+            case BEVERAGES -> {
+                buildBeverageFilterButtons(i, j);
+                updateBeverageTagButtons();
+            }
+            case RARE_CUSTOMER, COMMON_CUSTOMER -> {
+                // 顾客模式暂无标签过滤，后续可扩展
+            }
+        }
+    }
+
+    /**
+     * 构建食谱模式的过滤按钮：菜系标签 + 厨具
+     */
+    private void buildRecipeFilterButtons(int i, int j) {
         allSelectTagButton = new TagButton(
-                i + TAG_OFFSET_X,
-                j + TAG_OFFSET_Y,
-                TAG_ITEM_WIDTH,
-                TAG_ITEM_HEIGHT,
+                i + TAG_OFFSET_X, j + TAG_OFFSET_Y,
+                TAG_ITEM_WIDTH, TAG_ITEM_HEIGHT,
                 Component.literal("全选"),
                 button -> {
                     if (!isAllSelected) {
                         isAllSelected = true;
                         foodTagSelected.clear();
-                        updateTagButtons();
+                        updateRecipeTagButtons();
                     }
-                    tagChanged = true;
+                    needsRefresh = true;
                 },
                 DEFAULT_NARRATION
         );
         allSelectTagButton.setSelected(true);
         addRenderableWidget(allSelectTagButton);
 
-        // 创建标签按钮
         List<Identifier> allTags = NMICuisinesTags.ALL;
         for (int k = 0; k < allTags.size(); k++) {
             Identifier tag = allTags.get(k);
             int adjustedIndex = k + 1;
             int x = i + adjustedIndex % TAG_COLS_PER_ROW * TAG_COL_WIDTH + TAG_OFFSET_X;
             int y = j + adjustedIndex / TAG_COLS_PER_ROW * TAG_ROW_HEIGHT + TAG_OFFSET_Y;
-
-            TagButton tagButton = new TagButton(
-                    x, y, TAG_ITEM_WIDTH, TAG_ITEM_HEIGHT,
+            TagButton tb = new TagButton(x, y, TAG_ITEM_WIDTH, TAG_ITEM_HEIGHT,
                     Component.translatable(tag.toLanguageKey("tag")),
-                    button -> handleTagClick(tag),
-                    DEFAULT_NARRATION
-            );
-            tagButtons.add(tagButton);
-            addRenderableWidget(tagButton);
+                    button -> handleRecipeTagClick(tag),
+                    DEFAULT_NARRATION);
+            tagButtons.add(tb);
+            addRenderableWidget(tb);
         }
 
-        // 创建厨具全选按钮
         allSelectKitchenwareButton = new KitchenwareButton(
-                i + KITCHENWARE_OFFSET_X,
-                j + KITCHENWARE_OFFSET_Y,
-                KITCHENWARE_ITEM_WIDTH,
-                KITCHENWARE_ITEM_HEIGHT,
+                i + KITCHENWARE_OFFSET_X, j + KITCHENWARE_OFFSET_Y,
+                KITCHENWARE_ITEM_WIDTH, KITCHENWARE_ITEM_HEIGHT,
                 Component.literal("全选"),
-                ItemStack.EMPTY,
+                net.minecraft.world.item.ItemStack.EMPTY,
                 button -> {
                     if (!isAllKitchenwareSelected) {
                         isAllKitchenwareSelected = true;
                         selectedKitchenwareTypes.clear();
                         updateKitchenwareButtons();
                     }
-                    tagChanged = true;
+                    needsRefresh = true;
                 },
                 DEFAULT_NARRATION
         );
         allSelectKitchenwareButton.setSelected(true);
         addRenderableWidget(allSelectKitchenwareButton);
 
-        // 创建厨具按钮
         for (int k = 0; k < kitchenwareTypes.length; k++) {
             KitchenwareMenu.KitchenwareType type = kitchenwareTypes[k];
             int adjustedIndex = k + 1;
             int x = i + KITCHENWARE_OFFSET_X;
             int y = j + KITCHENWARE_OFFSET_Y + adjustedIndex * KITCHENWARE_ROW_HEIGHT;
-
-            KitchenwareButton kitchenwareButton = new KitchenwareButton(
-                    x, y, KITCHENWARE_ITEM_WIDTH, KITCHENWARE_ITEM_HEIGHT,
+            KitchenwareButton kb = new KitchenwareButton(x, y, KITCHENWARE_ITEM_WIDTH, KITCHENWARE_ITEM_HEIGHT,
                     Component.translatable(type.KITCHENWARE_TAG.toLanguageKey("tag")),
                     type.KITCHENWARE_ITEM.getDefaultInstance(),
                     button -> handleKitchenwareClick(type),
-                    DEFAULT_NARRATION
-            );
-            kitchenwareButtons.add(kitchenwareButton);
-            addRenderableWidget(kitchenwareButton);
+                    DEFAULT_NARRATION);
+            kitchenwareButtons.add(kb);
+            addRenderableWidget(kb);
         }
+    }
 
+    /**
+     * 构建酒水模式的过滤按钮：酒水特性标签
+     */
+    private void buildBeverageFilterButtons(int i, int j) {
+        allSelectTagButton = new TagButton(
+                i + TAG_OFFSET_X, j + TAG_OFFSET_Y,
+                TAG_ITEM_WIDTH, TAG_ITEM_HEIGHT,
+                Component.literal("全选"),
+                button -> {
+                    if (!isAllBeverageSelected) {
+                        isAllBeverageSelected = true;
+                        beverageTagSelected.clear();
+                        updateBeverageTagButtons();
+                    }
+                    needsRefresh = true;
+                },
+                DEFAULT_NARRATION
+        );
+        allSelectTagButton.setSelected(true);
+        addRenderableWidget(allSelectTagButton);
+
+        List<Identifier> allTags = NMIBeveragesTags.ALL;
+        for (int k = 0; k < allTags.size(); k++) {
+            Identifier tag = allTags.get(k);
+            int adjustedIndex = k + 1;
+            int x = i + adjustedIndex % TAG_COLS_PER_ROW * TAG_COL_WIDTH + TAG_OFFSET_X;
+            int y = j + adjustedIndex / TAG_COLS_PER_ROW * TAG_ROW_HEIGHT + TAG_OFFSET_Y;
+            TagButton tb = new TagButton(x, y, TAG_ITEM_WIDTH, TAG_ITEM_HEIGHT,
+                    Component.translatable(tag.toLanguageKey("tag")),
+                    button -> handleBeverageTagClick(tag),
+                    DEFAULT_NARRATION);
+            tagButtons.add(tb);
+            addRenderableWidget(tb);
+        }
+    }
+
+    /**
+     * 构建模式切换按钮
+     */
+    private void buildScreenModeButtons(int i, int j) {
         for (int k = 0; k < ScreenModes.length; k++) {
-            int x = i -40;
+            int x = i - 40;
             int y = j + k * 20;
             ScreenMode mode = ScreenModes[k];
-            ImageStateButton imageStateButton = new ImageStateButton(
-                    x,y, 40, 16, Component.translatable("gui.neo_mystias_izakaya." + mode.name().toLowerCase()),
-                    (button -> {
-                        selectedScreenMode = mode;
-                        updateScreenModeButtons();
-                    }), DEFAULT_NARRATION);
-            screenModeButtons.add(imageStateButton);
-            addRenderableWidget(imageStateButton);
+            ImageStateButton btn = new ImageStateButton(
+                    x, y, 40, 16,
+                    Component.translatable("gui.neo_mystias_izakaya." + mode.name().toLowerCase()),
+                    button -> switchMode(mode),
+                    DEFAULT_NARRATION);
+            screenModeButtons.add(btn);
+            addRenderableWidget(btn);
         }
-
-        // 同步按钮状态到数据
-        updateTagButtons();
-        updateKitchenwareButtons();
         updateScreenModeButtons();
     }
 
-    private void handleTagClick(Identifier tag) {
-        // 如果全选格子被选中，先取消全选格子
+    // === 标签点击处理 ===
+
+    private void handleRecipeTagClick(Identifier tag) {
         if (isAllSelected) {
             isAllSelected = false;
         }
-
-        // 切换普通格子的选中状态
         if (foodTagSelected.contains(tag)) {
             foodTagSelected.remove(tag);
-            // 如果取消后没有其他格子被选中，则自动选中全选格子
             if (foodTagSelected.isEmpty()) {
                 isAllSelected = true;
             }
         } else {
             foodTagSelected.add(tag);
         }
-        updateTagButtons();
-        tagChanged = true;
+        updateRecipeTagButtons();
+        needsRefresh = true;
+    }
+
+    private void handleBeverageTagClick(Identifier tag) {
+        if (isAllBeverageSelected) {
+            isAllBeverageSelected = false;
+        }
+        if (beverageTagSelected.contains(tag)) {
+            beverageTagSelected.remove(tag);
+            if (beverageTagSelected.isEmpty()) {
+                isAllBeverageSelected = true;
+            }
+        } else {
+            beverageTagSelected.add(tag);
+        }
+        updateBeverageTagButtons();
+        needsRefresh = true;
     }
 
     private void handleKitchenwareClick(KitchenwareMenu.KitchenwareType type) {
-        // 如果全选格子被选中，先取消全选格子
         if (isAllKitchenwareSelected) {
             isAllKitchenwareSelected = false;
         }
-
-        // 切换普通格子的选中状态
         if (selectedKitchenwareTypes.contains(type)) {
             selectedKitchenwareTypes.remove(type);
-            // 如果取消后没有其他格子被选中，则自动选中全选格子
             if (selectedKitchenwareTypes.isEmpty()) {
                 isAllKitchenwareSelected = true;
             }
@@ -253,59 +354,194 @@ public class RecipeScreen extends Screen {
             selectedKitchenwareTypes.add(type);
         }
         updateKitchenwareButtons();
-        tagChanged = true;
+        needsRefresh = true;
     }
 
-    private void updateTagButtons() {
-        allSelectTagButton.setSelected(isAllSelected);
+    // === 按钮状态更新 ===
+
+    private void updateRecipeTagButtons() {
+        if (allSelectTagButton != null) allSelectTagButton.setSelected(isAllSelected);
         List<Identifier> allTags = NMICuisinesTags.ALL;
-        for (int i = 0; i < tagButtons.size(); i++) {
-            tagButtons.get(i).setSelected(foodTagSelected.contains(allTags.get(i)));
+        for (int idx = 0; idx < tagButtons.size() && idx < allTags.size(); idx++) {
+            tagButtons.get(idx).setSelected(foodTagSelected.contains(allTags.get(idx)));
+        }
+    }
+
+    private void updateBeverageTagButtons() {
+        if (allSelectTagButton != null) allSelectTagButton.setSelected(isAllBeverageSelected);
+        List<Identifier> allTags = NMIBeveragesTags.ALL;
+        for (int idx = 0; idx < tagButtons.size() && idx < allTags.size(); idx++) {
+            tagButtons.get(idx).setSelected(beverageTagSelected.contains(allTags.get(idx)));
         }
     }
 
     private void updateKitchenwareButtons() {
-        allSelectKitchenwareButton.setSelected(isAllKitchenwareSelected);
-        for (int i = 0; i < kitchenwareButtons.size(); i++) {
-            kitchenwareButtons.get(i).setSelected(selectedKitchenwareTypes.contains(kitchenwareTypes[i]));
+        if (allSelectKitchenwareButton != null) allSelectKitchenwareButton.setSelected(isAllKitchenwareSelected);
+        for (int idx = 0; idx < kitchenwareButtons.size(); idx++) {
+            kitchenwareButtons.get(idx).setSelected(selectedKitchenwareTypes.contains(kitchenwareTypes[idx]));
         }
     }
 
     private void updateScreenModeButtons() {
-        for (int i = 0; i < screenModeButtons.size(); i++) {
-            screenModeButtons.get(i).setSelected(ScreenModes[i] == selectedScreenMode);
+        for (int idx = 0; idx < screenModeButtons.size(); idx++) {
+            screenModeButtons.get(idx).setSelected(ScreenModes[idx] == selectedScreenMode);
         }
     }
 
-    public <T extends ObjectSelectionList.Entry<T>> void buildImageList(Consumer<T> modListViewConsumer, Function<NMIRecipeHolder, T> newEntry) {
-        cookedMealItems.forEach(cookedMealItem -> modListViewConsumer.accept(newEntry.apply(cookedMealItem)));
+    // === 模式切换 ===
+
+    private void switchMode(ScreenMode mode) {
+        if (this.selectedScreenMode == mode) return;
+        this.selectedScreenMode = mode;
+        this.selected = null;
+        this.search.setValue("");
+        this.lastFilterText = "";
+
+        int i = (this.width - this.imageWidth) / 2 - 40;
+        int j = (this.height - this.imageHeight) / 2;
+        rebuildFilterButtons(i, j);
+        updateScreenModeButtons();
+        reloadData();
+        cuisineListWidget.refreshList();
     }
+
+    // === 数据加载 ===
+
+    private void reloadData() {
+        displayItems.clear();
+        switch (selectedScreenMode) {
+            case RECIPE -> displayItems.addAll(allRecipes);
+            case BEVERAGES -> displayItems.addAll(allRecipes); // 酒水也是 recipe，通过标签区分
+            case COMMON_CUSTOMER -> displayItems.addAll(allCommonCustomers);
+            case RARE_CUSTOMER -> displayItems.addAll(allRareCustomers);
+        }
+    }
+
+    // === buildImageList: 将被过滤后的列表构建到 CuisineListWidget ===
+
+    public void buildImageList(java.util.function.Consumer<DisplayEntry> addEntry) {
+        for (Object item : displayItems) {
+            if (item instanceof NMIRecipeHolder recipe) {
+                addEntry.accept(new DisplayEntry(recipe, this, selectedScreenMode));
+            } else if (item instanceof CustomerHolder customer) {
+                addEntry.accept(new DisplayEntry(customer, this, selectedScreenMode));
+            }
+        }
+    }
+
+    // === tick: 搜索和过滤 ===
 
     @Override
     public void tick() {
         String value = search.getValue();
-        if (!lastFilterText.equals(value) || tagChanged) {
-            this.cookedMealItems = unsortedCookedMealItems.stream().filter(recipeHolder -> {
-                NMIRecipe recipe = recipeHolder.recipe();
-                MutableComponent translatable = Component.translatable(recipe.output().item().value().getDescriptionId());
-                String string = getTranslatedString(translatable.getVisualOrderText()).toString();
-                boolean containName = string.contains(value);
-
-                List<Identifier> identifiers = ClientNMIDataAccessor.INSTANCE.getTagItemListMap().getItemToTagMap().get(recipeHolder.key()).positiveTags();
-
-                // 标签过滤：如果是全选状态则直接通过，否则检查是否包含已选中的标签
-                boolean containTag = isAllSelected || new HashSet<>(identifiers).containsAll(foodTagSelected);
-
-                // 厨具过滤：如果是全选状态则直接通过，否则检查是否匹配已选中的厨具
-                boolean containKitchenware = isAllKitchenwareSelected || selectedKitchenwareTypes.stream()
-                        .anyMatch(type -> type.KITCHENWARE_TYPE.equals(recipe.kitchenware()));
-
-                return containName && containTag && containKitchenware;
-            }).toList();
+        if (!lastFilterText.equals(value) || needsRefresh) {
+            // 重新加载全量数据并过滤
+            reloadData();
+            applyFilters(value);
             this.lastFilterText = value;
-            this.tagChanged = false;
+            this.needsRefresh = false;
             this.cuisineListWidget.refreshList();
             this.cuisineListWidget.setScrollAmount(0);
+        }
+    }
+
+    private void applyFilters(String searchText) {
+        displayItems = switch (selectedScreenMode) {
+            case RECIPE -> filterRecipes(allRecipes, searchText);
+            case BEVERAGES -> filterBeverages(allRecipes, searchText);
+            case COMMON_CUSTOMER -> filterCustomers(allCommonCustomers, searchText);
+            case RARE_CUSTOMER -> filterCustomers(allRareCustomers, searchText);
+        };
+    }
+
+    /**
+     * 食谱模式过滤：按名称 + 菜系标签 + 厨具
+     */
+    private List<Object> filterRecipes(List<NMIRecipeHolder> source, String searchText) {
+        return source.stream().filter(recipeHolder -> {
+            NMIRecipe recipe = recipeHolder.recipe();
+            MutableComponent translatable = Component.translatable(recipe.output().item().value().getDescriptionId());
+            String name = getTranslatedString(translatable.getVisualOrderText()).toString();
+            if (!name.contains(searchText)) return false;
+
+            List<Identifier> identifiers = ClientNMIDataAccessor.INSTANCE.getTagItemListMap()
+                    .getItemToTagMap().get(recipeHolder.key()).positiveTags();
+            boolean containTag = isAllSelected || new HashSet<>(identifiers).containsAll(foodTagSelected);
+            boolean containKitchenware = isAllKitchenwareSelected || selectedKitchenwareTypes.stream()
+                    .anyMatch(type -> type.KITCHENWARE_TYPE.equals(recipe.kitchenware()));
+
+            return containTag && containKitchenware;
+        }).collect(java.util.stream.Collectors.toList());
+    }
+
+    /**
+     * 酒水模式过滤：按名称 + 酒水标签（无需厨具过滤）
+     */
+    private List<Object> filterBeverages(List<NMIRecipeHolder> source, String searchText) {
+        return source.stream().filter(recipeHolder -> {
+            NMIRecipe recipe = recipeHolder.recipe();
+            MutableComponent translatable = Component.translatable(recipe.output().item().value().getDescriptionId());
+            String name = getTranslatedString(translatable.getVisualOrderText()).toString();
+            if (!name.contains(searchText)) return false;
+
+            // 酒水模式：只保留有酒水标签的 recipe
+            List<Identifier> itemTags = ClientNMIDataAccessor.INSTANCE.getTagItemListMap()
+                    .getItemToTagMap().get(recipeHolder.key()).positiveTags();
+            List<Identifier> beverageTags = NMIBeveragesTags.ALL;
+            boolean isBeverage = itemTags.stream().anyMatch(beverageTags::contains);
+            if (!isBeverage) return false;
+
+            // 酒水标签过滤
+            if (isAllBeverageSelected) return true;
+            return itemTags.stream().anyMatch(beverageTagSelected::contains);
+        }).collect(java.util.stream.Collectors.toList());
+    }
+
+    /**
+     * 顾客模式过滤：按名称
+     */
+    private List<Object> filterCustomers(List<CustomerHolder> source, String searchText) {
+        return source.stream().filter(customerHolder -> {
+            Identifier key = customerHolder.key();
+            MutableComponent translatable = Component.translatable("customer.neo_mystias_izakaya." + key.getPath());
+            String name = getTranslatedString(translatable.getVisualOrderText()).toString();
+            return name.contains(searchText);
+        }).collect(java.util.stream.Collectors.toList());
+    }
+
+    // === 顾客详情渲染 ===
+
+    private void renderCustomerInfo(GuiGraphicsExtractor guiGraphics, Font font, CustomerHolder customerHolder, int i, int j) {
+        Customer customer = customerHolder.customer();
+        Identifier key = customerHolder.key();
+
+        guiGraphics.text(font, Component.translatable("customer.neo_mystias_izakaya." + key.getPath()),
+                i + 15, j + 10, 0xFF000000, false);
+
+        // 预算
+        guiGraphics.text(font, Component.translatable("gui.neo_mystias_izakaya.budget")
+                        .append(": " + customer.budget().min() + "~" + customer.budget().max()),
+                i + 15, j + 22, 0xFF000000, false);
+
+        // 喜好
+        if (!customer.likes().isEmpty()) {
+            guiGraphics.text(font, Component.translatable("gui.neo_mystias_izakaya.likes")
+                            .append(": " + customer.likes().size() + " 种"),
+                    i + 15, j + 34, 0xFF000000, false);
+        }
+
+        // 厌恶
+        if (!customer.dislikes().isEmpty()) {
+            guiGraphics.text(font, Component.translatable("gui.neo_mystias_izakaya.dislikes")
+                            .append(": " + customer.dislikes().size() + " 种"),
+                    i + 15, j + 46, 0xFF000000, false);
+        }
+
+        // 酒水偏好
+        if (!customer.beverage().isEmpty()) {
+            guiGraphics.text(font, Component.translatable("gui.neo_mystias_izakaya.beverage_pref")
+                            .append(": " + customer.beverage().size() + " 种"),
+                    i + 15, j + 58, 0xFF000000, false);
         }
     }
 
