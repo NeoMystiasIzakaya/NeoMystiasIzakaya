@@ -5,6 +5,7 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.client.network;
 
+import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaMenu;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class ClientPayloadSender {
@@ -12,7 +13,7 @@ public class ClientPayloadSender {
         ClientPacketDistributor.sendToServer(message);
     }
 
-    public static void sendIzakayaMenuSyncMessage(NMIIzakayaMenuSyncMessage message) {
-        ClientPacketDistributor.sendToServer(message);
+    public static void sendIzakayaMenuSyncMessage(IzakayaMenu menu) {
+        ClientPacketDistributor.sendToServer(new NMIIzakayaMenuSyncMessage(menu));
     }
 }
