@@ -12,8 +12,9 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Player;
 
-public class NMIClientUtil {
+public final class NMIClientUtil {
     public static void updateKitchenwareScreen() {
         Screen screen = Minecraft.getInstance().screen;
         if (screen instanceof KitchenwareScreen kitchenwareScreen) {
@@ -29,5 +30,9 @@ public class NMIClientUtil {
         graphics.pose().scale(scale, scale);
         graphics.text(font, component, x, y, color, dropShadow);
         graphics.pose().scale(1 / scale, 1 / scale);
+    }
+
+    public static Player getPlayer() {
+        return Minecraft.getInstance().player;
     }
 }

@@ -6,6 +6,8 @@
 package icu.gensoukyo.neo_mystias_izakaya.registry;
 
 import icu.gensoukyo.neo_mystias_izakaya.client.network.ClientPayloadHandler;
+import icu.gensoukyo.neo_mystias_izakaya.client.network.NMIIzakayaMenuSyncMessage;
+import icu.gensoukyo.neo_mystias_izakaya.client.network.NMIKitchenwareCookMessage;
 import icu.gensoukyo.neo_mystias_izakaya.common.network.*;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -18,6 +20,11 @@ public class NMINetwork {
     public static void register(RegisterPayloadHandlersEvent event) {
         // Sets the current network version
         final PayloadRegistrar registrar = event.registrar("1");
+        registerServerBound(registrar);
+        registerClientBound(registrar);
+    }
+
+    private static void registerServerBound(PayloadRegistrar registrar) {
 
         registrar.playToClient(
                 TagItemListMapSyncMessage.TYPE,
@@ -43,10 +50,31 @@ public class NMINetwork {
                 ClientPayloadHandler::handleEconomyMapSyncMessage
         );
 
+        registrar.playToClient(
+                IzakayaOrderSyncFullMessage.TYPE,
+                IzakayaOrderSyncFullMessage.STREAM_CODEC,
+                ClientPayloadHandler::handleIzakayaOrderSyncFullMessage
+        );
+
+        registrar.playToClient(
+                IzakayaOrderUpdateMessage.TYPE,
+                IzakayaOrderUpdateMessage.STREAM_CODEC,
+                ClientPayloadHandler::handleIzakayaOrderUpdateMessage
+        );
+    }
+
+    private static void registerClientBound(PayloadRegistrar registrar) {
+
         registrar.playToServer(
                 NMIKitchenwareCookMessage.TYPE,
                 NMIKitchenwareCookMessage.STREAM_CODEC,
                 ServerPayloadHandler::handleKitchenwareCookMessage
+        );
+
+        registrar.playToServer(
+                NMIIzakayaMenuSyncMessage.TYPE,
+                NMIIzakayaMenuSyncMessage.STREAM_CODEC,
+                ServerPayloadHandler::handleIzakayaMenuSyncMessage
         );
     }
 }

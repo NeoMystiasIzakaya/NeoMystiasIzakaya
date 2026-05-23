@@ -5,6 +5,7 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.common.blockentity;
 
+import com.mojang.logging.LogUtils;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.KitchenwareMenu;
 import lombok.Setter;
@@ -28,10 +29,13 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import org.slf4j.Logger;
 
 import java.util.List;
 
 public abstract class AbstractKitchenwareBE extends RandomizableContainerBlockEntity {
+
+    private static final Logger LOGGER = LogUtils.getLogger();
     /**
      * 0-4为食材格
      * 5为结果格
@@ -94,8 +98,20 @@ public abstract class AbstractKitchenwareBE extends RandomizableContainerBlockEn
     }
 
     @Override
-    protected void setItems(NonNullList<ItemStack> nonNullList) {
-        this.items = NonNullList.copyOf(nonNullList);
+    protected void setItems(NonNullList<ItemStack> itemStacks) {
+        if (itemStacks.size() != 7) {
+            LOGGER.error("Attempted to set items with a list of size {}, but expected size is 7. This may cause unexpected behavior.", itemStacks.size());
+        }
+        this.items = NonNullList.copyOf(itemStacks);
+    }
+
+    public void setIngredients(NonNullList<ItemStack> itemStacks) {
+        if (itemStacks.size() != 5) {
+            LOGGER.error("Attempted to set ingredient items with a list of size {}, but expected size is 5. This may cause unexpected behavior.", itemStacks.size());
+        }
+        for (int i = 0; i < Math.min(itemStacks.size(), 5); i++) {
+            this.items.set(i, itemStacks.get(i));
+        }
     }
 
     @Override

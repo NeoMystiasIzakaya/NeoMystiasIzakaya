@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-package icu.gensoukyo.neo_mystias_izakaya.api.event.server;
+package icu.gensoukyo.neo_mystias_izakaya.api.event.server.json;
 
 import com.google.gson.JsonElement;
 import lombok.Getter;

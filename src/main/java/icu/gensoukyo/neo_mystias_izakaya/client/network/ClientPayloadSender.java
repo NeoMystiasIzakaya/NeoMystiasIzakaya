@@ -5,11 +5,17 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.client.network;
 
-import icu.gensoukyo.neo_mystias_izakaya.common.network.NMIKitchenwareCookMessage;
+import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaMenu;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 public class ClientPayloadSender {
-    public static void sendKitchenwareCookMessage(NMIKitchenwareCookMessage message) {
-        ClientPacketDistributor.sendToServer(message);
+    public static void sendKitchenwareCookMessage(Identifier cuisine, BlockPos blockPos) {
+        ClientPacketDistributor.sendToServer(new NMIKitchenwareCookMessage(cuisine, blockPos));
+    }
+
+    public static void sendIzakayaMenuSyncMessage(IzakayaMenu menu) {
+        ClientPacketDistributor.sendToServer(new NMIIzakayaMenuSyncMessage(menu));
     }
 }

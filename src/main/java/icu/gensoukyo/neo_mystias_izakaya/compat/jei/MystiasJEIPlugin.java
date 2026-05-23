@@ -40,19 +40,19 @@ public class MystiasJEIPlugin implements IModPlugin {
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         List<NMIRecipe> recipes;
-        recipes = NMICommonRecipeUtil.unWarp(NMIClientRecipeUtil.getRecipesByKitchenware(NMIVanillaTags.BOILING_POT));
+        recipes = NMICommonRecipeUtil.unWarp(NMIClientRecipeUtil.getRecipesByKitchenware(null,NMIVanillaTags.BOILING_POT));
         registration.addRecipes(BoilingPotRecipe.BOILING_POT, recipes);
 
-        recipes = NMICommonRecipeUtil.unWarp(NMIClientRecipeUtil.getRecipesByKitchenware(NMIVanillaTags.GRILL));
+        recipes = NMICommonRecipeUtil.unWarp(NMIClientRecipeUtil.getRecipesByKitchenware(null,NMIVanillaTags.GRILL));
         registration.addRecipes(GrillRecipe.GRILL, recipes);
 
-        recipes = NMICommonRecipeUtil.unWarp(NMIClientRecipeUtil.getRecipesByKitchenware(NMIVanillaTags.FRYING_PAN));
+        recipes = NMICommonRecipeUtil.unWarp(NMIClientRecipeUtil.getRecipesByKitchenware(null,NMIVanillaTags.FRYING_PAN));
         registration.addRecipes(FryingPanRecipe.FRYING_PAN, recipes);
 
-        recipes = NMICommonRecipeUtil.unWarp(NMIClientRecipeUtil.getRecipesByKitchenware(NMIVanillaTags.STEAMER));
+        recipes = NMICommonRecipeUtil.unWarp(NMIClientRecipeUtil.getRecipesByKitchenware(null,NMIVanillaTags.STEAMER));
         registration.addRecipes(SteamerRecipe.STEAMER, recipes);
 
-        recipes = NMICommonRecipeUtil.unWarp(NMIClientRecipeUtil.getRecipesByKitchenware(NMIVanillaTags.CUTTING_BOARD));
+        recipes = NMICommonRecipeUtil.unWarp(NMIClientRecipeUtil.getRecipesByKitchenware(null,NMIVanillaTags.CUTTING_BOARD));
         registration.addRecipes(CuttingBoardRecipe.CUTTING_BOARD, recipes);
     }
 

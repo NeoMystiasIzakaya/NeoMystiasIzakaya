@@ -5,12 +5,14 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.client.gui;
 
+import icu.gensoukyo.neo_mystias_izakaya.api.event.server.cooking.IzakayaCookingEvent;
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.client.network.ClientPayloadSender;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientEconomyUtil;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientRecipeUtil;
+import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.AbstractKitchenwareBE;
-import icu.gensoukyo.neo_mystias_izakaya.common.network.NMIKitchenwareCookMessage;
+import icu.gensoukyo.neo_mystias_izakaya.client.network.NMIKitchenwareCookMessage;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonComponentUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipe;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeHolder;
@@ -27,6 +29,7 @@ import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.neoforged.neoforge.common.NeoForge;
 
 import java.awt.*;
 import java.util.List;
@@ -51,7 +54,7 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
         super(menu, inv, title, 230, 219);
         Map<Identifier, NMIRecipeHolder> recipeMap = ClientNMIDataAccessor.INSTANCE.getRecipeMap().getRecipeMap();
         this.kitchenwareBE = this.getMenu().getKitchenwareBE();
-        this.possibleRecipes = NMIClientRecipeUtil.getRecipesByInputAndKitchenware(List.copyOf(kitchenwareBE.getItems()), kitchenwareBE.getKitchenwareType().KITCHENWARE_TYPE);
+        this.possibleRecipes = NMIClientRecipeUtil.getRecipesByInputAndKitchenware(NMIClientUtil.getPlayer(),List.copyOf(kitchenwareBE.getItems()), kitchenwareBE.getKitchenwareType().KITCHENWARE_TYPE);
     }
 
     @Override
@@ -73,8 +76,12 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
     public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
         int hoveredRecipeIndex = getHoveredRecipeIndex((int) event.x(), (int) event.y());
         if (hoveredRecipeIndex >= 0 && hoveredRecipeIndex < possibleRecipes.size() && kitchenwareBE.canStartCooking()) {
-            NMIRecipe recipe = this.possibleRecipes.get(hoveredRecipeIndex).recipe();
-            ClientPayloadSender.sendKitchenwareCookMessage(new NMIKitchenwareCookMessage(recipe, recipe.time(), kitchenwareBE.getBlockPos()));
+            Identifier key = this.possibleRecipes.get(hoveredRecipeIndex).key();
+            IzakayaCookingEvent.Trigger post = NeoForge.EVENT_BUS.post(new IzakayaCookingEvent.Trigger(NMIClientUtil.getPlayer(), kitchenwareBE));
+            if (post.isCanceled()) {
+                return true;
+            }
+            ClientPayloadSender.sendKitchenwareCookMessage(key, kitchenwareBE.getBlockPos());
         }
         return super.mouseClicked(event, doubleClick);
     }
@@ -138,7 +145,7 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
     }
 
     public void updateRecipes() {
-        this.possibleRecipes = NMIClientRecipeUtil.getRecipesByInputAndKitchenware(List.copyOf(kitchenwareBE.getItems()), kitchenwareBE.getKitchenwareType().KITCHENWARE_TYPE);
+        this.possibleRecipes = NMIClientRecipeUtil.getRecipesByInputAndKitchenware(NMIClientUtil.getPlayer(),List.copyOf(kitchenwareBE.getItems()), kitchenwareBE.getKitchenwareType().KITCHENWARE_TYPE);
     }
 
     @Override
