@@ -1,5 +1,6 @@
 package icu.gensoukyo.neo_mystias_izakaya.content.cooking;
 
+import com.mojang.logging.LogUtils;
 import icu.gensoukyo.neo_mystias_izakaya.api.event.server.cooking.GetAdditionalItemsEvent;
 import icu.gensoukyo.neo_mystias_izakaya.api.event.server.cooking.IzakayaCookingEvent;
 import icu.gensoukyo.neo_mystias_izakaya.api.event.server.cooking.IzakayaCookingTagEvent;
@@ -19,11 +20,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.common.NeoForge;
+import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public final class IzakayaCookingUtil {
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     public static List<ItemStack> getAdditionalItems(Player player, AbstractKitchenwareBE kitchenwareBE, NMIRecipe recipe, List<ItemStack> inputs){
 
@@ -91,6 +94,11 @@ public final class IzakayaCookingUtil {
     }
 
     public static void processCooking(Player player, Identifier recipe, BlockPos pos){
+        if(!player.level().isLoaded(pos)){
+            LOGGER.error("Player {} attempted to cook at position {}, but the chunk is not loaded. This may be caused by a desync between the client and server. Ignoring the cooking attempt to prevent potential issues.", player.getName().getString(), pos);
+            return;
+        }
+
         BlockEntity blockEntity = player.level().getBlockEntity(pos);
         if (blockEntity instanceof AbstractKitchenwareBE kitchenware) {
             IzakayaCookingEvent.Trigger post = NeoForge.EVENT_BUS.post(new IzakayaCookingEvent.Trigger(player, kitchenware));
