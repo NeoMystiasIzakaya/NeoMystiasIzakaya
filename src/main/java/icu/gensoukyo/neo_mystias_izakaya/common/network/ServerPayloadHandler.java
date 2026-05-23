@@ -7,7 +7,7 @@ package icu.gensoukyo.neo_mystias_izakaya.common.network;
 
 import icu.gensoukyo.neo_mystias_izakaya.client.network.NMIIzakayaMenuSyncMessage;
 import icu.gensoukyo.neo_mystias_izakaya.client.network.NMIKitchenwareCookMessage;
-import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonIzakayaMenuUtil;
+import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonIzakayaUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.cooking.IzakayaCookingUtil;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
@@ -17,6 +17,6 @@ public class ServerPayloadHandler {
     }
 
     public static void handleIzakayaMenuSyncMessage(NMIIzakayaMenuSyncMessage message, IPayloadContext context) {
-        context.enqueueWork(()-> NMICommonIzakayaMenuUtil.set(context.player(), message.izakayaMenu()));
+        context.enqueueWork(()-> NMICommonIzakayaUtil.setMenu(context.player(), message.izakayaMenu()));
     }
 }
