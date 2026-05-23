@@ -5,12 +5,16 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.common.network;
 
+import icu.gensoukyo.neo_mystias_izakaya.client.network.NMIIzakayaMenuSyncMessage;
+import icu.gensoukyo.neo_mystias_izakaya.client.network.NMIKitchenwareCookMessage;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.AbstractKitchenwareBE;
+import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonIzakayaMenuUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMIServerItemTagUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipe;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMICuisinesItems;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -64,5 +68,9 @@ public class ServerPayloadHandler {
                 }
             }
         });
+    }
+
+    public static void handleIzakayaMenuSyncMessage(NMIIzakayaMenuSyncMessage message, IPayloadContext context) {
+        context.enqueueWork(()-> NMICommonIzakayaMenuUtil.set(context.player(), message.izakayaMenu()));
     }
 }

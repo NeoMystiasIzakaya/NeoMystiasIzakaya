@@ -10,7 +10,7 @@ import icu.gensoukyo.neo_mystias_izakaya.client.network.ClientPayloadSender;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientEconomyUtil;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientRecipeUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.AbstractKitchenwareBE;
-import icu.gensoukyo.neo_mystias_izakaya.common.network.NMIKitchenwareCookMessage;
+import icu.gensoukyo.neo_mystias_izakaya.client.network.NMIKitchenwareCookMessage;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonComponentUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipe;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeHolder;
