@@ -33,8 +33,4 @@ public class IzakayaOrderHolder {
             IzakayaOrder.STREAM_CODEC, IzakayaOrderHolder::getOrder,
             IzakayaOrderHolder::new
     );
-
-    public IzakayaOrderHolder copy() {
-        return new IzakayaOrderHolder(id, order.copy());
-    }
 }

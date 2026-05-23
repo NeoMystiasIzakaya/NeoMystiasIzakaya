@@ -6,6 +6,8 @@
 package icu.gensoukyo.neo_mystias_izakaya.content.izakaya;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
 import lombok.Getter;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -28,12 +30,12 @@ public class IzakayaOrderList {
 
     public static final Codec<IzakayaOrderList> CODEC = Codec.list(IzakayaOrderHolder.CODEC).xmap(IzakayaOrderList::new, IzakayaOrderList::getOrders);
 
+    public static final MapCodec<IzakayaOrderList> MAP_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+            IzakayaOrderHolder.CODEC.listOf().fieldOf("orders").forGetter(IzakayaOrderList::getOrders)
+    ).apply(instance, IzakayaOrderList::new));
+
     public static final StreamCodec<ByteBuf, IzakayaOrderList> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.<ByteBuf, IzakayaOrderHolder>list().apply(IzakayaOrderHolder.STREAM_CODEC), IzakayaOrderList::getOrders,
             IzakayaOrderList::new
     );
-
-    public IzakayaOrderList copy() {
-        return new IzakayaOrderList(orders.stream().map(IzakayaOrderHolder::copy).toList());
-    }
 }
