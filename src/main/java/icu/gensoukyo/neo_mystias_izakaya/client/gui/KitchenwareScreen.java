@@ -81,7 +81,7 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
             if (post.isCanceled()) {
                 return true;
             }
-            ClientPayloadSender.sendKitchenwareCookMessage(new NMIKitchenwareCookMessage(key, kitchenwareBE.getBlockPos()));
+            ClientPayloadSender.sendKitchenwareCookMessage(key, kitchenwareBE.getBlockPos());
         }
         return super.mouseClicked(event, doubleClick);
     }

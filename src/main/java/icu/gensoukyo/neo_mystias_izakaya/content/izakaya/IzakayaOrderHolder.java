@@ -9,6 +9,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
 import lombok.Getter;
+import lombok.Setter;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 
@@ -16,6 +17,7 @@ import net.minecraft.network.codec.StreamCodec;
 public class IzakayaOrderHolder {
 
     private final short id;
+    @Setter
     private IzakayaOrder order;
 
     public IzakayaOrderHolder(short id, IzakayaOrder order) {

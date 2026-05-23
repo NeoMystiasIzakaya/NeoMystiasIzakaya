@@ -49,6 +49,18 @@ public class NMINetwork {
                 NMIEconomyMapSyncMessage.STREAM_CODEC,
                 ClientPayloadHandler::handleEconomyMapSyncMessage
         );
+
+        registrar.playToClient(
+                IzakayaOrderSyncFullMessage.TYPE,
+                IzakayaOrderSyncFullMessage.STREAM_CODEC,
+                ClientPayloadHandler::handleIzakayaOrderSyncFullMessage
+        );
+
+        registrar.playToClient(
+                IzakayaOrderUpdateMessage.TYPE,
+                IzakayaOrderUpdateMessage.STREAM_CODEC,
+                ClientPayloadHandler::handleIzakayaOrderUpdateMessage
+        );
     }
 
     private static void registerClientBound(PayloadRegistrar registrar) {

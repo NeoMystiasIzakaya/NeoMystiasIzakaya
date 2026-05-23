@@ -6,10 +6,10 @@
 package icu.gensoukyo.neo_mystias_izakaya.client.network;
 
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
-import icu.gensoukyo.neo_mystias_izakaya.common.network.NMICustomerMapSyncMessage;
-import icu.gensoukyo.neo_mystias_izakaya.common.network.NMIEconomyMapSyncMessage;
-import icu.gensoukyo.neo_mystias_izakaya.common.network.NMIRecipeMapSyncMessage;
-import icu.gensoukyo.neo_mystias_izakaya.common.network.TagItemListMapSyncMessage;
+import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientUtil;
+import icu.gensoukyo.neo_mystias_izakaya.common.network.*;
+import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaOrderList;
+import icu.gensoukyo.neo_mystias_izakaya.registry.NMIAttachmentTypes;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public class ClientPayloadHandler {
@@ -28,5 +28,16 @@ public class ClientPayloadHandler {
 
     public static void handleEconomyMapSyncMessage(NMIEconomyMapSyncMessage message, IPayloadContext context) {
         context.enqueueWork(()-> ClientNMIDataAccessor.INSTANCE.setEconomyMap(message.map()));
+    }
+
+    public static void handleIzakayaOrderSyncFullMessage(IzakayaOrderSyncFullMessage message, IPayloadContext context) {
+        context.enqueueWork(()-> NMIClientUtil.getPlayer().setData(NMIAttachmentTypes.ORDER,message.list()));
+    }
+
+    public static void handleIzakayaOrderUpdateMessage(IzakayaOrderUpdateMessage message, IPayloadContext context) {
+        context.enqueueWork(()-> {
+            IzakayaOrderList data = NMIClientUtil.getPlayer().getData(NMIAttachmentTypes.ORDER);
+            data.getOrderMap().get(message.id()).setOrder(message.order());
+        });
     }
 }

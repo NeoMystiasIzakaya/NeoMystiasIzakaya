@@ -17,7 +17,7 @@ public record IzakayaOrder(Identifier cuisine, Identifier beverage, Identifier r
     public static final Identifier EMPTY_ORDER = NeoMystiasIzakaya.id("empty_order");
     public static final Identifier EMPTY_RARE_CUSTOMER = NeoMystiasIzakaya.id("empty_rare_customer");
 
-    public static final IzakayaOrder EMPTY = new IzakayaOrder( EMPTY_ORDER, EMPTY_ORDER, EMPTY_ORDER, EMPTY_RARE_CUSTOMER);
+    public static final IzakayaOrder EMPTY = new IzakayaOrder(EMPTY_ORDER, EMPTY_ORDER, EMPTY_ORDER, EMPTY_RARE_CUSTOMER);
 
     public static final Codec<IzakayaOrder> CODEC = RecordCodecBuilder.create(
             instance -> instance.group(
