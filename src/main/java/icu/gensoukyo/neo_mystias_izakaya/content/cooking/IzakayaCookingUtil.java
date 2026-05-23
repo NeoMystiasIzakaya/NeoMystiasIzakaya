@@ -7,6 +7,7 @@ import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.AbstractKitchenwareB
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMIServerItemTagUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMIServerRecipeUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipe;
+import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeHolder;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMICuisinesItems;
 import net.minecraft.core.BlockPos;
@@ -92,6 +93,15 @@ public final class IzakayaCookingUtil {
     public static void processCooking(Player player, Identifier recipe, BlockPos pos){
         BlockEntity blockEntity = player.level().getBlockEntity(pos);
         if (blockEntity instanceof AbstractKitchenwareBE kitchenware) {
+            IzakayaCookingEvent.Trigger post = NeoForge.EVENT_BUS.post(new IzakayaCookingEvent.Trigger(player, kitchenware));
+            if (post.isCanceled()) return;
+
+            List<NMIRecipeHolder> recipes = NMIServerRecipeUtil.getRecipesByInputAndKitchenware(player,kitchenware.getIngredientItems(), kitchenware.getKitchenwareType().KITCHENWARE_TYPE);
+
+            boolean valid = recipes.stream().anyMatch(holder -> holder.key().equals(recipe));
+
+            if (!valid) return;
+
             NMIRecipe cuisine = NMIServerRecipeUtil.getRecipe(recipe).recipe();
 
             List<ItemTagList> additionalList = IzakayaCookingUtil.getAdditionalItems(player, kitchenware, cuisine, kitchenware.getIngredientItems()).stream()

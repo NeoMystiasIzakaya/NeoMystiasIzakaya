@@ -1,6 +1,7 @@
 package icu.gensoukyo.neo_mystias_izakaya.api.event.server.cooking;
 
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.AbstractKitchenwareBE;
+import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeHolder;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.core.NonNullList;
@@ -8,6 +9,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.ICancellableEvent;
+
+import java.util.List;
 
 @Getter
 public abstract class IzakayaCookingEvent extends Event {
@@ -91,4 +94,11 @@ public abstract class IzakayaCookingEvent extends Event {
             this.cookingTotalTimeTick = cookingTime * 20;
         }
     }
+
+    public static class Trigger extends IzakayaCookingEvent implements ICancellableEvent{
+        public Trigger(Player player, AbstractKitchenwareBE kitchenwareBE) {
+            super(player, kitchenwareBE);
+        }
+    }
+
 }
