@@ -6,6 +6,7 @@
 package icu.gensoukyo.neo_mystias_izakaya.registry.item;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
+import icu.gensoukyo.neo_mystias_izakaya.common.item.KateenConfigItem;
 import icu.gensoukyo.neo_mystias_izakaya.common.item.RecipeItem;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlocks;
 import net.minecraft.world.item.BlockItem;
@@ -21,6 +22,8 @@ public class NMIMainItems {
     public static final DeferredItem<Item> FRYING_PAN = ITEMS.registerItem("cooker/frying_pan",(properties) -> new BlockItem(NMIBlocks.FRYING_PAN.get(), properties), properties -> properties);
     public static final DeferredItem<Item> STEAMER = ITEMS.registerItem("cooker/steamer",(properties) -> new BlockItem(NMIBlocks.STEAMER.get(), properties), properties -> properties);
     public static final DeferredItem<Item> CUTTING_BOARD = ITEMS.registerItem("cooker/cutting_board",(properties) -> new BlockItem(NMIBlocks.CUTTING_BOARD.get(), properties), properties -> properties);
+    public static final DeferredItem<Item> CANTEEN = ITEMS.registerItem("misc/canteen", (properties) -> new BlockItem(NMIBlocks.CANTEEN.get(), properties), properties -> properties);
+    public static final DeferredItem<Item> CANTEEN_CONFIG = ITEMS.registerItem("misc/canteen_config", KateenConfigItem::new, properties -> properties);
     
     public static final DeferredItem<Item> CHROME_BALL = ITEMS.registerItem("misc/chrome_ball", Item::new, properties -> properties);
     public static final DeferredItem<Item> RECIPE_BOOK = ITEMS.registerItem("misc/recipe_book", RecipeItem::new, properties -> properties);

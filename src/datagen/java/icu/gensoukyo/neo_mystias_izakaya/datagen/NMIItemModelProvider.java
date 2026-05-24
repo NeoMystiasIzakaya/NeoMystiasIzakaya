@@ -39,6 +39,7 @@ public class NMIItemModelProvider extends ModelProvider {
     protected void registerModels(@NotNull BlockModelGenerators blockModels, @NotNull ItemModelGenerators itemModels) {
         itemModels.generateFlatItem(NMIMainItems.CHROME_BALL.asItem(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(NMIMainItems.RECIPE_BOOK.asItem(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(NMIMainItems.CANTEEN_CONFIG.asItem(), ModelTemplates.FLAT_ITEM);
 
         this.registerBlockModels(blockModels);
         this.registerItemModels(itemModels);
@@ -50,6 +51,7 @@ public class NMIItemModelProvider extends ModelProvider {
         horizontallyBlock(blockModels, NMIBlocks.FRYING_PAN.get());
         horizontallyBlock(blockModels, NMIBlocks.STEAMER.get());
         horizontallyBlock(blockModels, NMIBlocks.CUTTING_BOARD.get());
+        horizontallyBlock(blockModels, NMIBlocks.CANTEEN.get());
     }
 
     private void registerItemModels(ItemModelGenerators itemModels) {

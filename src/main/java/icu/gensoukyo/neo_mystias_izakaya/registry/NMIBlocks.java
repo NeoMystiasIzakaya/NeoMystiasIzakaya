@@ -19,4 +19,5 @@ public class NMIBlocks {
     public static final DeferredBlock<Block> FRYING_PAN = BLOCKS.register("frying_pan", () -> new FryingPanBlock(BlockBehaviour.Properties.of()));
     public static final DeferredBlock<Block> STEAMER = BLOCKS.register("steamer", () -> new SteamerBlock(BlockBehaviour.Properties.of()));
     public static final DeferredBlock<Block> CUTTING_BOARD = BLOCKS.register("cutting_board", () -> new CuttingBoardBlock(BlockBehaviour.Properties.of()));
+    public static final DeferredBlock<Block> CANTEEN = BLOCKS.registerBlock("canteen", CanteenControllerBlock::new);
 }
