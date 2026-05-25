@@ -145,8 +145,8 @@ public class KitchenwareMenu extends AbstractContainerMenu {
 
         KitchenwareType(TagKey<Block> blockTagKey, Item kitchenwareItem, Identifier kitchenwareTag) {
             this.KITCHENWARE_TYPE = blockTagKey;
-            this.KITCHENWARE_TAG = kitchenwareTag;
             this.KITCHENWARE_ITEM = kitchenwareItem;
+            this.KITCHENWARE_TAG = kitchenwareTag;
         }
     }
 }

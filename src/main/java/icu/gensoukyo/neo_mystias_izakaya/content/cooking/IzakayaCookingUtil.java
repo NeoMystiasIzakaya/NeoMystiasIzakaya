@@ -54,6 +54,7 @@ public final class IzakayaCookingUtil {
                 }
             }
         }
+        resultPositiveTags.add(kitchenwareBE.getKitchenwareType().KITCHENWARE_TAG);
 
         IzakayaCookingTagEvent.Collect post = NeoForge.EVENT_BUS.post(new IzakayaCookingTagEvent.Collect(player, kitchenwareBE, cuisine, additional,resultPositiveTags));
 
