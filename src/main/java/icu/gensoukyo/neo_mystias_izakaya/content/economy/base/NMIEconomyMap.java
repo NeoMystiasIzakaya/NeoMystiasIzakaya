@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-package icu.gensoukyo.neo_mystias_izakaya.content.economy;
+package icu.gensoukyo.neo_mystias_izakaya.content.economy.base;
 
 import com.mojang.serialization.Codec;
 import io.netty.buffer.ByteBuf;

@@ -12,22 +12,23 @@ import io.netty.buffer.ByteBuf;
 import lombok.Getter;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.Identifier;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.TransferPreconditions;
+import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.Objects;
 
 @Getter
-public class NMIBalance {
+public class NMIBalance implements ResourceHandler<NMIBalanceEntry> {
 
     private final List<NMIBalanceEntry> entries;
-    private final Map<Identifier, Integer> balanceMap;
 
     public NMIBalance(List<NMIBalanceEntry> entries) {
-        this.entries = entries;
-        this.balanceMap = entries.stream().collect(java.util.stream.Collectors.toMap(NMIBalanceEntry::item, NMIBalanceEntry::count));
+        this.entries = new ArrayList<>();
+        this.entries.addAll(entries);
+        this.entries.add(NMIBalanceEntry.EMPTY);
     }
 
     public static final MapCodec<NMIBalance> MAP_CODEC = RecordCodecBuilder.mapCodec(
@@ -47,83 +48,76 @@ public class NMIBalance {
             NMIBalance::new
     );
 
-
-    public record NMIBalanceEntry(Identifier item, int count) {
-        public static final MapCodec<NMIBalanceEntry> MAP_CODEC = RecordCodecBuilder.mapCodec(
-                instance -> instance.group(
-                        Identifier.CODEC.fieldOf("item").forGetter(NMIBalanceEntry::item),
-                        Codec.INT.fieldOf("count").forGetter(NMIBalanceEntry::count)
-                ).apply(instance, NMIBalanceEntry::new)
-        );
-        public static final Codec<NMIBalanceEntry> CODEC = RecordCodecBuilder.create(
-                instance -> instance.group(
-                        Identifier.CODEC.fieldOf("item").forGetter(NMIBalanceEntry::item),
-                        Codec.INT.fieldOf("count").forGetter(NMIBalanceEntry::count)
-                ).apply(instance, NMIBalanceEntry::new)
-        );
-        public static final StreamCodec<ByteBuf, NMIBalanceEntry> STREAM_CODEC = StreamCodec.composite(
-                Identifier.STREAM_CODEC, NMIBalanceEntry::item,
-                ByteBufCodecs.INT, NMIBalanceEntry::count,
-                NMIBalanceEntry::new
-        );
-    }
-
     public static final NMIBalance EMPTY = new NMIBalance(List.of());
 
     public NMIBalance copy() {
         return new NMIBalance(new ArrayList<>(this.entries));
     }
 
-    public NMIBalance merge(NMIBalance other) {
-        Set<Identifier> allItems = new java.util.HashSet<>(this.balanceMap.keySet());
-        allItems.addAll(other.balanceMap.keySet());
-        List<NMIBalanceEntry> mergedEntries = new ArrayList<>();
-        for (Identifier item : allItems) {
-            int count1 = this.balanceMap.getOrDefault(item, 0);
-            int count2 = other.balanceMap.getOrDefault(item, 0);
-            mergedEntries.add(new NMIBalanceEntry(item, count1 + count2));
-        }
-        return new NMIBalance(mergedEntries);
+    @Override
+    public int size() {
+        return getEntries().size(); // Always have one extra slot for new resources
     }
 
-    public boolean canAfford(NMIBalance cost) {
-        for (NMIBalanceEntry entry : cost.entries) {
-            int available = this.balanceMap.getOrDefault(entry.item(), 0);
-            if (available < entry.count()) {
-                return false;
-            }
-        }
-        return true;
+    @Override
+    public NMIBalanceEntry getResource(int index) {
+        Objects.checkIndex(index, this.size());
+        return getEntries().get(index);
     }
 
-    public NMIBalance subtract(NMIBalance cost) {
-        List<NMIBalanceEntry> newEntries = new ArrayList<>();
-        for (NMIBalanceEntry entry : this.entries) {
-            int costCount = cost.balanceMap.getOrDefault(entry.item(), 0);
-            int newCount = entry.count() - costCount;
-            if (newCount > 0) {
-                newEntries.add(new NMIBalanceEntry(entry.item(), newCount));
-            }
-        }
-        return new NMIBalance(newEntries);
+    @Override
+    public long getAmountAsLong(int index) {
+        Objects.checkIndex(index, this.size());
+        return getEntries().get(index).getCount();
     }
 
-    public NMIBalance setCount(Identifier item, int count) {
-        List<NMIBalanceEntry> newEntries = new ArrayList<>();
-        boolean found = false;
-        for (NMIBalanceEntry entry : this.entries) {
-            if (entry.item().equals(item)) {
-                if (count > 0) {
-                    newEntries.add(new NMIBalanceEntry(item, count));
-                }
-                found = true;
-            } else {
-                newEntries.add(entry);
+    @Override
+    public long getCapacityAsLong(int index, NMIBalanceEntry resource) {
+        if (getResource(index).isEmpty()) {
+            return Long.MAX_VALUE;
+        }
+        return getEntries().get(index).getItem() == resource.getItem() ? Long.MAX_VALUE : 0;
+    }
+
+    @Override
+    public boolean isValid(int index, NMIBalanceEntry resource) {
+        if (getResource(index).isEmpty()) {
+            return true;
+        }
+        return getResource(index).getItem() == resource.getItem();
+    }
+
+    @Override
+    public int insert(int index, NMIBalanceEntry resource, int amount, TransactionContext transaction) {
+        Objects.checkIndex(index, this.size());
+        TransferPreconditions.checkNonEmptyNonNegative(resource, amount);
+        if (resource.isEmpty()) {
+            return 0;
+        }
+
+        if (isValid(index, resource)) {
+            if (getResource(index).isEmpty()) {
+                getEntries().set(index, resource.copyWithCount(amount));
+                return amount;
             }
+            return getResource(index).changeCount(amount);
         }
-        if (!found && count > 0) {
-            newEntries.add(new NMIBalanceEntry(item, count));
+        return 0;
+    }
+
+    @Override
+    public int extract(int index, NMIBalanceEntry resource, int amount, TransactionContext transaction) {
+        Objects.checkIndex(index, this.size());
+        TransferPreconditions.checkNonEmptyNonNegative(resource, amount);
+
+        if (resource.isEmpty()) {
+            return 0;
         }
-        return new NMIBalance(newEntries);
+
+        if (isValid(index, resource)) {
+            int extracted = Math.min(amount, getResource(index).getCount());
+            return getResource(index).changeCount(-extracted);
+        }
+        return 0;
     }
 }

@@ -6,7 +6,7 @@
 package icu.gensoukyo.neo_mystias_izakaya.common.network;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
-import icu.gensoukyo.neo_mystias_izakaya.content.economy.NMIEconomyMap;
+import icu.gensoukyo.neo_mystias_izakaya.content.economy.base.NMIEconomyMap;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;

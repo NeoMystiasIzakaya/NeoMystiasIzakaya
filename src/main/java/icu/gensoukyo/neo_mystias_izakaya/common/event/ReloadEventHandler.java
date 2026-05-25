@@ -8,7 +8,7 @@ package icu.gensoukyo.neo_mystias_izakaya.common.event;
 import com.mojang.logging.LogUtils;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.content.customer.CustomerReloadListener;
-import icu.gensoukyo.neo_mystias_izakaya.content.economy.NMIEconomyReloadListener;
+import icu.gensoukyo.neo_mystias_izakaya.content.economy.base.NMIEconomyReloadListener;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeReloadListener;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagListReloadListener;
 import net.neoforged.bus.api.SubscribeEvent;

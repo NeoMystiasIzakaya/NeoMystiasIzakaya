@@ -6,14 +6,12 @@
 package icu.gensoukyo.neo_mystias_izakaya.common.network;
 
 import icu.gensoukyo.neo_mystias_izakaya.content.customer.CustomerMap;
-import icu.gensoukyo.neo_mystias_izakaya.content.economy.NMIEconomyMap;
+import icu.gensoukyo.neo_mystias_izakaya.content.economy.base.NMIEconomyMap;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaOrder;
-import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaOrderHolder;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaOrderList;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeMap;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.TagItemListMap;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 public class ServerPayloadSender {

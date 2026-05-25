@@ -7,8 +7,8 @@ package icu.gensoukyo.neo_mystias_izakaya.datagen.api;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonItemUtil;
-import icu.gensoukyo.neo_mystias_izakaya.content.economy.NMIEconomy;
-import icu.gensoukyo.neo_mystias_izakaya.content.economy.NMIEconomyList;
+import icu.gensoukyo.neo_mystias_izakaya.content.economy.base.NMIEconomy;
+import icu.gensoukyo.neo_mystias_izakaya.content.economy.base.NMIEconomyList;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
