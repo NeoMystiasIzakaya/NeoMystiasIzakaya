@@ -10,6 +10,7 @@ import icu.gensoukyo.neo_mystias_izakaya.content.economy.balance.NMIBalance;
 import icu.gensoukyo.neo_mystias_izakaya.content.economy.balance.NMIBalanceEntry;
 import icu.gensoukyo.neo_mystias_izakaya.content.economy.balance.NMIBalanceUnits;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIAttachmentTypes;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.slf4j.Logger;
@@ -31,44 +32,54 @@ public class NMICommonBalanceUtil {
         player.setData(NMIAttachmentTypes.BALANCE, balance);
     }
 
-    public static int getEn(Player player) {
+    public static long getEn(Player player) {
+        return get(player, NMIBalanceUnits.EN);
+    }
+
+    public static void setEn(Player player, int en) {
+        set(player, NMIBalanceUnits.EN, en);
+    }
+
+    public static void addEn(Player player, int en) {
+        add(player, NMIBalanceUnits.EN, en);
+    }
+
+    public static long get(Player player, Identifier unit) {
         try (Transaction transaction = Transaction.openRoot()) {
-            int count = 0;
+            long count = 0;
             NMIBalance balance = getWithOutCopy(player);
             for (int i = 0; i < balance.size(); i++) {
-                if (balance.getResource(i).is(NMIBalanceUnits.EN)) {
+                if (balance.getResource(i).is(unit)) {
                     count += balance.getAmountAsInt(i);
                 }
             }
             transaction.commit();
             return count;
         } catch (Exception e) {
-            LOGGER.trace("Failed to get EN balance for player {}: {}", player.getName().getString(), e.getMessage());
+            LOGGER.trace("Failed to get {} balance for player {}: {}", unit, player.getName().getString(), e.getMessage());
             return 0;
         }
     }
 
-    public static void setEn(Player player, int en) {
+    public static void set(Player player, Identifier unit, int count) {
         try (Transaction transaction = Transaction.openRoot()) {
             NMIBalance balance = getWithOutCopy(player);
-            balance.insert(NMIBalanceUnits.EN_ENTRY, en + getEn(player), transaction);
+            balance.insert(new NMIBalanceEntry(unit), count + (int)get(player, unit), transaction);
             transaction.commit();
             set(player, balance);
         } catch (Exception e) {
-            LOGGER.trace("Failed to set EN balance for player {}: {}", player.getName().getString(), e.getMessage());
+            LOGGER.trace("Failed to set {} balance for player {}: {}", unit, player.getName().getString(), e.getMessage());
         }
     }
 
-    public static void addEn(Player player, int en) {
+    public static void add(Player player, Identifier unit, int count) {
         try (Transaction transaction = Transaction.openRoot()) {
             NMIBalance balance = getWithOutCopy(player);
-            balance.insert(new NMIBalanceEntry(NMIBalanceUnits.EN, en), en, transaction);
+            balance.insert(new NMIBalanceEntry(unit, count), count, transaction);
             transaction.commit();
             set(player, balance);
         } catch (Exception e) {
-            LOGGER.trace("Failed to add EN balance for player {}: {}", player.getName().getString(), e.getMessage());
+            LOGGER.trace("Failed to add {} balance for player {}: {}", unit, player.getName().getString(), e.getMessage());
         }
-
     }
-
 }

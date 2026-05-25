@@ -18,17 +18,17 @@ public class NMIBalanceEntry implements Resource {
 
     private final Identifier item;
     @Setter
-    private int count;
+    private long count;
 
-    public int changeCount(int delta) {
-        if (Integer.MAX_VALUE - count < delta) {
-            int oldCount = count;
-            count = Integer.MAX_VALUE;
-            return Integer.MAX_VALUE - oldCount;
-        } else if (Integer.MIN_VALUE - count > delta) {
-            int oldCount = count;
-            count = Integer.MIN_VALUE;
-            return Integer.MIN_VALUE - oldCount;
+    public long changeCount(long delta) {
+        if (Long.MAX_VALUE - count < delta) {
+            long oldCount = count;
+            count = Long.MAX_VALUE;
+            return Long.MAX_VALUE - oldCount;
+        } else if (Long.MIN_VALUE - count > delta) {
+            long oldCount = count;
+            count = Long.MIN_VALUE;
+            return Long.MIN_VALUE - oldCount;
         } else {
             count += delta;
             return delta;
@@ -38,18 +38,18 @@ public class NMIBalanceEntry implements Resource {
     public static final MapCodec<NMIBalanceEntry> MAP_CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
                     Identifier.CODEC.fieldOf("item").forGetter(NMIBalanceEntry::getItem),
-                    Codec.INT.fieldOf("count").forGetter(NMIBalanceEntry::getCount)
+                    Codec.LONG.fieldOf("count").forGetter(NMIBalanceEntry::getCount)
             ).apply(instance, NMIBalanceEntry::new)
     );
     public static final Codec<NMIBalanceEntry> CODEC = RecordCodecBuilder.create(
             instance -> instance.group(
                     Identifier.CODEC.fieldOf("item").forGetter(NMIBalanceEntry::getItem),
-                    Codec.INT.fieldOf("count").forGetter(NMIBalanceEntry::getCount)
+                    Codec.LONG.fieldOf("count").forGetter(NMIBalanceEntry::getCount)
             ).apply(instance, NMIBalanceEntry::new)
     );
     public static final StreamCodec<ByteBuf, NMIBalanceEntry> STREAM_CODEC = StreamCodec.composite(
             Identifier.STREAM_CODEC, NMIBalanceEntry::getItem,
-            ByteBufCodecs.INT, NMIBalanceEntry::getCount,
+            ByteBufCodecs.LONG, NMIBalanceEntry::getCount,
             NMIBalanceEntry::new
     );
 
@@ -58,7 +58,7 @@ public class NMIBalanceEntry implements Resource {
         this.count = 1;
     }
 
-    public NMIBalanceEntry(Identifier item,int count) {
+    public NMIBalanceEntry(Identifier item,long count) {
         this.item = item;
         this.count = count;
     }

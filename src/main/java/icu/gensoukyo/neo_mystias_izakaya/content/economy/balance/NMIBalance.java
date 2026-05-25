@@ -100,7 +100,7 @@ public class NMIBalance implements ResourceHandler<NMIBalanceEntry> {
                 getEntries().set(index, resource.copyWithCount(amount));
                 return amount;
             }
-            return getResource(index).changeCount(amount);
+            return (int)getResource(index).changeCount(amount);
         }
         return 0;
     }
@@ -115,8 +115,8 @@ public class NMIBalance implements ResourceHandler<NMIBalanceEntry> {
         }
 
         if (isValid(index, resource)) {
-            int extracted = Math.min(amount, getResource(index).getCount());
-            return getResource(index).changeCount(-extracted);
+            long extracted = Math.min(amount, getResource(index).getCount());
+            return (int) getResource(index).changeCount(-extracted);
         }
         return 0;
     }
