@@ -47,29 +47,6 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
     @Getter
     private Identifier customerId = IzakayaOrder.EMPTY_RARE_CUSTOMER;
 
-    @Getter
-    private final ContainerData dataAccess = new ContainerData() {
-        @Override
-        public int get(int pIndex) {
-            return switch (pIndex) {
-                case 0 -> DiningTableBlockEntity.this.isOccupied ? 1 : 0;
-                default -> 0;
-            };
-        }
-
-        @Override
-        public void set(int pIndex, int pValue) {
-            switch (pIndex) {
-                case 0 -> DiningTableBlockEntity.this.isOccupied = pValue != 0;
-            }
-        }
-
-        @Override
-        public int getCount() {
-            return 3;
-        }
-    };
-
     public DiningTableBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(NMIBlockEntities.DINING_TABLE.get(), blockPos, blockState);
     }
@@ -159,8 +136,7 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
         this.isOccupied = false;
         this.customerId = IzakayaOrder.EMPTY_RARE_CUSTOMER;
         // 清空菜品和饮品
-        this.items.set(SLOT_CUISINE, ItemStack.EMPTY);
-        this.items.set(SLOT_BEVERAGE, ItemStack.EMPTY);
+        this.items.clear();
         this.setChanged();
         if (this.level != null) {
             this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);

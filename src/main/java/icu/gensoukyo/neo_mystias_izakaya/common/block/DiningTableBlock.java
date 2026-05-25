@@ -89,7 +89,7 @@ public class DiningTableBlock extends BaseEntityBlock {
         if (!level.isClientSide()) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof DiningTableBlockEntity diningTableBE) {
-                player.openMenu(diningTableBE, friendlyByteBuf -> friendlyByteBuf.writeBlockPos(diningTableBE.getBlockPos()));
+
                 return InteractionResult.SUCCESS_SERVER;
             }
         }
