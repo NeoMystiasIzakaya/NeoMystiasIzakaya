@@ -40,8 +40,9 @@ public abstract class IzakayaCookingTagEvent extends IzakayaCookingEvent{
 
         List<Identifier> result;
 
-        public Collect(Player player, AbstractKitchenwareBE kitchenwareBE, ItemTagList cuisine, List<ItemTagList> additional) {
+        public Collect(Player player, AbstractKitchenwareBE kitchenwareBE, ItemTagList cuisine, List<ItemTagList> additional,List<Identifier> result) {
             super(player, kitchenwareBE, cuisine, additional);
+            this.result = result;
         }
     }
 }

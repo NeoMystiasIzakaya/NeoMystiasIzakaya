@@ -50,7 +50,7 @@ public final class IzakayaCookingUtil {
             }
         }
 
-        IzakayaCookingTagEvent.Collect post = NeoForge.EVENT_BUS.post(new IzakayaCookingTagEvent.Collect(player, kitchenwareBE, cuisine, additional));
+        IzakayaCookingTagEvent.Collect post = NeoForge.EVENT_BUS.post(new IzakayaCookingTagEvent.Collect(player, kitchenwareBE, cuisine, additional,resultPositiveTags));
 
         return post.getResult();
     }
@@ -85,7 +85,7 @@ public final class IzakayaCookingUtil {
     }
 
     public static void setCookingTime(Player player, AbstractKitchenwareBE kitchenwareBE, int cookingTime){
-        IzakayaCookingEvent.SetCookingTime post = NeoForge.EVENT_BUS.post(new IzakayaCookingEvent.SetCookingTime(player, kitchenwareBE, cookingTime * 20));
+        IzakayaCookingEvent.SetCookingTime post = NeoForge.EVENT_BUS.post(new IzakayaCookingEvent.SetCookingTime(player, kitchenwareBE, cookingTime));
         kitchenwareBE.setCookingTime(post.getCookingTimeTick());
         kitchenwareBE.setTotalCookingTime(post.getCookingTotalTimeTick());
         if (kitchenwareBE.getLevel() != null) {
