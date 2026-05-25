@@ -32,6 +32,8 @@ public final class NMIClientRecipeUtil {
                 recipesIds.addAll(identifiers);
             }
         }
+        // 验证所有原料均可被 input 列表满足
+        recipesIds.removeIf(id -> canCraft(id, input));
         IzakayaRecipeEvent.Collect post = NeoForge.EVENT_BUS.post(new IzakayaRecipeEvent.Collect(player, new ArrayList<>(recipesIds), null, input));;
         return getRecipes(new ArrayList<>(post.getRecipes()));
     }
@@ -62,6 +64,8 @@ public final class NMIClientRecipeUtil {
         } else {
             inputRecipeIds.clear();
         }
+        // 验证所有原料均可被 input 列表满足
+        inputRecipeIds.removeIf(id -> canCraft(id, input));
 
         IzakayaRecipeEvent.Collect post = NeoForge.EVENT_BUS.post(new IzakayaRecipeEvent.Collect(player, new ArrayList<>(inputRecipeIds), kitchenware, input));
         return getRecipes(new ArrayList<>(post.getRecipes()));
@@ -83,6 +87,20 @@ public final class NMIClientRecipeUtil {
 
     public static NMIRecipeHolder getRecipe(Identifier id) {
         return NMIDataAccessor.client().getRecipeMap().getRecipeMap().get(id);
+    }
+
+    /**
+     * 检查配方是否可被给定的物品列表合成
+     * @param recipeId 配方 ID
+     * @param availableItems 可用的物品列表
+     * @return 当配方的所有原料槽位都能被 availableItems 中至少一个物品满足时返回 true
+     */
+    private static boolean canCraft(Identifier recipeId, List<ItemStack> availableItems) {
+        if (availableItems.isEmpty()) return true;
+        NMIRecipeHolder holder = NMIDataAccessor.client().getRecipeMap().getRecipeMap().get(recipeId);
+        if (holder == null) return true;
+        return !holder.recipe().input().stream()
+                .allMatch(ingredient -> availableItems.stream().anyMatch(ingredient));
     }
 
 }

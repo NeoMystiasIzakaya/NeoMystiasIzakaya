@@ -28,16 +28,19 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 import static icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya.id;
@@ -122,6 +125,7 @@ public class RecipeScreen extends Screen {
         if (this.selected != null) {
             if (selected.isRecipe()) {
                 renderCuisineInfo(graphics, font, selected.getRecipe(), i + 254, j);
+                renderCuisineIngredient(graphics, font, selected.getRecipe(), i, j);
             } else if (selected.isCustomer()) {
                 renderCustomerInfo(graphics, font, selected.getCustomer(), i + 254, j);
             } else if (selected.isItem()) {
@@ -511,6 +515,25 @@ public class RecipeScreen extends Screen {
             String name = getTranslatedString(translatable.getVisualOrderText()).toString();
             return name.contains(searchText);
         }).collect(java.util.stream.Collectors.toList());
+    }
+
+    private void renderCuisineIngredient(GuiGraphicsExtractor graphics, Font font, NMIRecipeHolder recipe, int i, int j) {
+        List<ItemStack> list = recipe.recipe().input().stream()
+                .map(ingredient -> {
+                    HolderSet<Item> values = ingredient.getValues();
+                    if (values.size() == 0) return null;
+                    return values.get(0).value().getDefaultInstance();
+                })
+                .filter(Objects::nonNull)
+                .toList();
+        for (int k = 0; k < list.size(); k++) {
+            ItemStack stack = list.get(k);
+            int x = i + 15 + k * 28;
+            int y = j + 175;
+            graphics.fill(x - 2, y - 2, x + 18, y + 18, 0xFFD0A680);
+            graphics.item(stack, x, y);
+        }
+
     }
 
     // === 顾客详情渲染 ===
