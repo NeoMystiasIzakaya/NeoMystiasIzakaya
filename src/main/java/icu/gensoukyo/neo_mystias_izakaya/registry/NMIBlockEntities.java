@@ -21,4 +21,5 @@ public class NMIBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SteamerBE>> STEAMER = BLOCK_ENTITY_TYPES.register("steamer", () -> new BlockEntityType<>(SteamerBE::new, NMIBlocks.STEAMER.get()));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CuttingBoardBE>> CUTTING_BOARD = BLOCK_ENTITY_TYPES.register("cutting_board", () -> new BlockEntityType<>(CuttingBoardBE::new, NMIBlocks.CUTTING_BOARD.get()));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CanteenControllerBlockEntity>> COUNTER = BLOCK_ENTITY_TYPES.register("counter", () -> new BlockEntityType<>(CanteenControllerBlockEntity::new, NMIBlocks.CANTEEN.get()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<DiningTableBlockEntity>> DINING_TABLE = BLOCK_ENTITY_TYPES.register("dining_table", () -> new BlockEntityType<>(DiningTableBlockEntity::new, NMIBlocks.DINING_TABLE.get()));
 }

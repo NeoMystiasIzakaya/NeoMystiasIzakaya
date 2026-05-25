@@ -57,12 +57,20 @@ public class NMILanguageProvider implements DataProvider {
         this.add(NMIBlocks.FRYING_PAN.get(), "Frying Pan", "油锅");
         this.add(NMIBlocks.STEAMER.get(), "Steamer", "蒸锅");
         this.add(NMIBlocks.CUTTING_BOARD.get(), "Cutting Board", "料理台");
+        this.add(NMIBlocks.DINING_TABLE.get(), "Dining Table", "餐桌");
 
         this.add(NMIMainItems.BOILING_POT, "Boiling Pot", "煮锅");
         this.add(NMIMainItems.GRILL, "Grill", "烤架");
         this.add(NMIMainItems.FRYING_PAN, "Frying Pan", "油锅");
         this.add(NMIMainItems.STEAMER, "Steamer", "蒸锅");
         this.add(NMIMainItems.CUTTING_BOARD, "Cutting Board", "料理台");
+        this.add(NMIMainItems.DINING_TABLE, "Dining Table", "餐桌");
+        this.add(NMIMainItems.CANTEEN, "Canteen", "餐厅");
+        this.add(NMIMainItems.CANTEEN_CONFIG, "Canteen Config", "餐厅配置器");
+        this.add(NMIMainItems.MYSTIAS_HAT, "Mystia's Hat", "夜雀的帽子");
+
+
+        this.add("container.neo_mystias_izakaya.dining_table", "Dining Table", "餐桌");
 
         this.add("gui.neo_mystias_izakaya.time", "Time", "时间");
         this.add("gui.neo_mystias_izakaya.price","Price", "价格");

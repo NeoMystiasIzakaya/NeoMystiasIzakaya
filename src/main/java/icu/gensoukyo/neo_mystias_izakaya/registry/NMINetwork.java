@@ -61,6 +61,18 @@ public class NMINetwork {
                 IzakayaOrderUpdateMessage.STREAM_CODEC,
                 ClientPayloadHandler::handleIzakayaOrderUpdateMessage
         );
+
+        registrar.playToClient(
+                NMIBalanceTransactionSyncFullMessage.TYPE,
+                NMIBalanceTransactionSyncFullMessage.STREAM_CODEC,
+                ClientPayloadHandler::handleBalanceTransactionSyncFullMessage
+        );
+
+        registrar.playToClient(
+                NMIBalanceTransactionUpdateMessage.TYPE,
+                NMIBalanceTransactionUpdateMessage.STREAM_CODEC,
+                ClientPayloadHandler::handleBalanceTransactionUpdateMessage
+        );
     }
 
     private static void registerClientBound(PayloadRegistrar registrar) {

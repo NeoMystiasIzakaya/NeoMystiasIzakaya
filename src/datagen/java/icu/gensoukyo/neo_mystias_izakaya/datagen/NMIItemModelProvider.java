@@ -37,6 +37,42 @@ public class NMIItemModelProvider extends ModelProvider {
         super(output, NeoMystiasIzakaya.MODID);
     }
 
+    private static void normalBlock(BlockModelGenerators blockModels, Block block) {
+        Variant variant = new Variant(ModelLocationUtils.getModelLocation(block));
+        blockModels.blockStateOutput.accept(MultiVariantGenerator
+                .dispatch(block, BlockModelGenerators.variant(variant)));
+    }
+
+    private static void horizontallyBlock(BlockModelGenerators blockModels, Block block) {
+        Variant variant = new Variant(ModelLocationUtils.getModelLocation(block));
+        blockModels.blockStateOutput.accept(MultiVariantGenerator
+                .dispatch(block, BlockModelGenerators.variant(variant))
+                .with(PropertyDispatch.modify(BlockStateProperties.HORIZONTAL_FACING)
+                        .select(Direction.NORTH, v -> v.withYRot(Quadrant.R0))
+                        .select(Direction.EAST, v -> v.withYRot(Quadrant.R90))
+                        .select(Direction.SOUTH, v -> v.withYRot(Quadrant.R180))
+                        .select(Direction.WEST, v -> v.withYRot(Quadrant.R270))
+                ));
+    }
+
+    private static void horizontallyLitBlock(BlockModelGenerators blockModels, Block block) {
+        Identifier key = BuiltInRegistries.BLOCK.getKey(block);
+        Identifier lit = key.withSuffix("_lit").withPrefix("block/");
+        Variant variant = new Variant(key.withPrefix("block/"));
+        blockModels.blockStateOutput.accept(MultiVariantGenerator
+                .dispatch(block, BlockModelGenerators.variant(variant))
+                .with(PropertyDispatch.modify(BlockStateProperties.HORIZONTAL_FACING, BlockStateProperties.LIT)
+                        .select(Direction.NORTH, false, v -> v.withYRot(Quadrant.R0))
+                        .select(Direction.EAST, false, v -> v.withYRot(Quadrant.R90))
+                        .select(Direction.SOUTH, false, v -> v.withYRot(Quadrant.R180))
+                        .select(Direction.WEST, false, v -> v.withYRot(Quadrant.R270))
+                        .select(Direction.NORTH, true, v -> v.withYRot(Quadrant.R0).withModel(lit))
+                        .select(Direction.EAST, true, v -> v.withYRot(Quadrant.R90).withModel(lit))
+                        .select(Direction.SOUTH, true, v -> v.withYRot(Quadrant.R180).withModel(lit))
+                        .select(Direction.WEST, true, v -> v.withYRot(Quadrant.R270).withModel(lit))
+                ));
+    }
+
     @Override
     protected void registerModels(@NotNull BlockModelGenerators blockModels, @NotNull ItemModelGenerators itemModels) {
         itemModels.generateFlatItem(NMIMainItems.CHROME_BALL.asItem(), ModelTemplates.FLAT_ITEM);
@@ -55,6 +91,7 @@ public class NMIItemModelProvider extends ModelProvider {
         horizontallyBlock(blockModels, NMIBlocks.STEAMER.get());
         horizontallyBlock(blockModels, NMIBlocks.CUTTING_BOARD.get());
         horizontallyBlock(blockModels, NMIBlocks.CANTEEN.get());
+        normalBlock(blockModels, NMIBlocks.DINING_TABLE.get());
     }
 
     private void registerItemModels(ItemModelGenerators itemModels) {
@@ -63,36 +100,5 @@ public class NMIItemModelProvider extends ModelProvider {
                 itemModels.generateFlatItem(item.asItem(), ModelTemplates.FLAT_ITEM);
             }
         }
-    }
-
-
-    private static void horizontallyBlock(BlockModelGenerators blockModels, Block block) {
-        Variant variant = new Variant(ModelLocationUtils.getModelLocation(block));
-        blockModels.blockStateOutput.accept(MultiVariantGenerator
-                .dispatch(block, BlockModelGenerators.variant(variant))
-                .with(PropertyDispatch.modify(BlockStateProperties.HORIZONTAL_FACING)
-                        .select(Direction.NORTH, v -> v.withYRot(Quadrant.R0))
-                        .select(Direction.EAST,  v -> v.withYRot(Quadrant.R90))
-                        .select(Direction.SOUTH, v -> v.withYRot(Quadrant.R180))
-                        .select(Direction.WEST,  v -> v.withYRot(Quadrant.R270))
-                ));
-    }
-
-    private static void horizontallyLitBlock(BlockModelGenerators blockModels, Block block) {
-        Identifier key = BuiltInRegistries.BLOCK.getKey(block);
-        Identifier lit = key.withSuffix("_lit").withPrefix("block/");
-        Variant variant = new Variant(key.withPrefix("block/"));
-        blockModels.blockStateOutput.accept(MultiVariantGenerator
-                .dispatch(block, BlockModelGenerators.variant(variant))
-                .with(PropertyDispatch.modify(BlockStateProperties.HORIZONTAL_FACING, BlockStateProperties.LIT)
-                        .select(Direction.NORTH, false, v -> v.withYRot(Quadrant.R0))
-                        .select(Direction.EAST, false,  v -> v.withYRot(Quadrant.R90))
-                        .select(Direction.SOUTH, false, v -> v.withYRot(Quadrant.R180))
-                        .select(Direction.WEST, false,  v -> v.withYRot(Quadrant.R270))
-                        .select(Direction.NORTH, true, v -> v.withYRot(Quadrant.R0).withModel(lit))
-                        .select(Direction.EAST, true,  v -> v.withYRot(Quadrant.R90).withModel(lit))
-                        .select(Direction.SOUTH, true, v -> v.withYRot(Quadrant.R180).withModel(lit))
-                        .select(Direction.WEST, true,  v -> v.withYRot(Quadrant.R270).withModel(lit))
-                ));
     }
 }
