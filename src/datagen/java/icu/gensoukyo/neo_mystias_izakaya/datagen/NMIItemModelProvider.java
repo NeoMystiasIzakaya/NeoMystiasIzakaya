@@ -21,7 +21,9 @@ import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.renderer.block.dispatch.Variant;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -40,6 +42,7 @@ public class NMIItemModelProvider extends ModelProvider {
         itemModels.generateFlatItem(NMIMainItems.CHROME_BALL.asItem(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(NMIMainItems.RECIPE_BOOK.asItem(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(NMIMainItems.CANTEEN_CONFIG.asItem(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateDynamicTrimmableItem(NMIMainItems.MYSTIAS_HAT.asItem(), ItemModelGenerators.TRIM_PREFIX_HELMET);
 
         this.registerBlockModels(blockModels);
         this.registerItemModels(itemModels);
@@ -47,7 +50,7 @@ public class NMIItemModelProvider extends ModelProvider {
 
     private void registerBlockModels(BlockModelGenerators blockModels) {
         horizontallyBlock(blockModels, NMIBlocks.BOILING_POT.get());
-        horizontallyBlock(blockModels, NMIBlocks.GRILL.get());
+        horizontallyLitBlock(blockModels, NMIBlocks.GRILL.get());
         horizontallyBlock(blockModels, NMIBlocks.FRYING_PAN.get());
         horizontallyBlock(blockModels, NMIBlocks.STEAMER.get());
         horizontallyBlock(blockModels, NMIBlocks.CUTTING_BOARD.get());
@@ -72,6 +75,24 @@ public class NMIItemModelProvider extends ModelProvider {
                         .select(Direction.EAST,  v -> v.withYRot(Quadrant.R90))
                         .select(Direction.SOUTH, v -> v.withYRot(Quadrant.R180))
                         .select(Direction.WEST,  v -> v.withYRot(Quadrant.R270))
+                ));
+    }
+
+    private static void horizontallyLitBlock(BlockModelGenerators blockModels, Block block) {
+        Identifier key = BuiltInRegistries.BLOCK.getKey(block);
+        Identifier lit = key.withSuffix("_lit").withPrefix("block/");
+        Variant variant = new Variant(key.withPrefix("block/"));
+        blockModels.blockStateOutput.accept(MultiVariantGenerator
+                .dispatch(block, BlockModelGenerators.variant(variant))
+                .with(PropertyDispatch.modify(BlockStateProperties.HORIZONTAL_FACING, BlockStateProperties.LIT)
+                        .select(Direction.NORTH, false, v -> v.withYRot(Quadrant.R0))
+                        .select(Direction.EAST, false,  v -> v.withYRot(Quadrant.R90))
+                        .select(Direction.SOUTH, false, v -> v.withYRot(Quadrant.R180))
+                        .select(Direction.WEST, false,  v -> v.withYRot(Quadrant.R270))
+                        .select(Direction.NORTH, true, v -> v.withYRot(Quadrant.R0).withModel(lit))
+                        .select(Direction.EAST, true,  v -> v.withYRot(Quadrant.R90).withModel(lit))
+                        .select(Direction.SOUTH, true, v -> v.withYRot(Quadrant.R180).withModel(lit))
+                        .select(Direction.WEST, true,  v -> v.withYRot(Quadrant.R270).withModel(lit))
                 ));
     }
 }

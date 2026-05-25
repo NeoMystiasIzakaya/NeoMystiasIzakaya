@@ -23,8 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CanteenControllerBlockEntity extends BlockEntity {
-    List<BlockPos> kitchenwareList = new ArrayList<>();
-    List<BlockPos> dingingTableList = new ArrayList<>();
+    private List<BlockPos> kitchenwareList = new ArrayList<>();
+    private List<BlockPos> dingingTableList = new ArrayList<>();
+    private boolean isOpen;
     public CanteenControllerBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(NMIBlockEntities.COUNTER.get(), blockPos, blockState);
     }

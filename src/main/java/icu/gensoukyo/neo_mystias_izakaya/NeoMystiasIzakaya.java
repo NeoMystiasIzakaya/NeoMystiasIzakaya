@@ -35,15 +35,15 @@ public class NeoMystiasIzakaya {
         NMIAttachmentTypes.ATTACHMENT_TYPES.register(modEventBus);
     }
 
-    public static Identifier id(String key){
-        return Identifier.fromNamespaceAndPath(MODID,key);
+    public static Identifier id(String key) {
+        return Identifier.fromNamespaceAndPath(MODID, key);
     }
 
-    public static String ids(String key){
-        return Identifier.fromNamespaceAndPath(MODID,key).toString();
+    public static String ids(String key) {
+        return Identifier.fromNamespaceAndPath(MODID, key).toString();
     }
 
-    public static String path(String path){
+    public static String path(String path) {
         return MODID + "/" + path;
     }
 }

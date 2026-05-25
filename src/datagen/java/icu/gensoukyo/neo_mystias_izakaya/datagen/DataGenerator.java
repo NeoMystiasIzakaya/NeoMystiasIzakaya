@@ -27,6 +27,7 @@ public class DataGenerator {
         event.createProvider(output -> new NMICustomerProvider(output, NeoMystiasIzakaya.MODID));
         event.createProvider(output -> new NMIEconomyProvider(output, NeoMystiasIzakaya.MODID));
         event.createProvider(output -> new NMIVanillaItemTagProvider(output, registries, NeoMystiasIzakaya.MODID));
+        event.createProvider(NMIEquipmentAssetProvider::new);
 
         event.createProvider(NMIItemModelProvider::new);
     }

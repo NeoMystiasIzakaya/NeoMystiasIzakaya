@@ -1,0 +1,19 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "neo_mystias_izakaya:mystias_hat"
+      }
+    ],
+    "humanoid_baby": [
+      {
+        "texture": "neo_mystias_izakaya:mystias_hat"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "neo_mystias_izakaya:mystias_hat"
+      }
+    ]
+  }
+}
