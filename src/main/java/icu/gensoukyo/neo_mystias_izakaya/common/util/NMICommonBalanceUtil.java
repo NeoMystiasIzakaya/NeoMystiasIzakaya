@@ -40,8 +40,12 @@ public class NMICommonBalanceUtil {
         set(player, NMIBalanceUnits.EN, en);
     }
 
-    public static void addEn(Player player, int en) {
-        add(player, NMIBalanceUnits.EN, en);
+    public static void insertEn(Player player, int en) {
+        insert(player, NMIBalanceUnits.EN, en);
+    }
+
+    public static void extractEn(Player player, int en) {
+        extract(player, NMIBalanceUnits.EN, en);
     }
 
     public static long get(Player player, Identifier unit) {
@@ -72,14 +76,25 @@ public class NMICommonBalanceUtil {
         }
     }
 
-    public static void add(Player player, Identifier unit, int count) {
+    public static void insert(Player player, Identifier unit, int count) {
         try (Transaction transaction = Transaction.openRoot()) {
             NMIBalance balance = getWithOutCopy(player);
             balance.insert(new NMIBalanceEntry(unit, count), count, transaction);
             transaction.commit();
             set(player, balance);
         } catch (Exception e) {
-            LOGGER.trace("Failed to add {} balance for player {}: {}", unit, player.getName().getString(), e.getMessage());
+            LOGGER.trace("Failed to insert {} balance for player {}: {}", unit, player.getName().getString(), e.getMessage());
+        }
+    }
+
+    public static void extract(Player player, Identifier unit, int count) {
+        try (Transaction transaction = Transaction.openRoot()) {
+            NMIBalance balance = getWithOutCopy(player);
+            balance.extract(new NMIBalanceEntry(unit, count), count, transaction);
+            transaction.commit();
+            set(player, balance);
+        } catch (Exception e) {
+            LOGGER.trace("Failed to extract {} balance for player {}: {}", unit, player.getName().getString(), e.getMessage());
         }
     }
 }
