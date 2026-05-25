@@ -6,12 +6,20 @@
 package icu.gensoukyo.neo_mystias_izakaya.common.util;
 
 import com.mojang.logging.LogUtils;
+import icu.gensoukyo.neo_mystias_izakaya.api.event.server.economy.NMIBalanceEvent;
+import icu.gensoukyo.neo_mystias_izakaya.common.network.ServerPayloadSender;
 import icu.gensoukyo.neo_mystias_izakaya.content.economy.balance.NMIBalance;
 import icu.gensoukyo.neo_mystias_izakaya.content.economy.balance.NMIBalanceEntry;
 import icu.gensoukyo.neo_mystias_izakaya.content.economy.balance.NMIBalanceUnits;
+import icu.gensoukyo.neo_mystias_izakaya.content.economy.transaction.NMIBalanceTransaction;
+import icu.gensoukyo.neo_mystias_izakaya.content.economy.transaction.NMIBalanceTransactionEntry;
+import icu.gensoukyo.neo_mystias_izakaya.content.economy.transaction.NMIBalanceTransactionReasons;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIAttachmentTypes;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.slf4j.Logger;
 
@@ -54,7 +62,7 @@ public class NMICommonBalanceUtil {
             NMIBalance balance = getWithOutCopy(player);
             for (int i = 0; i < balance.size(); i++) {
                 if (balance.getResource(i).is(unit)) {
-                    count += balance.getAmountAsInt(i);
+                    count += balance.getAmountAsLong(i);
                 }
             }
             transaction.commit();
@@ -66,21 +74,28 @@ public class NMICommonBalanceUtil {
     }
 
     public static void set(Player player, Identifier unit, int count) {
-        try (Transaction transaction = Transaction.openRoot()) {
-            NMIBalance balance = getWithOutCopy(player);
-            balance.insert(new NMIBalanceEntry(unit), count + (int)get(player, unit), transaction);
-            transaction.commit();
-            set(player, balance);
-        } catch (Exception e) {
-            LOGGER.trace("Failed to set {} balance for player {}: {}", unit, player.getName().getString(), e.getMessage());
-        }
+        insert(player, unit, count - (int) get(player, unit));
+    }
+
+    public static void set(Player player, Identifier unit, int count, Identifier reason, String from, String to) {
+        insert(player, unit, count - (int) get(player, unit), reason, from, to);
     }
 
     public static void insert(Player player, Identifier unit, int count) {
+        insert(player, unit, count, NMIBalanceTransactionReasons.UNDEFINED, "", player.getStringUUID());
+    }
+
+    public static void insert(Player player, Identifier unit, int count, Identifier reason, String from, String to) {
         try (Transaction transaction = Transaction.openRoot()) {
             NMIBalance balance = getWithOutCopy(player);
             balance.insert(new NMIBalanceEntry(unit, count), count, transaction);
+            NMIBalanceEvent.Insert post = NeoForge.EVENT_BUS.post(new NMIBalanceEvent.Insert(player, transaction, unit, count, reason, from, to));
+            if (post.isCanceled()) {
+                transaction.close();
+                return;
+            }
             transaction.commit();
+            addTransactionEntry(player, new NMIBalanceTransactionEntry(post.getReason(), post.getUnit(), post.getCount(), post.getFrom(), post.getTo()));
             set(player, balance);
         } catch (Exception e) {
             LOGGER.trace("Failed to insert {} balance for player {}: {}", unit, player.getName().getString(), e.getMessage());
@@ -88,13 +103,41 @@ public class NMICommonBalanceUtil {
     }
 
     public static void extract(Player player, Identifier unit, int count) {
+        extract(player, unit, count, NMIBalanceTransactionReasons.UNDEFINED, player.getStringUUID(), "");
+    }
+
+    public static void extract(Player player, Identifier unit, int count, Identifier reason, String from, String to) {
         try (Transaction transaction = Transaction.openRoot()) {
             NMIBalance balance = getWithOutCopy(player);
             balance.extract(new NMIBalanceEntry(unit, count), count, transaction);
+            NMIBalanceEvent.Extract post = NeoForge.EVENT_BUS.post(new NMIBalanceEvent.Extract(player, transaction, unit, count, reason, from, to));
+            if (post.isCanceled()) {
+                transaction.close();
+                return;
+            }
             transaction.commit();
+            addTransactionEntry(player, new NMIBalanceTransactionEntry(post.getReason(), post.getUnit(), post.getCount(), post.getFrom(), post.getTo()));
             set(player, balance);
         } catch (Exception e) {
             LOGGER.trace("Failed to extract {} balance for player {}: {}", unit, player.getName().getString(), e.getMessage());
+        }
+    }
+
+    public static NMIBalanceTransaction getTransaction(Player player) {
+        return player.getData(NMIAttachmentTypes.TRANSACTION);
+    }
+
+    public static void setTransaction(Player player, NMIBalanceTransaction transaction) {
+        player.setData(NMIAttachmentTypes.TRANSACTION, transaction);
+        if (player instanceof ServerPlayer serverPlayer) {
+            ServerPayloadSender.sendTransactionSyncMessage(serverPlayer, transaction);
+        }
+    }
+
+    public static void addTransactionEntry(Player player, NMIBalanceTransactionEntry entry) {
+        player.setData(NMIAttachmentTypes.TRANSACTION, getTransaction(player).addEntry(entry));
+        if (player instanceof ServerPlayer serverPlayer) {
+            ServerPayloadSender.sendTransactionUpdateMessage(serverPlayer, entry);
         }
     }
 }

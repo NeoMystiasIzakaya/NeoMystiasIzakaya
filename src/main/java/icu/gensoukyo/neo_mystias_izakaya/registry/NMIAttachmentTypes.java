@@ -7,6 +7,7 @@ package icu.gensoukyo.neo_mystias_izakaya.registry;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.content.economy.balance.NMIBalance;
+import icu.gensoukyo.neo_mystias_izakaya.content.economy.transaction.NMIBalanceTransaction;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaMenu;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaOrderList;
 import net.neoforged.neoforge.attachment.AttachmentType;
@@ -33,5 +34,11 @@ public class NMIAttachmentTypes {
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<IzakayaOrderList>> ORDER = ATTACHMENT_TYPES.register(
             "order",
             () -> AttachmentType.builder(()-> IzakayaOrderList.EMPTY).serialize(IzakayaOrderList.MAP_CODEC).copyOnDeath().build()
+    );
+
+    // 手动同步，减小网络包
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<NMIBalanceTransaction>> TRANSACTION = ATTACHMENT_TYPES.register(
+            "transaction",
+            () -> AttachmentType.builder(()-> NMIBalanceTransaction.EMPTY).serialize(NMIBalanceTransaction.MAP_CODEC).copyOnDeath().build()
     );
 }

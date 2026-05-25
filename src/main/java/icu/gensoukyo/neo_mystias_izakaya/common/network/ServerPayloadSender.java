@@ -5,8 +5,12 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.common.network;
 
+import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonBalanceUtil;
+import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonIzakayaUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.customer.CustomerMap;
 import icu.gensoukyo.neo_mystias_izakaya.content.economy.base.NMIEconomyMap;
+import icu.gensoukyo.neo_mystias_izakaya.content.economy.transaction.NMIBalanceTransaction;
+import icu.gensoukyo.neo_mystias_izakaya.content.economy.transaction.NMIBalanceTransactionEntry;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaOrder;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaOrderList;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeMap;
@@ -32,11 +36,27 @@ public class ServerPayloadSender {
         PacketDistributor.sendToAllPlayers(new NMIEconomyMapSyncMessage(map));
     }
 
+    public static void sendIzakayaMenuSyncMessage(ServerPlayer player) {
+        PacketDistributor.sendToPlayer(player, new IzakayaOrderSyncFullMessage(NMICommonIzakayaUtil.getOrder(player)));
+    }
+
     public static void sendIzakayaMenuSyncMessage(ServerPlayer player, IzakayaOrderList list) {
         PacketDistributor.sendToPlayer(player,new IzakayaOrderSyncFullMessage(list));
     }
 
     public static void sendIzakayaMenuUpdateMessage(ServerPlayer player, short id , IzakayaOrder order) {
         PacketDistributor.sendToPlayer(player,new IzakayaOrderUpdateMessage(id,order));
+    }
+
+    public static void sendTransactionSyncMessage(ServerPlayer player) {
+        PacketDistributor.sendToPlayer(player, new NMIBalanceTransactionSyncFullMessage(NMICommonBalanceUtil.getTransaction(player)));
+    }
+
+    public static void sendTransactionSyncMessage(ServerPlayer player, NMIBalanceTransaction transaction) {
+        PacketDistributor.sendToPlayer(player, new NMIBalanceTransactionSyncFullMessage(transaction));
+    }
+
+    public static void sendTransactionUpdateMessage(ServerPlayer player, NMIBalanceTransactionEntry entry) {
+        PacketDistributor.sendToPlayer(player, new NMIBalanceTransactionUpdateMessage(entry));
     }
 }
