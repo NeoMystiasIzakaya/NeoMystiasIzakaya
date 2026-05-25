@@ -7,14 +7,19 @@ package icu.gensoukyo.neo_mystias_izakaya.common.block;
 
 import com.mojang.serialization.MapCodec;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
+import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientItemTagUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.DiningTableBlockEntity;
+import icu.gensoukyo.neo_mystias_izakaya.common.util.NMIServerRecipeUtil;
+import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -85,15 +90,28 @@ public class DiningTableBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        if (!level.isClientSide()) {
-            BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof DiningTableBlockEntity diningTableBE) {
+    protected InteractionResult useItemOn(ItemStack itemStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (level.isClientSide()) {
+            return super.useItemOn(itemStack, state, level, pos, player, hand, hitResult);
+        }
 
-                return InteractionResult.SUCCESS_SERVER;
+        ItemTagList itemTagList = NMIClientItemTagUtil.get(itemStack);
+        if (itemTagList == null || itemTagList.isEmpty()) {
+            return super.useItemOn(itemStack, state, level, pos, player, hand, hitResult);
+        }
+
+        if (level.getBlockEntity(pos) instanceof DiningTableBlockEntity diningTableBlockEntity) {
+            if (itemTagList.hasBeveragesTag()) {
+                diningTableBlockEntity.setBeverage(itemStack.copy());
+                return InteractionResult.SUCCESS;
+            }
+            if (NMIServerRecipeUtil.isCuisine(itemStack)) {
+                diningTableBlockEntity.setCuisine(itemStack.copy());
+                return InteractionResult.SUCCESS;
             }
         }
-        return InteractionResult.SUCCESS;
+
+        return super.useItemOn(itemStack, state, level, pos, player, hand, hitResult);
     }
 
     @Override

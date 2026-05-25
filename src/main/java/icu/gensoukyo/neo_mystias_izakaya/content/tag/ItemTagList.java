@@ -7,6 +7,7 @@ package icu.gensoukyo.neo_mystias_izakaya.content.tag;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import icu.gensoukyo.neo_mystias_izakaya.content.tag.consts.NMIBeveragesTags;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -44,11 +45,24 @@ public record ItemTagList(List<Identifier> positiveTags, List<Identifier> negati
         return new ItemTagList(new ArrayList<>(positiveTags), new ArrayList<>(negativeTags));
     }
 
-    public ItemTagList sort(){
+    public ItemTagList sort() {
         List<Identifier> sortedPositive = new ArrayList<>(positiveTags);
         List<Identifier> sortedNegative = new ArrayList<>(negativeTags);
         sortedPositive.sort(Identifier::compareTo);
         sortedNegative.sort(Identifier::compareTo);
         return new ItemTagList(sortedPositive, sortedNegative);
+    }
+
+    public boolean isEmpty() {
+        return positiveTags.isEmpty() && negativeTags.isEmpty();
+    }
+
+    /**
+     * 判断 positiveTags 是否包含任意饮品标签
+     *
+     * @return 与 {@link icu.gensoukyo.neo_mystias_izakaya.content.tag.consts.NMIBeveragesTags#ALL} 有交集时返回 true
+     */
+    public boolean hasBeveragesTag() {
+        return positiveTags.stream().anyMatch(NMIBeveragesTags.ALL::contains);
     }
 }

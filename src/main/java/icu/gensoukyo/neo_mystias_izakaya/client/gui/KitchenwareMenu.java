@@ -137,7 +137,7 @@ public class KitchenwareMenu extends AbstractContainerMenu {
         CUTTING_BOARD(NMIVanillaTags.CUTTING_BOARD, NMIMainItems.CUTTING_BOARD.get(), NMICuisinesTags.Cutting_Board),
         FRYING_PAN(NMIVanillaTags.FRYING_PAN, NMIMainItems.FRYING_PAN.get(), NMICuisinesTags.Frying_Pan),
         GRILL(NMIVanillaTags.GRILL, NMIMainItems.GRILL.get(),  NMICuisinesTags.Grill),
-        STEAMER(NMIVanillaTags.STEAMER, NMIMainItems.STEAMER.get(), NMICuisinesTags.Streamer);
+        STEAMER(NMIVanillaTags.STEAMER, NMIMainItems.STEAMER.get(), NMICuisinesTags.Steamer);
 
         public final TagKey<Block> KITCHENWARE_TYPE;
         public final Identifier KITCHENWARE_TAG;

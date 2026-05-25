@@ -142,7 +142,7 @@ public class NMILanguageProvider implements DataProvider {
         this.addTag(NMICuisinesTags.Cutting_Board, "Cutting Board", "料理台");
         this.addTag(NMICuisinesTags.Frying_Pan, "Frying Pan", "油锅");
         this.addTag(NMICuisinesTags.Grill, "Grill", "烧烤架");
-        this.addTag(NMICuisinesTags.Streamer, "Streamer", "蒸锅");
+        this.addTag(NMICuisinesTags.Steamer, "Steamer", "蒸锅");
 
         this.addTag(NMICuisinesTags.Trend_Popular, "Trend - Popular", "趋势-流行");
         this.addTag(NMICuisinesTags.Trend_Unpopular, "Trend - Unpopular", "趋势-厌恶");

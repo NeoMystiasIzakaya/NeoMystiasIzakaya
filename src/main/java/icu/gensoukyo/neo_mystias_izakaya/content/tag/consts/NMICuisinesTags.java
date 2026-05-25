@@ -60,7 +60,7 @@ public class NMICuisinesTags {
     public static final Identifier Cutting_Board = NeoMystiasIzakaya.id("cuisines/cutting_board");
     public static final Identifier Frying_Pan = NeoMystiasIzakaya.id("cuisines/frying_pan");
     public static final Identifier Grill = NeoMystiasIzakaya.id("cuisines/grill");
-    public static final Identifier Streamer = NeoMystiasIzakaya.id("cuisines/streamer");
+    public static final Identifier Steamer = NeoMystiasIzakaya.id("cuisines/steamer");
 
     public static final Identifier Trend_Popular = NeoMystiasIzakaya.id("cuisines/trend_popular");
     public static final Identifier Trend_Unpopular = NeoMystiasIzakaya.id("cuisines/trend_unpopular");
