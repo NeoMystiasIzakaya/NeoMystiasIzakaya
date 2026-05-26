@@ -103,10 +103,12 @@ public class DiningTableBlock extends BaseEntityBlock {
         if (level.getBlockEntity(pos) instanceof DiningTableBlockEntity diningTableBlockEntity) {
             if (itemTagList.hasBeveragesTag()) {
                 diningTableBlockEntity.setBeverage(itemStack.copy());
+                itemStack.shrink(1);
                 return InteractionResult.SUCCESS;
             }
             if (NMIServerRecipeUtil.isCuisine(itemStack)) {
                 diningTableBlockEntity.setCuisine(itemStack.copy());
+                itemStack.shrink(1);
                 return InteractionResult.SUCCESS;
             }
         }

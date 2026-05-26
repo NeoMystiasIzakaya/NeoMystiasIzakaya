@@ -20,7 +20,6 @@ import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
@@ -31,24 +30,38 @@ import net.minecraft.world.level.storage.ValueOutput;
 
 public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
 
-    /** 菜品槽位 */
+    /**
+     * 菜品槽位
+     */
     public static final int SLOT_CUISINE = 0;
-    /** 饮品槽位 */
+    /**
+     * 饮品槽位
+     */
     public static final int SLOT_BEVERAGE = 1;
-    /** 总槽位数 */
+    /**
+     * 总槽位数
+     */
     public static final int CONTAINER_SIZE = 2;
 
     NonNullList<ItemStack> items = NonNullList.withSize(CONTAINER_SIZE, ItemStack.EMPTY);
 
-    /** 是否有顾客入座 */
+    /**
+     * 是否有顾客入座
+     */
     @Getter
     private boolean isOccupied = false;
-    /** 当前入座顾客的ID */
+    /**
+     * 当前入座顾客的ID
+     */
     @Getter
     private Identifier customerId = IzakayaOrder.EMPTY_RARE_CUSTOMER;
 
     public DiningTableBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(NMIBlockEntities.DINING_TABLE.get(), blockPos, blockState);
+    }
+
+    public static void serverTick(Level pLevel, BlockPos pPos, BlockState pState, DiningTableBlockEntity pBlockEntity) {
+        // 预留：未来可在此处理顾客用餐计时等逻辑
     }
 
     @Override
@@ -71,12 +84,12 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
         return null;
     }
 
+    // === NBT ===
+
     @Override
     public int getContainerSize() {
         return CONTAINER_SIZE;
     }
-
-    // === NBT ===
 
     @Override
     protected void saveAdditional(ValueOutput output) {
@@ -85,6 +98,8 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
         output.putBoolean("IsOccupied", this.isOccupied);
         output.putString("CustomerId", this.customerId.toString());
     }
+
+    // === 网络同步 ===
 
     @Override
     protected void loadAdditional(ValueInput input) {
@@ -97,12 +112,12 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
                 .orElse(IzakayaOrder.EMPTY_RARE_CUSTOMER);
     }
 
-    // === 网络同步 ===
-
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
     }
+
+    // === 业务方法 ===
 
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
@@ -114,8 +129,6 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
             return output.buildResult();
         }
     }
-
-    // === 业务方法 ===
 
     /**
      * 顾客入座
@@ -144,26 +157,21 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
     }
 
     /**
+     * 获取菜品
+     */
+    public ItemStack getCuisine() {
+        return this.items.get(SLOT_CUISINE);
+    }
+
+    /**
      * 设置菜品
      */
     public void setCuisine(ItemStack cuisine) {
         this.items.set(SLOT_CUISINE, cuisine);
         this.setChanged();
-    }
-
-    /**
-     * 设置饮品
-     */
-    public void setBeverage(ItemStack beverage) {
-        this.items.set(SLOT_BEVERAGE, beverage);
-        this.setChanged();
-    }
-
-    /**
-     * 获取菜品
-     */
-    public ItemStack getCuisine() {
-        return this.items.get(SLOT_CUISINE);
+        if (this.level != null) {
+            this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);
+        }
     }
 
     /**
@@ -175,7 +183,14 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
 
     // === Tick ===
 
-    public static void serverTick(Level pLevel, BlockPos pPos, BlockState pState, DiningTableBlockEntity pBlockEntity) {
-        // 预留：未来可在此处理顾客用餐计时等逻辑
+    /**
+     * 设置饮品
+     */
+    public void setBeverage(ItemStack beverage) {
+        this.items.set(SLOT_BEVERAGE, beverage);
+        this.setChanged();
+        if (this.level != null) {
+            this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);
+        }
     }
 }
