@@ -7,6 +7,7 @@ package icu.gensoukyo.neo_mystias_izakaya.client.network;
 
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.common.network.*;
+import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonBalanceUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonIzakayaUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaOrderList;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
@@ -42,14 +43,10 @@ public class ClientPayloadHandler {
     }
 
     public static void handleBalanceTransactionUpdateMessage(NMIBalanceTransactionUpdateMessage message, IPayloadContext context) {
-        context.enqueueWork(() -> {
-
-        });
+        context.enqueueWork(() -> NMICommonBalanceUtil.addTransactionEntry(context.player(), message.transactionEntry()));
     }
 
     public static void handleBalanceTransactionSyncFullMessage(NMIBalanceTransactionSyncFullMessage message, IPayloadContext context) {
-        context.enqueueWork(() -> {
-
-        });
+        context.enqueueWork(() -> NMICommonBalanceUtil.setTransaction(context.player(), message.transaction()));
     }
 }
