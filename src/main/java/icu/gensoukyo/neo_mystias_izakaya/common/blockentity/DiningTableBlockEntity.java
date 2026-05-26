@@ -174,6 +174,10 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
         }
     }
 
+    public void clearCuisine() {
+        this.setCuisine(ItemStack.EMPTY);
+    }
+
     /**
      * 获取饮品
      */
@@ -192,5 +196,13 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
         if (this.level != null) {
             this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);
         }
+    }
+
+    public void clearBeverage() {
+        this.setBeverage(ItemStack.EMPTY);
+    }
+
+    public boolean isFull() {
+        return this.items.stream().noneMatch(ItemStack::isEmpty);
     }
 }

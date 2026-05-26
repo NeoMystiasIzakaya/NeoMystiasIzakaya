@@ -91,29 +91,57 @@ public class DiningTableBlock extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useItemOn(ItemStack itemStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (level.isClientSide()) {
-            return super.useItemOn(itemStack, state, level, pos, player, hand, hitResult);
-        }
-
-        ItemTagList itemTagList = NMIClientItemTagUtil.get(itemStack);
-        if (itemTagList == null || itemTagList.isEmpty()) {
+        if (level.isClientSide() || hand != InteractionHand.MAIN_HAND) {
             return super.useItemOn(itemStack, state, level, pos, player, hand, hitResult);
         }
 
         if (level.getBlockEntity(pos) instanceof DiningTableBlockEntity diningTableBlockEntity) {
-            if (itemTagList.hasBeveragesTag()) {
-                diningTableBlockEntity.setBeverage(itemStack.copy());
-                itemStack.shrink(1);
-                return InteractionResult.SUCCESS;
-            }
-            if (NMIServerRecipeUtil.isCuisine(itemStack)) {
-                diningTableBlockEntity.setCuisine(itemStack.copy());
-                itemStack.shrink(1);
-                return InteractionResult.SUCCESS;
+            if (!itemStack.isEmpty()) {
+                // 手持物品 → 尝试放入（若槽位已有则交换给玩家）
+                ItemTagList itemTagList = NMIClientItemTagUtil.get(itemStack);
+                if (itemTagList != null && !itemTagList.isEmpty()) {
+                    if (itemTagList.hasBeveragesTag()) {
+                        swapOrPlace(player, itemStack, diningTableBlockEntity, true);
+                        return InteractionResult.SUCCESS;
+                    }
+                    if (NMIServerRecipeUtil.isCuisine(itemStack)) {
+                        swapOrPlace(player, itemStack, diningTableBlockEntity, false);
+                        return InteractionResult.SUCCESS;
+                    }
+                }
+            } else {
+                // 空手 → 先取菜品，后取酒水
+                if (!diningTableBlockEntity.getCuisine().isEmpty()) {
+                    player.setItemInHand(hand, diningTableBlockEntity.getCuisine().copy());
+                    diningTableBlockEntity.clearCuisine();
+                    return InteractionResult.SUCCESS;
+                }
+                if (!diningTableBlockEntity.getBeverage().isEmpty()) {
+                    player.setItemInHand(hand, diningTableBlockEntity.getBeverage().copy());
+                    diningTableBlockEntity.clearBeverage();
+                    return InteractionResult.SUCCESS;
+                }
             }
         }
 
         return super.useItemOn(itemStack, state, level, pos, player, hand, hitResult);
+    }
+
+    /**
+     * 将手持物品放入餐桌指定槽位，若槽位已有物品则交换给玩家
+     * @param isBeverage true=饮品槽, false=菜品槽
+     */
+    private void swapOrPlace(Player player, ItemStack heldItem, DiningTableBlockEntity table, boolean isBeverage) {
+        ItemStack existing = isBeverage ? table.getBeverage() : table.getCuisine();
+        if (isBeverage) {
+            table.setBeverage(heldItem.copy());
+        } else {
+            table.setCuisine(heldItem.copy());
+        }
+        heldItem.shrink(1);
+        if (!existing.isEmpty() && !player.getInventory().add(existing)) {
+            player.drop(existing, false);
+        }
     }
 
     @Override
