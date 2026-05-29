@@ -23,7 +23,6 @@ import net.minecraft.world.level.storage.ValueOutput;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 public class CanteenControllerBlockEntity extends BlockEntity {
     @Getter
@@ -31,8 +30,13 @@ public class CanteenControllerBlockEntity extends BlockEntity {
     private LinkedHashSet<BlockPos> dingingTableList = new LinkedHashSet<>();
     @Getter
     private boolean isOpen;
+
     public CanteenControllerBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(NMIBlockEntities.COUNTER.get(), blockPos, blockState);
+    }
+
+    public static void serverTick(Level pLevel, BlockPos pPos, BlockState pState, CanteenControllerBlockEntity pBlockEntity) {
+
     }
 
     @Override
@@ -67,10 +71,6 @@ public class CanteenControllerBlockEntity extends BlockEntity {
             tag.merge(output.buildResult());
         }
         return tag;
-    }
-
-    public static void serverTick(Level pLevel, BlockPos pPos, BlockState pState, CanteenControllerBlockEntity pBlockEntity) {
-
     }
 
     // === 绑定管理 ===

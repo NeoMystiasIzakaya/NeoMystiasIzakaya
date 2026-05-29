@@ -12,7 +12,6 @@ import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMainItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -30,11 +29,19 @@ import org.jspecify.annotations.Nullable;
 
 public class CanteenControllerBlock extends BaseEntityBlock {
     public static final MapCodec<CanteenControllerBlock> CODEC = simpleCodec(CanteenControllerBlock::new);
+
     public CanteenControllerBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
         );
+    }
+
+    @Nullable
+    protected static <T extends BlockEntity> BlockEntityTicker<T> createCounterTicker(
+            Level pLevel, BlockEntityType<T> pServerType, BlockEntityType<? extends CanteenControllerBlockEntity> pClientType
+    ) {
+        return pLevel.isClientSide() ? null : createTickerHelper(pServerType, pClientType, CanteenControllerBlockEntity::serverTick);
     }
 
     @Override
@@ -61,13 +68,6 @@ public class CanteenControllerBlock extends BaseEntityBlock {
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> type) {
         return createCounterTicker(level, type, NMIBlockEntities.COUNTER.get());
-    }
-
-    @Nullable
-    protected static <T extends BlockEntity> BlockEntityTicker<T> createCounterTicker(
-            Level pLevel, BlockEntityType<T> pServerType, BlockEntityType<? extends CanteenControllerBlockEntity> pClientType
-    ) {
-        return pLevel.isClientSide() ? null : createTickerHelper(pServerType, pClientType, CanteenControllerBlockEntity::serverTick);
     }
 
     @Override

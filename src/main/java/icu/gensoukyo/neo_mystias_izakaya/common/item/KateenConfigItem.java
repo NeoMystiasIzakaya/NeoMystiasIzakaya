@@ -21,6 +21,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jspecify.annotations.NonNull;
 
+import java.util.ArrayList;
+
 public class KateenConfigItem extends Item {
 
     private static final Component MSG_CONTROLLER_SELECTED = Component.translatable("item.neo_mystias_izakaya.kateen_config.controller_selected");
@@ -34,6 +36,24 @@ public class KateenConfigItem extends Item {
 
     public KateenConfigItem(Properties properties) {
         super(properties);
+    }
+
+    /**
+     * 将控制器及其所有关联方块同步存储到物品 DataComponent
+     */
+    private static void syncControllerData(ItemStack item, CanteenControllerBlockEntity controller) {
+        item.set(NMIDataComponentTypes.BOUND_CONTROLLER, controller.getBlockPos());
+        item.set(NMIDataComponentTypes.BOUND_KITCHENWARE, new ArrayList<>(controller.getKitchenwareList()));
+        item.set(NMIDataComponentTypes.BOUND_DINING_TABLES, new ArrayList<>(controller.getDiningTableList()));
+    }
+
+    /**
+     * 清除物品中存储的所有控制器关联数据
+     */
+    private static void clearControllerData(ItemStack item) {
+        item.remove(NMIDataComponentTypes.BOUND_CONTROLLER);
+        item.remove(NMIDataComponentTypes.BOUND_KITCHENWARE);
+        item.remove(NMIDataComponentTypes.BOUND_DINING_TABLES);
     }
 
     @Override
@@ -55,9 +75,9 @@ public class KateenConfigItem extends Item {
             return InteractionResult.SUCCESS;
         }
 
-        // 右键控制器 → 选择/存储控制器
+        // 右键控制器 → 选择控制器并存储所有关联方块
         if (clickedBE instanceof CanteenControllerBlockEntity controllerBE) {
-            heldItem.set(NMIDataComponentTypes.BOUND_CONTROLLER, clickedPos);
+            syncControllerData(heldItem, controllerBE);
             if (player != null) {
                 player.sendOverlayMessage(MSG_CONTROLLER_SELECTED);
             }
@@ -85,7 +105,7 @@ public class KateenConfigItem extends Item {
      * 将目标方块绑定到物品中存储的控制器
      */
     private InteractionResult bindToController(Level level, BlockPos targetPos, Player player, ItemStack heldItem,
-                                                BindingFunction bindFunc, Component successMsg, Component alreadyMsg) {
+                                               BindingFunction bindFunc, Component successMsg, Component alreadyMsg) {
         BlockPos controllerPos = heldItem.get(NMIDataComponentTypes.BOUND_CONTROLLER);
         if (controllerPos == null) {
             if (player != null) {
@@ -99,11 +119,14 @@ public class KateenConfigItem extends Item {
             if (player != null) {
                 player.sendOverlayMessage(MSG_CONTROLLER_NOT_FOUND);
             }
-            heldItem.remove(NMIDataComponentTypes.BOUND_CONTROLLER);
+            clearControllerData(heldItem);
             return InteractionResult.FAIL;
         }
 
         boolean added = bindFunc.apply(controller, targetPos);
+        if (added) {
+            syncControllerData(heldItem, controller);
+        }
         if (player != null) {
             player.sendOverlayMessage(added ? successMsg : alreadyMsg);
         }
@@ -116,9 +139,9 @@ public class KateenConfigItem extends Item {
     private void handleUnbindMode(Level level, BlockPos clickedPos, BlockEntity clickedBE, Player player, ItemStack heldItem) {
         BlockPos controllerPos = heldItem.get(NMIDataComponentTypes.BOUND_CONTROLLER);
 
-        // 若点击的是控制器自身 → 清除物品中存储的控制器引用
+        // 若点击的是控制器自身 → 清除物品中存储的所有关联数据
         if (clickedBE instanceof CanteenControllerBlockEntity) {
-            heldItem.remove(NMIDataComponentTypes.BOUND_CONTROLLER);
+            clearControllerData(heldItem);
             if (player != null) {
                 player.sendOverlayMessage(MSG_CONTROLLER_CLEARED);
             }
@@ -138,14 +161,14 @@ public class KateenConfigItem extends Item {
             if (player != null) {
                 player.sendOverlayMessage(MSG_CONTROLLER_NOT_FOUND);
             }
-            heldItem.remove(NMIDataComponentTypes.BOUND_CONTROLLER);
+            clearControllerData(heldItem);
             return;
         }
 
         // 尝试从控制器中移除目标方块
         boolean removed = controller.removeKitchenware(clickedPos) || controller.removeDiningTable(clickedPos);
-        if (player != null) {
-            // 静默解绑不显示消息也可以，改由具体调用方决定
+        if (removed) {
+            syncControllerData(heldItem, controller);
         }
     }
 

@@ -16,6 +16,8 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
+
 public class NMIDataComponentTypes {
 
     public static final DeferredRegister.DataComponents DATA_COMPONENT_TYPES = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, NeoMystiasIzakaya.MODID);
@@ -46,5 +48,25 @@ public class NMIDataComponentTypes {
             builder -> builder
                     .persistent(BlockPos.CODEC)
                     .networkSynchronized(BlockPos.STREAM_CODEC)
+    );
+
+    /**
+     * 厨房配置工具已绑定的厨房用具坐标列表
+     */
+    public static final DeferredHolder<DataComponentType<?>, @NotNull DataComponentType<List<BlockPos>>> BOUND_KITCHENWARE = DATA_COMPONENT_TYPES.registerComponentType(
+            "bound_kitchenware",
+            builder -> builder
+                    .persistent(BlockPos.CODEC.listOf())
+                    .networkSynchronized(BlockPos.STREAM_CODEC.apply(ByteBufCodecs.list()))
+    );
+
+    /**
+     * 厨房配置工具已绑定的餐桌坐标列表
+     */
+    public static final DeferredHolder<DataComponentType<?>, @NotNull DataComponentType<List<BlockPos>>> BOUND_DINING_TABLES = DATA_COMPONENT_TYPES.registerComponentType(
+            "bound_dining_tables",
+            builder -> builder
+                    .persistent(BlockPos.CODEC.listOf())
+                    .networkSynchronized(BlockPos.STREAM_CODEC.apply(ByteBufCodecs.list()))
     );
 }
