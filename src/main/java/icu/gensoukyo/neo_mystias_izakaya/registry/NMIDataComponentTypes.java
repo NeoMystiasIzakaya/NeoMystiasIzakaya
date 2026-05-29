@@ -8,6 +8,7 @@ package icu.gensoukyo.neo_mystias_izakaya.registry;
 import com.mojang.serialization.Codec;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -35,5 +36,15 @@ public class NMIDataComponentTypes {
             builder -> builder
                     .persistent(Codec.INT)
                     .networkSynchronized(ByteBufCodecs.INT)
+    );
+
+    /**
+     * 厨房配置工具已绑定的控制器坐标
+     */
+    public static final DeferredHolder<DataComponentType<?>, @NotNull DataComponentType<BlockPos>> BOUND_CONTROLLER = DATA_COMPONENT_TYPES.registerComponentType(
+            "bound_controller",
+            builder -> builder
+                    .persistent(BlockPos.CODEC)
+                    .networkSynchronized(BlockPos.STREAM_CODEC)
     );
 }

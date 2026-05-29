@@ -51,7 +51,7 @@ public class DiningTableRenderer implements BlockEntityRenderer<DiningTableBlock
     public void submit(DiningTableRenderState diningTableRenderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
         poseStack.pushPose();
         poseStack.scale(0.5F,0.5F,0.5F);
-        poseStack.translate(0.5D, 2D, 1D);
+        poseStack.translate(0.5D, 2.5D, 1D);
         diningTableRenderState.beverageRenderState.submit(poseStack, submitNodeCollector, diningTableRenderState.lightCoords, OverlayTexture.NO_OVERLAY, 0);
         poseStack.translate(1D, 0D, 0D);
         diningTableRenderState.cuisineRenderState.submit(poseStack, submitNodeCollector, diningTableRenderState.lightCoords, OverlayTexture.NO_OVERLAY, 0);
