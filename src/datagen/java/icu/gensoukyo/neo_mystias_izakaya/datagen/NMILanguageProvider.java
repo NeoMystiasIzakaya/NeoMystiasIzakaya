@@ -78,6 +78,8 @@ public class NMILanguageProvider implements DataProvider {
         this.add("item.neo_mystias_izakaya.canteen_config.controller_cleared", "Controller reference cleared.", "已清除控制器引用。");
         this.add("item.neo_mystias_izakaya.canteen_config.already_bound", "Already bound to this controller.", "已绑定到该控制器。");
         this.add("item.neo_mystias_izakaya.canteen_config.unbound", "Unbound from controller.", "已从控制器解绑。");
+        this.add("item.neo_mystias_izakaya.canteen_config.kitchenware_full", "Maximum 8 kitchenware reached!", "最多只能绑定8个厨房用具！");
+        this.add("item.neo_mystias_izakaya.canteen_config.dining_table_full", "Maximum 8 dining tables reached!", "最多只能绑定8张餐桌！");
 
         this.add("block.neo_mystias_izakaya.canteen_controller.status", "Kitchenware: %s, Dining Tables: %s", "厨房用具：%s，餐桌：%s");
 

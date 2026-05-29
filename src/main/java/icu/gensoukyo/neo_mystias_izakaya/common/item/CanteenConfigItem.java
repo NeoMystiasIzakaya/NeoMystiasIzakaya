@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jspecify.annotations.NonNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CanteenConfigItem extends Item {
 
@@ -33,6 +34,11 @@ public class CanteenConfigItem extends Item {
     private static final Component MSG_CONTROLLER_CLEARED = Component.translatable("item.neo_mystias_izakaya.canteen_config.controller_cleared");
     private static final Component MSG_ALREADY_BOUND = Component.translatable("item.neo_mystias_izakaya.canteen_config.already_bound");
     private static final Component MSG_UNBOUND = Component.translatable("item.neo_mystias_izakaya.canteen_config.unbound");
+    private static final Component MSG_KITCHENWARE_FULL = Component.translatable("item.neo_mystias_izakaya.canteen_config.kitchenware_full");
+    private static final Component MSG_DINING_TABLE_FULL = Component.translatable("item.neo_mystias_izakaya.canteen_config.dining_table_full");
+
+    private static final int MAX_KITCHENWARE = 8;
+    private static final int MAX_DINING_TABLES = 8;
 
     public CanteenConfigItem(Properties properties) {
         super(properties);
@@ -54,6 +60,16 @@ public class CanteenConfigItem extends Item {
         item.remove(NMIDataComponentTypes.BOUND_CONTROLLER);
         item.remove(NMIDataComponentTypes.BOUND_KITCHENWARE);
         item.remove(NMIDataComponentTypes.BOUND_DINING_TABLES);
+    }
+
+    /**
+     * 检查是否已达到绑定上限
+     * @param isKitchenware true=厨房用具, false=餐桌
+     */
+    private static boolean isLimitReached(ItemStack item, boolean isKitchenware) {
+        List<BlockPos> list = item.get(isKitchenware ? NMIDataComponentTypes.BOUND_KITCHENWARE : NMIDataComponentTypes.BOUND_DINING_TABLES);
+        int max = isKitchenware ? MAX_KITCHENWARE : MAX_DINING_TABLES;
+        return list != null && list.size() >= max;
     }
 
     @Override
@@ -86,6 +102,10 @@ public class CanteenConfigItem extends Item {
 
         // 右键厨房用具 → 绑定到已选的控制器
         if (clickedState.getBlock() instanceof AbstractKitchenware) {
+            if (isLimitReached(heldItem, true)) {
+                if (player != null) player.sendOverlayMessage(MSG_KITCHENWARE_FULL);
+                return InteractionResult.FAIL;
+            }
             return bindToController(level, clickedPos, player, heldItem,
                     CanteenControllerBlockEntity::addKitchenware,
                     MSG_KITCHENWARE_BOUND, MSG_ALREADY_BOUND);
@@ -93,6 +113,10 @@ public class CanteenConfigItem extends Item {
 
         // 右键餐桌 → 绑定到已选的控制器
         if (clickedState.getBlock() instanceof DiningTableBlock) {
+            if (isLimitReached(heldItem, false)) {
+                if (player != null) player.sendOverlayMessage(MSG_DINING_TABLE_FULL);
+                return InteractionResult.FAIL;
+            }
             return bindToController(level, clickedPos, player, heldItem,
                     CanteenControllerBlockEntity::addDiningTable,
                     MSG_DINING_TABLE_BOUND, MSG_ALREADY_BOUND);
