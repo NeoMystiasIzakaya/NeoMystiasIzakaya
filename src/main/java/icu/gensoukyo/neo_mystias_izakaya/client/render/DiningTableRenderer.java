@@ -45,6 +45,7 @@ public class DiningTableRenderer implements BlockEntityRenderer<DiningTableBlock
         itemModelResolver.updateForTopItem(beverageRenderState, beverage, ItemDisplayContext.NONE, blockEntity.getLevel(), null, (int) blockEntity.getBlockPos().asLong());
         state.cuisineRenderState = cuisineRenderState;
         state.beverageRenderState = beverageRenderState;
+        state.index = blockEntity.getTableIndex();
     }
 
     @Override

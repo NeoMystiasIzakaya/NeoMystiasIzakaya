@@ -11,4 +11,5 @@ import net.minecraft.client.renderer.item.ItemStackRenderState;
 public class DiningTableRenderState extends BlockEntityRenderState {
     public ItemStackRenderState cuisineRenderState;
     public ItemStackRenderState beverageRenderState;
+    public int index;
 }

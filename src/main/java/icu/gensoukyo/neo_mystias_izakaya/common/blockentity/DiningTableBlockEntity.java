@@ -55,6 +55,21 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
      */
     @Getter
     private Identifier customerId = IzakayaOrder.EMPTY_RARE_CUSTOMER;
+    /**
+     * 当前顾客的订单
+     */
+    @Getter
+    private IzakayaOrder currentOrder = IzakayaOrder.EMPTY;
+    /**
+     * 餐桌序号（由控制器分配，从 1 开始；-1 表示未绑定）
+     */
+    @Getter
+    private int tableIndex = -1;
+    /**
+     * 所属控制器坐标
+     */
+    @Getter
+    private BlockPos controllerPos = BlockPos.ZERO;
 
     public DiningTableBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(NMIBlockEntities.DINING_TABLE.get(), blockPos, blockState);
@@ -97,6 +112,11 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
         ContainerHelper.saveAllItems(output, this.items);
         output.putBoolean("IsOccupied", this.isOccupied);
         output.putString("CustomerId", this.customerId.toString());
+        output.putInt("TableIndex", this.tableIndex);
+        output.store("ControllerPos", BlockPos.CODEC, this.controllerPos);
+        if (!this.currentOrder.equals(IzakayaOrder.EMPTY)) {
+            output.store("Order", IzakayaOrder.CODEC, this.currentOrder);
+        }
     }
 
     // === 网络同步 ===
@@ -110,6 +130,9 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
         this.customerId = input.getString("CustomerId")
                 .map(Identifier::parse)
                 .orElse(IzakayaOrder.EMPTY_RARE_CUSTOMER);
+        this.tableIndex = input.getIntOr("TableIndex", -1);
+        this.controllerPos = input.read("ControllerPos", BlockPos.CODEC).orElse(BlockPos.ZERO);
+        this.currentOrder = input.read("Order", IzakayaOrder.CODEC).orElse(IzakayaOrder.EMPTY);
     }
 
     @Override
@@ -126,16 +149,22 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
             ContainerHelper.saveAllItems(output, this.items);
             output.putBoolean("IsOccupied", this.isOccupied);
             output.putString("CustomerId", this.customerId.toString());
+            output.putInt("TableIndex", this.tableIndex);
+            output.store("ControllerPos", BlockPos.CODEC, this.controllerPos);
+            if (!this.currentOrder.equals(IzakayaOrder.EMPTY)) {
+                output.store("Order", IzakayaOrder.CODEC, this.currentOrder);
+            }
             return output.buildResult();
         }
     }
 
     /**
-     * 顾客入座
+     * 顾客入座并派发订单
      */
-    public void seatCustomer(Identifier customerId, short orderId) {
+    public void seatCustomer(Identifier customerId, IzakayaOrder order) {
         this.isOccupied = true;
         this.customerId = customerId;
+        this.currentOrder = order;
         this.setChanged();
         if (this.level != null) {
             this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);
@@ -148,12 +177,38 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
     public void clearCustomer() {
         this.isOccupied = false;
         this.customerId = IzakayaOrder.EMPTY_RARE_CUSTOMER;
+        this.currentOrder = IzakayaOrder.EMPTY;
         // 清空菜品和饮品
         this.items.clear();
         this.setChanged();
         if (this.level != null) {
             this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);
         }
+    }
+
+    /**
+     * 餐桌是否空闲（无顾客且无物品）
+     */
+    public boolean isIdle() {
+        return !this.isOccupied && this.items.stream().allMatch(ItemStack::isEmpty);
+    }
+
+    /**
+     * 设置餐桌序号与所属控制器（由控制器调用）
+     */
+    public void bindToController(int index, BlockPos controller) {
+        this.tableIndex = index;
+        this.controllerPos = controller;
+        this.setChanged();
+    }
+
+    /**
+     * 解除与控制器绑定
+     */
+    public void unbindFromController() {
+        this.tableIndex = -1;
+        this.controllerPos = BlockPos.ZERO;
+        this.setChanged();
     }
 
     /**
