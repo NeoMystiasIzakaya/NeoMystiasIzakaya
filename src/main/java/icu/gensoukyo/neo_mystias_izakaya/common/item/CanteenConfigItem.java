@@ -23,18 +23,18 @@ import org.jspecify.annotations.NonNull;
 
 import java.util.ArrayList;
 
-public class KateenConfigItem extends Item {
+public class CanteenConfigItem extends Item {
 
-    private static final Component MSG_CONTROLLER_SELECTED = Component.translatable("item.neo_mystias_izakaya.kateen_config.controller_selected");
-    private static final Component MSG_KITCHENWARE_BOUND = Component.translatable("item.neo_mystias_izakaya.kateen_config.kitchenware_bound");
-    private static final Component MSG_DINING_TABLE_BOUND = Component.translatable("item.neo_mystias_izakaya.kateen_config.dining_table_bound");
-    private static final Component MSG_NO_CONTROLLER = Component.translatable("item.neo_mystias_izakaya.kateen_config.no_controller");
-    private static final Component MSG_CONTROLLER_NOT_FOUND = Component.translatable("item.neo_mystias_izakaya.kateen_config.controller_not_found");
-    private static final Component MSG_CONTROLLER_CLEARED = Component.translatable("item.neo_mystias_izakaya.kateen_config.controller_cleared");
-    private static final Component MSG_ALREADY_BOUND = Component.translatable("item.neo_mystias_izakaya.kateen_config.already_bound");
-    private static final Component MSG_UNBOUND = Component.translatable("item.neo_mystias_izakaya.kateen_config.unbound");
+    private static final Component MSG_CONTROLLER_SELECTED = Component.translatable("item.neo_mystias_izakaya.canteen_config.controller_selected");
+    private static final Component MSG_KITCHENWARE_BOUND = Component.translatable("item.neo_mystias_izakaya.canteen_config.kitchenware_bound");
+    private static final Component MSG_DINING_TABLE_BOUND = Component.translatable("item.neo_mystias_izakaya.canteen_config.dining_table_bound");
+    private static final Component MSG_NO_CONTROLLER = Component.translatable("item.neo_mystias_izakaya.canteen_config.no_controller");
+    private static final Component MSG_CONTROLLER_NOT_FOUND = Component.translatable("item.neo_mystias_izakaya.canteen_config.controller_not_found");
+    private static final Component MSG_CONTROLLER_CLEARED = Component.translatable("item.neo_mystias_izakaya.canteen_config.controller_cleared");
+    private static final Component MSG_ALREADY_BOUND = Component.translatable("item.neo_mystias_izakaya.canteen_config.already_bound");
+    private static final Component MSG_UNBOUND = Component.translatable("item.neo_mystias_izakaya.canteen_config.unbound");
 
-    public KateenConfigItem(Properties properties) {
+    public CanteenConfigItem(Properties properties) {
         super(properties);
     }
 

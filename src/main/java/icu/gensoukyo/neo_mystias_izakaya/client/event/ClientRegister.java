@@ -5,7 +5,9 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.client.event;
 
+import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.KitchenwareScreen;
+import icu.gensoukyo.neo_mystias_izakaya.client.overlay.CanteenOverlay;
 import icu.gensoukyo.neo_mystias_izakaya.client.render.DiningTableRenderer;
 import icu.gensoukyo.neo_mystias_izakaya.client.render.KitchenwareRenderer;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockEntities;
@@ -14,7 +16,10 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+
+import static net.neoforged.neoforge.client.gui.VanillaGuiLayers.CROSSHAIR;
 
 @EventBusSubscriber(value = Dist.CLIENT)
 public class ClientRegister {
@@ -31,5 +36,9 @@ public class ClientRegister {
         event.registerBlockEntityRenderer(NMIBlockEntities.STEAMER.get(), KitchenwareRenderer::new);
         event.registerBlockEntityRenderer(NMIBlockEntities.CUTTING_BOARD.get(), KitchenwareRenderer::new);
         event.registerBlockEntityRenderer(NMIBlockEntities.DINING_TABLE.get(), DiningTableRenderer::new);
+    }
+
+    public static void registerOverlay(RegisterGuiLayersEvent event) {
+        event.registerAbove(CROSSHAIR, NeoMystiasIzakaya.id("canteen_overlay"), new CanteenOverlay());
     }
 }

@@ -6,7 +6,7 @@
 package icu.gensoukyo.neo_mystias_izakaya.registry.item;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
-import icu.gensoukyo.neo_mystias_izakaya.common.item.KateenConfigItem;
+import icu.gensoukyo.neo_mystias_izakaya.common.item.CanteenConfigItem;
 import icu.gensoukyo.neo_mystias_izakaya.common.item.MystiaHatItem;
 import icu.gensoukyo.neo_mystias_izakaya.common.item.RecipeItem;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlocks;
@@ -26,7 +26,7 @@ public class NMIMainItems {
     public static final DeferredItem<Item> MYSTIAS_HAT = ITEMS.registerItem("misc/mystias_hat", MystiaHatItem::new, properties -> properties);
     public static final DeferredItem<Item> CANTEEN = ITEMS.registerItem("misc/canteen", (properties) -> new BlockItem(NMIBlocks.CANTEEN.get(), properties), properties -> properties);
     public static final DeferredItem<Item> DINING_TABLE = ITEMS.registerItem("misc/dining_table", (properties) -> new BlockItem(NMIBlocks.DINING_TABLE.get(), properties), properties -> properties);
-    public static final DeferredItem<Item> CANTEEN_CONFIG = ITEMS.registerItem("misc/canteen_config", KateenConfigItem::new, properties -> properties);
+    public static final DeferredItem<Item> CANTEEN_CONFIG = ITEMS.registerItem("misc/canteen_config", CanteenConfigItem::new, properties -> properties);
 
     public static final DeferredItem<Item> CHROME_BALL = ITEMS.registerItem("misc/chrome_ball", Item::new, properties -> properties);
     public static final DeferredItem<Item> RECIPE_BOOK = ITEMS.registerItem("misc/recipe_book", RecipeItem::new, properties -> properties);

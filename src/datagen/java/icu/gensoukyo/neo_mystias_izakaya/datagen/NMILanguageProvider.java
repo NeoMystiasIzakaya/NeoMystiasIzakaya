@@ -69,15 +69,15 @@ public class NMILanguageProvider implements DataProvider {
         this.add(NMIMainItems.CANTEEN_CONFIG, "Canteen Config", "餐厅配置器");
         this.add(NMIMainItems.MYSTIAS_HAT, "Mystia's Hat", "夜雀的帽子");
 
-        // KateenConfigItem 提示消息
-        this.add("item.neo_mystias_izakaya.kateen_config.controller_selected", "Controller selected!", "已选择控制器！");
-        this.add("item.neo_mystias_izakaya.kateen_config.kitchenware_bound", "Kitchenware bound!", "厨房用具已绑定！");
-        this.add("item.neo_mystias_izakaya.kateen_config.dining_table_bound", "Dining table bound!", "餐桌已绑定！");
-        this.add("item.neo_mystias_izakaya.kateen_config.no_controller", "No controller selected! Right-click a Canteen Controller first.", "未选择控制器！请先右键点击餐厅控制器。");
-        this.add("item.neo_mystias_izakaya.kateen_config.controller_not_found", "Controller not found! The stored controller may have been removed.", "控制器不存在！之前绑定的控制器可能已被拆除。");
-        this.add("item.neo_mystias_izakaya.kateen_config.controller_cleared", "Controller reference cleared.", "已清除控制器引用。");
-        this.add("item.neo_mystias_izakaya.kateen_config.already_bound", "Already bound to this controller.", "已绑定到该控制器。");
-        this.add("item.neo_mystias_izakaya.kateen_config.unbound", "Unbound from controller.", "已从控制器解绑。");
+        // CanteenConfigItem 提示消息
+        this.add("item.neo_mystias_izakaya.canteen_config.controller_selected", "Controller selected!", "已选择控制器！");
+        this.add("item.neo_mystias_izakaya.canteen_config.kitchenware_bound", "Kitchenware bound!", "厨房用具已绑定！");
+        this.add("item.neo_mystias_izakaya.canteen_config.dining_table_bound", "Dining table bound!", "餐桌已绑定！");
+        this.add("item.neo_mystias_izakaya.canteen_config.no_controller", "No controller selected! Right-click a Canteen Controller first.", "未选择控制器！请先右键点击餐厅控制器。");
+        this.add("item.neo_mystias_izakaya.canteen_config.controller_not_found", "Controller not found! The stored controller may have been removed.", "控制器不存在！之前绑定的控制器可能已被拆除。");
+        this.add("item.neo_mystias_izakaya.canteen_config.controller_cleared", "Controller reference cleared.", "已清除控制器引用。");
+        this.add("item.neo_mystias_izakaya.canteen_config.already_bound", "Already bound to this controller.", "已绑定到该控制器。");
+        this.add("item.neo_mystias_izakaya.canteen_config.unbound", "Unbound from controller.", "已从控制器解绑。");
 
         this.add("block.neo_mystias_izakaya.canteen_controller.status", "Kitchenware: %s, Dining Tables: %s", "厨房用具：%s，餐桌：%s");
 
