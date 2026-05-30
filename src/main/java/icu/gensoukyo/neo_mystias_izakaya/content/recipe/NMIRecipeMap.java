@@ -56,15 +56,11 @@ public class NMIRecipeMap {
     private Map<Identifier, List<Identifier>> buildInputItemToRecipeMap(List<NMIRecipeHolder> recipes) {
         Map<Identifier, Set<Identifier>> map = new HashMap<>();
         recipes.forEach(
-                e -> {
-                    e.recipe().input().forEach(
-                            i -> i.getValues().forEach(
-                                    s -> {
-                                        addToMap(map, NMICommonItemUtil.get(s.value()), e.key());
-                                    }
-                            )
-                    );
-                }
+                e -> e.recipe().input().forEach(
+                        i -> i.getValues().forEach(
+                                s -> addToMap(map, NMICommonItemUtil.get(s.value()), e.key())
+                        )
+                )
         );
         return normalizeMap(map);
     }

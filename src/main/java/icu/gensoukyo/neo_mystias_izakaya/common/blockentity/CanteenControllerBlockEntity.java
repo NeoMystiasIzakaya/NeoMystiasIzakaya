@@ -55,13 +55,12 @@ public class CanteenControllerBlockEntity extends BlockEntity {
      * 同时校验关联方块完整性，发现已破坏的则移除并重排序号。
      */
     public static void serverTick(Level pLevel, BlockPos pPos, BlockState pState, CanteenControllerBlockEntity pBlockEntity) {
-        if (!pBlockEntity.isOpen) return;
-
         // 每 5 秒（100 tick）尝试派发一次
         if (pLevel.getGameTime() % DISPATCH_INTERVAL != 0) return;
-
         // 校验关联方块完整性：餐桌和厨具
-        boolean needsResync = pBlockEntity.validateLinkedBlocks(pLevel);
+        pBlockEntity.validateLinkedBlocks(pLevel);
+
+        if (!pBlockEntity.isOpen) return;
 
         // 为每张空闲餐桌按概率派发订单
         for (BlockPos tablePos : pBlockEntity.dingingTableList) {
@@ -119,23 +118,31 @@ public class CanteenControllerBlockEntity extends BlockEntity {
         CustomerHolder holder = pickCustomer(customerMap, random);
         if (holder == null) return null;
         Customer customer = holder.customer();
+        boolean isRare = holder instanceof icu.gensoukyo.neo_mystias_izakaya.content.customer.RareCustomerHolder;
 
-        // ② 根据喜好标签选菜品
-        Identifier cuisineId = pickItemByTags(recipeMap, customer.likes(), random);
-        if (cuisineId == null) return null;
-
-        // ③ 根据饮品偏好选饮品
+        // ② 饮品（普客和稀客都需要）
         Identifier beverageId = pickItemByTags(recipeMap, customer.beverage(), random);
         if (beverageId == null) return null;
 
-        // ④ 从命中的标签中随机选一个作为 requestedTag
-        Identifier requestedTag = pickRandom(customer.likes(), random);
-        if (requestedTag == null) return null;
+        Identifier cuisineId;
+        Identifier requestedTag;
+        Identifier rareCustomerId;
 
-        Identifier rareCustomerId = holder instanceof icu.gensoukyo.neo_mystias_izakaya.content.customer.RareCustomerHolder
-                ? holder.key() : IzakayaOrder.EMPTY_RARE_CUSTOMER;
+        if (isRare) {
+            // 稀客：只需 requestedTag，无具体菜品
+            cuisineId = IzakayaOrder.EMPTY_ORDER;
+            requestedTag = pickRandom(customer.likes(), random);
+            if (requestedTag == null) return null;
+            rareCustomerId = holder.key();
+        } else {
+            // 普客：需要具体菜品，无标签偏好
+            cuisineId = pickItemByTags(recipeMap, customer.likes(), random);
+            if (cuisineId == null) return null;
+            requestedTag = IzakayaOrder.EMPTY_ORDER;
+            rareCustomerId = IzakayaOrder.EMPTY_RARE_CUSTOMER;
+        }
 
-        return new IzakayaOrder(cuisineId, beverageId, requestedTag, rareCustomerId);
+        return new IzakayaOrder(cuisineId, beverageId, requestedTag, rareCustomerId, isRare);
     }
 
     /**

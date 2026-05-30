@@ -8,6 +8,7 @@ package icu.gensoukyo.neo_mystias_izakaya.client.render;
 import com.mojang.blaze3d.vertex.PoseStack;
 import icu.gensoukyo.neo_mystias_izakaya.client.render.state.DiningTableRenderState;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.DiningTableBlockEntity;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -16,6 +17,7 @@ import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
@@ -56,6 +58,8 @@ public class DiningTableRenderer implements BlockEntityRenderer<DiningTableBlock
         diningTableRenderState.beverageRenderState.submit(poseStack, submitNodeCollector, diningTableRenderState.lightCoords, OverlayTexture.NO_OVERLAY, 0);
         poseStack.translate(1D, 0D, 0D);
         diningTableRenderState.cuisineRenderState.submit(poseStack, submitNodeCollector, diningTableRenderState.lightCoords, OverlayTexture.NO_OVERLAY, 0);
+        poseStack.translate(-0.5D,1D,0D);
+        submitNodeCollector.submitText(poseStack, 0,0, Component.literal("Table " + diningTableRenderState.index).getVisualOrderText(), false, Font.DisplayMode.NORMAL, diningTableRenderState.lightCoords,0xFFFFFFFF, 0,0);
         poseStack.popPose();
     }
 }
