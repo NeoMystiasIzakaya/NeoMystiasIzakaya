@@ -14,6 +14,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -73,16 +74,25 @@ public class CanteenControllerBlock extends BaseEntityBlock {
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (!level.isClientSide() && level.getBlockEntity(pos) instanceof CanteenControllerBlockEntity controller) {
-            player.sendSystemMessage(
-                    Component.translatable("block.neo_mystias_izakaya.canteen_controller.status",
-                            controller.getKitchenwareList().size(),
-                            controller.getDiningTableList().size())
-            );
+            ItemStack mainHandItem = player.getMainHandItem();
+            if (mainHandItem.isEmpty()) {
+                controller.setOpen(!controller.isOpen());
+                player.sendSystemMessage(
+                        Component.translatable(controller.isOpen()
+                                ? "block.neo_mystias_izakaya.canteen_controller.open"
+                                : "block.neo_mystias_izakaya.canteen_controller.close")
+                );
+            }
+            if (mainHandItem.is(NMIMainItems.CANTEEN_CONFIG)) {
+                player.sendSystemMessage(
+                        Component.translatable("block.neo_mystias_izakaya.canteen_controller.status",
+                                controller.getKitchenwareList().size(),
+                                controller.getDiningTableList().size())
+                );
+                return super.useWithoutItem(state, level, pos, player, hitResult);
+            }
         }
 
-        if (player.getMainHandItem().is(NMIMainItems.CANTEEN_CONFIG)) {
-            return super.useWithoutItem(state, level, pos, player, hitResult);
-        }
         return InteractionResult.SUCCESS;
     }
 }

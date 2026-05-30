@@ -165,10 +165,7 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
         this.isOccupied = true;
         this.customerId = customerId;
         this.currentOrder = order;
-        this.setChanged();
-        if (this.level != null) {
-            this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);
-        }
+        markUpdated();
     }
 
     /**
@@ -180,10 +177,7 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
         this.currentOrder = IzakayaOrder.EMPTY;
         // 清空菜品和饮品
         this.items.clear();
-        this.setChanged();
-        if (this.level != null) {
-            this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);
-        }
+        markUpdated();
     }
 
     /**
@@ -199,7 +193,7 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
     public void bindToController(int index, BlockPos controller) {
         this.tableIndex = index;
         this.controllerPos = controller;
-        this.setChanged();
+        markUpdated();
     }
 
     /**
@@ -208,7 +202,7 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
     public void unbindFromController() {
         this.tableIndex = -1;
         this.controllerPos = BlockPos.ZERO;
-        this.setChanged();
+        markUpdated();
     }
 
     /**
@@ -223,10 +217,7 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
      */
     public void setCuisine(ItemStack cuisine) {
         this.items.set(SLOT_CUISINE, cuisine);
-        this.setChanged();
-        if (this.level != null) {
-            this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);
-        }
+        markUpdated();
     }
 
     public void clearCuisine() {
@@ -247,10 +238,7 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
      */
     public void setBeverage(ItemStack beverage) {
         this.items.set(SLOT_BEVERAGE, beverage);
-        this.setChanged();
-        if (this.level != null) {
-            this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);
-        }
+        markUpdated();
     }
 
     public void clearBeverage() {
@@ -259,5 +247,12 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
 
     public boolean isFull() {
         return this.items.stream().noneMatch(ItemStack::isEmpty);
+    }
+
+    private void markUpdated() {
+        this.setChanged();
+        if (this.level != null) {
+            this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);
+        }
     }
 }

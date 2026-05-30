@@ -81,6 +81,8 @@ public class NMILanguageProvider implements DataProvider {
         this.add("item.neo_mystias_izakaya.canteen_config.kitchenware_full", "Maximum 8 kitchenware reached!", "最多只能绑定8个厨房用具！");
         this.add("item.neo_mystias_izakaya.canteen_config.dining_table_full", "Maximum 8 dining tables reached!", "最多只能绑定8张餐桌！");
 
+        this.add("block.neo_mystias_izakaya.canteen_controller.open", "§aCanteen Opened! §7Customers will arrive.", "§a餐厅已营业！§7顾客即将光临。");
+        this.add("block.neo_mystias_izakaya.canteen_controller.close", "§cCanteen Closed! §7No more new customers.", "§c餐厅已打烊！§7不再接待新顾客。");
         this.add("block.neo_mystias_izakaya.canteen_controller.status", "Kitchenware: %s, Dining Tables: %s", "厨房用具：%s，餐桌：%s");
 
         this.add("container.neo_mystias_izakaya.dining_table", "Dining Table", "餐桌");

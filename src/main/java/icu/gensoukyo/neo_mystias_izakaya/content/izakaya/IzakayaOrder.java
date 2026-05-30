@@ -32,7 +32,7 @@ public record IzakayaOrder(Identifier cuisine, Identifier beverage, Identifier r
                     Identifier.CODEC.fieldOf("beverage").forGetter(IzakayaOrder::beverage),
                     Identifier.CODEC.fieldOf("requestedTag").forGetter(IzakayaOrder::requestedTag),
                     Identifier.CODEC.fieldOf("rareCustomer").forGetter(IzakayaOrder::rareCustomer),
-                    Codec.BOOL.optionalFieldOf("isRare", false).forGetter(IzakayaOrder::isRare)
+                    Codec.BOOL.fieldOf("isRare").forGetter(IzakayaOrder::isRare)
             ).apply(instance, IzakayaOrder::new)
     );
 

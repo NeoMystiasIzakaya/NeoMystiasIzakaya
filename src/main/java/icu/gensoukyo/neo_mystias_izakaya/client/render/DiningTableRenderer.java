@@ -6,8 +6,10 @@
 package icu.gensoukyo.neo_mystias_izakaya.client.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import icu.gensoukyo.neo_mystias_izakaya.client.render.state.DiningTableRenderState;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.DiningTableBlockEntity;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -18,6 +20,7 @@ import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
@@ -52,14 +55,21 @@ public class DiningTableRenderer implements BlockEntityRenderer<DiningTableBlock
 
     @Override
     public void submit(DiningTableRenderState diningTableRenderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
+        Font font = Minecraft.getInstance().font;
         poseStack.pushPose();
         poseStack.scale(0.5F,0.5F,0.5F);
         poseStack.translate(0.5D, 2.5D, 1D);
         diningTableRenderState.beverageRenderState.submit(poseStack, submitNodeCollector, diningTableRenderState.lightCoords, OverlayTexture.NO_OVERLAY, 0);
         poseStack.translate(1D, 0D, 0D);
         diningTableRenderState.cuisineRenderState.submit(poseStack, submitNodeCollector, diningTableRenderState.lightCoords, OverlayTexture.NO_OVERLAY, 0);
-        poseStack.translate(-0.5D,1D,0D);
-        submitNodeCollector.submitText(poseStack, 0,0, Component.literal("Table " + diningTableRenderState.index).getVisualOrderText(), false, Font.DisplayMode.NORMAL, diningTableRenderState.lightCoords,0xFFFFFFFF, 0,0);
+        poseStack.translate(-0.5D,2D,0D);
+        poseStack.mulPose(Axis.ZN.rotationDegrees(180));
+        poseStack.scale(0.1F,0.1F,0.1F);
+        MutableComponent literal = Component.literal(String.valueOf(diningTableRenderState.index));
+        submitNodeCollector.submitText(poseStack, 0,0, literal.getVisualOrderText(), false, Font.DisplayMode.NORMAL, diningTableRenderState.lightCoords,0xFFFFFFFF, 0,0);
+        poseStack.mulPose(Axis.YN.rotationDegrees(180));
+        poseStack.translate(-font.width(literal), 0.0D, 0.0D);
+        submitNodeCollector.submitText(poseStack, 0,0, literal.getVisualOrderText(), false, Font.DisplayMode.NORMAL, diningTableRenderState.lightCoords,0xFFFFFFFF, 0,0);
         poseStack.popPose();
     }
 }
