@@ -16,6 +16,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.Containers;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
@@ -93,16 +94,16 @@ public abstract class AbstractKitchenwareBE extends RandomizableContainerBlockEn
     }
 
     @Override
-    protected AbstractContainerMenu createMenu(int containerID, Inventory inventory) {
-        return new KitchenwareMenu(containerID, inventory, this.getBlockPos(), dataAccess);
-    }
-
-    @Override
     protected void setItems(NonNullList<ItemStack> itemStacks) {
         if (itemStacks.size() != 7) {
             LOGGER.error("Attempted to set items with a list of size {}, but expected size is 7. This may cause unexpected behavior.", itemStacks.size());
         }
         this.items = NonNullList.copyOf(itemStacks);
+    }
+
+    @Override
+    protected AbstractContainerMenu createMenu(int containerID, Inventory inventory) {
+        return new KitchenwareMenu(containerID, inventory, this.getBlockPos(), dataAccess);
     }
 
     public void setIngredients(NonNullList<ItemStack> itemStacks) {
@@ -175,6 +176,14 @@ public abstract class AbstractKitchenwareBE extends RandomizableContainerBlockEn
             output.putInt("CookingTime", this.cookingTime);
             output.putInt("TotalCookingTime", this.totalCookingTime);
             return output.buildResult();
+        }
+    }
+
+    @Override
+    public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+        if (this.level != null) {
+            this.getIngredientItems().forEach(stack -> Containers.dropItemStack(this.level, pos.getX(), pos.getY(), pos.getZ(), stack));
+            Containers.dropItemStack(this.level, pos.getX(), pos.getY(), pos.getZ(), this.getResultItem());
         }
     }
 }

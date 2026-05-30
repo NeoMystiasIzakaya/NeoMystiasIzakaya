@@ -75,7 +75,6 @@ public abstract class AbstractKitchenware extends BaseEntityBlock {
     }
 
     @Override
-    @SuppressWarnings("all")
     protected RenderShape getRenderShape(BlockState pState) {
         return RenderShape.MODEL;
     }
