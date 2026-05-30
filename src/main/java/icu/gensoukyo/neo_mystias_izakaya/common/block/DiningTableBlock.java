@@ -7,7 +7,7 @@ package icu.gensoukyo.neo_mystias_izakaya.common.block;
 
 import com.mojang.serialization.MapCodec;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
-import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientItemTagUtil;
+import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonItemTagUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.DiningTableBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMIServerRecipeUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
@@ -98,7 +98,7 @@ public class DiningTableBlock extends BaseEntityBlock {
         if (level.getBlockEntity(pos) instanceof DiningTableBlockEntity diningTableBlockEntity) {
             if (!itemStack.isEmpty()) {
                 // 手持物品 → 尝试放入（若槽位已有则交换给玩家）
-                ItemTagList itemTagList = NMIClientItemTagUtil.get(itemStack);
+                ItemTagList itemTagList = NMICommonItemTagUtil.get(itemStack);
                 if (itemTagList != null && !itemTagList.isEmpty()) {
                     if (itemTagList.hasBeveragesTag()) {
                         swapOrPlace(player, itemStack, diningTableBlockEntity, true);

@@ -8,7 +8,7 @@ package icu.gensoukyo.neo_mystias_izakaya.client.event;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.api.event.client.ClientTagFoodItemEvent;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientEconomyUtil;
-import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientItemTagUtil;
+import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonItemTagUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonComponentUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMIServerItemTagUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
@@ -32,7 +32,7 @@ public class ItemEventHandler {
     public static void onLivingEntityUseItemEventFinish(LivingEntityUseItemEvent.Finish event) {
         ItemStack item = event.getItem();
         if (event.getEntity() instanceof LocalPlayer player) {
-            ItemTagList itemTagList = NMIClientItemTagUtil.get(item);
+            ItemTagList itemTagList = NMICommonItemTagUtil.get(item);
             NeoForge.EVENT_BUS.post(new ClientTagFoodItemEvent(itemTagList, item, player));
             NMIServerItemTagUtil.set(item, itemTagList);
         }
@@ -41,7 +41,7 @@ public class ItemEventHandler {
 
     @SubscribeEvent
     public static void onItemTooltipEvent(ItemTooltipEvent event){
-        ItemTagList itemTagList = NMIClientItemTagUtil.get(event.getItemStack());
+        ItemTagList itemTagList = NMICommonItemTagUtil.get(event.getItemStack());
 
         List<Component> toolTip = event.getToolTip();
 

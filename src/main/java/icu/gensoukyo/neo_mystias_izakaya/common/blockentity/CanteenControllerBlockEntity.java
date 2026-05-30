@@ -6,7 +6,12 @@
 package icu.gensoukyo.neo_mystias_izakaya.common.blockentity;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
+import icu.gensoukyo.neo_mystias_izakaya.api.dal.NMIDataAccessor;
+import icu.gensoukyo.neo_mystias_izakaya.content.customer.Customer;
+import icu.gensoukyo.neo_mystias_izakaya.content.customer.CustomerHolder;
+import icu.gensoukyo.neo_mystias_izakaya.content.customer.CustomerMap;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaOrder;
+import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeMap;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockEntities;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
@@ -15,6 +20,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.ProblemReporter;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -26,6 +32,7 @@ import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 
 public class CanteenControllerBlockEntity extends BlockEntity {
     @Getter
@@ -65,7 +72,7 @@ public class CanteenControllerBlockEntity extends BlockEntity {
             // 按概率派发：只有命中概率才入座
             if (pLevel.getRandom().nextFloat() >= SEAT_CHANCE) continue;
 
-            IzakayaOrder order = generateOrder(pBlockEntity);
+            IzakayaOrder order = generateOrder(pLevel, pBlockEntity);
             if (order != null) {
                 Identifier customerId = NeoMystiasIzakaya.id("customer_" + table.getTableIndex() + "_" + pLevel.getGameTime());
                 table.seatCustomer(customerId, order);
@@ -92,12 +99,87 @@ public class CanteenControllerBlockEntity extends BlockEntity {
         return changed;
     }
 
+    /** 稀客出现概率 */
+    private static final float RARE_CUSTOMER_CHANCE = 0.15F;
+
     /**
-     * 生成新订单（TODO: 接入顾客系统与菜单系统）
+     * 生成新订单：随机选顾客 → 匹配菜品/饮品标签 → 构建 IzakayaOrder
      */
-    private static @Nullable IzakayaOrder generateOrder(CanteenControllerBlockEntity controller) {
-        // TODO: 根据 IzakayaMenu、当前解锁配方、稀客/普客概率生成订单
+    private static @Nullable IzakayaOrder generateOrder(Level level, CanteenControllerBlockEntity controller) {
+        CustomerMap customerMap = NMIDataAccessor.server().getCustomerMap();
+        NMIRecipeMap recipeMap = NMIDataAccessor.server().getRecipeMap();
+        RandomSource random = level.getRandom();
+
+        // 确保标签索引已构建（首次调用时构建，后续命中缓存）
+        if (recipeMap.getOutputTagToItemMap().isEmpty()) {
+            recipeMap.buildOutputTagToItemMap(NMIDataAccessor.server().getTagItemListMap());
+        }
+
+        // ① 选择顾客（概率加权）
+        CustomerHolder holder = pickCustomer(customerMap, random);
+        if (holder == null) return null;
+        Customer customer = holder.customer();
+
+        // ② 根据喜好标签选菜品
+        Identifier cuisineId = pickItemByTags(recipeMap, customer.likes(), random);
+        if (cuisineId == null) return null;
+
+        // ③ 根据饮品偏好选饮品
+        Identifier beverageId = pickItemByTags(recipeMap, customer.beverage(), random);
+        if (beverageId == null) return null;
+
+        // ④ 从命中的标签中随机选一个作为 requestedTag
+        Identifier requestedTag = pickRandom(customer.likes(), random);
+        if (requestedTag == null) return null;
+
+        Identifier rareCustomerId = holder instanceof icu.gensoukyo.neo_mystias_izakaya.content.customer.RareCustomerHolder
+                ? holder.key() : IzakayaOrder.EMPTY_RARE_CUSTOMER;
+
+        return new IzakayaOrder(cuisineId, beverageId, requestedTag, rareCustomerId);
+    }
+
+    /**
+     * 从顾客池中按概率选一位（稀客 15%，普客 85%）
+     */
+    private static @Nullable CustomerHolder pickCustomer(CustomerMap customerMap, RandomSource random) {
+        boolean isRare = random.nextFloat() < RARE_CUSTOMER_CHANCE;
+        List<? extends CustomerHolder> pool;
+
+        if (isRare) {
+            pool = customerMap.getRareCustomers();
+            if (pool.isEmpty()) pool = customerMap.getCommonCustomers();
+        } else {
+            pool = customerMap.getCommonCustomers();
+            if (pool.isEmpty()) pool = customerMap.getRareCustomers();
+        }
+
+        if (pool.isEmpty()) return null;
+        return pool.get(random.nextInt(pool.size()));
+    }
+
+    /**
+     * 从 recipeMap 的标签索引中随机匹配一个产物
+     */
+    private static @Nullable Identifier pickItemByTags(NMIRecipeMap recipeMap, List<Identifier> tags, RandomSource random) {
+        if (tags.isEmpty()) return null;
+
+        Map<Identifier, List<Identifier>> tagIndex = recipeMap.getOutputTagToItemMap();
+        if (tagIndex.isEmpty()) return null;
+
+        // 随机选一个标签，查索引获取匹配的产物列表
+        Identifier targetTag = tags.get(random.nextInt(tags.size()));
+        List<Identifier> matchingItems = tagIndex.get(targetTag);
+        if (matchingItems != null && !matchingItems.isEmpty()) {
+            return matchingItems.get(random.nextInt(matchingItems.size()));
+        }
+
         return null;
+    }
+
+    @Nullable
+    private static <T> T pickRandom(List<T> list, RandomSource random) {
+        if (list.isEmpty()) return null;
+        return list.get(random.nextInt(list.size()));
     }
 
     @Override

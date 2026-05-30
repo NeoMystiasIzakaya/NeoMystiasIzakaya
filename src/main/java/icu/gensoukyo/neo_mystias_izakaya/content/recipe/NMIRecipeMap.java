@@ -8,6 +8,8 @@ package icu.gensoukyo.neo_mystias_izakaya.content.recipe;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonItemUtil;
+import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
+import icu.gensoukyo.neo_mystias_izakaya.content.tag.TagItemListMap;
 import lombok.Getter;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -26,6 +28,7 @@ public class NMIRecipeMap {
     private final Map<Identifier, List<Identifier>> inputItemToRecipeMap;
     private final Map<Identifier, List<Identifier>> outputItemToRecipeMap;
     private final Map<TagKey<Block>, List<Identifier>> kitchenwareToRecipeMap;
+    private Map<Identifier, List<Identifier>> outputTagToItemMap = Map.of();
 
     public static final Codec<NMIRecipeMap> CODEC = RecordCodecBuilder.create(
             instance -> instance.group(
@@ -107,6 +110,22 @@ public class NMIRecipeMap {
 
     public static NMIRecipeMap create(List<NMIRecipeHolder> recipes) {
         return new NMIRecipeMap(recipes);
+    }
+
+    /**
+     * 构建标签 → 可合成产物 的反向索引，用于按顾客偏好快速匹配订单
+     */
+    public void buildOutputTagToItemMap(TagItemListMap tagMap) {
+        Map<Identifier, Set<Identifier>> map = new HashMap<>();
+        for (Identifier itemId : this.outputItemToRecipeMap.keySet()) {
+            ItemTagList tags = tagMap.getTagsForItem(itemId);
+            if (tags != null) {
+                for (Identifier tag : tags.positiveTags()) {
+                    map.computeIfAbsent(tag, k -> new HashSet<>()).add(itemId);
+                }
+            }
+        }
+        this.outputTagToItemMap = normalizeMap(map);
     }
 
     public static final NMIRecipeMap EMPTY = new NMIRecipeMap(List.of());
