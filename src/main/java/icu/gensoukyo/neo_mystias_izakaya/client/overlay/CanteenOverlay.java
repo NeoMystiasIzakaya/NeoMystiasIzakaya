@@ -1,9 +1,11 @@
 package icu.gensoukyo.neo_mystias_izakaya.client.overlay;
 
+import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.DiningTableBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIDataComponentTypes;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -29,7 +31,8 @@ public class CanteenOverlay implements GuiLayer {
     @Override
     public void render(@NonNull GuiGraphicsExtractor guiGraphics, @NonNull DeltaTracker deltaTracker) {
         LocalPlayer player = Minecraft.getInstance().player;
-        if (player == null) {
+        ClientLevel level = Minecraft.getInstance().level;
+        if (player == null || level == null) {
             return;
         }
 
@@ -48,35 +51,48 @@ public class CanteenOverlay implements GuiLayer {
 
         // --- 左侧：厨房用具矩形组 ---
         if (kitchenware != null && !kitchenware.isEmpty()) {
-            drawCenteredRectGroup(guiGraphics, 0, ITEM_RECT_WIDTH, centerY, kitchenware.size());
+            drawKitchenwareOverlay(guiGraphics, kitchenware, centerY, level);
         }
 
         // --- 右侧：餐桌矩形组 ---
         if (diningTables != null && !diningTables.isEmpty()) {
-            int rightX0 = screenWidth - ITEM_RECT_WIDTH;
-            drawCenteredRectGroup(guiGraphics, rightX0, screenWidth, centerY, diningTables.size());
+            drawDiningTableOverlay(guiGraphics, diningTables, screenWidth, centerY, level);
         }
     }
 
     /**
-     * 以垂直中线为对称轴，绘制 N 个上下对称排列的矩形
-     *
-     * @param guiGraphics 图形上下文
-     * @param x0          矩形左边界 X
-     * @param x1          矩形右边界 X
-     * @param centerY     屏幕垂直中心
-     * @param count       矩形数量
+     * 在左侧绘制厨房用具叠加矩形组（以垂直中线为对称轴上下居中）
      */
-    private void drawCenteredRectGroup(GuiGraphicsExtractor guiGraphics, int x0, int x1, int centerY, int count) {
-        // 计算整组的总高度
+    private void drawKitchenwareOverlay(GuiGraphicsExtractor guiGraphics, List<BlockPos> kitchenware, int centerY, ClientLevel level) {
+        int count = kitchenware.size();
         int totalHeight = count * ITEM_RECT_HEIGHT + (count - 1) * ITEM_RECT_SPACING;
-        // 起始 Y：使整组以 centerY 为中心
         int startY = centerY - totalHeight / 2;
 
         for (int i = 0; i < count; i++) {
             int y0 = startY + i * (ITEM_RECT_HEIGHT + ITEM_RECT_SPACING);
             int y1 = y0 + ITEM_RECT_HEIGHT;
-            drawItemRect(guiGraphics, x0, y0, x1, y1);
+            drawItemRect(guiGraphics, 0, y0, ITEM_RECT_WIDTH, y1);
+        }
+    }
+
+    /**
+     * 在右侧绘制餐桌叠加矩形组（以垂直中线为对称轴上下居中）
+     */
+    private void drawDiningTableOverlay(GuiGraphicsExtractor guiGraphics, List<BlockPos> diningTables, int screenWidth, int centerY, ClientLevel level) {
+        int count = diningTables.size();
+        int totalHeight = count * ITEM_RECT_HEIGHT + (count - 1) * ITEM_RECT_SPACING;
+        int startY = centerY - totalHeight / 2;
+        int x0 = screenWidth - ITEM_RECT_WIDTH;
+
+        for (int i = 0; i < count; i++) {
+            int y0 = startY + i * (ITEM_RECT_HEIGHT + ITEM_RECT_SPACING);
+            int y1 = y0 + ITEM_RECT_HEIGHT;
+            drawItemRect(guiGraphics, x0, y0, screenWidth, y1);
+
+            BlockPos blockPos = diningTables.get(i);
+            if (level.isLoaded(blockPos) && level.getBlockEntity(blockPos) instanceof DiningTableBlockEntity diningTable) {
+
+            }
         }
     }
 

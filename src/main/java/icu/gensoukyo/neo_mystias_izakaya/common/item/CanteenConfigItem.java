@@ -100,26 +100,29 @@ public class CanteenConfigItem extends Item {
             return InteractionResult.SUCCESS;
         }
 
-        // 右键厨房用具 → 绑定到已选的控制器
-        if (clickedState.getBlock() instanceof AbstractKitchenware) {
-            if (isLimitReached(heldItem, true)) {
-                if (player != null) player.sendOverlayMessage(MSG_KITCHENWARE_FULL);
-                return InteractionResult.FAIL;
+        BlockPos controllerPos = heldItem.get(NMIDataComponentTypes.BOUND_CONTROLLER);
+        if (controllerPos != null && level.isLoaded(controllerPos)) {
+            // 右键厨房用具 → 绑定到已选的控制器
+            if (clickedState.getBlock() instanceof AbstractKitchenware) {
+                if (isLimitReached(heldItem, true)) {
+                    if (player != null) player.sendOverlayMessage(MSG_KITCHENWARE_FULL);
+                    return InteractionResult.FAIL;
+                }
+                return bindToController(level, clickedPos, player, heldItem,
+                        CanteenControllerBlockEntity::addKitchenware,
+                        MSG_KITCHENWARE_BOUND, MSG_ALREADY_BOUND);
             }
-            return bindToController(level, clickedPos, player, heldItem,
-                    CanteenControllerBlockEntity::addKitchenware,
-                    MSG_KITCHENWARE_BOUND, MSG_ALREADY_BOUND);
-        }
 
-        // 右键餐桌 → 绑定到已选的控制器
-        if (clickedState.getBlock() instanceof DiningTableBlock) {
-            if (isLimitReached(heldItem, false)) {
-                if (player != null) player.sendOverlayMessage(MSG_DINING_TABLE_FULL);
-                return InteractionResult.FAIL;
+            // 右键餐桌 → 绑定到已选的控制器
+            if (clickedState.getBlock() instanceof DiningTableBlock) {
+                if (isLimitReached(heldItem, false)) {
+                    if (player != null) player.sendOverlayMessage(MSG_DINING_TABLE_FULL);
+                    return InteractionResult.FAIL;
+                }
+                return bindToController(level, clickedPos, player, heldItem,
+                        CanteenControllerBlockEntity::addDiningTable,
+                        MSG_DINING_TABLE_BOUND, MSG_ALREADY_BOUND);
             }
-            return bindToController(level, clickedPos, player, heldItem,
-                    CanteenControllerBlockEntity::addDiningTable,
-                    MSG_DINING_TABLE_BOUND, MSG_ALREADY_BOUND);
         }
 
         return InteractionResult.PASS;

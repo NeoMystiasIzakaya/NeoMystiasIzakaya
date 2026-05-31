@@ -255,4 +255,15 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
             this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);
         }
     }
+
+    /**
+     * 完全重置餐桌状态
+     */
+    public void clear() {
+        this.items.clear();
+        this.isOccupied = false;
+        this.customerId = IzakayaOrder.EMPTY_RARE_CUSTOMER;
+        this.currentOrder = IzakayaOrder.EMPTY;
+        markUpdated();
+    }
 }

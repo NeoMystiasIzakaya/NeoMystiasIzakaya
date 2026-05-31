@@ -7,6 +7,7 @@ package icu.gensoukyo.neo_mystias_izakaya.common.block;
 
 import com.mojang.serialization.MapCodec;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.CanteenControllerBlockEntity;
+import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.DiningTableBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockEntities;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIDataComponentTypes;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMainItems;
@@ -87,6 +88,18 @@ public class CanteenControllerBlock extends BaseEntityBlock {
                                 ? "block.neo_mystias_izakaya.canteen_controller.open"
                                 : "block.neo_mystias_izakaya.canteen_controller.close")
                 );
+
+                //闭店时抹去餐桌的信息
+                if (!open) {
+                    controller.getDiningTableList().forEach(tablePos -> {
+                        BlockEntity tableBE = level.getBlockEntity(tablePos);
+                        if (tableBE instanceof DiningTableBlockEntity diningTable) {
+                            diningTable.clear();
+                        }
+                    });
+                }
+
+                //开店时同步信息进入帽子进行高亮显示
                 ItemStack headItem = player.getItemBySlot(EquipmentSlot.HEAD);
                 if (headItem.is(NMIMainItems.MYSTIAS_HAT)) {
                     if (open) {
