@@ -8,11 +8,13 @@ package icu.gensoukyo.neo_mystias_izakaya.common.block;
 import com.mojang.serialization.MapCodec;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.CanteenControllerBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockEntities;
+import icu.gensoukyo.neo_mystias_izakaya.registry.NMIDataComponentTypes;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMainItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -27,6 +29,8 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jspecify.annotations.Nullable;
+
+import java.util.ArrayList;
 
 public class CanteenControllerBlock extends BaseEntityBlock {
     public static final MapCodec<CanteenControllerBlock> CODEC = simpleCodec(CanteenControllerBlock::new);
@@ -76,12 +80,25 @@ public class CanteenControllerBlock extends BaseEntityBlock {
         if (!level.isClientSide() && level.getBlockEntity(pos) instanceof CanteenControllerBlockEntity controller) {
             ItemStack mainHandItem = player.getMainHandItem();
             if (mainHandItem.isEmpty()) {
-                controller.setOpen(!controller.isOpen());
+                boolean open = !controller.isOpen();
+                controller.setOpen(open);
                 player.sendSystemMessage(
-                        Component.translatable(controller.isOpen()
+                        Component.translatable(open
                                 ? "block.neo_mystias_izakaya.canteen_controller.open"
                                 : "block.neo_mystias_izakaya.canteen_controller.close")
                 );
+                ItemStack headItem = player.getItemBySlot(EquipmentSlot.HEAD);
+                if (headItem.is(NMIMainItems.MYSTIAS_HAT)) {
+                    if (open) {
+                        headItem.set(NMIDataComponentTypes.BOUND_CONTROLLER, controller.getBlockPos());
+                        headItem.set(NMIDataComponentTypes.BOUND_KITCHENWARE, new ArrayList<>(controller.getKitchenwareList()));
+                        headItem.set(NMIDataComponentTypes.BOUND_DINING_TABLES, new ArrayList<>(controller.getDiningTableList()));
+                    } else {
+                        headItem.remove(NMIDataComponentTypes.BOUND_CONTROLLER);
+                        headItem.remove(NMIDataComponentTypes.BOUND_KITCHENWARE);
+                        headItem.remove(NMIDataComponentTypes.BOUND_DINING_TABLES);
+                    }
+                }
             }
             if (mainHandItem.is(NMIMainItems.CANTEEN_CONFIG)) {
                 player.sendSystemMessage(

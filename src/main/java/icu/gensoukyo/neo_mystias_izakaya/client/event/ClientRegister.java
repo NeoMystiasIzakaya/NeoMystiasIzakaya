@@ -38,6 +38,7 @@ public class ClientRegister {
         event.registerBlockEntityRenderer(NMIBlockEntities.DINING_TABLE.get(), DiningTableRenderer::new);
     }
 
+    @SubscribeEvent
     public static void registerOverlay(RegisterGuiLayersEvent event) {
         event.registerAbove(CROSSHAIR, NeoMystiasIzakaya.id("canteen_overlay"), new CanteenOverlay());
     }
