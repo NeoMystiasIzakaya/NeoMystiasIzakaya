@@ -1,5 +1,6 @@
 package icu.gensoukyo.neo_mystias_izakaya.client.overlay;
 
+import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.AbstractKitchenwareBE;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.DiningTableBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIDataComponentTypes;
 import net.minecraft.client.DeltaTracker;
@@ -63,8 +64,8 @@ public class CanteenOverlay implements GuiLayer {
     /**
      * 在左侧绘制厨房用具叠加矩形组（以垂直中线为对称轴上下居中）
      */
-    private void drawKitchenwareOverlay(GuiGraphicsExtractor guiGraphics, List<BlockPos> kitchenware, int centerY, ClientLevel level) {
-        int count = kitchenware.size();
+    private void drawKitchenwareOverlay(GuiGraphicsExtractor guiGraphics, List<BlockPos> kitchenwareList, int centerY, ClientLevel level) {
+        int count = kitchenwareList.size();
         int totalHeight = count * ITEM_RECT_HEIGHT + (count - 1) * ITEM_RECT_SPACING;
         int startY = centerY - totalHeight / 2;
 
@@ -72,14 +73,20 @@ public class CanteenOverlay implements GuiLayer {
             int y0 = startY + i * (ITEM_RECT_HEIGHT + ITEM_RECT_SPACING);
             int y1 = y0 + ITEM_RECT_HEIGHT;
             drawItemRect(guiGraphics, 0, y0, ITEM_RECT_WIDTH, y1);
+
+            BlockPos blockPos = kitchenwareList.get(i);
+            if (level.isLoaded(blockPos) && level.getBlockEntity(blockPos) instanceof AbstractKitchenwareBE kitchenware) {
+                ItemStack defaultInstance = kitchenware.getKitchenwareType().KITCHENWARE_ITEM.getDefaultInstance();
+                guiGraphics.item(defaultInstance, 1, y0 + 1);
+            }
         }
     }
 
     /**
      * 在右侧绘制餐桌叠加矩形组（以垂直中线为对称轴上下居中）
      */
-    private void drawDiningTableOverlay(GuiGraphicsExtractor guiGraphics, List<BlockPos> diningTables, int screenWidth, int centerY, ClientLevel level) {
-        int count = diningTables.size();
+    private void drawDiningTableOverlay(GuiGraphicsExtractor guiGraphics, List<BlockPos> diningTableList, int screenWidth, int centerY, ClientLevel level) {
+        int count = diningTableList.size();
         int totalHeight = count * ITEM_RECT_HEIGHT + (count - 1) * ITEM_RECT_SPACING;
         int startY = centerY - totalHeight / 2;
         int x0 = screenWidth - ITEM_RECT_WIDTH;
@@ -89,7 +96,7 @@ public class CanteenOverlay implements GuiLayer {
             int y1 = y0 + ITEM_RECT_HEIGHT;
             drawItemRect(guiGraphics, x0, y0, screenWidth, y1);
 
-            BlockPos blockPos = diningTables.get(i);
+            BlockPos blockPos = diningTableList.get(i);
             if (level.isLoaded(blockPos) && level.getBlockEntity(blockPos) instanceof DiningTableBlockEntity diningTable) {
 
             }
