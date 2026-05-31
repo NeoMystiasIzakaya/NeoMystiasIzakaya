@@ -127,7 +127,7 @@ public class RecipeScreen extends Screen {
                 renderCuisineInfo(graphics, font, selected.getRecipe(), i + 254, j);
                 renderCuisineIngredient(graphics, font, selected.getRecipe(), i, j);
             } else if (selected.isCustomer()) {
-                renderCustomerInfo(graphics, font, selected.getCustomer(), i + 254, j);
+                renderCustomerInfo(graphics, font, selected.getCustomer(), i, j);
             } else if (selected.isItem()) {
                 renderBeverageInfo(graphics, font, selected.getItemStack(), i + 254, j);
             }
@@ -538,38 +538,80 @@ public class RecipeScreen extends Screen {
 
     // === 顾客详情渲染 ===
 
+    /**
+     * 在左侧原本绘制Tag的区域详细绘制顾客信息
+     */
     private void renderCustomerInfo(GuiGraphicsExtractor guiGraphics, Font font, CustomerHolder customerHolder, int i, int j) {
         Customer customer = customerHolder.customer();
         Identifier key = customerHolder.key();
+        int lineHeight = font.lineHeight;
+        int baseX = i + 15;
+        int startY = j + 30;
+        int maxWidth = 160;
 
+        // 顾客名称
         guiGraphics.text(font, Component.translatable("customer.neo_mystias_izakaya." + key.getPath()),
-                i + 15, j + 10, 0xFF000000, false);
+                baseX, startY, 0xFF000000, false);
+        startY += lineHeight + 2;
 
         // 预算
         guiGraphics.text(font, Component.translatable("gui.neo_mystias_izakaya.budget")
                         .append(": " + customer.budget().min() + "~" + customer.budget().max()),
-                i + 15, j + 22, 0xFF000000, false);
+                baseX, startY, 0xFF000000, false);
+        startY += lineHeight + 4;
+
+        // 地点
+        startY = renderCustomerTagSection(guiGraphics, font, "location", customer.locations(),
+                "gui.neo_mystias_izakaya.location", baseX, startY, maxWidth, 0xFF593B1F);
 
         // 喜好
-        if (!customer.likes().isEmpty()) {
-            guiGraphics.text(font, Component.translatable("gui.neo_mystias_izakaya.likes")
-                            .append(": " + customer.likes().size() + " 种"),
-                    i + 15, j + 34, 0xFF000000, false);
-        }
+        startY = renderCustomerTagSection(guiGraphics, font, "tag", customer.likes(),
+                "gui.neo_mystias_izakaya.likes", baseX, startY, maxWidth, 0xFF593B1F);
 
         // 厌恶
-        if (!customer.dislikes().isEmpty()) {
-            guiGraphics.text(font, Component.translatable("gui.neo_mystias_izakaya.dislikes")
-                            .append(": " + customer.dislikes().size() + " 种"),
-                    i + 15, j + 46, 0xFF000000, false);
-        }
+        startY = renderCustomerTagSection(guiGraphics, font, "tag", customer.dislikes(),
+                "gui.neo_mystias_izakaya.dislikes", baseX, startY, maxWidth, 0xFF593B1F);
 
         // 酒水偏好
-        if (!customer.beverage().isEmpty()) {
-            guiGraphics.text(font, Component.translatable("gui.neo_mystias_izakaya.beverage_pref")
-                            .append(": " + customer.beverage().size() + " 种"),
-                    i + 15, j + 58, 0xFF000000, false);
+        startY = renderCustomerTagSection(guiGraphics, font, "tag", customer.beverage(),
+                "gui.neo_mystias_izakaya.beverage_pref", baseX, startY, maxWidth, 0xFF593B1F);
+
+        // 符卡
+        startY = renderCustomerTagSection(guiGraphics, font, "tag", customer.spellCards(),
+                "gui.neo_mystias_izakaya.spell_card", baseX, startY, maxWidth, 0xFF593B1F);
+    }
+
+    /**
+     * 渲染一个带标题的标签区域，标签自动换行
+     *
+     * @return 下一段内容的起始 Y 坐标
+     */
+    private int renderCustomerTagSection(GuiGraphicsExtractor guiGraphics, Font font, String prefix,
+            List<Identifier> tags, String headerKey, int baseX, int startY, int maxWidth, int color) {
+        if (tags.isEmpty()) return startY;
+
+        int lineHeight = font.lineHeight;
+
+        // 区域标题
+        guiGraphics.text(font, Component.translatable(headerKey).append(":"),
+                baseX, startY, color, false);
+        startY += lineHeight;
+
+        // 标签内容，流式排列自动换行
+        int currentX = baseX + 8;
+        for (Identifier tag : tags) {
+            MutableComponent tagComponent = Component.translatable(tag.toLanguageKey(prefix));
+            int tagWidth = font.width(tagComponent.getVisualOrderText());
+            if (currentX + tagWidth > baseX + maxWidth) {
+                currentX = baseX + 8;
+                startY += lineHeight;
+            }
+            guiGraphics.text(font, tagComponent, currentX, startY, 0xFF000000, false);
+            currentX += tagWidth + 6;
         }
+        startY += lineHeight + 2;
+
+        return startY;
     }
 
     // === 酒水详情渲染 ===

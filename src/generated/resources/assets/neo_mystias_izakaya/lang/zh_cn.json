@@ -1,7 +1,7 @@
 {
   "block.neo_mystias_izakaya.boiling_pot": "煮锅",
-  "block.neo_mystias_izakaya.canteen_controller.open": "餐厅已营业！顾客即将光临。",
-  "block.neo_mystias_izakaya.canteen_controller.close": "餐厅已打烊！不再接待新顾客。",
+  "block.neo_mystias_izakaya.canteen_controller.close": "§c餐厅已打烊！§7不再接待新顾客。",
+  "block.neo_mystias_izakaya.canteen_controller.open": "§a餐厅已营业！§7顾客即将光临。",
   "block.neo_mystias_izakaya.canteen_controller.status": "厨房用具：%s，餐桌：%s",
   "block.neo_mystias_izakaya.cutting_board": "料理台",
   "block.neo_mystias_izakaya.dining_table": "餐桌",
@@ -1347,6 +1347,7 @@
   "gui.neo_mystias_izakaya.common_customer": "普客",
   "gui.neo_mystias_izakaya.dislikes": "厌恶",
   "gui.neo_mystias_izakaya.likes": "喜好",
+  "gui.neo_mystias_izakaya.location": "地点",
   "gui.neo_mystias_izakaya.price": "价格",
   "gui.neo_mystias_izakaya.progress": "进度",
   "gui.neo_mystias_izakaya.rare_customer": "稀客",
