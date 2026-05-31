@@ -6,10 +6,13 @@
 package icu.gensoukyo.neo_mystias_izakaya.client.network;
 
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
+import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.AbstractKitchenwareBE;
 import icu.gensoukyo.neo_mystias_izakaya.common.network.*;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonBalanceUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonIzakayaUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaOrderList;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public class ClientPayloadHandler {
@@ -48,5 +51,17 @@ public class ClientPayloadHandler {
 
     public static void handleBalanceTransactionSyncFullMessage(NMIBalanceTransactionSyncFullMessage message, IPayloadContext context) {
         context.enqueueWork(() -> NMICommonBalanceUtil.setTransaction(context.player(), message.transaction()));
+    }
+
+    public static void handleKitchenwareTimeSyncMessage(KitchenwareTimeSyncMessage message, IPayloadContext context) {
+        context.enqueueWork(() -> {
+            ClientLevel level = Minecraft.getInstance().level;
+            if (level != null && level.isLoaded(message.pos())) {
+                var blockEntity = level.getBlockEntity(message.pos());
+                if (blockEntity instanceof AbstractKitchenwareBE target) {
+                    target.setCookingTime(message.cookTime());
+                }
+            }
+        });
     }
 }

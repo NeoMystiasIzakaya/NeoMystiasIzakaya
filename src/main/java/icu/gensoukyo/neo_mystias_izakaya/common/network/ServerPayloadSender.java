@@ -15,6 +15,7 @@ import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaOrder;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaOrderList;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeMap;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.TagItemListMap;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.PacketDistributor;
 
@@ -58,5 +59,9 @@ public class ServerPayloadSender {
 
     public static void sendTransactionUpdateMessage(ServerPlayer player, NMIBalanceTransactionEntry entry) {
         PacketDistributor.sendToPlayer(player, new NMIBalanceTransactionUpdateMessage(entry));
+    }
+
+    public static void sendKitchenwareSyncMessage(BlockPos blockPos, int cookTime) {
+        PacketDistributor.sendToAllPlayers(new KitchenwareTimeSyncMessage(blockPos, cookTime));
     }
 }

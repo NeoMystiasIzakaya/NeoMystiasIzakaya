@@ -8,6 +8,7 @@ package icu.gensoukyo.neo_mystias_izakaya.common.blockentity;
 import com.mojang.logging.LogUtils;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.KitchenwareMenu;
+import icu.gensoukyo.neo_mystias_izakaya.common.network.ServerPayloadSender;
 import lombok.Setter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -78,6 +79,7 @@ public abstract class AbstractKitchenwareBE extends RandomizableContainerBlockEn
     public static void serverTick(Level pLevel, BlockPos pPos, BlockState pState, AbstractKitchenwareBE pBlockEntity) {
         if (pState.getValue(BlockStateProperties.LIT)) {
             pBlockEntity.cookingTime--;
+            ServerPayloadSender.sendKitchenwareSyncMessage(pBlockEntity.getBlockPos(), pBlockEntity.cookingTime);
             if (pBlockEntity.cookingTime <= 0) {
                 pBlockEntity.cookingTime = 0;
                 ItemStack copy = pBlockEntity.getTargetItem().copy();
@@ -139,6 +141,10 @@ public abstract class AbstractKitchenwareBE extends RandomizableContainerBlockEn
 
     public boolean canStartCooking() {
         return this.getTargetItem().isEmpty() && this.getResultItem().isEmpty() && !this.getBlockState().getValue(BlockStateProperties.LIT);
+    }
+
+    public float getCookingProgress() {
+        return (float) this.cookingTime / (float) this.totalCookingTime;
     }
 
     public ItemStack getTargetItem() {

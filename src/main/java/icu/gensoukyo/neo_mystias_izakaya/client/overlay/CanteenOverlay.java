@@ -19,7 +19,7 @@ import java.util.List;
 public class CanteenOverlay implements GuiLayer {
 
     /** 每个物品矩形宽度 */
-    private static final int ITEM_RECT_WIDTH = 60;
+    private static final int ITEM_RECT_WIDTH = 80;
     /** 每个物品矩形高度 */
     private static final int ITEM_RECT_HEIGHT = 24;
     /** 物品矩形之间的间距 */
@@ -78,6 +78,17 @@ public class CanteenOverlay implements GuiLayer {
             if (level.isLoaded(blockPos) && level.getBlockEntity(blockPos) instanceof AbstractKitchenwareBE kitchenware) {
                 ItemStack defaultInstance = kitchenware.getKitchenwareType().KITCHENWARE_ITEM.getDefaultInstance();
                 guiGraphics.item(defaultInstance, 1, y0 + 1);
+                if (!kitchenware.getResultItem().isEmpty()) {
+                    guiGraphics.item(kitchenware.getResultItem(), 20, y0 + 3);
+                    guiGraphics.text(Minecraft.getInstance().font, "完成", 40, y0 + 7, 0xFF000000, false);
+                }
+
+                if (!kitchenware.getTargetItem().isEmpty()) {
+                    guiGraphics.item(kitchenware.getTargetItem(), 20, y0 + 3);
+                    float cookingProgress = kitchenware.getCookingProgress();
+                    float width = ITEM_RECT_WIDTH - 44;
+                    guiGraphics.fill(40, y0 + 4, (int) (40 + width * cookingProgress), y1 - 4, 0xFFFFFFFF);
+                }
             }
         }
     }

@@ -73,6 +73,12 @@ public class NMINetwork {
                 NMIBalanceTransactionUpdateMessage.STREAM_CODEC,
                 ClientPayloadHandler::handleBalanceTransactionUpdateMessage
         );
+
+        registrar.playToClient(
+                KitchenwareTimeSyncMessage.TYPE,
+                KitchenwareTimeSyncMessage.STREAM_CODEC,
+                ClientPayloadHandler::handleKitchenwareTimeSyncMessage
+        );
     }
 
     private static void registerClientBound(PayloadRegistrar registrar) {
