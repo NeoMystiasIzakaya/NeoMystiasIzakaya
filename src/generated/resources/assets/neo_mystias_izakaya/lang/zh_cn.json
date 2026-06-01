@@ -1897,6 +1897,8 @@
   "item_group.neo_mystias_izakaya.cuisines": "新夜雀食堂 - 料理",
   "item_group.neo_mystias_izakaya.ingredient": "新夜雀食堂 - 食材",
   "item_group.neo_mystias_izakaya.main": "新夜雀食堂 - 主体",
+  "key.category.neo_mystias_izakaya.main": "新夜雀食堂",
+  "key.neo_mystias_izakaya.canteen_info": "显示餐厅信息",
   "location.neo_mystias_izakaya.bamboo_forest_of_the_lost": "迷途竹林",
   "location.neo_mystias_izakaya.divine_spirit_mausoleum": "神灵庙",
   "location.neo_mystias_izakaya.forest_of_magic": "魔法森林",

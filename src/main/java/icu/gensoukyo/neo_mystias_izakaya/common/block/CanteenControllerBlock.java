@@ -80,7 +80,9 @@ public class CanteenControllerBlock extends BaseEntityBlock {
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (!level.isClientSide() && level.getBlockEntity(pos) instanceof CanteenControllerBlockEntity controller) {
             ItemStack mainHandItem = player.getMainHandItem();
-            if (mainHandItem.isEmpty()) {
+            //开店时同步信息进入帽子进行高亮显示
+            ItemStack headItem = player.getItemBySlot(EquipmentSlot.HEAD);
+            if (mainHandItem.isEmpty() && headItem.is(NMIMainItems.MYSTIAS_HAT)) {
                 boolean open = !controller.isOpen();
                 controller.setOpen(open);
                 player.sendSystemMessage(
@@ -99,19 +101,16 @@ public class CanteenControllerBlock extends BaseEntityBlock {
                     });
                 }
 
-                //开店时同步信息进入帽子进行高亮显示
-                ItemStack headItem = player.getItemBySlot(EquipmentSlot.HEAD);
-                if (headItem.is(NMIMainItems.MYSTIAS_HAT)) {
-                    if (open) {
-                        headItem.set(NMIDataComponentTypes.BOUND_CONTROLLER, controller.getBlockPos());
-                        headItem.set(NMIDataComponentTypes.BOUND_KITCHENWARE, new ArrayList<>(controller.getKitchenwareList()));
-                        headItem.set(NMIDataComponentTypes.BOUND_DINING_TABLES, new ArrayList<>(controller.getDiningTableList()));
-                    } else {
-                        headItem.remove(NMIDataComponentTypes.BOUND_CONTROLLER);
-                        headItem.remove(NMIDataComponentTypes.BOUND_KITCHENWARE);
-                        headItem.remove(NMIDataComponentTypes.BOUND_DINING_TABLES);
-                    }
+                if (open) {
+                    headItem.set(NMIDataComponentTypes.BOUND_CONTROLLER, controller.getBlockPos());
+                    headItem.set(NMIDataComponentTypes.BOUND_KITCHENWARE, new ArrayList<>(controller.getKitchenwareList()));
+                    headItem.set(NMIDataComponentTypes.BOUND_DINING_TABLES, new ArrayList<>(controller.getDiningTableList()));
+                } else {
+                    headItem.remove(NMIDataComponentTypes.BOUND_CONTROLLER);
+                    headItem.remove(NMIDataComponentTypes.BOUND_KITCHENWARE);
+                    headItem.remove(NMIDataComponentTypes.BOUND_DINING_TABLES);
                 }
+
             }
             if (mainHandItem.is(NMIMainItems.CANTEEN_CONFIG)) {
                 player.sendSystemMessage(

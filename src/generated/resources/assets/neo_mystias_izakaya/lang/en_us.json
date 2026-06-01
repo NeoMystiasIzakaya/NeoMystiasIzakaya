@@ -1897,6 +1897,8 @@
   "item_group.neo_mystias_izakaya.cuisines": "Neo Mystia's Izakaya - Cuisines",
   "item_group.neo_mystias_izakaya.ingredient": "Neo Mystia's Izakaya - Ingredient",
   "item_group.neo_mystias_izakaya.main": "Neo Mystia's Izakaya - Main",
+  "key.category.neo_mystias_izakaya.main": "Neo Mystia's Izakaya",
+  "key.neo_mystias_izakaya.canteen_info": "Show canteen info",
   "location.neo_mystias_izakaya.bamboo_forest_of_the_lost": "Bamboo Forest of the Lost",
   "location.neo_mystias_izakaya.divine_spirit_mausoleum": "Divine Spirit Mausoleum",
   "location.neo_mystias_izakaya.forest_of_magic": "Forest of Magic",

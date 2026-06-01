@@ -104,6 +104,10 @@ public class NMILanguageProvider implements DataProvider {
 
         this.add("tooltip.neo_mystias_izakaya.price", "Price: %d %s", "价格：%s %s");
         this.add("tooltip.neo_mystias_izakaya.price.total", "Total Price: %d %s", "总价格：%s %s");
+
+        this.add("key.category.neo_mystias_izakaya.main", "Neo Mystia's Izakaya", "新夜雀食堂");
+        this.add("key.neo_mystias_izakaya.canteen_info", "Show canteen info", "显示餐厅信息");
+
         this.add("unit.neo_mystias_izakaya.en", "円", "円");
 
         this.add(NMIMainItems.CHROME_BALL, "Chrome Ball", "土球");
