@@ -6,7 +6,6 @@
 package icu.gensoukyo.neo_mystias_izakaya.api.event.server.cooking;
 
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.AbstractKitchenwareBE;
-import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeHolder;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.core.NonNullList;
@@ -14,8 +13,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.ICancellableEvent;
-
-import java.util.List;
 
 @Getter
 public abstract class IzakayaCookingEvent extends Event {
@@ -77,13 +74,29 @@ public abstract class IzakayaCookingEvent extends Event {
     }
 
     @Getter
-    @Setter
-    public static class ConsumeIngredients extends IzakayaCookingEvent {
-        private final NonNullList<ItemStack> ingredients;
+    public abstract static class ConsumeIngredients extends IzakayaCookingEvent {
+        private final NonNullList<ItemStack> originIngredients;
+        @Setter
+        private NonNullList<ItemStack> resultIngredients;
 
-        public ConsumeIngredients(Player player, AbstractKitchenwareBE kitchenwareBE, NonNullList<ItemStack> ingredients) {
+        public ConsumeIngredients(Player player, AbstractKitchenwareBE kitchenwareBE, NonNullList<ItemStack> originIngredients, NonNullList<ItemStack> resultIngredients) {
             super(player, kitchenwareBE);
-            this.ingredients = ingredients;
+            this.originIngredients = originIngredients;
+            this.resultIngredients = resultIngredients;
+        }
+
+        public static class Pre extends ConsumeIngredients implements ICancellableEvent {
+
+            public Pre(Player player, AbstractKitchenwareBE kitchenwareBE, NonNullList<ItemStack> ingredients, NonNullList<ItemStack> consumedIngredients) {
+                super(player, kitchenwareBE, ingredients, consumedIngredients);
+            }
+        }
+
+        public static class Post extends ConsumeIngredients {
+
+            public Post(Player player, AbstractKitchenwareBE kitchenwareBE, NonNullList<ItemStack> ingredients, NonNullList<ItemStack> consumedIngredients) {
+                super(player, kitchenwareBE, ingredients, consumedIngredients);
+            }
         }
     }
 
