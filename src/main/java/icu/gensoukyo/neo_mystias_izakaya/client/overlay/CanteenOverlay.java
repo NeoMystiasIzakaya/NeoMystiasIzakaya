@@ -4,13 +4,16 @@ import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.AbstractKitchenwareBE;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.DiningTableBlockEntity;
+import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonItemTagUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaOrder;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIDataComponentTypes;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -47,6 +50,11 @@ public class CanteenOverlay implements GuiLayer {
      * 矩形边框颜色 (白色)
      */
     private static final int BORDER_COLOR = 0xFFFFFFFF;
+
+    private static final Identifier CONFIRM_SPRITE = Identifier.withDefaultNamespace("container/beacon/confirm");
+    private static final Identifier CANCEL_SPRITE = Identifier.withDefaultNamespace("container/beacon/cancel");
+    public static final int DARK_RED = 0xFFAA0000;
+    public static final int DARK_GREEN = 0xFF00FF00;
 
     @Override
     public void render(@NonNull GuiGraphicsExtractor guiGraphics, @NonNull DeltaTracker deltaTracker) {
@@ -146,44 +154,55 @@ public class CanteenOverlay implements GuiLayer {
     /**
      * 渲染空闲餐桌
      */
-    private void renderIdleTable(GuiGraphicsExtractor guiGraphics, net.minecraft.client.gui.Font font, int x0, int y0) {
-        guiGraphics.text(font, Component.translatable("gui.neo_mystias_izakaya.idle"),
-                x0 + 4, y0 + 7, 0xFF888888, false);
+    private void renderIdleTable(GuiGraphicsExtractor guiGraphics, Font font, int x0, int y0) {
+        guiGraphics.text(font, Component.translatable("gui.neo_mystias_izakaya.idle"), x0 + 4, y0 + 7, 0xFF000000, false);
     }
 
     /**
      * 渲染有客餐桌：订单未完成显示需求，已完成显示物品
      */
-    private void renderOccupiedTable(GuiGraphicsExtractor guiGraphics, net.minecraft.client.gui.Font font,
+    private void renderOccupiedTable(GuiGraphicsExtractor guiGraphics, Font font,
                                      DiningTableBlockEntity diningTable, int x0, int y0) {
         IzakayaOrder order = diningTable.getCurrentOrder();
         Identifier customerId = diningTable.getCustomerId();
 
-        if (diningTable.isFull()) {
-            // 订单完成：显示桌上实际物品
-            ItemStack cuisine = diningTable.getCuisine();
-            ItemStack beverage = diningTable.getBeverage();
-            if (!cuisine.isEmpty()) guiGraphics.item(cuisine, x0 + 2, y0 + 3);
-            if (!beverage.isEmpty()) guiGraphics.item(beverage, x0 + 20, y0 + 3);
+        // 订单未完成：显示需求
+        if (order.isRare()) {
+            // 稀客：两个都是 Tag，显示 Tag 名称
+            Component cuisineTag = Component.translatable(order.cuisine().toLanguageKey("tag"));
+            Component beverageTag = Component.translatable(order.beverage().toLanguageKey("tag"));
+
+            int cuisineColor = NMICommonItemTagUtil.get(diningTable.getCuisine()).positiveTags().contains(order.cuisine()) ? DARK_GREEN : DARK_RED;
+            int beverageColor = NMICommonItemTagUtil.get(diningTable.getBeverage()).positiveTags().contains(order.beverage()) ? DARK_GREEN : DARK_RED;
+
+            guiGraphics.text(font, cuisineTag, x0 + 4, y0 + 3, cuisineColor, false);
+            guiGraphics.text(font, beverageTag, x0 + 4, y0 + 13, beverageColor, false);
         } else {
-            // 订单未完成：显示需求
-            if (order.isRare()) {
-                // 稀客：两个都是 Tag，显示 Tag 名称
-                Component cuisineTag = Component.translatable(order.cuisine().toLanguageKey("tag"));
-                Component beverageTag = Component.translatable(order.beverage().toLanguageKey("tag"));
-                guiGraphics.text(font, cuisineTag, x0 + 4, y0 + 3, 0xFFAA0000, false);
-                guiGraphics.text(font, beverageTag, x0 + 4, y0 + 13, 0xFFAA0000, false);
-            } else {
-                // 普客：两个都是物品，显示需求菜品 + 饮品图标
-                ClientNMIDataAccessor instance = ClientNMIDataAccessor.INSTANCE;
-                ItemStack cuisineItem = instance.getRecipeMap().getRecipeMap().get(order.cuisine()).recipe().output().item().value().getDefaultInstance();
-                Optional<Holder.Reference<Item>> itemReference = BuiltInRegistries.ITEM.get(order.beverage());
-                ItemStack beverageItem = ItemStack.EMPTY;
-                if (itemReference.isPresent()) {
-                    beverageItem = itemReference.get().value().getDefaultInstance();
+            // 普客：两个都是物品，显示需求菜品 + 饮品图标
+            ClientNMIDataAccessor instance = ClientNMIDataAccessor.INSTANCE;
+            ItemStack cuisineItem = instance.getRecipeMap().getRecipeMap().get(order.cuisine()).recipe().output().item().value().getDefaultInstance();
+            Optional<Holder.Reference<Item>> itemReference = BuiltInRegistries.ITEM.get(order.beverage());
+            ItemStack beverageItem = ItemStack.EMPTY;
+            if (itemReference.isPresent()) {
+                beverageItem = itemReference.get().value().getDefaultInstance();
+            }
+            guiGraphics.item(cuisineItem, x0 + 2, y0 + 3);
+            guiGraphics.item(beverageItem, x0 + 20, y0 + 3);
+
+            if (!diningTable.getCuisine().isEmpty()) {
+                if (diningTable.getCuisine().is(cuisineItem.getItem())) {
+                    guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, CONFIRM_SPRITE, x0 + 2, y0 + 2, 18, 18);
+                } else {
+                    guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, CANCEL_SPRITE, x0 + 2, y0 + 2, 18, 18);
                 }
-                guiGraphics.item(cuisineItem, x0 + 2, y0 + 3);
-                guiGraphics.item(beverageItem, x0 + 20, y0 + 3);
+            }
+
+            if (!diningTable.getBeverage().isEmpty()) {
+                if (diningTable.getBeverage().is(beverageItem.getItem())) {
+                    guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, CONFIRM_SPRITE, x0 + 20, y0 + 2, 18, 18);
+                } else {
+                    guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, CANCEL_SPRITE, x0 + 20, y0 + 2, 18, 18);
+                }
             }
         }
 

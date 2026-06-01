@@ -83,9 +83,8 @@ public class CanteenControllerBlockEntity extends BlockEntity {
 
     /**
      * 校验所有关联方块是否仍有效，移除已被破坏的，必要时重排序号
-     * @return 是否有方块被移除
      */
-    private boolean validateLinkedBlocks(Level pLevel) {
+    private void validateLinkedBlocks(Level pLevel) {
         boolean changed = dingingTableList.removeIf(pos ->
                 !pLevel.isLoaded(pos) || !(pLevel.getBlockEntity(pos) instanceof DiningTableBlockEntity)
         );
@@ -97,7 +96,6 @@ public class CanteenControllerBlockEntity extends BlockEntity {
             syncTableIndices();
             markUpdated();
         }
-        return changed;
     }
 
     /** 稀客出现概率 */
