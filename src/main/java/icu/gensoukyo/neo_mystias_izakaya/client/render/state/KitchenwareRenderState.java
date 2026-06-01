@@ -9,6 +9,11 @@ import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 
 public class KitchenwareRenderState extends BlockEntityRenderState {
-    public boolean isRender;
+    public RenderResult isRender = RenderResult.NONE;
     public final ItemStackRenderState targetItemModel = new ItemStackRenderState();
+    public final ItemStackRenderState resultItemModel = new ItemStackRenderState();
+
+    public enum RenderResult {
+        NONE, TARGET, RESULT
+    }
 }
