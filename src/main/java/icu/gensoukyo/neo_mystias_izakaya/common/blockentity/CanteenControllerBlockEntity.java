@@ -10,8 +10,11 @@ import icu.gensoukyo.neo_mystias_izakaya.api.dal.NMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.content.customer.Customer;
 import icu.gensoukyo.neo_mystias_izakaya.content.customer.CustomerHolder;
 import icu.gensoukyo.neo_mystias_izakaya.content.customer.CustomerMap;
+import icu.gensoukyo.neo_mystias_izakaya.content.customer.RareCustomerHolder;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaOrder;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeMap;
+import icu.gensoukyo.neo_mystias_izakaya.content.tag.TagItemListHolder;
+import icu.gensoukyo.neo_mystias_izakaya.content.tag.TagItemListMap;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockEntities;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
@@ -73,8 +76,7 @@ public class CanteenControllerBlockEntity extends BlockEntity {
 
             IzakayaOrder order = generateOrder(pLevel, pBlockEntity);
             if (order != null) {
-                Identifier customerId = NeoMystiasIzakaya.id("customer_" + table.getTableIndex() + "_" + pLevel.getGameTime());
-                table.seatCustomer(customerId, order);
+                table.seatCustomer(order);
             }
         }
     }
@@ -118,31 +120,27 @@ public class CanteenControllerBlockEntity extends BlockEntity {
         CustomerHolder holder = pickCustomer(customerMap, random);
         if (holder == null) return null;
         Customer customer = holder.customer();
-        boolean isRare = holder instanceof icu.gensoukyo.neo_mystias_izakaya.content.customer.RareCustomerHolder;
-
-        // ② 饮品（普客和稀客都需要）
-        Identifier beverageId = pickItemByTags(recipeMap, customer.beverage(), random);
-        if (beverageId == null) return null;
+        boolean isRare = holder instanceof RareCustomerHolder;
 
         Identifier cuisineId;
-        Identifier requestedTag;
-        Identifier rareCustomerId;
+        Identifier beverageId;
+        Identifier rareCustomerId = holder.key();
 
         if (isRare) {
-            // 稀客：只需 requestedTag，无具体菜品
-            cuisineId = IzakayaOrder.EMPTY_ORDER;
-            requestedTag = pickRandom(customer.likes(), random);
-            if (requestedTag == null) return null;
-            rareCustomerId = holder.key();
+            // 稀客：两个都是 Tag
+            cuisineId = pickRandom(customer.likes(), random);
+            if (cuisineId == null) return null;
+            beverageId = pickRandom(customer.beverage(), random);
+            if (beverageId == null) return null;
         } else {
-            // 普客：需要具体菜品，无标签偏好
+            // 普客：两个都是物品
             cuisineId = pickItemByTags(recipeMap, customer.likes(), random);
             if (cuisineId == null) return null;
-            requestedTag = IzakayaOrder.EMPTY_ORDER;
-            rareCustomerId = IzakayaOrder.EMPTY_RARE_CUSTOMER;
+            beverageId = pickItemByTag(NMIDataAccessor.server().getTagItemListMap(), customer.beverage(), random);
+            if (beverageId == null) return null;
         }
 
-        return new IzakayaOrder(cuisineId, beverageId, requestedTag, rareCustomerId, isRare);
+        return new IzakayaOrder(cuisineId, beverageId, rareCustomerId, isRare);
     }
 
     /**
@@ -165,7 +163,7 @@ public class CanteenControllerBlockEntity extends BlockEntity {
     }
 
     /**
-     * 从 recipeMap 的标签索引中随机匹配一个产物
+     * 从 recipeMap 的标签索引中随机匹配一个菜品产物
      */
     private static @Nullable Identifier pickItemByTags(NMIRecipeMap recipeMap, List<Identifier> tags, RandomSource random) {
         if (tags.isEmpty()) return null;
@@ -181,6 +179,23 @@ public class CanteenControllerBlockEntity extends BlockEntity {
         }
 
         return null;
+    }
+
+    /**
+     * 从 TagItemListMap 中根据标签列表随机选取一个酒水物品 ID
+     */
+    private static @Nullable Identifier pickItemByTag(TagItemListMap tagItemListMap, List<Identifier> tags, RandomSource random) {
+        if (tags.isEmpty()) return null;
+
+        // 随机选一个标签
+        Identifier targetTag = tags.get(random.nextInt(tags.size()));
+        TagItemListHolder holder = tagItemListMap.get(targetTag);
+        if (holder == null) return null;
+
+        List<Identifier> items = holder.tag().items();
+        if (items.isEmpty()) return null;
+
+        return items.get(random.nextInt(items.size()));
     }
 
     @Nullable

@@ -28,7 +28,7 @@ public final class NMIClientUtil {
 
     public static void renderScaledText(GuiGraphicsExtractor graphics, Font font, Component component, int x, int y, int color, boolean dropShadow, float scale) {
         graphics.pose().scale(scale, scale);
-        graphics.text(font, component, x, y, color, dropShadow);
+        graphics.text(font, component, (int) (x / scale), (int) (y / scale), color, dropShadow);
         graphics.pose().scale(1 / scale, 1 / scale);
     }
 

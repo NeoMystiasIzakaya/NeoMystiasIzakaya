@@ -5,6 +5,7 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.client.gui.widget;
 
+import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientUtil;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.Minecraft;
@@ -36,8 +37,14 @@ public class TagButton extends Button {
         Font font = Minecraft.getInstance().font;
         Component text = getMessage();
         var textToRender = text.getVisualOrderText();
-        int textX = getX() + (getWidth() - font.width(textToRender)) / 2;
+        int fontWidth = font.width(textToRender);
+        int textX = getX();
         int textY = getY() + 1;
-        guiGraphicsExtractor.text(font, textToRender, textX, textY, textColor, false);
+        if (fontWidth > 40) {
+            NMIClientUtil.renderScaledText(guiGraphicsExtractor, font, text, textX, textY, textColor, false, (float) 40 / fontWidth);
+        } else {
+            textX = getX() + (getWidth() - font.width(textToRender)) / 2;
+            guiGraphicsExtractor.text(font, textToRender, textX, textY, textColor, false);
+        }
     }
 }

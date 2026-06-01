@@ -161,9 +161,9 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
     /**
      * 顾客入座并派发订单
      */
-    public void seatCustomer(Identifier customerId, IzakayaOrder order) {
+    public void seatCustomer(IzakayaOrder order) {
         this.isOccupied = true;
-        this.customerId = customerId;
+        this.customerId = order.rareCustomer();
         this.currentOrder = order;
         markUpdated();
     }

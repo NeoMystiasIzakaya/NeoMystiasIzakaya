@@ -1,7 +1,10 @@
 package icu.gensoukyo.neo_mystias_izakaya.client.overlay;
 
+import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
+import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.AbstractKitchenwareBE;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.DiningTableBlockEntity;
+import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaOrder;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIDataComponentTypes;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -9,24 +12,40 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.gui.GuiLayer;
 import org.jspecify.annotations.NonNull;
 
 import java.util.List;
+import java.util.Optional;
 
 public class CanteenOverlay implements GuiLayer {
 
-    /** 每个物品矩形宽度 */
+    /**
+     * 每个物品矩形宽度
+     */
     private static final int ITEM_RECT_WIDTH = 80;
-    /** 每个物品矩形高度 */
+    /**
+     * 每个物品矩形高度
+     */
     private static final int ITEM_RECT_HEIGHT = 24;
-    /** 物品矩形之间的间距 */
+    /**
+     * 物品矩形之间的间距
+     */
     private static final int ITEM_RECT_SPACING = 4;
-    /** 矩形填充颜色 (半透明灰) */
+    /**
+     * 矩形填充颜色 (半透明灰)
+     */
     private static final int FILL_COLOR = 0x40FFFFFF;
-    /** 矩形边框颜色 (白色) */
+    /**
+     * 矩形边框颜色 (白色)
+     */
     private static final int BORDER_COLOR = 0xFFFFFFFF;
 
     @Override
@@ -95,8 +114,14 @@ public class CanteenOverlay implements GuiLayer {
 
     /**
      * 在右侧绘制餐桌叠加矩形组（以垂直中线为对称轴上下居中）
+     * <ul>
+     *   <li>空闲桌：灰色"空闲"文字</li>
+     *   <li>有客 + 订单未完成：显示需求菜品/Tag</li>
+     *   <li>有客 + 订单已完成：显示桌上实际物品</li>
+     * </ul>
      */
     private void drawDiningTableOverlay(GuiGraphicsExtractor guiGraphics, List<BlockPos> diningTableList, int screenWidth, int centerY, ClientLevel level) {
+        var font = Minecraft.getInstance().font;
         int count = diningTableList.size();
         int totalHeight = count * ITEM_RECT_HEIGHT + (count - 1) * ITEM_RECT_SPACING;
         int startY = centerY - totalHeight / 2;
@@ -109,8 +134,66 @@ public class CanteenOverlay implements GuiLayer {
 
             BlockPos blockPos = diningTableList.get(i);
             if (level.isLoaded(blockPos) && level.getBlockEntity(blockPos) instanceof DiningTableBlockEntity diningTable) {
-
+                if (diningTable.isOccupied()) {
+                    renderOccupiedTable(guiGraphics, font, diningTable, x0, y0);
+                } else {
+                    renderIdleTable(guiGraphics, font, x0, y0);
+                }
             }
+        }
+    }
+
+    /**
+     * 渲染空闲餐桌
+     */
+    private void renderIdleTable(GuiGraphicsExtractor guiGraphics, net.minecraft.client.gui.Font font, int x0, int y0) {
+        guiGraphics.text(font, Component.translatable("gui.neo_mystias_izakaya.idle"),
+                x0 + 4, y0 + 7, 0xFF888888, false);
+    }
+
+    /**
+     * 渲染有客餐桌：订单未完成显示需求，已完成显示物品
+     */
+    private void renderOccupiedTable(GuiGraphicsExtractor guiGraphics, net.minecraft.client.gui.Font font,
+                                     DiningTableBlockEntity diningTable, int x0, int y0) {
+        IzakayaOrder order = diningTable.getCurrentOrder();
+        Identifier customerId = diningTable.getCustomerId();
+
+        if (diningTable.isFull()) {
+            // 订单完成：显示桌上实际物品
+            ItemStack cuisine = diningTable.getCuisine();
+            ItemStack beverage = diningTable.getBeverage();
+            if (!cuisine.isEmpty()) guiGraphics.item(cuisine, x0 + 2, y0 + 3);
+            if (!beverage.isEmpty()) guiGraphics.item(beverage, x0 + 20, y0 + 3);
+        } else {
+            // 订单未完成：显示需求
+            if (order.isRare()) {
+                // 稀客：两个都是 Tag，显示 Tag 名称
+                Component cuisineTag = Component.translatable(order.cuisine().toLanguageKey("tag"));
+                Component beverageTag = Component.translatable(order.beverage().toLanguageKey("tag"));
+                guiGraphics.text(font, cuisineTag, x0 + 4, y0 + 3, 0xFFAA0000, false);
+                guiGraphics.text(font, beverageTag, x0 + 4, y0 + 13, 0xFFAA0000, false);
+            } else {
+                // 普客：两个都是物品，显示需求菜品 + 饮品图标
+                ClientNMIDataAccessor instance = ClientNMIDataAccessor.INSTANCE;
+                ItemStack cuisineItem = instance.getRecipeMap().getRecipeMap().get(order.cuisine()).recipe().output().item().value().getDefaultInstance();
+                Optional<Holder.Reference<Item>> itemReference = BuiltInRegistries.ITEM.get(order.beverage());
+                ItemStack beverageItem = ItemStack.EMPTY;
+                if (itemReference.isPresent()) {
+                    beverageItem = itemReference.get().value().getDefaultInstance();
+                }
+                guiGraphics.item(cuisineItem, x0 + 2, y0 + 3);
+                guiGraphics.item(beverageItem, x0 + 20, y0 + 3);
+            }
+        }
+
+        // 客人名
+        Component customerName = Component.translatable("customer.neo_mystias_izakaya." + customerId.getPath());
+        int width = font.width(customerName);
+        if (width > 40) {
+            NMIClientUtil.renderScaledText(guiGraphics, font, customerName, x0 + 38, y0 + 7, 0xFF000000, false, (float) 40 / width);
+        } else {
+            guiGraphics.text(font, customerName, x0 + 38, y0 + 7, 0xFF000000, false);
         }
     }
 
