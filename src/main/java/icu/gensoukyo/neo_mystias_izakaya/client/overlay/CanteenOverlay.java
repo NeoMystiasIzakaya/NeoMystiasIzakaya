@@ -1,10 +1,10 @@
 package icu.gensoukyo.neo_mystias_izakaya.client.overlay;
 
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
+import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientItemTagUtil;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.AbstractKitchenwareBE;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.DiningTableBlockEntity;
-import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonItemTagUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaOrder;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIDataComponentTypes;
 import net.minecraft.client.DeltaTracker;
@@ -30,6 +30,8 @@ import java.util.Optional;
 
 public class CanteenOverlay implements GuiLayer {
 
+    public static final int DARK_RED = 0xFFAA0000;
+    public static final int DARK_GREEN = 0xFF00FF00;
     /**
      * 每个物品矩形宽度
      */
@@ -50,11 +52,8 @@ public class CanteenOverlay implements GuiLayer {
      * 矩形边框颜色 (白色)
      */
     private static final int BORDER_COLOR = 0xFFFFFFFF;
-
     private static final Identifier CONFIRM_SPRITE = Identifier.withDefaultNamespace("container/beacon/confirm");
     private static final Identifier CANCEL_SPRITE = Identifier.withDefaultNamespace("container/beacon/cancel");
-    public static final int DARK_RED = 0xFFAA0000;
-    public static final int DARK_GREEN = 0xFF00FF00;
 
     @Override
     public void render(@NonNull GuiGraphicsExtractor guiGraphics, @NonNull DeltaTracker deltaTracker) {
@@ -172,8 +171,8 @@ public class CanteenOverlay implements GuiLayer {
             Component cuisineTag = Component.translatable(order.cuisine().toLanguageKey("tag"));
             Component beverageTag = Component.translatable(order.beverage().toLanguageKey("tag"));
 
-            int cuisineColor = NMICommonItemTagUtil.get(diningTable.getCuisine()).positiveTags().contains(order.cuisine()) ? DARK_GREEN : DARK_RED;
-            int beverageColor = NMICommonItemTagUtil.get(diningTable.getBeverage()).positiveTags().contains(order.beverage()) ? DARK_GREEN : DARK_RED;
+            int cuisineColor = NMIClientItemTagUtil.get(diningTable.getCuisine()).positiveTags().contains(order.cuisine()) ? DARK_GREEN : DARK_RED;
+            int beverageColor = NMIClientItemTagUtil.get(diningTable.getBeverage()).positiveTags().contains(order.beverage()) ? DARK_GREEN : DARK_RED;
 
             guiGraphics.text(font, cuisineTag, x0 + 4, y0 + 3, cuisineColor, false);
             guiGraphics.text(font, beverageTag, x0 + 4, y0 + 13, beverageColor, false);

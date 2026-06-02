@@ -33,7 +33,6 @@ import net.neoforged.neoforge.common.NeoForge;
 
 import java.awt.*;
 import java.util.List;
-import java.util.Map;
 
 import static icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya.id;
 
@@ -52,9 +51,66 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
 
     public KitchenwareScreen(KitchenwareMenu menu, Inventory inv, Component title) {
         super(menu, inv, title, 230, 219);
-        Map<Identifier, NMIRecipeHolder> recipeMap = ClientNMIDataAccessor.INSTANCE.getRecipeMap().getRecipeMap();
         this.kitchenwareBE = this.getMenu().getKitchenwareBE();
-        this.possibleRecipes = NMIClientRecipeUtil.getRecipesByInputAndKitchenware(NMIClientUtil.getPlayer(),List.copyOf(kitchenwareBE.getItems()), kitchenwareBE.getKitchenwareType().KITCHENWARE_TYPE);
+        this.possibleRecipes = NMIClientRecipeUtil.getRecipesByInputAndKitchenware(NMIClientUtil.getPlayer(), List.copyOf(kitchenwareBE.getItems()), kitchenwareBE.getKitchenwareType().KITCHENWARE_TYPE);
+    }
+
+    public static void renderCuisineInfo(GuiGraphicsExtractor guiGraphics, Font font, NMIRecipeHolder recipeHolder, int i, int j) {
+        NMIRecipe recipe = recipeHolder.recipe();
+        Item cuisineItem = recipe.output().item().value();
+        Integer itemStackPriceBase = NMIClientEconomyUtil.getItemStackPriceBase(recipe.output().create());
+        int price = 0;
+        if (itemStackPriceBase != null) {
+            price = itemStackPriceBase;
+        }
+        guiGraphics.text(font, Component.translatable(cuisineItem.getDescriptionId()), i + 15, j + 10, BLACK, false);
+        guiGraphics.text(font, Component.translatable("gui.neo_mystias_izakaya.time").append(": " + recipe.time()), i + 15, j + 20, BLACK, false);
+        guiGraphics.text(font, Component.translatable("gui.neo_mystias_izakaya.price").append(": " + price + " ").append(NMICommonComponentUtil.unitEn()), i + 50, j + 20, BLACK, false);
+
+        FormattedCharSequence description = Component.translatable(cuisineItem.getDescriptionId() + ".desc").getVisualOrderText();
+        StringBuilder builder = getTranslatedString(description);
+        String substring = builder.subSequence(0, 10).toString();
+
+        guiGraphics.text(font, Component.literal(substring + "..."), i + 15, j + 30, BLACK, false);
+        ItemTagList itemTagList = ClientNMIDataAccessor.INSTANCE.getTagItemListMap().getItemToTagMap().get(recipeHolder.key());
+        if (itemTagList != null) {
+            renderTags(guiGraphics, font, i, j, itemTagList);
+        }
+    }
+
+    public static StringBuilder getTranslatedString(FormattedCharSequence description) {
+        StringBuilder builder = new StringBuilder();
+        description.accept((index, style, charPoint) -> {
+            builder.append(Character.toChars(charPoint));
+            return true;
+        });
+        return builder;
+    }
+
+    public static void renderTags(GuiGraphicsExtractor guiGraphics, Font font, int i, int j, ItemTagList itemTagList) {
+        TagRenderState state = new TagRenderState(0, j + 40);
+        state = renderTags(font, itemTagList.positiveTags(), GREEN, state, guiGraphics, i + 15);
+        state = renderTags(font, itemTagList.negativeTags(), RED, state, guiGraphics, i + 15);
+    }
+
+    public static TagRenderState renderTags(Font font, List<Identifier> tags, int color, TagRenderState state, GuiGraphicsExtractor guiGraphics, int baseX) {
+        int currentX = state.currentX();
+        int startY = state.startY();
+        int lineHeight = font.lineHeight;
+        int maxWidth = 100;
+
+        for (Identifier identifier : tags) {
+            MutableComponent tag = Component.translatable(identifier.toLanguageKey("tag"));
+            FormattedCharSequence visualOrderText = tag.getVisualOrderText();
+            int fontWidth = font.width(visualOrderText);
+            if (currentX + fontWidth > maxWidth) {
+                currentX = 0;
+                startY += lineHeight;
+            }
+            guiGraphics.text(font, visualOrderText, baseX + currentX, startY, color, false);
+            currentX += (fontWidth + 4);
+        }
+        return new TagRenderState(currentX, startY);
     }
 
     @Override
@@ -145,7 +201,7 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
     }
 
     public void updateRecipes() {
-        this.possibleRecipes = NMIClientRecipeUtil.getRecipesByInputAndKitchenware(NMIClientUtil.getPlayer(),List.copyOf(kitchenwareBE.getItems()), kitchenwareBE.getKitchenwareType().KITCHENWARE_TYPE);
+        this.possibleRecipes = NMIClientRecipeUtil.getRecipesByInputAndKitchenware(NMIClientUtil.getPlayer(), List.copyOf(kitchenwareBE.getItems()), kitchenwareBE.getKitchenwareType().KITCHENWARE_TYPE);
     }
 
     @Override
@@ -158,64 +214,6 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
 
     @Override
     protected void extractLabels(GuiGraphicsExtractor graphics, int xm, int ym) {
-    }
-
-    public static void renderCuisineInfo(GuiGraphicsExtractor guiGraphics, Font font, NMIRecipeHolder recipeHolder, int i, int j) {
-        NMIRecipe recipe = recipeHolder.recipe();
-        Item cuisineItem = recipe.output().item().value();
-        Integer itemStackPriceBase = NMIClientEconomyUtil.getItemStackPriceBase(recipe.output().create());
-        int price = 0;
-        if (itemStackPriceBase != null) {
-            price = itemStackPriceBase;
-        }
-        guiGraphics.text(font, Component.translatable(cuisineItem.getDescriptionId()), i + 15, j + 10, BLACK, false);
-        guiGraphics.text(font, Component.translatable("gui.neo_mystias_izakaya.time").append(": " + recipe.time()), i + 15, j + 20, BLACK, false);
-        guiGraphics.text(font, Component.translatable("gui.neo_mystias_izakaya.price").append(": " + price + " ").append(NMICommonComponentUtil.unitEn()), i + 50, j + 20, BLACK, false);
-
-        FormattedCharSequence description = Component.translatable(cuisineItem.getDescriptionId() + ".desc").getVisualOrderText();
-        StringBuilder builder = getTranslatedString(description);
-        String substring = builder.subSequence(0, 10).toString();
-
-        guiGraphics.text(font, Component.literal(substring + "..."), i + 15, j + 30, BLACK, false);
-        ItemTagList itemTagList = ClientNMIDataAccessor.INSTANCE.getTagItemListMap().getItemToTagMap().get(recipeHolder.key());
-        if (itemTagList != null) {
-            renderTags(guiGraphics, font, i, j, itemTagList);
-        }
-    }
-
-    public static StringBuilder getTranslatedString(FormattedCharSequence description) {
-        StringBuilder builder = new StringBuilder();
-        description.accept((index, style, charPoint) -> {
-            builder.append(Character.toChars(charPoint));
-            return true;
-        });
-        return builder;
-    }
-
-    public static void renderTags(GuiGraphicsExtractor guiGraphics, Font font, int i, int j, ItemTagList itemTagList) {
-        TagRenderState state = new TagRenderState(0, j + 40);
-        state = renderTags(font, itemTagList.positiveTags(), GREEN, state, guiGraphics, i + 15);
-        state = renderTags(font, itemTagList.negativeTags(), RED, state, guiGraphics, i + 15);
-    }
-
-    public static TagRenderState renderTags(Font font , List<Identifier> tags, int color, TagRenderState state, GuiGraphicsExtractor guiGraphics, int baseX) {
-        int currentX = state.currentX();
-        int startY = state.startY();
-        int lineHeight = font.lineHeight;
-        int maxWidth = 100;
-
-        for (Identifier identifier : tags) {
-            MutableComponent tag = Component.translatable(identifier.toLanguageKey("tag"));
-            FormattedCharSequence visualOrderText = tag.getVisualOrderText();
-            int fontWidth = font.width(visualOrderText);
-            if (currentX + fontWidth > maxWidth) {
-                currentX = 0;
-                startY += lineHeight;
-            }
-            guiGraphics.text(font, visualOrderText, baseX + currentX, startY, color, false);
-            currentX += (fontWidth + 4);
-        }
-        return new TagRenderState(currentX, startY);
     }
 
     public record TagRenderState(int currentX, int startY) {

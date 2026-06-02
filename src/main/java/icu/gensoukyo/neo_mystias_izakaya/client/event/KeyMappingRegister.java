@@ -2,6 +2,7 @@ package icu.gensoukyo.neo_mystias_izakaya.client.event;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
+import icu.gensoukyo.neo_mystias_izakaya.client.network.ClientPayloadSender;
 import net.minecraft.client.KeyMapping;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -35,7 +36,7 @@ public class KeyMappingRegister {
     @SubscribeEvent
     public static void onSttChatPress(InputEvent.Key event) {
         if (CANTEEN_INFO_KEY.matches(event.getKeyEvent())) {
-
+            ClientPayloadSender.sendOpenDishServingMessage();
             CANTEEN_INFO_KEY.consumeClick();
         }
     }

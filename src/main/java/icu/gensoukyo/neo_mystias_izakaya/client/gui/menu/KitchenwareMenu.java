@@ -28,13 +28,10 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.fml.loading.FMLEnvironment;
 
 @Getter
-public class KitchenwareMenu extends AbstractContainerMenu {
-    protected static final int INV_SIZE = 36;
-    protected final int INV_START = 6;
+public class KitchenwareMenu extends AbstractNMIMenu {
     private final ContainerLevelAccess access = ContainerLevelAccess.NULL;
     private final ContainerData data;
     private AbstractKitchenwareBE kitchenwareBE;
-
 
     public KitchenwareMenu(int containerId, Inventory inventory, FriendlyByteBuf buf) {
         this(containerId, inventory, buf.readBlockPos(), new SimpleContainerData(2));
@@ -42,6 +39,7 @@ public class KitchenwareMenu extends AbstractContainerMenu {
 
     public KitchenwareMenu(int containerId, Inventory inventory, BlockPos blockPos, ContainerData data) {
         super(NMIMenus.KITCHENWARE_MENU.get(), containerId);
+        this.invStart = 6;
         this.data = data;
         this.addDataSlots(data);
         BlockEntity blockEntity = inventory.player.level().getBlockEntity(blockPos);
@@ -87,44 +85,6 @@ public class KitchenwareMenu extends AbstractContainerMenu {
                 this.container.setChanged();
             }
         });
-    }
-
-    protected void addPlayerInventory(Inventory inv) {
-        for (int i = 0; i < 3; i++)
-            for (int j = 0; j < 9; j++)
-                addSlot(new Slot(inv, j + i * 9 + 9, 36 + j * 18, 137 + i * 18));
-        for (int i = 0; i < 9; i++)
-            addSlot(new Slot(inv, i, 36 + i * 18, 195));
-    }
-
-    @Override
-    public ItemStack quickMoveStack(Player playerIn, int index) {
-        ItemStack itemStack = ItemStack.EMPTY;
-        Slot slot = this.slots.get(index);
-
-        if (slot.hasItem()) {
-            ItemStack slotStack = slot.getItem();
-            itemStack = slotStack.copy();
-            if (index < INV_START) {
-                if (!this.moveItemStackTo(slotStack, INV_START, INV_SIZE + INV_START, true)) {
-                    return ItemStack.EMPTY;
-                }
-                slot.onQuickCraft(slotStack, itemStack);
-            } else {
-                if (index < INV_SIZE + INV_START && !this.moveItemStackTo(slotStack, 0, INV_START, false))
-                    return ItemStack.EMPTY;
-            }
-            if (slotStack.isEmpty()) {
-                slot.set(ItemStack.EMPTY);
-            } else {
-                slot.setChanged();
-            }
-            if (slotStack.getCount() == itemStack.getCount()) {
-                return ItemStack.EMPTY;
-            }
-            slot.onTake(playerIn, slotStack);
-        }
-        return itemStack;
     }
 
     @Override

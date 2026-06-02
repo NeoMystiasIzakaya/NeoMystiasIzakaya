@@ -7,8 +7,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
 public class DishServingScreen extends AbstractContainerScreen<DishServingMenu> {
-    public DishServingScreen(DishServingMenu menu, Inventory inventory) {
-        super(menu, inventory, Component.literal("Dish Serving"));
+    public DishServingScreen(DishServingMenu menu, Inventory inventory, Component title) {
+        super(menu, inventory, title, 230, 219);
     }
 
     @Override

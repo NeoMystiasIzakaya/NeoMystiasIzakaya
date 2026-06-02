@@ -8,7 +8,7 @@ package icu.gensoukyo.neo_mystias_izakaya.client.event;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.api.event.client.ClientTagFoodItemEvent;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientEconomyUtil;
-import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonItemTagUtil;
+import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientItemTagUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonComponentUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMIServerItemTagUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
@@ -25,14 +25,14 @@ import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
 import java.util.List;
 
-@EventBusSubscriber(modid = NeoMystiasIzakaya.MODID,value = Dist.CLIENT)
+@EventBusSubscriber(modid = NeoMystiasIzakaya.MODID, value = Dist.CLIENT)
 public class ItemEventHandler {
 
     @SubscribeEvent
     public static void onLivingEntityUseItemEventFinish(LivingEntityUseItemEvent.Finish event) {
         ItemStack item = event.getItem();
         if (event.getEntity() instanceof LocalPlayer player) {
-            ItemTagList itemTagList = NMICommonItemTagUtil.get(item);
+            ItemTagList itemTagList = NMIClientItemTagUtil.get(item);
             NeoForge.EVENT_BUS.post(new ClientTagFoodItemEvent(itemTagList, item, player));
             NMIServerItemTagUtil.set(item, itemTagList);
         }
@@ -40,16 +40,16 @@ public class ItemEventHandler {
 
 
     @SubscribeEvent
-    public static void onItemTooltipEvent(ItemTooltipEvent event){
-        ItemTagList itemTagList = NMICommonItemTagUtil.get(event.getItemStack());
+    public static void onItemTooltipEvent(ItemTooltipEvent event) {
+        ItemTagList itemTagList = NMIClientItemTagUtil.get(event.getItemStack());
 
         List<Component> toolTip = event.getToolTip();
 
-        itemTagList.positiveTags().forEach(e->toolTip.add(Component.literal("+ ").append(NMICommonComponentUtil.translatableTag(e))));
-        itemTagList.negativeTags().forEach(e->toolTip.add(Component.literal("- ").append(NMICommonComponentUtil.translatableTag(e))));
+        itemTagList.positiveTags().forEach(e -> toolTip.add(Component.literal("+ ").append(NMICommonComponentUtil.translatableTag(e))));
+        itemTagList.negativeTags().forEach(e -> toolTip.add(Component.literal("- ").append(NMICommonComponentUtil.translatableTag(e))));
 
         Integer price = NMIClientEconomyUtil.getItemStackPriceBase(event.getItemStack());
-        if (price != null){
+        if (price != null) {
             int count = event.getItemStack().getCount();
             MutableComponent unitEn = NMICommonComponentUtil.unitEn();
             MutableComponent priceC = Component.translatable("tooltip.neo_mystias_izakaya.price", price, unitEn);

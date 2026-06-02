@@ -6,6 +6,7 @@
 package icu.gensoukyo.neo_mystias_izakaya.client.event;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
+import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.DishServingScreen;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.KitchenwareScreen;
 import icu.gensoukyo.neo_mystias_izakaya.client.overlay.CanteenOverlay;
 import icu.gensoukyo.neo_mystias_izakaya.client.render.DiningTableRenderer;
@@ -26,6 +27,7 @@ public class ClientRegister {
     @SubscribeEvent
     public static void registerScreens(RegisterMenuScreensEvent event) {
         event.register(NMIMenus.KITCHENWARE_MENU.get(), KitchenwareScreen::new);
+        event.register(NMIMenus.DISH_SERVING_MENU.get(), DishServingScreen::new);
     }
 
     @SubscribeEvent
