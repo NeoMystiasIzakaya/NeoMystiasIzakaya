@@ -6,12 +6,19 @@
 package icu.gensoukyo.neo_mystias_izakaya.common.blockentity;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
+import icu.gensoukyo.neo_mystias_izakaya.api.dal.NMIDataAccessor;
+import icu.gensoukyo.neo_mystias_izakaya.common.util.NMIServerEconomyUtil;
+import icu.gensoukyo.neo_mystias_izakaya.common.util.NMIServerItemTagUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaOrder;
+import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeHolder;
+import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockEntities;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -20,6 +27,7 @@ import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
@@ -27,6 +35,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+
+import java.util.Optional;
 
 public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
 
@@ -70,13 +80,56 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
      */
     @Getter
     private BlockPos controllerPos = BlockPos.ZERO;
+    /**
+     * 当前订单匹配物品的总价（仅符合条件的物品才计入）
+     */
+    @Getter
+    private int totalPrice = 0;
 
     public DiningTableBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(NMIBlockEntities.DINING_TABLE.get(), blockPos, blockState);
     }
 
     public static void serverTick(Level pLevel, BlockPos pPos, BlockState pState, DiningTableBlockEntity pBlockEntity) {
-        // 预留：未来可在此处理顾客用餐计时等逻辑
+        if (!pBlockEntity.isFull() || !pBlockEntity.isOccupied()) {
+            pBlockEntity.totalPrice = 0;
+            return;
+        }
+
+        IzakayaOrder order = pBlockEntity.getCurrentOrder();
+        int price = 0;
+
+        if (order.isRare()) {
+            // 稀客：cuisine 和 beverage 均为 Tag ID，检查物品正面 Tag 是否包含订单 Tag
+            ItemTagList cuisineTags = NMIServerItemTagUtil.get(pBlockEntity.getCuisine());
+            if (cuisineTags.positiveTags().contains(order.cuisine())) {
+                price += NMIServerEconomyUtil.getItemStackPrice(pBlockEntity.getCuisine());
+            }
+
+            ItemTagList beverageTags = NMIServerItemTagUtil.get(pBlockEntity.getBeverage());
+            if (beverageTags.positiveTags().contains(order.beverage())) {
+                price += NMIServerEconomyUtil.getItemStackPrice(pBlockEntity.getBeverage());
+            }
+        } else {
+            // 普客：cuisine 为配方 ID，beverage 为物品 ID，检查物品是否匹配
+            NMIRecipeHolder recipeHolder = NMIDataAccessor.server().getRecipeMap().getRecipeMap().get(order.cuisine());
+            if (recipeHolder != null) {
+                Item expectedCuisine = recipeHolder.recipe().output().item().value();
+                if (pBlockEntity.getCuisine().is(expectedCuisine)) {
+                    price += NMIServerEconomyUtil.getItemStackPrice(pBlockEntity.getCuisine());
+                }
+            }
+
+            Optional<Holder.Reference<Item>> itemRef = BuiltInRegistries.ITEM.get(order.beverage());
+            if (itemRef.isPresent()) {
+                Item expectedBeverage = itemRef.get().value();
+                if (pBlockEntity.getBeverage().is(expectedBeverage)) {
+                    price += NMIServerEconomyUtil.getItemStackPrice(pBlockEntity.getBeverage());
+                }
+            }
+        }
+        pBlockEntity.clear();
+        pBlockEntity.totalPrice = price;
     }
 
     @Override
@@ -175,6 +228,7 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
         this.isOccupied = false;
         this.customerId = IzakayaOrder.EMPTY_RARE_CUSTOMER;
         this.currentOrder = IzakayaOrder.EMPTY;
+        this.totalPrice = 0;
         // 清空菜品和饮品
         this.items.clear();
         markUpdated();
@@ -264,6 +318,7 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
         this.isOccupied = false;
         this.customerId = IzakayaOrder.EMPTY_RARE_CUSTOMER;
         this.currentOrder = IzakayaOrder.EMPTY;
+        this.totalPrice = 0;
         markUpdated();
     }
 }
