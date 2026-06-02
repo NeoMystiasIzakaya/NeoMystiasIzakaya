@@ -46,7 +46,7 @@ public class KitchenwareMenu extends AbstractNMIMenu {
         if (blockEntity instanceof AbstractKitchenwareBE kitchenware) {
             this.kitchenwareBE = kitchenware;
             addItems(kitchenwareBE);
-            addPlayerInventory(inventory);
+            addPlayerInventory(inventory, 36);
         }
     }
 

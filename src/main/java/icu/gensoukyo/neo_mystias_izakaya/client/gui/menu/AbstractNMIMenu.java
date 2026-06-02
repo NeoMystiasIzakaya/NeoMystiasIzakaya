@@ -15,12 +15,12 @@ public abstract class AbstractNMIMenu extends AbstractContainerMenu {
         super(menuType, containerId);
     }
 
-    protected void addPlayerInventory(Inventory inv) {
+    protected void addPlayerInventory(Inventory inv ,int offsetX) {
         for (int i = 0; i < 3; i++)
             for (int j = 0; j < 9; j++)
-                addSlot(new Slot(inv, j + i * 9 + 9, 36 + j * 18, 137 + i * 18));
+                addSlot(new Slot(inv, j + i * 9 + 9, offsetX + j * 18, 137 + i * 18));
         for (int i = 0; i < 9; i++)
-            addSlot(new Slot(inv, i, 36 + i * 18, 195));
+            addSlot(new Slot(inv, i, offsetX + i * 18, 195));
     }
 
     @Override

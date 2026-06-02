@@ -1,35 +1,220 @@
 package icu.gensoukyo.neo_mystias_izakaya.client.gui.screen;
 
+import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.menu.DishServingMenu;
+import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientItemTagUtil;
+import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientUtil;
+import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.DiningTableBlockEntity;
+import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaOrder;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+
+import java.util.Optional;
 
 import static icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya.id;
 
 public class DishServingScreen extends AbstractContainerScreen<DishServingMenu> {
     private static final Identifier BACKGROUND = id("textures/gui/dish_serve.png");
+
+    // --- 渲染常量（与 CanteenOverlay 保持一致） ---
+    private static final int DARK_RED = 0xFFAA0000;
+    private static final int DARK_GREEN = 0xFF00FF00;
+    private static final int FILL_COLOR = 0x40FFFFFF;
+    private static final int BORDER_COLOR = 0xFFFFFFFF;
+    private static final Identifier CONFIRM_SPRITE = Identifier.withDefaultNamespace("container/beacon/confirm");
+    private static final Identifier CANCEL_SPRITE = Identifier.withDefaultNamespace("container/beacon/cancel");
+
     public DishServingScreen(DishServingMenu menu, Inventory inventory, Component title) {
-        super(menu, inventory, title, 230, 219);
+        super(menu, inventory, title, 256, 219);
     }
 
     @Override
     public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
         super.extractRenderState(graphics, mouseX, mouseY, a);
+        // 在槽位上方绘制确认/取消精灵图
+        drawConfirmCancelSprites(graphics);
     }
 
     @Override
     public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
         super.extractBackground(graphics, mouseX, mouseY, a);
-        int i = (this.width - this.imageWidth) / 2;
-        int j = (this.height - this.imageHeight) / 2;
-        graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, i, j, 0.0F, 0.0F, 256, 256, 256, 256);
+        int leftPos = (this.width - this.imageWidth) / 2;
+        int topPos = (this.height - this.imageHeight) / 2;
+        graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, leftPos, topPos, 0.0F, 0.0F, 256, 256, 256, 256);
+
+        // 绘制餐桌详细信息
+        drawDiningTableDetails(graphics, leftPos, topPos);
     }
 
     @Override
     protected void extractLabels(GuiGraphicsExtractor graphics, int xm, int ym) {
+    }
+
+    // === 餐桌详细绘制（从 CanteenOverlay 迁移） ===
+
+    /**
+     * 绘制所有餐桌的详细信息：矩形背景 + 订单状态
+     */
+    private void drawDiningTableDetails(GuiGraphicsExtractor graphics, int leftPos, int topPos) {
+        var font = Minecraft.getInstance().font;
+        DishServingMenu menu = this.menu;
+        int tableCount = menu.getTableCount();
+        boolean lastRowSingle = menu.isLastRowSingle();
+
+        for (int i = 0; i < tableCount; i++) {
+            // 获取该餐桌的槽位对（每 2 个槽位 = 1 个餐桌）
+            Slot cuisineSlot = this.menu.slots.get(i * 2);
+            if (!(cuisineSlot.container instanceof DiningTableBlockEntity diningTable)) {
+                continue;
+            }
+
+            int cellX = DishServingMenu.getCellX(i, lastRowSingle, tableCount);
+            int cellY = DishServingMenu.getCellY(i);
+
+            // 在 GUI 坐标系中绘制
+            int x0 = leftPos + cellX;
+            int y0 = topPos + cellY;
+            int x1 = x0 + DishServingMenu.CELL_WIDTH;
+            int y1 = y0 + 24; // 单元格高度 24
+
+            drawItemRect(graphics, x0, y0, x1, y1);
+
+            if (diningTable.isOccupied()) {
+                renderOccupiedTable(graphics, font, diningTable, x0, y0);
+            } else {
+                renderIdleTable(graphics, font, x0, y0);
+            }
+        }
+    }
+
+    /**
+     * 在槽位上方绘制确认/取消精灵图
+     */
+    private void drawConfirmCancelSprites(GuiGraphicsExtractor graphics) {
+        int leftPos = (this.width - this.imageWidth) / 2;
+        int topPos = (this.height - this.imageHeight) / 2;
+        DishServingMenu menu = this.menu;
+        int tableCount = menu.getTableCount();
+        boolean lastRowSingle = menu.isLastRowSingle();
+
+        for (int i = 0; i < tableCount; i++) {
+            Slot cuisineSlot = this.menu.slots.get(i * 2);
+            if (!(cuisineSlot.container instanceof DiningTableBlockEntity diningTable)) {
+                continue;
+            }
+
+            int cellX = DishServingMenu.getCellX(i, lastRowSingle, tableCount);
+            int cellY = DishServingMenu.getCellY(i);
+
+            IzakayaOrder order = diningTable.getCurrentOrder();
+
+            // 仅普客绘制确认/取消图标（稀客显示 Tag，无物品图标）
+            if (!order.isRare()) {
+                int slotX = leftPos + cellX + 44;
+                int slotY = topPos + cellY + 3;
+
+                // 菜品确认/取消
+                ClientNMIDataAccessor instance = ClientNMIDataAccessor.INSTANCE;
+                ItemStack cuisineItem = instance.getRecipeMap().getRecipeMap().get(order.cuisine()).recipe().output().item().value().getDefaultInstance();
+                if (!diningTable.getCuisine().isEmpty()) {
+                    if (diningTable.getCuisine().is(cuisineItem.getItem())) {
+                        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, CONFIRM_SPRITE, slotX, slotY, 18, 18);
+                    } else {
+                        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, CANCEL_SPRITE, slotX, slotY, 18, 18);
+                    }
+                }
+
+                // 饮品确认/取消
+                int beverageSlotX = slotX + DishServingMenu.SLOT_SPACING;
+                Optional<Holder.Reference<Item>> itemReference = BuiltInRegistries.ITEM.get(order.beverage());
+                ItemStack beverageItem = itemReference.map(ref -> ref.value().getDefaultInstance()).orElse(ItemStack.EMPTY);
+                if (!diningTable.getBeverage().isEmpty() && !beverageItem.isEmpty()) {
+                    if (diningTable.getBeverage().is(beverageItem.getItem())) {
+                        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, CONFIRM_SPRITE, beverageSlotX, slotY, 18, 18);
+                    } else {
+                        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, CANCEL_SPRITE, beverageSlotX, slotY, 18, 18);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 渲染空闲餐桌
+     */
+    private void renderIdleTable(GuiGraphicsExtractor graphics, Font font, int x0, int y0) {
+        graphics.text(font, Component.translatable("gui.neo_mystias_izakaya.idle"), x0 + 80, y0 + 7, 0xFF000000, false);
+    }
+
+    /**
+     * 渲染有客餐桌：订单未完成显示需求，已完成显示物品
+     */
+    private void renderOccupiedTable(GuiGraphicsExtractor graphics, Font font,
+                                     DiningTableBlockEntity diningTable, int x0, int y0) {
+        IzakayaOrder order = diningTable.getCurrentOrder();
+        Identifier customerId = diningTable.getCustomerId();
+
+        // 客人名（右侧，与订单需求分离避免重叠）
+        Component customerName = Component.translatable("customer.neo_mystias_izakaya." + customerId.getPath());
+        int nameWidth = font.width(customerName);
+        int nameX = x0 + 78;
+        int nameY = y0 + 7;
+        int nameMaxWidth = 40;
+        if (nameWidth > nameMaxWidth) {
+            NMIClientUtil.renderScaledText(graphics, font, customerName, nameX, nameY, 0xFF000000, false, (float) nameMaxWidth / nameWidth);
+        } else {
+            graphics.text(font, customerName, nameX, nameY, 0xFF000000, false);
+        }
+
+        // 订单未完成：显示需求
+        if (order.isRare()) {
+            // 稀客：两个都是 Tag，在客人名下方显示 Tag 名称
+            Component cuisineTag = Component.translatable(order.cuisine().toLanguageKey("tag"));
+            Component beverageTag = Component.translatable(order.beverage().toLanguageKey("tag"));
+
+            int cuisineColor = NMIClientItemTagUtil.get(diningTable.getCuisine()).positiveTags().contains(order.cuisine()) ? DARK_GREEN : DARK_RED;
+            int beverageColor = NMIClientItemTagUtil.get(diningTable.getBeverage()).positiveTags().contains(order.beverage()) ? DARK_GREEN : DARK_RED;
+
+            graphics.text(font, cuisineTag, x0 + 44, y0 + 3, cuisineColor, false);
+            graphics.text(font, beverageTag, x0 + 44, y0 + 13, beverageColor, false);
+        } else {
+            // 普客：显示需求菜品 + 饮品图标
+            ClientNMIDataAccessor instance = ClientNMIDataAccessor.INSTANCE;
+            ItemStack cuisineItem = instance.getRecipeMap().getRecipeMap().get(order.cuisine()).recipe().output().item().value().getDefaultInstance();
+            Optional<Holder.Reference<Item>> itemReference = BuiltInRegistries.ITEM.get(order.beverage());
+            ItemStack beverageItem = ItemStack.EMPTY;
+            if (itemReference.isPresent()) {
+                beverageItem = itemReference.get().value().getDefaultInstance();
+            }
+            graphics.item(cuisineItem, x0 + 44, y0 + 3);
+            graphics.item(beverageItem, x0 + 62, y0 + 3);
+        }
+    }
+
+    /**
+     * 绘制单个物品矩形（填充 + 边框）
+     */
+    private void drawItemRect(GuiGraphicsExtractor graphics, int x0, int y0, int x1, int y1) {
+        // 半透明填充
+        graphics.fill(x0 + 1, y0 + 1, x1 - 1, y1 - 1, FILL_COLOR);
+        // 上边框
+        graphics.fill(x0, y0, x1, y0 + 1, BORDER_COLOR);
+        // 下边框
+        graphics.fill(x0, y1 - 1, x1, y1, BORDER_COLOR);
+        // 左边框
+        graphics.fill(x0, y0, x0 + 1, y1, BORDER_COLOR);
+        // 右边框
+        graphics.fill(x1 - 1, y0, x1, y1, BORDER_COLOR);
     }
 }
