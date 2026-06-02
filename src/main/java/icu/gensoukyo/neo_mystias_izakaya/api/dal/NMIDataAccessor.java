@@ -9,6 +9,7 @@ import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.common.dal.ServerNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.content.customer.CustomerMap;
 import icu.gensoukyo.neo_mystias_izakaya.content.economy.base.NMIEconomyMap;
+import icu.gensoukyo.neo_mystias_izakaya.content.economy.store.NMIStoreMap;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeMap;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.TagItemListMap;
 
@@ -29,4 +30,6 @@ public interface NMIDataAccessor {
     CustomerMap getCustomerMap();
 
     NMIEconomyMap getEconomyMap();
+
+    NMIStoreMap getStoreMap();
 }

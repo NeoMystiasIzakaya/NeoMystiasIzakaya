@@ -18,7 +18,6 @@ import icu.gensoukyo.neo_mystias_izakaya.registry.NMIAttachmentTypes;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.slf4j.Logger;
@@ -44,16 +43,28 @@ public class NMICommonBalanceUtil {
         return get(player, NMIBalanceUnits.EN);
     }
 
-    public static void setEn(Player player, int en) {
-        set(player, NMIBalanceUnits.EN, en);
+    public static void setEn(Player player, int en, boolean simulate) {
+        set(player, NMIBalanceUnits.EN, en, simulate);
     }
 
-    public static void insertEn(Player player, int en) {
-        insert(player, NMIBalanceUnits.EN, en);
+    public static int insertEn(Player player, int en, boolean simulate) {
+        return insert(player, NMIBalanceUnits.EN, en, simulate);
     }
 
-    public static void extractEn(Player player, int en) {
-        extract(player, NMIBalanceUnits.EN, en);
+    public static int extractEn(Player player, int en, boolean simulate) {
+        return extract(player, NMIBalanceUnits.EN, en, simulate);
+    }
+
+    public static void setEn(Player player, int en, boolean simulate, Identifier reason, String from, String to) {
+        set(player, NMIBalanceUnits.EN, en, simulate, reason, from, to);
+    }
+
+    public static int insertEn(Player player, int en, boolean simulate, Identifier reason, String from, String to) {
+        return insert(player, NMIBalanceUnits.EN, en, simulate, reason, from, to);
+    }
+
+    public static int extractEn(Player player, int en, boolean simulate, Identifier reason, String from, String to) {
+        return extract(player, NMIBalanceUnits.EN, en, simulate, reason, from, to);
     }
 
     public static long get(Player player, Identifier unit) {
@@ -73,53 +84,65 @@ public class NMICommonBalanceUtil {
         }
     }
 
-    public static void set(Player player, Identifier unit, int count) {
-        insert(player, unit, count - (int) get(player, unit));
+    public static void set(Player player, Identifier unit, int count, boolean simulate) {
+        insert(player, unit, count - (int) get(player, unit), simulate);
     }
 
-    public static void set(Player player, Identifier unit, int count, Identifier reason, String from, String to) {
-        insert(player, unit, count - (int) get(player, unit), reason, from, to);
+    public static void set(Player player, Identifier unit, int count, boolean simulate, Identifier reason, String from, String to) {
+        insert(player, unit, count - (int) get(player, unit), simulate, reason, from, to);
     }
 
-    public static void insert(Player player, Identifier unit, int count) {
-        insert(player, unit, count, NMIBalanceTransactionReasons.UNDEFINED, "", player.getStringUUID());
+    public static int insert(Player player, Identifier unit, int count, boolean simulate) {
+        return insert(player, unit, count, simulate, NMIBalanceTransactionReasons.UNDEFINED, "", player.getStringUUID());
     }
 
-    public static void insert(Player player, Identifier unit, int count, Identifier reason, String from, String to) {
+    public static int insert(Player player, Identifier unit, int count, boolean simulate, Identifier reason, String from, String to) {
         try (Transaction transaction = Transaction.openRoot()) {
             NMIBalance balance = getWithOutCopy(player);
-            balance.insert(new NMIBalanceEntry(unit, count), count, transaction);
-            NMIBalanceEvent.Insert post = NeoForge.EVENT_BUS.post(new NMIBalanceEvent.Insert(player, transaction, unit, count, reason, from, to));
+            int canInsert = balance.insert(new NMIBalanceEntry(unit, count), count, transaction);
+            NMIBalanceEvent.Insert post = NeoForge.EVENT_BUS.post(new NMIBalanceEvent.Insert(player, transaction, unit, count, simulate, reason, from, to));
             if (post.isCanceled()) {
                 transaction.close();
-                return;
+                return 0;
+            }
+            if (simulate) {
+                transaction.close();
+                return canInsert;
             }
             transaction.commit();
             addTransactionEntry(player, new NMIBalanceTransactionEntry(post.getReason(), post.getUnit(), post.getCount(), post.getFrom(), post.getTo()));
             set(player, balance);
+            return canInsert;
         } catch (Exception e) {
             LOGGER.trace("Failed to insert {} balance for player {}: {}", unit, player.getName().getString(), e.getMessage());
+            return 0;
         }
     }
 
-    public static void extract(Player player, Identifier unit, int count) {
-        extract(player, unit, count, NMIBalanceTransactionReasons.UNDEFINED, player.getStringUUID(), "");
+    public static int extract(Player player, Identifier unit, int count, boolean simulate) {
+        return extract(player, unit, count, simulate, NMIBalanceTransactionReasons.UNDEFINED, player.getStringUUID(), "");
     }
 
-    public static void extract(Player player, Identifier unit, int count, Identifier reason, String from, String to) {
+    public static int extract(Player player, Identifier unit, int count, boolean simulate, Identifier reason, String from, String to) {
         try (Transaction transaction = Transaction.openRoot()) {
             NMIBalance balance = getWithOutCopy(player);
-            balance.extract(new NMIBalanceEntry(unit, count), count, transaction);
-            NMIBalanceEvent.Extract post = NeoForge.EVENT_BUS.post(new NMIBalanceEvent.Extract(player, transaction, unit, count, reason, from, to));
+            int canExtract = balance.extract(new NMIBalanceEntry(unit, count), count, transaction);
+            NMIBalanceEvent.Extract post = NeoForge.EVENT_BUS.post(new NMIBalanceEvent.Extract(player, transaction, unit, count, simulate, reason, from, to));
             if (post.isCanceled()) {
                 transaction.close();
-                return;
+                return 0;
+            }
+            if (simulate) {
+                transaction.close();
+                return canExtract;
             }
             transaction.commit();
             addTransactionEntry(player, new NMIBalanceTransactionEntry(post.getReason(), post.getUnit(), post.getCount(), post.getFrom(), post.getTo()));
             set(player, balance);
+            return canExtract;
         } catch (Exception e) {
             LOGGER.trace("Failed to extract {} balance for player {}: {}", unit, player.getName().getString(), e.getMessage());
+            return 0;
         }
     }
 

@@ -22,8 +22,9 @@ public abstract class NMIBalanceEvent extends Event implements ICancellableEvent
     private final Identifier reason;
     private final String from;
     private final String to;
+    private final boolean simulate;
 
-    public NMIBalanceEvent(Player player, Transaction transaction, Identifier unit, int count, Identifier reason, String from, String to) {
+    public NMIBalanceEvent(Player player, Transaction transaction, Identifier unit, int count,boolean simulate, Identifier reason, String from, String to) {
         this.player = player;
         this.transaction = transaction;
         this.unit = unit;
@@ -31,19 +32,20 @@ public abstract class NMIBalanceEvent extends Event implements ICancellableEvent
         this.reason = reason;
         this.from = from;
         this.to = to;
+        this.simulate = simulate;
     }
 
     public static class Insert extends NMIBalanceEvent {
 
-        public Insert(Player player, Transaction transaction, Identifier unit, int count, Identifier reason, String from, String to) {
-            super(player, transaction, unit, count, reason, from, to);
+        public Insert(Player player, Transaction transaction, Identifier unit, int count,boolean simulate, Identifier reason, String from, String to) {
+            super(player, transaction, unit, count,simulate, reason, from, to);
         }
     }
 
     public static class Extract extends NMIBalanceEvent {
 
-        public Extract(Player player, Transaction transaction, Identifier unit, int count, Identifier reason, String from, String to) {
-            super(player, transaction, unit, count, reason, from, to);
+        public Extract(Player player, Transaction transaction, Identifier unit, int count,boolean simulate, Identifier reason, String from, String to) {
+            super(player, transaction, unit, count,simulate, reason, from, to);
         }
     }
 }
