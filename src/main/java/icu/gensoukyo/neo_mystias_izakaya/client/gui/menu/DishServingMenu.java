@@ -9,7 +9,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import org.jspecify.annotations.NonNull;
 
 import java.util.List;
 
@@ -25,8 +24,8 @@ public class DishServingMenu extends AbstractNMIMenu {
             BlockPos blockPos = diningTables.get(i);
             if (level.isLoaded(blockPos)) {
                 if (level.getBlockEntity(blockPos) instanceof DiningTableBlockEntity tableBlockEntity) {
-                    addSlot(new CuisineSlot(tableBlockEntity, 0, 0, i * 18));
-                    addSlot(new BeverageSlot(tableBlockEntity, 1, 18, i * 18));
+                    addSlot(new CuisineSlot(tableBlockEntity, 0, 12, i * 18 + 15));
+                    addSlot(new BeverageSlot(tableBlockEntity, 1, 30, i * 18 + 15));
                     invStart += 2;
                 }
             }
@@ -35,7 +34,7 @@ public class DishServingMenu extends AbstractNMIMenu {
     }
 
     @Override
-    public boolean stillValid(@NonNull Player player) {
+    public boolean stillValid(Player player) {
         return true;
     }
 }
