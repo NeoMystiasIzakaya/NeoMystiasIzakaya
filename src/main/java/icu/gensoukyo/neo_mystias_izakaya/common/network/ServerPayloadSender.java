@@ -9,6 +9,7 @@ import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonBalanceUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonIzakayaUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.customer.CustomerMap;
 import icu.gensoukyo.neo_mystias_izakaya.content.economy.base.NMIEconomyMap;
+import icu.gensoukyo.neo_mystias_izakaya.content.economy.store.NMIStoreMap;
 import icu.gensoukyo.neo_mystias_izakaya.content.economy.transaction.NMIBalanceTransaction;
 import icu.gensoukyo.neo_mystias_izakaya.content.economy.transaction.NMIBalanceTransactionEntry;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaOrder;
@@ -35,6 +36,10 @@ public class ServerPayloadSender {
 
     public static void sendEconomyMapSyncMessage(NMIEconomyMap map) {
         PacketDistributor.sendToAllPlayers(new NMIEconomyMapSyncMessage(map));
+    }
+
+    public static void sendStoreMapSyncMessage(NMIStoreMap map) {
+        PacketDistributor.sendToAllPlayers(new NMIStoreMapSyncMessage(map));
     }
 
     public static void sendIzakayaMenuSyncMessage(ServerPlayer player) {

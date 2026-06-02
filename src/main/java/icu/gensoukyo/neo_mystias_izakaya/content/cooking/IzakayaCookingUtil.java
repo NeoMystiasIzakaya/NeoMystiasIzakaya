@@ -80,9 +80,11 @@ public final class IzakayaCookingUtil {
     }
 
     public static void spawnResult(Player player, AbstractKitchenwareBE kitchenwareBE, ItemStack result){
-
-        IzakayaCookingEvent.ConsumeIngredients ingredients = NeoForge.EVENT_BUS.post(new IzakayaCookingEvent.ConsumeIngredients(player, kitchenwareBE, NonNullList.copyOf(kitchenwareBE.getItems().subList(0, 4))));
-        kitchenwareBE.setIngredients(ingredients.getIngredients());
+        NonNullList<ItemStack> inputs = NonNullList.copyOf(kitchenwareBE.getItems().subList(0, 4));
+        IzakayaCookingEvent.ConsumeIngredients.Pre ingredients = NeoForge.EVENT_BUS.post(new IzakayaCookingEvent.ConsumeIngredients.Pre(player, kitchenwareBE, inputs,NonNullList.createWithCapacity(5)));
+        if (ingredients.isCanceled()) return;
+        kitchenwareBE.setIngredients(ingredients.getResultIngredients());
+        NeoForge.EVENT_BUS.post(new IzakayaCookingEvent.ConsumeIngredients.Post(player, kitchenwareBE,inputs, ingredients.getResultIngredients()));
 
         IzakayaCookingEvent.SpawnResult.Pre post = NeoForge.EVENT_BUS.post(new IzakayaCookingEvent.SpawnResult.Pre(player, kitchenwareBE, result));
         if (post.isCanceled()) return;

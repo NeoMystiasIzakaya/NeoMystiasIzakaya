@@ -33,6 +33,10 @@ public class ClientPayloadHandler {
         context.enqueueWork(() -> ClientNMIDataAccessor.INSTANCE.setEconomyMap(message.map()));
     }
 
+    public static void handleStoreMapSyncMessage(NMIStoreMapSyncMessage message, IPayloadContext context) {
+        context.enqueueWork(() -> ClientNMIDataAccessor.INSTANCE.setStoreMap(message.map()));
+    }
+
     public static void handleIzakayaOrderSyncFullMessage(IzakayaOrderSyncFullMessage message, IPayloadContext context) {
         context.enqueueWork(() -> NMICommonIzakayaUtil.setOrder(context.player(), message.list()));
     }

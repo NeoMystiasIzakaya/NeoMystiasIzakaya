@@ -52,6 +52,12 @@ public class NMINetwork {
         );
 
         registrar.playToClient(
+                NMIStoreMapSyncMessage.TYPE,
+                NMIStoreMapSyncMessage.STREAM_CODEC,
+                ClientPayloadHandler::handleStoreMapSyncMessage
+        );
+
+        registrar.playToClient(
                 IzakayaOrderSyncFullMessage.TYPE,
                 IzakayaOrderSyncFullMessage.STREAM_CODEC,
                 ClientPayloadHandler::handleIzakayaOrderSyncFullMessage
