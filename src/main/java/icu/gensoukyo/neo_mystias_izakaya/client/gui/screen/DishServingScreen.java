@@ -17,6 +17,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -49,6 +50,17 @@ public class DishServingScreen extends AbstractContainerScreen<DishServingMenu> 
         super.extractRenderState(graphics, mouseX, mouseY, a);
         // 在槽位上方绘制确认/取消精灵图
         drawConfirmCancelSprites(graphics);
+    }
+
+    @Override
+    protected void extractTooltip(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+        super.extractTooltip(graphics, mouseX, mouseY);
+        // 为订单需求物品渲染 tooltip
+        drawOrderRequirementTooltips(graphics, mouseX, mouseY);
+    }
+
+    private void getTooltip(GuiGraphicsExtractor graphics, int mouseX, int mouseY, ItemStack item) {
+        graphics.setTooltipForNextFrame(this.font, this.getTooltipFromContainerItem(item), item.getTooltipImage(), item, mouseX, mouseY, item.get(DataComponents.TOOLTIP_STYLE));
     }
 
     @Override
@@ -151,6 +163,57 @@ public class DishServingScreen extends AbstractContainerScreen<DishServingMenu> 
                         graphics.blitSprite(RenderPipelines.GUI_TEXTURED, CANCEL_SPRITE, beverageSlotX, slotY, 18, 18);
                     }
                 }
+            }
+        }
+    }
+
+    /**
+     * 为右侧订单需求物品渲染 tooltip
+     */
+    private void drawOrderRequirementTooltips(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+        int leftPos = (this.width - this.imageWidth) / 2;
+        int topPos = (this.height - this.imageHeight) / 2;
+        DishServingMenu menu = this.menu;
+        int tableCount = menu.getTableCount();
+        boolean lastRowSingle = menu.isLastRowSingle();
+
+        for (int i = 0; i < tableCount; i++) {
+            Slot cuisineSlot = this.menu.slots.get(i * 2);
+            if (!(cuisineSlot.container instanceof DiningTableBlockEntity diningTable)) {
+                continue;
+            }
+            if (!diningTable.isOccupied()) {
+                continue;
+            }
+
+            IzakayaOrder order = diningTable.getCurrentOrder();
+            if (order.isRare()) {
+                continue; // 稀客显示 Tag 文字，无物品图标
+            }
+
+            int cellX = DishServingMenu.getCellX(i, lastRowSingle, tableCount);
+            int cellY = DishServingMenu.getCellY(i);
+
+            // 菜品需求物品位置 (16x16)
+            int cuisineX = leftPos + cellX + 44;
+            int cuisineY = topPos + cellY + 3;
+            if (mouseX >= cuisineX && mouseX < cuisineX + 16 && mouseY >= cuisineY && mouseY < cuisineY + 16) {
+                ClientNMIDataAccessor instance = ClientNMIDataAccessor.INSTANCE;
+                ItemStack cuisineItem = instance.getRecipeMap().getRecipeMap().get(order.cuisine()).recipe().output().item().value().getDefaultInstance();
+                getTooltip(graphics, mouseX, mouseY, cuisineItem);
+                return;
+            }
+
+            // 饮品需求物品位置 (16x16)
+            int beverageX = leftPos + cellX + 62;
+            int beverageY = topPos + cellY + 3;
+            if (mouseX >= beverageX && mouseX < beverageX + 16 && mouseY >= beverageY && mouseY < beverageY + 16) {
+                Optional<Holder.Reference<Item>> itemReference = BuiltInRegistries.ITEM.get(order.beverage());
+                ItemStack beverageItem = itemReference.map(ref -> ref.value().getDefaultInstance()).orElse(ItemStack.EMPTY);
+                if (!beverageItem.isEmpty()) {
+                    getTooltip(graphics, mouseX, mouseY, beverageItem);
+                }
+                return;
             }
         }
     }
