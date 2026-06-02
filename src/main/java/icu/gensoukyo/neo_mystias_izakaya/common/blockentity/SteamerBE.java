@@ -5,7 +5,7 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.common.blockentity;
 
-import icu.gensoukyo.neo_mystias_izakaya.client.gui.KitchenwareMenu;
+import icu.gensoukyo.neo_mystias_izakaya.client.gui.menu.KitchenwareMenu;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;

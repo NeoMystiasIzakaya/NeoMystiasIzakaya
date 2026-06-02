@@ -5,8 +5,8 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.client.gui.widget;
 
-import icu.gensoukyo.neo_mystias_izakaya.client.gui.RecipeScreen;
-import icu.gensoukyo.neo_mystias_izakaya.client.gui.RecipeScreen.ScreenMode;
+import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.RecipeScreen;
+import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.RecipeScreen.ScreenMode;
 import icu.gensoukyo.neo_mystias_izakaya.content.customer.CustomerHolder;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeHolder;
 import lombok.Getter;

@@ -14,8 +14,8 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 
-import static icu.gensoukyo.neo_mystias_izakaya.client.gui.RecipeScreen.POSITIVE_IN_COLOR;
-import static icu.gensoukyo.neo_mystias_izakaya.client.gui.RecipeScreen.POSITIVE_OUT_COLOR;
+import static icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.RecipeScreen.POSITIVE_IN_COLOR;
+import static icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.RecipeScreen.POSITIVE_OUT_COLOR;
 
 public class TagButton extends Button {
     @Getter

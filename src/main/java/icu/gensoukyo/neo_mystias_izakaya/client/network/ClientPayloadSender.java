@@ -18,4 +18,8 @@ public class ClientPayloadSender {
     public static void sendIzakayaMenuSyncMessage(IzakayaMenu menu) {
         ClientPacketDistributor.sendToServer(new NMIIzakayaMenuSyncMessage(menu));
     }
+
+    public static void sendOpenDishServingMessage() {
+        ClientPacketDistributor.sendToServer(new OpenDishServingMessage());
+    }
 }

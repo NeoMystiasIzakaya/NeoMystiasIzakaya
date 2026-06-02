@@ -7,7 +7,7 @@ package icu.gensoukyo.neo_mystias_izakaya.common.blockentity;
 
 import com.mojang.logging.LogUtils;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
-import icu.gensoukyo.neo_mystias_izakaya.client.gui.KitchenwareMenu;
+import icu.gensoukyo.neo_mystias_izakaya.client.gui.menu.KitchenwareMenu;
 import icu.gensoukyo.neo_mystias_izakaya.common.network.ServerPayloadSender;
 import lombok.Setter;
 import net.minecraft.core.BlockPos;

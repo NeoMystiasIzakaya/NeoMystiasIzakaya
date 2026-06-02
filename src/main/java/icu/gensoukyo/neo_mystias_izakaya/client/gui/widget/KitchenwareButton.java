@@ -13,8 +13,8 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
-import static icu.gensoukyo.neo_mystias_izakaya.client.gui.RecipeScreen.POSITIVE_IN_COLOR;
-import static icu.gensoukyo.neo_mystias_izakaya.client.gui.RecipeScreen.POSITIVE_OUT_COLOR;
+import static icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.RecipeScreen.POSITIVE_IN_COLOR;
+import static icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.RecipeScreen.POSITIVE_OUT_COLOR;
 
 public class KitchenwareButton extends Button {
     @Getter

@@ -5,8 +5,8 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.client.util;
 
-import icu.gensoukyo.neo_mystias_izakaya.client.gui.KitchenwareScreen;
-import icu.gensoukyo.neo_mystias_izakaya.client.gui.RecipeScreen;
+import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.KitchenwareScreen;
+import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.RecipeScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;

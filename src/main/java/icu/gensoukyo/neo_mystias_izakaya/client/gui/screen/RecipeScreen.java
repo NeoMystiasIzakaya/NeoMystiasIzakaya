@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-package icu.gensoukyo.neo_mystias_izakaya.client.gui;
+package icu.gensoukyo.neo_mystias_izakaya.client.gui.screen;
 
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
+import icu.gensoukyo.neo_mystias_izakaya.client.gui.menu.KitchenwareMenu;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.CuisineListWidget;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.CuisineListWidget.DisplayEntry;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.ImageStateButton;
@@ -44,7 +45,7 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 import static icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya.id;
-import static icu.gensoukyo.neo_mystias_izakaya.client.gui.KitchenwareScreen.*;
+import static icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.KitchenwareScreen.*;
 
 public class RecipeScreen extends Screen {
     public static final int POSITIVE_IN_COLOR = 0xFFFBEECB;

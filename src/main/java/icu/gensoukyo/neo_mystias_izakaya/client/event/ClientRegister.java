@@ -6,7 +6,7 @@
 package icu.gensoukyo.neo_mystias_izakaya.client.event;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
-import icu.gensoukyo.neo_mystias_izakaya.client.gui.KitchenwareScreen;
+import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.KitchenwareScreen;
 import icu.gensoukyo.neo_mystias_izakaya.client.overlay.CanteenOverlay;
 import icu.gensoukyo.neo_mystias_izakaya.client.render.DiningTableRenderer;
 import icu.gensoukyo.neo_mystias_izakaya.client.render.KitchenwareRenderer;

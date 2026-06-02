@@ -8,6 +8,7 @@ package icu.gensoukyo.neo_mystias_izakaya.registry;
 import icu.gensoukyo.neo_mystias_izakaya.client.network.ClientPayloadHandler;
 import icu.gensoukyo.neo_mystias_izakaya.client.network.NMIIzakayaMenuSyncMessage;
 import icu.gensoukyo.neo_mystias_izakaya.client.network.NMIKitchenwareCookMessage;
+import icu.gensoukyo.neo_mystias_izakaya.client.network.OpenDishServingMessage;
 import icu.gensoukyo.neo_mystias_izakaya.common.network.*;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -93,6 +94,12 @@ public class NMINetwork {
                 NMIIzakayaMenuSyncMessage.TYPE,
                 NMIIzakayaMenuSyncMessage.STREAM_CODEC,
                 ServerPayloadHandler::handleIzakayaMenuSyncMessage
+        );
+
+        registrar.playToServer(
+                OpenDishServingMessage.TYPE,
+                OpenDishServingMessage.STREAM_CODEC,
+                ServerPayloadHandler::handleOpenDishServingMessage
         );
     }
 }

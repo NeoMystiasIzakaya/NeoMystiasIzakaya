@@ -5,7 +5,7 @@
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-package icu.gensoukyo.neo_mystias_izakaya.client.gui;
+package icu.gensoukyo.neo_mystias_izakaya.client.gui.screen;
 
 import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
 
