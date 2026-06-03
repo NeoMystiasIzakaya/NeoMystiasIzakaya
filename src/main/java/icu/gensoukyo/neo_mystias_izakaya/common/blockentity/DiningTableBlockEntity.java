@@ -255,7 +255,7 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
      * 餐桌是否空闲（无顾客且无物品）
      */
     public boolean isIdle() {
-        return !this.isOccupied && this.items.stream().allMatch(ItemStack::isEmpty);
+        return !this.isOccupied && this.items.stream().allMatch(ItemStack::isEmpty) && this.cooldownTicks == 0;
     }
 
     /**
