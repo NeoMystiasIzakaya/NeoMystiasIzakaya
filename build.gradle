@@ -42,6 +42,15 @@ repositories {
         name = "Jared's maven"
         url = "https://maven.blamejared.com/"
     }
+
+    mavenCentral()
+    maven {
+        url 'https://jitpack.io'
+        content {
+            includeGroup "com.github.TouhouLittleMaid"
+            includeGroup "com.github.*"
+        }
+    }
 }
 
 base {
@@ -101,6 +110,8 @@ dependencies {
     runtimeOnly("mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}")
     compileOnly("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
     runtimeOnly("mezz.jei:jei-${minecraft_version}-common:${jei_version}")
+
+    implementation 'com.github.TouhouLittleMaid:TouhouLittleMaid-26.1:7c11c1d0a4'
 
 //    compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:${rei_version}"
 //    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:${rei_version}"
