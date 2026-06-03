@@ -83,12 +83,22 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
      */
     @Getter
     private BlockPos controllerPos = BlockPos.ZERO;
+    /**
+     * 冷却时间（tick），菜单完成后随机 10~20 秒（200~400 tick）
+     */
+    private int cooldownTicks = 0;
 
     public DiningTableBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(NMIBlockEntities.DINING_TABLE.get(), blockPos, blockState);
     }
 
     public static void serverTick(Level pLevel, BlockPos pPos, BlockState pState, DiningTableBlockEntity pBlockEntity) {
+        // CD 中，递减并跳过
+        if (pBlockEntity.cooldownTicks > 0) {
+            pBlockEntity.cooldownTicks--;
+            return;
+        }
+
         if (!pBlockEntity.isFull() || !pBlockEntity.isOccupied()) {
             return;
         }
@@ -132,6 +142,8 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
             NMICommonBalanceUtil.insertEn(serverPlayer, price, false, NMIBalanceTransactionReasons.ORDER_PAY, "DiningTable", serverPlayer.getPlainTextName());
             serverPlayer.sendOverlayMessage(Component.translatable("block.neo_mystias_izakaya.dining_table.sale", price));
         }
+        // 完成后进入随机 10~20 秒 CD
+        pBlockEntity.cooldownTicks = pLevel.getRandom().nextInt(200, 401);
         pBlockEntity.clear();
     }
 
@@ -169,6 +181,7 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
         output.putBoolean("IsOccupied", this.isOccupied);
         output.putString("CustomerId", this.customerId.toString());
         output.putInt("TableIndex", this.tableIndex);
+        output.putInt("CooldownTicks", this.cooldownTicks);
         output.store("ControllerPos", BlockPos.CODEC, this.controllerPos);
         if (!this.currentOrder.equals(IzakayaOrder.EMPTY)) {
             output.store("Order", IzakayaOrder.CODEC, this.currentOrder);
@@ -187,6 +200,7 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
                 .map(Identifier::parse)
                 .orElse(IzakayaOrder.EMPTY_RARE_CUSTOMER);
         this.tableIndex = input.getIntOr("TableIndex", -1);
+        this.cooldownTicks = input.getIntOr("CooldownTicks", 0);
         this.controllerPos = input.read("ControllerPos", BlockPos.CODEC).orElse(BlockPos.ZERO);
         this.currentOrder = input.read("Order", IzakayaOrder.CODEC).orElse(IzakayaOrder.EMPTY);
     }
@@ -206,6 +220,7 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
             output.putBoolean("IsOccupied", this.isOccupied);
             output.putString("CustomerId", this.customerId.toString());
             output.putInt("TableIndex", this.tableIndex);
+            output.putInt("CooldownTicks", this.cooldownTicks);
             output.store("ControllerPos", BlockPos.CODEC, this.controllerPos);
             if (!this.currentOrder.equals(IzakayaOrder.EMPTY)) {
                 output.store("Order", IzakayaOrder.CODEC, this.currentOrder);
