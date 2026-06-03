@@ -136,6 +136,10 @@ public class DishServingScreen extends AbstractContainerScreen<DishServingMenu> 
 
             IzakayaOrder order = diningTable.getCurrentOrder();
 
+            if (IzakayaOrder.isEmpty(order)) {
+                continue; // 无订单不显示确认/取消图标
+            }
+
             // 仅普客绘制确认/取消图标（稀客显示 Tag，无物品图标）
             if (!order.isRare()) {
                 int slotX = leftPos + cellX + 44;

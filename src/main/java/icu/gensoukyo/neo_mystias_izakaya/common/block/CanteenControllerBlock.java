@@ -84,7 +84,7 @@ public class CanteenControllerBlock extends BaseEntityBlock {
             ItemStack headItem = player.getItemBySlot(EquipmentSlot.HEAD);
             if (mainHandItem.isEmpty() && headItem.is(NMIMainItems.MYSTIAS_HAT)) {
                 boolean open = !controller.isOpen();
-                controller.setOpen(open);
+                controller.setOpen(open, open ? player.getUUID() : null);
                 player.sendSystemMessage(
                         Component.translatable(open
                                 ? "block.neo_mystias_izakaya.canteen_controller.open"

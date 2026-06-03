@@ -13,4 +13,5 @@ public class NMIBalanceTransactionReasons {
     public static final Identifier UNDEFINED = NeoMystiasIzakaya.id("undefined");
     public static final Identifier PURCHASE = NeoMystiasIzakaya.id("purchase");
     public static final Identifier SALE = NeoMystiasIzakaya.id("sale");
+    public static final Identifier ORDER_PAY = NeoMystiasIzakaya.id("order_pay");
 }

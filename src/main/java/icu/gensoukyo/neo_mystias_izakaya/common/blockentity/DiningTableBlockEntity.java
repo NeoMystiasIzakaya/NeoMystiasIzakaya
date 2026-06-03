@@ -7,8 +7,10 @@ package icu.gensoukyo.neo_mystias_izakaya.common.blockentity;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.api.dal.NMIDataAccessor;
+import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonBalanceUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMIServerEconomyUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMIServerItemTagUtil;
+import icu.gensoukyo.neo_mystias_izakaya.content.economy.transaction.NMIBalanceTransactionReasons;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaOrder;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeHolder;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
@@ -23,6 +25,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
@@ -80,11 +83,6 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
      */
     @Getter
     private BlockPos controllerPos = BlockPos.ZERO;
-    /**
-     * 当前订单匹配物品的总价（仅符合条件的物品才计入）
-     */
-    @Getter
-    private int totalPrice = 0;
 
     public DiningTableBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(NMIBlockEntities.DINING_TABLE.get(), blockPos, blockState);
@@ -92,7 +90,6 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
 
     public static void serverTick(Level pLevel, BlockPos pPos, BlockState pState, DiningTableBlockEntity pBlockEntity) {
         if (!pBlockEntity.isFull() || !pBlockEntity.isOccupied()) {
-            pBlockEntity.totalPrice = 0;
             return;
         }
 
@@ -128,8 +125,14 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
                 }
             }
         }
+        if (pBlockEntity.level != null
+                && pBlockEntity.level.getBlockEntity(pBlockEntity.controllerPos) instanceof CanteenControllerBlockEntity canteen
+                && canteen.getOwner() != null
+                && pLevel.getEntity(canteen.getOwner()) instanceof ServerPlayer serverPlayer) {
+            NMICommonBalanceUtil.insertEn(serverPlayer, price, false, NMIBalanceTransactionReasons.ORDER_PAY, "DiningTable", serverPlayer.getPlainTextName());
+            serverPlayer.sendOverlayMessage(Component.translatable("block.neo_mystias_izakaya.dining_table.sale", price));
+        }
         pBlockEntity.clear();
-        pBlockEntity.totalPrice = price;
     }
 
     @Override
@@ -228,7 +231,6 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
         this.isOccupied = false;
         this.customerId = IzakayaOrder.EMPTY_RARE_CUSTOMER;
         this.currentOrder = IzakayaOrder.EMPTY;
-        this.totalPrice = 0;
         // 清空菜品和饮品
         this.items.clear();
         markUpdated();
@@ -318,7 +320,6 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
         this.isOccupied = false;
         this.customerId = IzakayaOrder.EMPTY_RARE_CUSTOMER;
         this.currentOrder = IzakayaOrder.EMPTY;
-        this.totalPrice = 0;
         markUpdated();
     }
 }

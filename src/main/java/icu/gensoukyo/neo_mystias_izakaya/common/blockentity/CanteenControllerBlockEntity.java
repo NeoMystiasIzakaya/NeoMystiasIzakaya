@@ -19,6 +19,7 @@ import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockEntities;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.Identifier;
@@ -36,6 +37,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class CanteenControllerBlockEntity extends BlockEntity {
     @Getter
@@ -43,6 +45,12 @@ public class CanteenControllerBlockEntity extends BlockEntity {
     private LinkedHashSet<BlockPos> dingingTableList = new LinkedHashSet<>();
     @Getter
     private boolean isOpen;
+    /**
+     * 开店玩家的 UUID（闭店时擦除）
+     */
+    @Getter
+    @Nullable
+    private UUID owner;
 
     public CanteenControllerBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(NMIBlockEntities.COUNTER.get(), blockPos, blockState);
@@ -129,14 +137,13 @@ public class CanteenControllerBlockEntity extends BlockEntity {
             cuisineId = pickRandom(customer.likes(), random);
             if (cuisineId == null) return null;
             beverageId = pickRandom(customer.beverage(), random);
-            if (beverageId == null) return null;
         } else {
             // 普客：两个都是物品
             cuisineId = pickItemByTags(recipeMap, customer.likes(), random);
             if (cuisineId == null) return null;
             beverageId = pickItemByTag(NMIDataAccessor.server().getTagItemListMap(), customer.beverage(), random);
-            if (beverageId == null) return null;
         }
+        if (beverageId == null) return null;
 
         return new IzakayaOrder(cuisineId, beverageId, rareCustomerId, isRare);
     }
@@ -208,6 +215,9 @@ public class CanteenControllerBlockEntity extends BlockEntity {
         output.store("kitchenware", BlockPos.CODEC.listOf(), new ArrayList<>(this.kitchenwareList));
         output.store("diningTable", BlockPos.CODEC.listOf(), new ArrayList<>(this.dingingTableList));
         output.putBoolean("isOpen", this.isOpen);
+        if (this.owner != null) {
+            output.store("Owner", UUIDUtil.CODEC, this.owner);
+        }
     }
 
     @Override
@@ -216,6 +226,7 @@ public class CanteenControllerBlockEntity extends BlockEntity {
         this.kitchenwareList = new LinkedHashSet<>(input.read("kitchenware", BlockPos.CODEC.listOf()).orElse(List.of()));
         this.dingingTableList = new LinkedHashSet<>(input.read("diningTable", BlockPos.CODEC.listOf()).orElse(List.of()));
         this.isOpen = input.getBooleanOr("isOpen", false);
+        this.owner = input.read("Owner", UUIDUtil.CODEC).orElse(null);
     }
 
     @Override
@@ -231,6 +242,9 @@ public class CanteenControllerBlockEntity extends BlockEntity {
             output.store("kitchenware", BlockPos.CODEC.listOf(), new ArrayList<>(this.kitchenwareList));
             output.store("diningTable", BlockPos.CODEC.listOf(), new ArrayList<>(this.dingingTableList));
             output.putBoolean("isOpen", this.isOpen);
+            if (this.owner != null) {
+                output.store("Owner", UUIDUtil.CODEC, this.owner);
+            }
             tag.merge(output.buildResult());
         }
         return tag;
@@ -302,8 +316,9 @@ public class CanteenControllerBlockEntity extends BlockEntity {
         return dingingTableList;
     }
 
-    public void setOpen(boolean open) {
+    public void setOpen(boolean open, @Nullable UUID ownerUUID) {
         this.isOpen = open;
+        this.owner = open ? ownerUUID : null;
         markUpdated();
     }
 

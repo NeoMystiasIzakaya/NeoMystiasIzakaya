@@ -42,4 +42,8 @@ public record IzakayaOrder(Identifier cuisine, Identifier beverage, Identifier r
             net.minecraft.network.codec.ByteBufCodecs.BOOL, IzakayaOrder::isRare,
             IzakayaOrder::new
     );
+
+    public static boolean isEmpty(IzakayaOrder order) {
+        return order == null || order.cuisine.equals(EMPTY_ORDER) || order.beverage.equals(EMPTY_ORDER);
+    }
 }
