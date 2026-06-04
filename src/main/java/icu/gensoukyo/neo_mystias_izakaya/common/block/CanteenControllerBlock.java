@@ -14,20 +14,28 @@ import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMainItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.RandomSource;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jspecify.annotations.Nullable;
 
@@ -35,11 +43,13 @@ import java.util.ArrayList;
 
 public class CanteenControllerBlock extends BaseEntityBlock {
     public static final MapCodec<CanteenControllerBlock> CODEC = simpleCodec(CanteenControllerBlock::new);
+    public static final EnumProperty<CanteenPart> PART = EnumProperty.create("part", CanteenPart.class);
 
     public CanteenControllerBlock(Properties properties) {
-        super(properties);
+        super(properties.noOcclusion());
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
+                .setValue(PART, CanteenPart.MAIN)
         );
     }
 
@@ -51,14 +61,24 @@ public class CanteenControllerBlock extends BaseEntityBlock {
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        return defaultBlockState()
-                .setValue(BlockStateProperties.HORIZONTAL_FACING, pContext.getHorizontalDirection().getOpposite());
+    protected RenderShape getRenderShape(BlockState state) {
+        return state.getValue(PART) == CanteenPart.MAIN ? RenderShape.MODEL : RenderShape.INVISIBLE;
+    }
+
+    @Override
+    public @Nullable BlockState getStateForPlacement(BlockPlaceContext pContext) {
+        Direction facing = pContext.getHorizontalDirection();
+        BlockPos pos = pContext.getClickedPos();
+        BlockPos relative = pos.relative(facing.getCounterClockWise());
+        Level level = pContext.getLevel();
+        return level.getBlockState(relative).canBeReplaced(pContext) && level.getWorldBorder().isWithinBounds(relative)
+                ? defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_FACING, facing)
+                : null;
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(BlockStateProperties.HORIZONTAL_FACING);
+        pBuilder.add(BlockStateProperties.HORIZONTAL_FACING, PART);
     }
 
     @Override
@@ -74,6 +94,49 @@ public class CanteenControllerBlock extends BaseEntityBlock {
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> type) {
         return createCounterTicker(level, type, NMIBlockEntities.COUNTER.get());
+    }
+
+    @Override
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity by, ItemStack itemStack) {
+        super.setPlacedBy(level, pos, state, by, itemStack);
+        if (!level.isClientSide()) {
+            BlockPos otherPos = pos.relative(state.getValue(BlockStateProperties.HORIZONTAL_FACING).getCounterClockWise());
+            level.setBlock(otherPos, state.setValue(PART, CanteenPart.EXTENSION), 3);
+            level.updateNeighborsAt(pos, Blocks.AIR);
+            state.updateNeighbourShapes(level, pos, 3);
+        }
+    }
+
+    @Override
+    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+        if (!level.isClientSide() && player.preventsBlockDrops()) {
+            CanteenPart part = state.getValue(PART);
+            if (part == CanteenPart.MAIN) {
+                BlockPos otherPos = pos.relative(getNeighbourDirection(part, state.getValue(BlockStateProperties.HORIZONTAL_FACING)));
+                BlockState otherState = level.getBlockState(otherPos);
+                if (otherState.is(this) && otherState.getValue(PART) == CanteenPart.EXTENSION) {
+                    level.setBlock(otherPos, Blocks.AIR.defaultBlockState(), 35);
+                    level.levelEvent(player, 2001, otherPos, Block.getId(otherState));
+                }
+            }
+        }
+        return super.playerWillDestroy(level, pos, state, player);
+    }
+
+    @Override
+    protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess ticks, BlockPos pos,
+                                     Direction directionToNeighbour, BlockPos neighbourPos, BlockState neighbourState, RandomSource random) {
+        if (directionToNeighbour != getNeighbourDirection(state.getValue(PART), state.getValue(BlockStateProperties.HORIZONTAL_FACING))) {
+            return super.updateShape(state, level, ticks, pos, directionToNeighbour, neighbourPos, neighbourState, random);
+        } else {
+            return neighbourState.is(this) && neighbourState.getValue(PART) != state.getValue(PART)
+                    ? state
+                    : Blocks.AIR.defaultBlockState();
+        }
+    }
+
+    private static Direction getNeighbourDirection(CanteenPart part, Direction facing) {
+        return part == CanteenPart.MAIN ? facing.getCounterClockWise() : facing.getClockWise();
     }
 
     @Override
@@ -123,5 +186,21 @@ public class CanteenControllerBlock extends BaseEntityBlock {
         }
 
         return InteractionResult.SUCCESS;
+    }
+
+    public enum CanteenPart implements StringRepresentable {
+        MAIN("main"),
+        EXTENSION("extension");
+
+        private final String name;
+
+        CanteenPart(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String getSerializedName() {
+            return this.name;
+        }
     }
 }
