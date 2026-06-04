@@ -7,6 +7,8 @@ package icu.gensoukyo.neo_mystias_izakaya.common.blockentity;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.api.dal.NMIDataAccessor;
+import icu.gensoukyo.neo_mystias_izakaya.common.block.AbstractKitchenware;
+import icu.gensoukyo.neo_mystias_izakaya.common.block.DiningTableBlock;
 import icu.gensoukyo.neo_mystias_izakaya.content.customer.Customer;
 import icu.gensoukyo.neo_mystias_izakaya.content.customer.CustomerHolder;
 import icu.gensoukyo.neo_mystias_izakaya.content.customer.CustomerMap;
@@ -320,6 +322,42 @@ public class CanteenControllerBlockEntity extends BlockEntity {
         this.isOpen = open;
         this.owner = open ? ownerUUID : null;
         markUpdated();
+    }
+
+    /**
+     * 扫描包围盒内的方块，自动绑定厨具和餐桌
+     *
+     * @param level           当前世界
+     * @param cornerA         第一个角点
+     * @param cornerB         第二个角点
+     * @param maxKitchenware  厨具上限
+     * @param maxDiningTables 餐桌上限
+     * @return [厨具绑定数, 餐桌绑定数]
+     */
+    public int[] scanAndBind(Level level, BlockPos cornerA, BlockPos cornerB, int maxKitchenware, int maxDiningTables) {
+        int minX = Math.min(cornerA.getX(), cornerB.getX());
+        int minY = Math.min(cornerA.getY(), cornerB.getY());
+        int minZ = Math.min(cornerA.getZ(), cornerB.getZ());
+        int maxX = Math.max(cornerA.getX(), cornerB.getX());
+        int maxY = Math.max(cornerA.getY(), cornerB.getY());
+        int maxZ = Math.max(cornerA.getZ(), cornerB.getZ());
+
+        int kitchenwareCount = 0;
+        int diningTableCount = 0;
+
+        for (BlockPos pos : BlockPos.betweenClosed(minX, minY, minZ, maxX, maxY, maxZ)) {
+            BlockState state = level.getBlockState(pos);
+            if (state.getBlock() instanceof AbstractKitchenware) {
+                if (kitchenwareList.size() < maxKitchenware && addKitchenware(pos.immutable())) {
+                    kitchenwareCount++;
+                }
+            } else if (state.getBlock() instanceof DiningTableBlock) {
+                if (dingingTableList.size() < maxDiningTables && addDiningTable(pos.immutable())) {
+                    diningTableCount++;
+                }
+            }
+        }
+        return new int[]{kitchenwareCount, diningTableCount};
     }
 
     private void markUpdated() {

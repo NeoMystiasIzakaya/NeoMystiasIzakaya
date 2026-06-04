@@ -69,4 +69,24 @@ public class NMIDataComponentTypes {
                     .persistent(BlockPos.CODEC.listOf())
                     .networkSynchronized(BlockPos.STREAM_CODEC.apply(ByteBufCodecs.list()))
     );
+
+    /**
+     * 区域扫描模式：第一个角点
+     */
+    public static final DeferredHolder<DataComponentType<?>, @NotNull DataComponentType<BlockPos>> SCAN_CORNER_A = DATA_COMPONENT_TYPES.registerComponentType(
+            "scan_corner_a",
+            builder -> builder
+                    .persistent(BlockPos.CODEC)
+                    .networkSynchronized(BlockPos.STREAM_CODEC)
+    );
+
+    /**
+     * 区域扫描模式：第二个角点
+     */
+    public static final DeferredHolder<DataComponentType<?>, @NotNull DataComponentType<BlockPos>> SCAN_CORNER_B = DATA_COMPONENT_TYPES.registerComponentType(
+            "scan_corner_b",
+            builder -> builder
+                    .persistent(BlockPos.CODEC)
+                    .networkSynchronized(BlockPos.STREAM_CODEC)
+    );
 }
