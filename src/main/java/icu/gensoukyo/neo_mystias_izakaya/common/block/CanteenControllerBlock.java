@@ -88,12 +88,16 @@ public class CanteenControllerBlock extends BaseEntityBlock {
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+        // MAIN 和 EXTENSION 均创建 BE，EXTENSION 内部自动代理到 MAIN
         return new CanteenControllerBlockEntity(blockPos, blockState);
     }
 
     @Override
     public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> type) {
-        return createCounterTicker(level, type, NMIBlockEntities.COUNTER.get());
+        // 仅 MAIN 执行 tick
+        return blockState.getValue(PART) == CanteenPart.MAIN
+                ? createCounterTicker(level, type, NMIBlockEntities.COUNTER.get())
+                : null;
     }
 
     @Override
@@ -141,6 +145,7 @@ public class CanteenControllerBlock extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        // EXTENSION 的 BE 内部代理到 MAIN，直接使用 pos 即可
         if (!level.isClientSide() && level.getBlockEntity(pos) instanceof CanteenControllerBlockEntity controller) {
             ItemStack mainHandItem = player.getMainHandItem();
             //开店时同步信息进入帽子进行高亮显示
@@ -165,7 +170,7 @@ public class CanteenControllerBlock extends BaseEntityBlock {
                 }
 
                 if (open) {
-                    headItem.set(NMIDataComponentTypes.BOUND_CONTROLLER, controller.getBlockPos());
+                    headItem.set(NMIDataComponentTypes.BOUND_CONTROLLER, controller.getControllerPos());
                     headItem.set(NMIDataComponentTypes.BOUND_KITCHENWARE, new ArrayList<>(controller.getKitchenwareList()));
                     headItem.set(NMIDataComponentTypes.BOUND_DINING_TABLES, new ArrayList<>(controller.getDiningTableList()));
                 } else {

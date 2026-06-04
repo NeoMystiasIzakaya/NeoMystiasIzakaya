@@ -8,6 +8,7 @@ package icu.gensoukyo.neo_mystias_izakaya.common.blockentity;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.api.dal.NMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.common.block.AbstractKitchenware;
+import icu.gensoukyo.neo_mystias_izakaya.common.block.CanteenControllerBlock;
 import icu.gensoukyo.neo_mystias_izakaya.common.block.DiningTableBlock;
 import icu.gensoukyo.neo_mystias_izakaya.content.customer.Customer;
 import icu.gensoukyo.neo_mystias_izakaya.content.customer.CustomerHolder;
@@ -18,8 +19,8 @@ import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeMap;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.TagItemListHolder;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.TagItemListMap;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockEntities;
-import lombok.Getter;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.nbt.CompoundTag;
@@ -30,6 +31,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -42,20 +44,157 @@ import java.util.Map;
 import java.util.UUID;
 
 public class CanteenControllerBlockEntity extends BlockEntity {
-    @Getter
     private LinkedHashSet<BlockPos> kitchenwareList = new LinkedHashSet<>();
     private LinkedHashSet<BlockPos> dingingTableList = new LinkedHashSet<>();
-    @Getter
     private boolean isOpen;
-    /**
-     * 开店玩家的 UUID（闭店时擦除）
-     */
-    @Getter
     @Nullable
     private UUID owner;
 
     public CanteenControllerBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(NMIBlockEntities.COUNTER.get(), blockPos, blockState);
+    }
+
+    // ==================== 代理层：EXTENSION 透明指向 MAIN ====================
+
+    /**
+     * 获取持有实际数据的 MAIN BlockEntity。EXTENSION 沿 facing 顺时针解析到 MAIN。
+     */
+    private CanteenControllerBlockEntity getMain() {
+        if (level == null) return this;
+        BlockState state = getBlockState();
+        if (!state.hasProperty(CanteenControllerBlock.PART)
+                || state.getValue(CanteenControllerBlock.PART) == CanteenControllerBlock.CanteenPart.MAIN) {
+            return this;
+        }
+        Direction facing = state.getValue(BlockStateProperties.HORIZONTAL_FACING);
+        BlockPos mainPos = getBlockPos().relative(facing.getClockWise());
+        if (level.getBlockEntity(mainPos) instanceof CanteenControllerBlockEntity main) {
+            return main;
+        }
+        return this;
+    }
+
+    /**
+     * 始终返回 MAIN 的实际坐标（用于外部存储引用，如帽子 DataComponent）
+     */
+    public BlockPos getControllerPos() {
+        return getMain().worldPosition;
+    }
+
+    private boolean isMain() {
+        BlockState state = getBlockState();
+        return !state.hasProperty(CanteenControllerBlock.PART)
+                || state.getValue(CanteenControllerBlock.PART) == CanteenControllerBlock.CanteenPart.MAIN;
+    }
+
+    // ==================== 公开访问器（全部委托到 MAIN） ====================
+
+    public LinkedHashSet<BlockPos> getKitchenwareList() {
+        return getMain().kitchenwareList;
+    }
+
+    public LinkedHashSet<BlockPos> getDiningTableList() {
+        return getMain().dingingTableList;
+    }
+
+    public boolean isOpen() {
+        return getMain().isOpen;
+    }
+
+    @Nullable
+    public UUID getOwner() {
+        return getMain().owner;
+    }
+
+    public boolean addKitchenware(BlockPos pos) {
+        return getMain().addKitchenwareImpl(pos);
+    }
+
+    public boolean removeKitchenware(BlockPos pos) {
+        return getMain().removeKitchenwareImpl(pos);
+    }
+
+    public boolean addDiningTable(BlockPos pos) {
+        return getMain().addDiningTableImpl(pos);
+    }
+
+    public boolean removeDiningTable(BlockPos pos) {
+        return getMain().removeDiningTableImpl(pos);
+    }
+
+    public void setOpen(boolean open, @Nullable UUID ownerUUID) {
+        getMain().setOpenImpl(open, ownerUUID);
+    }
+
+    public int[] scanAndBind(Level level, BlockPos cornerA, BlockPos cornerB, int maxKitchenware, int maxDiningTables) {
+        return getMain().scanAndBindImpl(level, cornerA, cornerB, maxKitchenware, maxDiningTables);
+    }
+
+    // ==================== 内部实现（仅在 MAIN 上执行） ====================
+
+    private boolean addKitchenwareImpl(BlockPos pos) {
+        boolean added = kitchenwareList.add(pos);
+        if (added) markUpdated();
+        return added;
+    }
+
+    private boolean removeKitchenwareImpl(BlockPos pos) {
+        boolean removed = kitchenwareList.remove(pos);
+        if (removed) markUpdated();
+        return removed;
+    }
+
+    private boolean addDiningTableImpl(BlockPos pos) {
+        boolean added = dingingTableList.add(pos);
+        if (added) {
+            syncTableIndices();
+            markUpdated();
+        }
+        return added;
+    }
+
+    private boolean removeDiningTableImpl(BlockPos pos) {
+        if (level != null && level.isLoaded(pos) && level.getBlockEntity(pos) instanceof DiningTableBlockEntity table) {
+            table.unbindFromController();
+        }
+        boolean removed = dingingTableList.remove(pos);
+        if (removed) {
+            syncTableIndices();
+            markUpdated();
+        }
+        return removed;
+    }
+
+    private void setOpenImpl(boolean open, @Nullable UUID ownerUUID) {
+        this.isOpen = open;
+        this.owner = open ? ownerUUID : null;
+        markUpdated();
+    }
+
+    private int[] scanAndBindImpl(Level level, BlockPos cornerA, BlockPos cornerB, int maxKitchenware, int maxDiningTables) {
+        int minX = Math.min(cornerA.getX(), cornerB.getX());
+        int minY = Math.min(cornerA.getY(), cornerB.getY());
+        int minZ = Math.min(cornerA.getZ(), cornerB.getZ());
+        int maxX = Math.max(cornerA.getX(), cornerB.getX());
+        int maxY = Math.max(cornerA.getY(), cornerB.getY());
+        int maxZ = Math.max(cornerA.getZ(), cornerB.getZ());
+
+        int kitchenwareCount = 0;
+        int diningTableCount = 0;
+
+        for (BlockPos pos : BlockPos.betweenClosed(minX, minY, minZ, maxX, maxY, maxZ)) {
+            BlockState state = level.getBlockState(pos);
+            if (state.getBlock() instanceof AbstractKitchenware) {
+                if (kitchenwareList.size() < maxKitchenware && addKitchenwareImpl(pos.immutable())) {
+                    kitchenwareCount++;
+                }
+            } else if (state.getBlock() instanceof DiningTableBlock) {
+                if (dingingTableList.size() < maxDiningTables && addDiningTableImpl(pos.immutable())) {
+                    diningTableCount++;
+                }
+            }
+        }
+        return new int[]{kitchenwareCount, diningTableCount};
     }
 
     /** 每轮每张空闲餐桌有客入座的概率（0.0 ~ 1.0） */
@@ -213,6 +352,7 @@ public class CanteenControllerBlockEntity extends BlockEntity {
 
     @Override
     protected void saveAdditional(ValueOutput output) {
+        if (!isMain()) return;
         super.saveAdditional(output);
         output.store("kitchenware", BlockPos.CODEC.listOf(), new ArrayList<>(this.kitchenwareList));
         output.store("diningTable", BlockPos.CODEC.listOf(), new ArrayList<>(this.dingingTableList));
@@ -224,6 +364,7 @@ public class CanteenControllerBlockEntity extends BlockEntity {
 
     @Override
     protected void loadAdditional(ValueInput input) {
+        if (!isMain()) return;
         super.loadAdditional(input);
         this.kitchenwareList = new LinkedHashSet<>(input.read("kitchenware", BlockPos.CODEC.listOf()).orElse(List.of()));
         this.dingingTableList = new LinkedHashSet<>(input.read("diningTable", BlockPos.CODEC.listOf()).orElse(List.of()));
@@ -233,11 +374,15 @@ public class CanteenControllerBlockEntity extends BlockEntity {
 
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
-        return ClientboundBlockEntityDataPacket.create(this);
+        return ClientboundBlockEntityDataPacket.create(getMain());
     }
 
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return getMain().getUpdateTagImpl(registries);
+    }
+
+    private CompoundTag getUpdateTagImpl(HolderLookup.Provider registries) {
         CompoundTag tag = super.getUpdateTag(registries);
         try (ProblemReporter.ScopedCollector reporter = new ProblemReporter.ScopedCollector(this.problemPath(), NeoMystiasIzakaya.LOGGER)) {
             TagValueOutput output = TagValueOutput.createWithContext(reporter, registries);
@@ -252,112 +397,18 @@ public class CanteenControllerBlockEntity extends BlockEntity {
         return tag;
     }
 
-    // === 绑定管理 ===
+    // === 内部工具方法 ===
 
-    /**
-     * 添加厨房用具到关联列表（LinkedHashSet 自动去重）
-     */
-    public boolean addKitchenware(BlockPos pos) {
-        boolean added = kitchenwareList.add(pos);
-        if (added) markUpdated();
-        return added;
-    }
-
-    /**
-     * 移除厨房用具关联
-     */
-    public boolean removeKitchenware(BlockPos pos) {
-        boolean removed = kitchenwareList.remove(pos);
-        if (removed) markUpdated();
-        return removed;
-    }
-
-    /**
-     * 添加餐桌到关联列表并同步序号
-     */
-    public boolean addDiningTable(BlockPos pos) {
-        boolean added = dingingTableList.add(pos);
-        if (added) {
-            syncTableIndices();
-            markUpdated();
-        }
-        return added;
-    }
-
-    /**
-     * 移除餐桌关联并同步序号
-     */
-    public boolean removeDiningTable(BlockPos pos) {
-        // 先清除该餐桌的绑定信息
-        if (level != null && level.isLoaded(pos) && level.getBlockEntity(pos) instanceof DiningTableBlockEntity table) {
-            table.unbindFromController();
-        }
-        boolean removed = dingingTableList.remove(pos);
-        if (removed) {
-            syncTableIndices();
-            markUpdated();
-        }
-        return removed;
-    }
-
-    /**
-     * 将所有餐桌序号（从 1 开始）同步到各自的 BlockEntity
-     */
     private void syncTableIndices() {
         if (level == null || level.isClientSide()) return;
         int index = 1;
+        BlockPos controllerPos = getControllerPos();
         for (BlockPos pos : dingingTableList) {
             if (level.isLoaded(pos) && level.getBlockEntity(pos) instanceof DiningTableBlockEntity table) {
-                table.bindToController(index, this.worldPosition);
+                table.bindToController(index, controllerPos);
             }
             index++;
         }
-    }
-
-    public LinkedHashSet<BlockPos> getDiningTableList() {
-        return dingingTableList;
-    }
-
-    public void setOpen(boolean open, @Nullable UUID ownerUUID) {
-        this.isOpen = open;
-        this.owner = open ? ownerUUID : null;
-        markUpdated();
-    }
-
-    /**
-     * 扫描包围盒内的方块，自动绑定厨具和餐桌
-     *
-     * @param level           当前世界
-     * @param cornerA         第一个角点
-     * @param cornerB         第二个角点
-     * @param maxKitchenware  厨具上限
-     * @param maxDiningTables 餐桌上限
-     * @return [厨具绑定数, 餐桌绑定数]
-     */
-    public int[] scanAndBind(Level level, BlockPos cornerA, BlockPos cornerB, int maxKitchenware, int maxDiningTables) {
-        int minX = Math.min(cornerA.getX(), cornerB.getX());
-        int minY = Math.min(cornerA.getY(), cornerB.getY());
-        int minZ = Math.min(cornerA.getZ(), cornerB.getZ());
-        int maxX = Math.max(cornerA.getX(), cornerB.getX());
-        int maxY = Math.max(cornerA.getY(), cornerB.getY());
-        int maxZ = Math.max(cornerA.getZ(), cornerB.getZ());
-
-        int kitchenwareCount = 0;
-        int diningTableCount = 0;
-
-        for (BlockPos pos : BlockPos.betweenClosed(minX, minY, minZ, maxX, maxY, maxZ)) {
-            BlockState state = level.getBlockState(pos);
-            if (state.getBlock() instanceof AbstractKitchenware) {
-                if (kitchenwareList.size() < maxKitchenware && addKitchenware(pos.immutable())) {
-                    kitchenwareCount++;
-                }
-            } else if (state.getBlock() instanceof DiningTableBlock) {
-                if (dingingTableList.size() < maxDiningTables && addDiningTable(pos.immutable())) {
-                    diningTableCount++;
-                }
-            }
-        }
-        return new int[]{kitchenwareCount, diningTableCount};
     }
 
     private void markUpdated() {

@@ -54,7 +54,7 @@ public class CanteenConfigItem extends Item {
     // ==================== 控制器数据同步 ====================
 
     private static void syncControllerData(ItemStack item, CanteenControllerBlockEntity controller) {
-        item.set(NMIDataComponentTypes.BOUND_CONTROLLER, controller.getBlockPos());
+        item.set(NMIDataComponentTypes.BOUND_CONTROLLER, controller.getControllerPos());
         item.set(NMIDataComponentTypes.BOUND_KITCHENWARE, new ArrayList<>(controller.getKitchenwareList()));
         item.set(NMIDataComponentTypes.BOUND_DINING_TABLES, new ArrayList<>(controller.getDiningTableList()));
     }
