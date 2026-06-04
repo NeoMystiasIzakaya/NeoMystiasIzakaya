@@ -113,6 +113,9 @@ public class NMILanguageProvider implements DataProvider {
 
         this.add(NMIMainItems.CHROME_BALL, "Chrome Ball", "土球");
         this.add(NMIMainItems.RECIPE_BOOK, "Recipe Book", "食谱");
+
+        this.add("task.neo_mystias_izakaya.mystias_izakaya_task", "Neo Mystia's Izakaya", "夜雀食堂");
+        this.add("task.neo_mystias_izakaya.mystias_izakaya_task.desc", "Find nearest dining table", "寻找最近的餐桌");
     }
 
     private void addTagTranslations() {

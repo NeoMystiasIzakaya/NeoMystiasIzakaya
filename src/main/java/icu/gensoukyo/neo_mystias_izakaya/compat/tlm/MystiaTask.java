@@ -20,7 +20,7 @@ public class MystiaTask implements IMaidTask {
     public static final String MystiasSeat = "mystias_seat";
     @Override
     public Identifier getUid() {
-        return NeoMystiasIzakaya.id("mystias_meal");
+        return NeoMystiasIzakaya.id("mystias_izakaya_task");
     }
 
     @Override

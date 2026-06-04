@@ -1988,6 +1988,8 @@
   "tag.neo_mystias_izakaya.cuisines/vegetarian": "Vegetarian",
   "tag.neo_mystias_izakaya.cuisines/western": "Western",
   "tag.neo_mystias_izakaya.cuisines/wonderful": "Wonderful",
+  "task.neo_mystias_izakaya.mystias_izakaya_task": "Neo Mystia's Izakaya",
+  "task.neo_mystias_izakaya.mystias_izakaya_task.desc": "Find nearest dining table",
   "tooltip.neo_mystias_izakaya.price": "Price: %d %s",
   "tooltip.neo_mystias_izakaya.price.total": "Total Price: %d %s",
   "unit.neo_mystias_izakaya.en": "円"

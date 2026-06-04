@@ -1988,6 +1988,8 @@
   "tag.neo_mystias_izakaya.cuisines/vegetarian": "素",
   "tag.neo_mystias_izakaya.cuisines/western": "西式",
   "tag.neo_mystias_izakaya.cuisines/wonderful": "不可思议",
+  "task.neo_mystias_izakaya.mystias_izakaya_task": "夜雀食堂",
+  "task.neo_mystias_izakaya.mystias_izakaya_task.desc": "寻找最近的餐桌",
   "tooltip.neo_mystias_izakaya.price": "价格：%s %s",
   "tooltip.neo_mystias_izakaya.price.total": "总价格：%s %s",
   "unit.neo_mystias_izakaya.en": "円"
