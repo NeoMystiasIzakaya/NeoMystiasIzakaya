@@ -14,6 +14,7 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.TransferPreconditions;
+import net.neoforged.neoforge.transfer.transaction.SnapshotJournal;
 import net.neoforged.neoforge.transfer.transaction.TransactionContext;
 
 import java.util.ArrayList;
@@ -24,11 +25,16 @@ import java.util.Objects;
 public class NMIBalance implements ResourceHandler<NMIBalanceEntry> {
 
     private final List<NMIBalanceEntry> entries;
+    private final ArrayList<EntrySnapshotJournal> snapshotJournals;
 
     public NMIBalance(List<NMIBalanceEntry> entries) {
         this.entries = new ArrayList<>();
         this.entries.addAll(entries);
         this.entries.add(NMIBalanceEntry.EMPTY);
+        this.snapshotJournals = new ArrayList<>();
+        for (int i = 0; i < this.entries.size(); i++) {
+            this.snapshotJournals.add(new EntrySnapshotJournal(i));
+        }
     }
 
     public static final MapCodec<NMIBalance> MAP_CODEC = RecordCodecBuilder.mapCodec(
@@ -97,10 +103,14 @@ public class NMIBalance implements ResourceHandler<NMIBalanceEntry> {
 
         if (isValid(index, resource)) {
             if (getResource(index).isEmpty()) {
+                snapshotJournals.get(index).updateSnapshots(transaction);
                 getEntries().set(index, resource.copyWithCount(amount));
                 return amount;
             }
-            return (int)getResource(index).changeCount(amount);
+            if (amount > 0) {
+                snapshotJournals.get(index).updateSnapshots(transaction);
+            }
+            return (int) getResource(index).changeCount(amount);
         }
         return 0;
     }
@@ -116,8 +126,30 @@ public class NMIBalance implements ResourceHandler<NMIBalanceEntry> {
 
         if (isValid(index, resource)) {
             long extracted = Math.min(amount, getResource(index).getCount());
-            return (int) getResource(index).changeCount(-extracted);
+            if (extracted > 0) {
+                snapshotJournals.get(index).updateSnapshots(transaction);
+            }
+            return (int) -getResource(index).changeCount(-extracted);
         }
         return 0;
+    }
+
+    public class EntrySnapshotJournal extends SnapshotJournal<NMIBalanceEntry> {
+
+        private final int index;
+
+        private EntrySnapshotJournal(int index) {
+            this.index = index;
+        }
+
+        @Override
+        protected NMIBalanceEntry createSnapshot() {
+            return getResource(index).copy();
+        }
+
+        @Override
+        protected void revertToSnapshot(NMIBalanceEntry snapshot) {
+            getEntries().set(index, snapshot);
+        }
     }
 }

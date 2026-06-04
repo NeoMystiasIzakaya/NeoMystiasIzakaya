@@ -26,18 +26,8 @@ public class NMIBalanceEntry implements Resource {
     private long count;
 
     public long changeCount(long delta) {
-        if (Long.MAX_VALUE - count < delta) {
-            long oldCount = count;
-            count = Long.MAX_VALUE;
-            return Long.MAX_VALUE - oldCount;
-        } else if (Long.MIN_VALUE - count > delta) {
-            long oldCount = count;
-            count = Long.MIN_VALUE;
-            return Long.MIN_VALUE - oldCount;
-        } else {
-            count += delta;
-            return delta;
-        }
+        this.count += delta;
+        return delta;
     }
 
     public static final MapCodec<NMIBalanceEntry> MAP_CODEC = RecordCodecBuilder.mapCodec(
@@ -63,7 +53,7 @@ public class NMIBalanceEntry implements Resource {
         this.count = 1;
     }
 
-    public NMIBalanceEntry(Identifier item,long count) {
+    public NMIBalanceEntry(Identifier item, long count) {
         this.item = item;
         this.count = count;
     }
@@ -82,4 +72,8 @@ public class NMIBalanceEntry implements Resource {
     }
 
     public static final NMIBalanceEntry EMPTY = new NMIBalanceEntry(NMIBalanceUnits.EMPTY, 0);
+
+    public NMIBalanceEntry copy() {
+        return new NMIBalanceEntry(this.item, this.count);
+    }
 }
