@@ -5,6 +5,7 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.client.gui.screen;
 
+import com.github.tartaricacid.touhoulittlemaid.TouhouLittleMaid;
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.menu.KitchenwareMenu;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.CuisineListWidget;
@@ -14,6 +15,7 @@ import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.KitchenwareButton;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.TagButton;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientEconomyUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonComponentUtil;
+import icu.gensoukyo.neo_mystias_izakaya.compat.tlm.TLMUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.customer.Customer;
 import icu.gensoukyo.neo_mystias_izakaya.content.customer.CustomerHolder;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipe;
@@ -37,6 +39,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.fml.ModList;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -128,7 +131,7 @@ public class RecipeScreen extends Screen {
                 renderCuisineInfo(graphics, font, selected.getRecipe(), i + 254, j);
                 renderCuisineIngredient(graphics, font, selected.getRecipe(), i, j);
             } else if (selected.isCustomer()) {
-                renderCustomerInfo(graphics, font, selected.getCustomer(), i, j);
+                renderCustomerInfo(graphics, font, selected.getCustomer(), i, j, mouseX, mouseY);
             } else if (selected.isItem()) {
                 renderBeverageInfo(graphics, font, selected.getItemStack(), i + 254, j);
             }
@@ -542,7 +545,7 @@ public class RecipeScreen extends Screen {
     /**
      * 在左侧原本绘制Tag的区域详细绘制顾客信息
      */
-    private void renderCustomerInfo(GuiGraphicsExtractor guiGraphics, Font font, CustomerHolder customerHolder, int i, int j) {
+    private void renderCustomerInfo(GuiGraphicsExtractor guiGraphics, Font font, CustomerHolder customerHolder, int i, int j, int mouseX, int mouseY) {
         Customer customer = customerHolder.customer();
         Identifier key = customerHolder.key();
         int lineHeight = font.lineHeight;
@@ -580,6 +583,13 @@ public class RecipeScreen extends Screen {
         // 符卡
         startY = renderCustomerTagSection(guiGraphics, font, "tag", customer.spellCards(),
                 "gui.neo_mystias_izakaya.spell_card", baseX, startY, maxWidth, 0xFF593B1F);
+
+        if (ModList.get().isLoaded("touhou_little_maid")) {
+            int middleX = (this.width - this.imageWidth) / 2 - 40;
+            int middleY = (this.height - this.imageHeight) / 2;
+            Identifier customerID = Identifier.fromNamespaceAndPath(TouhouLittleMaid.MOD_ID, key.getPath().replaceFirst("^customer/", ""));
+            TLMUtil.renderEntityPart(customerID.toString(), guiGraphics, mouseX, mouseY, middleX + 800,middleY - 10,0.7F);
+        }
     }
 
     /**

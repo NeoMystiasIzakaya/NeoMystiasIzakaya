@@ -137,7 +137,7 @@ public class CuisineListWidget extends ObjectSelectionList<CuisineListWidget.Dis
         }
 
         @Override
-        public void extractContent(GuiGraphicsExtractor graphics, int mouseX, int mouseY, boolean hovered, float a) {
+        public void extractContent(GuiGraphicsExtractor graphics, int mouseX, int mouseY, boolean hovered, float partialTick) {
             Font font = Minecraft.getInstance().font;
             if (isRecipe()) {
                 NMIRecipeHolder recipe = getRecipe();
