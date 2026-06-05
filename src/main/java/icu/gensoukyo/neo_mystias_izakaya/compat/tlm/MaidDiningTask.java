@@ -86,7 +86,7 @@ public class MaidDiningTask extends MaidCheckRateTask {
                 EntitySit newSitEntity = new EntitySit(worldIn, new Vec3(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5).add(Vec3.atLowerCornerOf(normal)), MystiasSeat, position);
                 newSitEntity.setYRot(direction.getOpposite().toYRot());
                 worldIn.addFreshEntity(newSitEntity);
-                diningTableBlock.setChanged();
+                diningTableBlock.setSeatEntityId(newSitEntity.getUUID());
                 maid.startRiding(newSitEntity);
             }
         }

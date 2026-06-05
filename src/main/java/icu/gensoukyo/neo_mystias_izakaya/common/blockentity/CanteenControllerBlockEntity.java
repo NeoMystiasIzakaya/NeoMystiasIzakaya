@@ -83,8 +83,8 @@ public class CanteenControllerBlockEntity extends BlockEntity {
 
     private boolean isMain() {
         BlockState state = getBlockState();
-        return !state.hasProperty(CanteenControllerBlock.PART)
-                || state.getValue(CanteenControllerBlock.PART) == CanteenControllerBlock.CanteenPart.MAIN;
+        return state.hasProperty(CanteenControllerBlock.PART)
+                && state.getValue(CanteenControllerBlock.PART) != CanteenControllerBlock.CanteenPart.MAIN;
     }
 
     // ==================== 公开访问器（全部委托到 MAIN） ====================
@@ -352,7 +352,7 @@ public class CanteenControllerBlockEntity extends BlockEntity {
 
     @Override
     protected void saveAdditional(ValueOutput output) {
-        if (!isMain()) return;
+        if (isMain()) return;
         super.saveAdditional(output);
         output.store("kitchenware", BlockPos.CODEC.listOf(), new ArrayList<>(this.kitchenwareList));
         output.store("diningTable", BlockPos.CODEC.listOf(), new ArrayList<>(this.dingingTableList));
@@ -364,7 +364,7 @@ public class CanteenControllerBlockEntity extends BlockEntity {
 
     @Override
     protected void loadAdditional(ValueInput input) {
-        if (!isMain()) return;
+        if (isMain()) return;
         super.loadAdditional(input);
         this.kitchenwareList = new LinkedHashSet<>(input.read("kitchenware", BlockPos.CODEC.listOf()).orElse(List.of()));
         this.dingingTableList = new LinkedHashSet<>(input.read("diningTable", BlockPos.CODEC.listOf()).orElse(List.of()));
