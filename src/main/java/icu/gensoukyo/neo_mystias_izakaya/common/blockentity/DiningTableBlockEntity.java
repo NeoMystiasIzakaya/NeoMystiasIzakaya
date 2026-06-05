@@ -37,7 +37,6 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
 import java.util.Optional;
-import java.util.UUID;
 
 public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
 
@@ -81,11 +80,6 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
      */
     @Getter
     private BlockPos controllerPos = BlockPos.ZERO;
-    /**
-     * 客人坐着的实体 ID（如座椅、载具等）
-     */
-    @Getter
-    private UUID sitId = null;
     /**
      * 冷却时间（tick），菜单完成后随机 10~20 秒（200~400 tick）
      */
@@ -186,9 +180,6 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
         output.putInt("TableIndex", this.tableIndex);
         output.putInt("CooldownTicks", this.cooldownTicks);
         output.store("ControllerPos", BlockPos.CODEC, this.controllerPos);
-        if (this.sitId != null) {
-            output.store("SitId", UUIDUtil.CODEC, this.sitId);
-        }
         if (!this.currentOrder.equals(IzakayaOrder.EMPTY)) {
             output.store("Order", IzakayaOrder.CODEC, this.currentOrder);
         }
@@ -208,7 +199,6 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
         this.tableIndex = input.getIntOr("TableIndex", -1);
         this.cooldownTicks = input.getIntOr("CooldownTicks", 0);
         this.controllerPos = input.read("ControllerPos", BlockPos.CODEC).orElse(BlockPos.ZERO);
-        this.sitId = input.read("SitId", UUIDUtil.CODEC).orElse(null);
         this.currentOrder = input.read("Order", IzakayaOrder.CODEC).orElse(IzakayaOrder.EMPTY);
     }
 
@@ -229,9 +219,6 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
             output.putInt("TableIndex", this.tableIndex);
             output.putInt("CooldownTicks", this.cooldownTicks);
             output.store("ControllerPos", BlockPos.CODEC, this.controllerPos);
-            if (this.sitId != null) {
-                output.store("SitId", UUIDUtil.CODEC, this.sitId);
-            }
             if (!this.currentOrder.equals(IzakayaOrder.EMPTY)) {
                 output.store("Order", IzakayaOrder.CODEC, this.currentOrder);
             }
@@ -242,14 +229,12 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
     /**
      * 顾客入座并派发订单
      *
-     * @param order       订单
-     * @param sitEntityId 客人所坐实体的 UUID
+     * @param order 订单
      */
-    public void seatCustomer(IzakayaOrder order, UUID sitEntityId) {
+    public void seatCustomer(IzakayaOrder order) {
         this.isOccupied = true;
         this.customerId = order.rareCustomer();
         this.currentOrder = order;
-        this.sitId = sitEntityId;
         markUpdated();
     }
 
@@ -260,7 +245,6 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
         this.isOccupied = false;
         this.customerId = IzakayaOrder.EMPTY_RARE_CUSTOMER;
         this.currentOrder = IzakayaOrder.EMPTY;
-        this.sitId = null;
         // 清空菜品和饮品
         this.items.clear();
         markUpdated();
@@ -350,7 +334,6 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
         this.isOccupied = false;
         this.customerId = IzakayaOrder.EMPTY_RARE_CUSTOMER;
         this.currentOrder = IzakayaOrder.EMPTY;
-        this.sitId = null;
         markUpdated();
     }
 }

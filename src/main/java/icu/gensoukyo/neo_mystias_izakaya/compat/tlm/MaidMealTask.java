@@ -4,12 +4,20 @@ import com.github.tartaricacid.touhoulittlemaid.entity.ai.brain.task.MaidCheckRa
 import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
 import com.github.tartaricacid.touhoulittlemaid.init.InitBrains;
 import com.google.common.collect.ImmutableMap;
+import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
+import icu.gensoukyo.neo_mystias_izakaya.api.dal.NMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.DiningTableBlockEntity;
+import icu.gensoukyo.neo_mystias_izakaya.content.customer.CustomerMap;
+import icu.gensoukyo.neo_mystias_izakaya.content.customer.RareCustomer;
+import icu.gensoukyo.neo_mystias_izakaya.content.customer.RareCustomerHolder;
+import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaOrder;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIMemoryTypes;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 
+import java.util.List;
 import java.util.Random;
 
 public class MaidMealTask extends MaidCheckRateTask {
@@ -28,7 +36,29 @@ public class MaidMealTask extends MaidCheckRateTask {
         maid.getBrain().getMemory(NMIMemoryTypes.TARGET_POS.get()).ifPresent(targetPos -> {
             if (level.getBlockEntity(targetPos) instanceof DiningTableBlockEntity diningTableBlock) {
                 if (!diningTableBlock.isOccupied()) {
+                    Identifier maidModel = Identifier.parse(maid.getModelId());
+                    Identifier maidID = NeoMystiasIzakaya.id("customer/" + maidModel.getPath());
 
+                    CustomerMap customerMap = NMIDataAccessor.server().getCustomerMap();
+                    // 尝试匹配特定稀客，匹配不到则随机选一个
+                    RareCustomerHolder holder = customerMap.getRareCustomerMap().get(maidID);
+                    if (holder == null) {
+                        List<RareCustomerHolder> rareList = customerMap.getRareCustomers();
+                        if (!rareList.isEmpty()) {
+                            holder = rareList.get(level.getRandom().nextInt(rareList.size()));
+                        }
+                    }
+                    if (holder != null) {
+                        RareCustomer customer = holder.customer();
+                        List<Identifier> likes = customer.likes();
+                        List<Identifier> beverages = customer.beverage();
+                        if (!likes.isEmpty() && !beverages.isEmpty()) {
+                            Identifier cuisineId = likes.get(level.getRandom().nextInt(likes.size()));
+                            Identifier beverageId = beverages.get(level.getRandom().nextInt(beverages.size()));
+                            IzakayaOrder order = new IzakayaOrder(cuisineId, beverageId, holder.key(), true);
+                            diningTableBlock.seatCustomer(order);
+                        }
+                    }
                 }
             }
         });

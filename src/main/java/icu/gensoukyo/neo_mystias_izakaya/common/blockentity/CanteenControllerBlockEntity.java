@@ -225,7 +225,7 @@ public class CanteenControllerBlockEntity extends BlockEntity {
 
             IzakayaOrder order = generateOrder(pLevel, pBlockEntity);
             if (order != null) {
-                table.seatCustomer(order, null);
+                table.seatCustomer(order);
             }
         }
     }

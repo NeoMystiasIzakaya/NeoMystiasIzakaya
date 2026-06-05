@@ -73,7 +73,7 @@ public final class RareCustomers {
     public static final Identifier MAMIZOU_FUTATSUIWA = NeoMystiasIzakaya.id("customer/hutatsuiwa_mamizou");
     public static final Identifier YUKARI_YAKUMO = NeoMystiasIzakaya.id("customer/yukari_yakumo");
 
-    public static final List<Identifier> RareCustomers = Arrays.asList(
+    public static final List<Identifier> RARE_CUSTOMERS = Arrays.asList(
             WRIGGLE_NIGHTBUG,
             RUMIA,
             CHEN,

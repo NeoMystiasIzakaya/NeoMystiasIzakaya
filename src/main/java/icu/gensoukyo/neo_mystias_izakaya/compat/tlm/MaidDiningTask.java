@@ -105,7 +105,7 @@ public class MaidDiningTask extends MaidCheckRateTask {
     private boolean isOccupied(ServerLevel worldIn, BlockPos pos) {
         BlockEntity te = worldIn.getBlockEntity(pos);
         if (te instanceof DiningTableBlockEntity tableBlockEntityTE) {
-            return worldIn.getEntity(tableBlockEntityTE.getSitId()) != null;
+            return tableBlockEntityTE.isOccupied();
         }
         return true;
     }
