@@ -133,10 +133,12 @@ public class DiningTableBlock extends BaseEntityBlock {
      */
     private void swapOrPlace(Player player, ItemStack heldItem, DiningTableBlockEntity table, boolean isBeverage) {
         ItemStack existing = isBeverage ? table.getBeverage() : table.getCuisine();
+        ItemStack copy = heldItem.copy();
+        copy.setCount(1);
         if (isBeverage) {
-            table.setBeverage(heldItem.copy());
+            table.setBeverage(copy);
         } else {
-            table.setCuisine(heldItem.copy());
+            table.setCuisine(copy);
         }
         heldItem.shrink(1);
         if (!existing.isEmpty() && !player.getInventory().add(existing)) {

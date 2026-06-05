@@ -35,27 +35,29 @@ public class MaidMealTask extends MaidCheckRateTask {
     protected void start(ServerLevel level, EntityMaid maid, long gameTimeIn) {
         maid.getBrain().getMemory(NMIMemoryTypes.TARGET_POS.get()).ifPresent(targetPos -> {
             if (level.getBlockEntity(targetPos) instanceof DiningTableBlockEntity diningTableBlock) {
-                Identifier maidModel = Identifier.parse(maid.getModelId());
-                Identifier maidID = NeoMystiasIzakaya.id("customer/" + maidModel.getPath());
+                if (!diningTableBlock.isOccupied()) {
+                    Identifier maidModel = Identifier.parse(maid.getModelId());
+                    Identifier maidID = NeoMystiasIzakaya.id("customer/" + maidModel.getPath());
 
-                CustomerMap customerMap = NMIDataAccessor.server().getCustomerMap();
-                // 尝试匹配特定稀客，匹配不到则随机选一个
-                RareCustomerHolder holder = customerMap.getRareCustomerMap().get(maidID);
-                if (holder == null) {
-                    List<RareCustomerHolder> rareList = customerMap.getRareCustomers();
-                    if (!rareList.isEmpty()) {
-                        holder = rareList.get(level.getRandom().nextInt(rareList.size()));
+                    CustomerMap customerMap = NMIDataAccessor.server().getCustomerMap();
+                    // 尝试匹配特定稀客，匹配不到则随机选一个
+                    RareCustomerHolder holder = customerMap.getRareCustomerMap().get(maidID);
+                    if (holder == null) {
+                        List<RareCustomerHolder> rareList = customerMap.getRareCustomers();
+                        if (!rareList.isEmpty()) {
+                            holder = rareList.get(level.getRandom().nextInt(rareList.size()));
+                        }
                     }
-                }
-                if (holder != null) {
-                    RareCustomer customer = holder.customer();
-                    List<Identifier> likes = customer.likes();
-                    List<Identifier> beverages = customer.beverage();
-                    if (!likes.isEmpty() && !beverages.isEmpty()) {
-                        Identifier cuisineId = likes.get(level.getRandom().nextInt(likes.size()));
-                        Identifier beverageId = beverages.get(level.getRandom().nextInt(beverages.size()));
-                        IzakayaOrder order = new IzakayaOrder(cuisineId, beverageId, holder.key(), true);
-                        diningTableBlock.seatCustomer(order);
+                    if (holder != null) {
+                        RareCustomer customer = holder.customer();
+                        List<Identifier> likes = customer.likes();
+                        List<Identifier> beverages = customer.beverage();
+                        if (!likes.isEmpty() && !beverages.isEmpty()) {
+                            Identifier cuisineId = likes.get(level.getRandom().nextInt(likes.size()));
+                            Identifier beverageId = beverages.get(level.getRandom().nextInt(beverages.size()));
+                            IzakayaOrder order = new IzakayaOrder(cuisineId, beverageId, holder.key(), true);
+                            diningTableBlock.seatCustomer(order);
+                        }
                     }
                 }
             }
