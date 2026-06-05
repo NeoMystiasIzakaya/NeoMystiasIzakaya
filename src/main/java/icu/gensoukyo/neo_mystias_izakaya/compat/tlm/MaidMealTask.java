@@ -4,6 +4,8 @@ import com.github.tartaricacid.touhoulittlemaid.entity.ai.brain.task.MaidCheckRa
 import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
 import com.github.tartaricacid.touhoulittlemaid.init.InitBrains;
 import com.google.common.collect.ImmutableMap;
+import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.DiningTableBlockEntity;
+import icu.gensoukyo.neo_mystias_izakaya.registry.NMIMemoryTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
@@ -23,15 +25,15 @@ public class MaidMealTask extends MaidCheckRateTask {
 
     @Override
     protected void start(ServerLevel level, EntityMaid maid, long gameTimeIn) {
-//        if (maid.getBrain().getMemory(NMIMemoryTypes.TARGET_POS.get()).isEmpty()) {
-//            Entity vehicle = maid.getVehicle();
-//            if (vehicle instanceof EntitySit sit) {
-//                BlockPos associatedBlockPos = sit.getAssociatedBlockPos();
-//                if (level.getBlockEntity(associatedBlockPos) instanceof DiningTableBlockEntity) {
-//                    maid.getBrain().setMemory(NMIMemoryTypes.TARGET_POS.get(), new BlockPosTracker(associatedBlockPos));
-//                }
-//            }
-//        }
+        maid.getBrain().getMemory(NMIMemoryTypes.TARGET_POS.get()).ifPresent(targetPos -> {
+            if (level.getBlockEntity(targetPos) instanceof DiningTableBlockEntity diningTableBlock) {
+                if (!diningTableBlock.isOccupied()) {
+
+                }
+            }
+        });
+
+
 //        maid.getBrain().getMemory(NMIMemoryTypes.TARGET_POS.get()).ifPresent(targetPos -> {
 //            BlockEntity blockEntity = level.getBlockEntity(targetPos.currentBlockPosition());
 //            if (blockEntity instanceof MystiaSeatTE mystiaSeatTE) {

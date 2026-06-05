@@ -67,7 +67,7 @@ public class MaidDiningTask extends MaidCheckRateTask {
             BlockState blockState = level.getBlockState(pos);
             if (blockState.getBlock() instanceof DiningTableBlock) {
                 this.startMaidSit(maid, blockState, level, pos);
-                maid.getBrain().setMemory(NMIMemoryTypes.TARGET_POS.get(), targetPos);
+                maid.getBrain().setMemory(NMIMemoryTypes.TARGET_POS.get(), pos);
             }
         });
         maid.getBrain().eraseMemory(InitBrains.TARGET_POS.get());

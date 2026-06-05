@@ -8,6 +8,9 @@ package icu.gensoukyo.neo_mystias_izakaya.content.customer.consts;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import net.minecraft.resources.Identifier;
 
+import java.util.Arrays;
+import java.util.List;
+
 public final class RareCustomers {
 
     public static final Identifier WRIGGLE_NIGHTBUG = NeoMystiasIzakaya.id("customer/wriggle_nightbug");
@@ -69,4 +72,66 @@ public final class RareCustomers {
     public static final Identifier KOISHI_KOMEIJI = NeoMystiasIzakaya.id("customer/komeiji_koishi");
     public static final Identifier MAMIZOU_FUTATSUIWA = NeoMystiasIzakaya.id("customer/hutatsuiwa_mamizou");
     public static final Identifier YUKARI_YAKUMO = NeoMystiasIzakaya.id("customer/yukari_yakumo");
+
+    public static final List<Identifier> RareCustomers = Arrays.asList(
+            WRIGGLE_NIGHTBUG,
+            RUMIA,
+            CHEN,
+            HIEDA_NO_AKYUU,
+            KEINE_KAMISHIRASAWA,
+            KASEN_IBARAKI,
+            HAKUREI_REIMU,
+            IBUKI_SUIKA,
+            HINANAWI_TENSHI,
+            MARISA_KIRISAME,
+            HONG_MEILING,
+            CIRNO,
+            PATCHOULI_KNOWLEDGE,
+            FUJIWARA_NO_MOKOU,
+            KAGUYA_HOURAISAN,
+            TEWI_INABA,
+            NITORI_KAWASHIRO,
+            MOMIJI_INUBASHIRI,
+            SANAE_KOCHIYA,
+            ALICE,
+            NARUMI_YATADERA,
+            YAMAME_KURODANI,
+            PARSEE_MIZUHASHI,
+            YUUGI_HOSHIGUMA,
+            SATORI_KOMEIJI,
+            RIN_KAENBYOU,
+            UTSUHO_REIUJI,
+            KOGASA_TATARA,
+            MINAMITSU_MURASA,
+            NUE_HOUJUU,
+            MONONOBE_NO_FUTO,
+            SEIGA_KAKU,
+            SOGA_NO_TOJIKO,
+            AYA_SHAMEIMARU,
+            MEDICINE_MELANCHOLY,
+            YUUKA_KAZAMI,
+            SEIJA_KIJIN,
+            SHINMYOUMARU_SUKUNA,
+            KAGEROU_IMAIZUMI,
+            REISEN,
+            WATATSUKI_NO_TOYOHIME,
+            WATATSUKI_NO_YORIHIME,
+            ELLEN,
+            MIMA,
+            LOUISE,
+            RINNOSUKE_MORICHIKA,
+            REMILIA_SCARLET,
+            YOUMU_KONPAKU,
+            YUYUKO_SAIGYOUJI,
+            MENG_CHENGGUO,
+            THREE_FAIRIES,
+            RIN_SATSUKI,
+            SHIO_TACHISORA,
+            JIEN_YUU,
+            HATA_NO_KOKORO,
+            YUUMA_TOUTETSU,
+            KOISHI_KOMEIJI,
+            MAMIZOU_FUTATSUIWA,
+            YUKARI_YAKUMO
+    );
 }
