@@ -98,6 +98,7 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
         // 女仆离席检测：座位实体消失则自动清桌
         if (pBlockEntity.seatEntityId != null && pLevel.getEntity(pBlockEntity.seatEntityId) == null) {
             pBlockEntity.clear();
+            pBlockEntity.seatEntityId = null;
             return;
         }
 
@@ -259,10 +260,10 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
     }
 
     /**
-     * 餐桌是否空闲（无顾客且无物品）
+     * 餐桌是否空闲（无顾客且无物品，无女仆占用）
      */
     public boolean isIdle() {
-        return !this.isOccupied && this.items.stream().allMatch(ItemStack::isEmpty) && this.cooldownTicks == 0;
+        return !this.isOccupied && this.items.stream().allMatch(ItemStack::isEmpty) && this.cooldownTicks == 0 && this.seatEntityId == null;
     }
 
     /**
