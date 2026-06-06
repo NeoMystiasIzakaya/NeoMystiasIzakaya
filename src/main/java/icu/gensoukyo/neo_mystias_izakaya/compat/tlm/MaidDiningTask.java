@@ -81,14 +81,40 @@ public class MaidDiningTask extends MaidCheckRateTask {
             if (blockEntity instanceof DiningTableBlockEntity diningTableBlock) {
                 BlockPos position = diningTableBlock.getBlockPos();
                 Random random = new Random();
-                Direction direction = Direction.values()[random.nextInt(4) + 2];
-                Vec3i normal = direction.getUnitVec3i();
-                EntitySit newSitEntity = new EntitySit(worldIn, new Vec3(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5).add(Vec3.atLowerCornerOf(normal)), MystiasSeat, position);
-                newSitEntity.setYRot(direction.getOpposite().toYRot());
-                worldIn.addFreshEntity(newSitEntity);
-                diningTableBlock.setSeatEntityId(newSitEntity.getUUID());
-                maid.startRiding(newSitEntity);
+                // 随机打乱四个水平方向，依次尝试找到合法的坐下位置
+                Direction[] directions = {Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST};
+                shuffleDirections(directions, random);
+                for (Direction direction : directions) {
+                    Vec3i normal = direction.getUnitVec3i();
+                    BlockPos sitPos = pos.offset(normal);
+                    // 座位位置必须为空（无方块阻挡），且下方必须有支撑方块
+                    if (worldIn.getBlockState(sitPos).isAir()
+                            && worldIn.getBlockState(sitPos.below()).isSolid()) {
+                        EntitySit newSitEntity = new EntitySit(worldIn,
+                                new Vec3(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5)
+                                        .add(Vec3.atLowerCornerOf(normal)),
+                                MystiasSeat, position);
+                        newSitEntity.setYRot(direction.getOpposite().toYRot());
+                        worldIn.addFreshEntity(newSitEntity);
+                        diningTableBlock.setSeatEntityId(newSitEntity.getUUID());
+                        maid.startRiding(newSitEntity);
+                        return;
+                    }
+                }
+                // 四个方向都不合法，无法入座
             }
+        }
+    }
+
+    /**
+     * Fisher-Yates 洗牌，打乱方向数组以保证随机性
+     */
+    private void shuffleDirections(Direction[] directions, Random random) {
+        for (int i = directions.length - 1; i > 0; i--) {
+            int j = random.nextInt(i + 1);
+            Direction temp = directions[i];
+            directions[i] = directions[j];
+            directions[j] = temp;
         }
     }
 

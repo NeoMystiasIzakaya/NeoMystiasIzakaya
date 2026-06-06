@@ -102,6 +102,7 @@ public class NMILanguageProvider implements DataProvider {
         this.add("gui.neo_mystias_izakaya.dislikes", "Dislikes", "厌恶");
         this.add("gui.neo_mystias_izakaya.likes", "Likes", "喜好");
         this.add("gui.neo_mystias_izakaya.location", "Location", "地点");
+        this.add("gui.neo_mystias_izakaya.maid_dining", "Maid", "女仆");
         this.add("gui.neo_mystias_izakaya.rare_customer", "Rare Customer", "稀客");
         this.add("gui.neo_mystias_izakaya.common_customer", "Common Customer", "普客");
         this.add("gui.neo_mystias_izakaya.idle","Idle", "闲置");

@@ -170,6 +170,21 @@ public class CanteenOverlay implements GuiLayer {
         IzakayaOrder order = diningTable.getCurrentOrder();
         Identifier customerId = diningTable.getCustomerId();
 
+        if (IzakayaOrder.isEmpty(order)) {
+            // 女仆占桌（无顾客订单）：直接显示桌上已有物品，不访问 order 字段
+            ItemStack cuisine = diningTable.getCuisine();
+            ItemStack beverage = diningTable.getBeverage();
+            if (!cuisine.isEmpty()) {
+                guiGraphics.item(cuisine, x0 + 2, y0 + 3);
+            }
+            if (!beverage.isEmpty()) {
+                guiGraphics.item(beverage, x0 + 20, y0 + 3);
+            }
+            Component maidLabel = Component.translatable("gui.neo_mystias_izakaya.maid_dining");
+            guiGraphics.text(font, maidLabel, x0 + 38, y0 + 7, 0xFF000000, false);
+            return;
+        }
+
         // 订单未完成：显示需求
         if (order.isRare()) {
             // 稀客：两个都是 Tag，显示 Tag 名称

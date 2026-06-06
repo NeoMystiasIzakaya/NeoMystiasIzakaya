@@ -153,11 +153,7 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
         // 完成后进入随机 10~20 秒 CD
         pBlockEntity.cooldownTicks = pLevel.getRandom().nextInt(200, 401);
         // 女仆仍在座则只清物品保留占用，否则完全重置
-        if (pBlockEntity.seatEntityId != null && pLevel.getEntity(pBlockEntity.seatEntityId) != null) {
-            pBlockEntity.clearItems();
-        } else {
-            pBlockEntity.clear();
-        }
+        pBlockEntity.clear();
     }
 
     @Override
@@ -255,42 +251,10 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
     }
 
     /**
-     * 顾客离席
-     */
-    public void clearCustomer() {
-        this.isOccupied = false;
-        this.customerId = IzakayaOrder.EMPTY_RARE_CUSTOMER;
-        this.currentOrder = IzakayaOrder.EMPTY;
-        this.seatEntityId = null;
-        // 清空菜品和饮品
-        this.items.clear();
-        markUpdated();
-    }
-
-    /**
-     * 直接设置占用状态（不涉及订单，用于外部实体如女仆占桌时阻止控制器派单）
-     */
-    public void setOccupied(boolean occupied) {
-        this.isOccupied = occupied;
-        markUpdated();
-    }
-
-    /**
      * 记录女仆座位实体并标记占用（由 MaidDiningTask 调用）
      */
     public void setSeatEntityId(UUID id) {
         this.seatEntityId = id;
-        this.isOccupied = true;
-        markUpdated();
-    }
-
-    /**
-     * 只清空物品和订单，保留占用状态（女仆仍在座时使用）
-     */
-    public void clearItems() {
-        this.items.clear();
-        this.customerId = IzakayaOrder.EMPTY_RARE_CUSTOMER;
-        this.currentOrder = IzakayaOrder.EMPTY;
         markUpdated();
     }
 
