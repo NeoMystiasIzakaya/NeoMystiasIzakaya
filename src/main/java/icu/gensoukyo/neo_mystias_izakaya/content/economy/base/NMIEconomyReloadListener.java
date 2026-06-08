@@ -23,6 +23,7 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.conditions.ConditionalOps;
+import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
@@ -73,7 +74,9 @@ public class NMIEconomyReloadListener extends SimplePreparableReloadListener<NMI
         LOGGER.info("Loaded {} NMI economy prices", economyMap.getItemPriceMap().size());
         if (FMLEnvironment.getDist().isDedicatedServer()) {
             ServerNMIDataAccessor.INSTANCE.setEconomyMap(economyMap);
-            ServerPayloadSender.sendEconomyMapSyncMessage(economyMap);
+            if (ServerLifecycleHooks.getCurrentServer() != null) {
+                ServerPayloadSender.sendEconomyMapSyncMessage(economyMap);
+            }
         }else {
             ServerNMIDataAccessor.INSTANCE.setEconomyMap(economyMap);
             ClientNMIDataAccessor.INSTANCE.setEconomyMap(economyMap);

@@ -25,21 +25,36 @@ public class ServerPayloadSender {
     public static void sendTagItemListMapSyncMessage(TagItemListMap map) {
         PacketDistributor.sendToAllPlayers(new TagItemListMapSyncMessage(map));
     }
+    public static void sendTagItemListMapSyncMessage(ServerPlayer player,TagItemListMap map) {
+        PacketDistributor.sendToPlayer(player,new TagItemListMapSyncMessage(map));
+    }
 
     public static void sendRecipeMapSyncMessage(NMIRecipeMap map) {
         PacketDistributor.sendToAllPlayers(new NMIRecipeMapSyncMessage(map));
+    }
+    public static void sendRecipeMapSyncMessage(ServerPlayer player, NMIRecipeMap map) {
+        PacketDistributor.sendToPlayer(player, new NMIRecipeMapSyncMessage(map));
     }
 
     public static void sendCustomerDataSyncMessage(CustomerMap message) {
         PacketDistributor.sendToAllPlayers(new NMICustomerMapSyncMessage(message));
     }
+    public static void sendCustomerDataSyncMessage(ServerPlayer player, CustomerMap message) {
+        PacketDistributor.sendToPlayer(player, new NMICustomerMapSyncMessage(message));
+    }
 
     public static void sendEconomyMapSyncMessage(NMIEconomyMap map) {
         PacketDistributor.sendToAllPlayers(new NMIEconomyMapSyncMessage(map));
     }
+    public static void sendEconomyMapSyncMessage(ServerPlayer player, NMIEconomyMap map) {
+        PacketDistributor.sendToPlayer(player, new NMIEconomyMapSyncMessage(map));
+    }
 
     public static void sendStoreMapSyncMessage(NMIStoreMap map) {
         PacketDistributor.sendToAllPlayers(new NMIStoreMapSyncMessage(map));
+    }
+    public static void sendStoreMapSyncMessage(ServerPlayer player, NMIStoreMap map) {
+        PacketDistributor.sendToPlayer(player, new NMIStoreMapSyncMessage(map));
     }
 
     public static void sendIzakayaMenuSyncMessage(ServerPlayer player) {

@@ -23,6 +23,7 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.conditions.ConditionalOps;
+import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
@@ -88,7 +89,9 @@ public class CustomerReloadListener extends SimplePreparableReloadListener<Custo
         LOGGER.info("Loaded {} common customers and {} rare customers", customerMap.getCommonCustomers().size(), customerMap.getRareCustomers().size());
         if (FMLEnvironment.getDist().isDedicatedServer()) {
             ServerNMIDataAccessor.INSTANCE.setCustomerMap(customerMap);
-            ServerPayloadSender.sendCustomerDataSyncMessage(customerMap);
+            if (ServerLifecycleHooks.getCurrentServer() != null) {
+                ServerPayloadSender.sendCustomerDataSyncMessage(customerMap);
+            }
         }else {
             ServerNMIDataAccessor.INSTANCE.setCustomerMap(customerMap);
             ClientNMIDataAccessor.INSTANCE.setCustomerMap(customerMap);

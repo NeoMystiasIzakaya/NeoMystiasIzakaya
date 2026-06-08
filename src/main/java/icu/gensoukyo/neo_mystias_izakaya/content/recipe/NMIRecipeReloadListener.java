@@ -23,6 +23,7 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.conditions.ConditionalOps;
+import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
@@ -73,7 +74,9 @@ public class NMIRecipeReloadListener extends SimplePreparableReloadListener<NMIR
         LOGGER.info("Loaded {} NMI recipes", nmiRecipeMap.getRecipes().size());
         if (FMLEnvironment.getDist().isDedicatedServer()) {
             ServerNMIDataAccessor.INSTANCE.setRecipeMap(nmiRecipeMap);
-            ServerPayloadSender.sendRecipeMapSyncMessage(nmiRecipeMap);
+            if (ServerLifecycleHooks.getCurrentServer() != null) {
+                ServerPayloadSender.sendRecipeMapSyncMessage(nmiRecipeMap);
+            }
         }else {
             ServerNMIDataAccessor.INSTANCE.setRecipeMap(nmiRecipeMap);
             ClientNMIDataAccessor.INSTANCE.setRecipeMap(nmiRecipeMap);

@@ -15,6 +15,7 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import org.slf4j.Logger;
 
 public class NMIStoreReloadListener extends SimplePreparableReloadListener<NMIStoreMap> {
@@ -45,7 +46,9 @@ public class NMIStoreReloadListener extends SimplePreparableReloadListener<NMISt
         LOGGER.info("Loaded {} NMI stores", storeMap.getStores().size());
         if (FMLEnvironment.getDist().isDedicatedServer()) {
             ServerNMIDataAccessor.INSTANCE.setStoreMap(storeMap);
-            ServerPayloadSender.sendStoreMapSyncMessage(storeMap);
+            if (ServerLifecycleHooks.getCurrentServer() != null) {
+                ServerPayloadSender.sendStoreMapSyncMessage(storeMap);
+            }
         }else {
             ServerNMIDataAccessor.INSTANCE.setStoreMap(storeMap);
             ClientNMIDataAccessor.INSTANCE.setStoreMap(storeMap);

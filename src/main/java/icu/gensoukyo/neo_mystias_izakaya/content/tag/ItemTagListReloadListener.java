@@ -23,6 +23,7 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.conditions.ConditionalOps;
+import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
@@ -89,7 +90,9 @@ public class ItemTagListReloadListener extends SimplePreparableReloadListener<Ta
         LOGGER.info("Loaded {} item negative tags with {} items", tagItemListMap.getNegativeTags().size(),tagItemListMap.getItemToNegativeTagMap().size());
         if (FMLEnvironment.getDist().isDedicatedServer()) {
             ServerNMIDataAccessor.INSTANCE.setTagItemListMap(tagItemListMap);
-            ServerPayloadSender.sendTagItemListMapSyncMessage(tagItemListMap);
+            if (ServerLifecycleHooks.getCurrentServer() != null) {
+                ServerPayloadSender.sendTagItemListMapSyncMessage(tagItemListMap);
+            }
         }else {
             ServerNMIDataAccessor.INSTANCE.setTagItemListMap(tagItemListMap);
             ClientNMIDataAccessor.INSTANCE.setTagItemListMap(tagItemListMap);
