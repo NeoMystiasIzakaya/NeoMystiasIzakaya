@@ -86,6 +86,12 @@ public class NMINetwork {
                 KitchenwareTimeSyncMessage.STREAM_CODEC,
                 ClientPayloadHandler::handleKitchenwareTimeSyncMessage
         );
+
+        registrar.playToClient(
+                DiningTableSaleMessage.TYPE,
+                DiningTableSaleMessage.STREAM_CODEC,
+                ClientPayloadHandler::handleDiningTableSaleMessage
+        );
     }
 
     private static void registerClientBound(PayloadRegistrar registrar) {

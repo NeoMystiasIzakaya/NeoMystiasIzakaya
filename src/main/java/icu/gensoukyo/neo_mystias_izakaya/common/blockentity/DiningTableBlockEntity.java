@@ -7,6 +7,7 @@ package icu.gensoukyo.neo_mystias_izakaya.common.blockentity;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.api.dal.NMIDataAccessor;
+import icu.gensoukyo.neo_mystias_izakaya.common.network.ServerPayloadSender;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonBalanceUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMIServerEconomyUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMIServerItemTagUtil;
@@ -149,7 +150,7 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
                 && canteen.getOwner() != null
                 && pLevel.getEntity(canteen.getOwner()) instanceof ServerPlayer serverPlayer) {
             NMICommonBalanceUtil.insertEn(serverPlayer, price, false, NMIBalanceTransactionReasons.ORDER_PAY, "DiningTable", serverPlayer.getPlainTextName());
-            serverPlayer.sendOverlayMessage(Component.translatable("block.neo_mystias_izakaya.dining_table.sale", price));
+            ServerPayloadSender.sendDiningTableSaleMessage(serverPlayer, price);
         }
         // 完成后进入随机 10~20 秒 CD
         pBlockEntity.cooldownTicks = pLevel.getRandom().nextInt(200, 401);

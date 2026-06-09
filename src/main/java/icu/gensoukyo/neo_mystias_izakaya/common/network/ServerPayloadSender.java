@@ -84,4 +84,8 @@ public class ServerPayloadSender {
     public static void sendKitchenwareSyncMessage(BlockPos blockPos, int cookTime) {
         PacketDistributor.sendToAllPlayers(new KitchenwareTimeSyncMessage(blockPos, cookTime));
     }
+
+    public static void sendDiningTableSaleMessage(ServerPlayer player, int saleAmount) {
+        PacketDistributor.sendToPlayer(player, new DiningTableSaleMessage(saleAmount));
+    }
 }
