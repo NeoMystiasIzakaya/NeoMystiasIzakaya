@@ -96,6 +96,11 @@ public class DiningTableBlock extends BaseEntityBlock {
         }
 
         if (level.getBlockEntity(pos) instanceof DiningTableBlockEntity diningTableBlockEntity) {
+            // 无顾客时不允许交互物品
+            if (!diningTableBlockEntity.isOccupied()) {
+                return InteractionResult.FAIL;
+            }
+
             if (!itemStack.isEmpty()) {
                 // 手持物品 → 尝试放入（若槽位已有则交换给玩家）
                 ItemTagList itemTagList = NMICommonItemTagUtil.get(itemStack);

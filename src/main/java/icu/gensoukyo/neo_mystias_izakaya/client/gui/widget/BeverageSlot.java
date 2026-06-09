@@ -1,5 +1,6 @@
 package icu.gensoukyo.neo_mystias_izakaya.client.gui.widget;
 
+import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.DiningTableBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonItemTagUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
 import net.minecraft.world.Container;
@@ -18,11 +19,10 @@ public class BeverageSlot extends Slot {
 
     @Override
     public boolean mayPlace(ItemStack itemStack) {
-        ItemTagList itemTagList = NMICommonItemTagUtil.get(itemStack);
-        if (itemTagList != null && !itemTagList.isEmpty()) {
-            return itemTagList.hasBeveragesTag();
-        } else {
+        if (!(this.container instanceof DiningTableBlockEntity diningTable) || !diningTable.isOccupied()) {
             return false;
         }
+        ItemTagList itemTagList = NMICommonItemTagUtil.get(itemStack);
+        return itemTagList != null && itemTagList.hasBeveragesTag();
     }
 }
