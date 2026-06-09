@@ -65,11 +65,15 @@ public class DiningTableRenderer implements BlockEntityRenderer<DiningTableBlock
         poseStack.translate(-0.5D,2D,0D);
         poseStack.mulPose(Axis.ZN.rotationDegrees(180));
         poseStack.scale(0.1F,0.1F,0.1F);
-        MutableComponent literal = Component.literal(String.valueOf(diningTableRenderState.index));
-        submitNodeCollector.submitText(poseStack, 0,0, literal.getVisualOrderText(), false, Font.DisplayMode.NORMAL, diningTableRenderState.lightCoords,0xFFFFFFFF, 0,0);
-        poseStack.mulPose(Axis.YN.rotationDegrees(180));
-        poseStack.translate(-font.width(literal), 0.0D, 0.0D);
-        submitNodeCollector.submitText(poseStack, 0,0, literal.getVisualOrderText(), false, Font.DisplayMode.NORMAL, diningTableRenderState.lightCoords,0xFFFFFFFF, 0,0);
+
+        int index = diningTableRenderState.index;
+        if (index >= 0) {
+            MutableComponent literal = Component.literal(String.valueOf(index));
+            submitNodeCollector.submitText(poseStack, 0,0, literal.getVisualOrderText(), false, Font.DisplayMode.NORMAL, diningTableRenderState.lightCoords,0xFFFFFFFF, 0,0);
+            poseStack.mulPose(Axis.YN.rotationDegrees(180));
+            poseStack.translate(-font.width(literal), 0.0D, 0.0D);
+            submitNodeCollector.submitText(poseStack, 0,0, literal.getVisualOrderText(), false, Font.DisplayMode.NORMAL, diningTableRenderState.lightCoords,0xFFFFFFFF, 0,0);
+        }
         poseStack.popPose();
     }
 }

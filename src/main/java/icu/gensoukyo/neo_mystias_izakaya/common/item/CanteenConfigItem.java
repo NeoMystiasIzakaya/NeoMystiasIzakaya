@@ -9,10 +9,12 @@ import icu.gensoukyo.neo_mystias_izakaya.common.block.AbstractKitchenware;
 import icu.gensoukyo.neo_mystias_izakaya.common.block.DiningTableBlock;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.CanteenControllerBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIDataComponentTypes;
+import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMainItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -65,6 +67,28 @@ public class CanteenConfigItem extends Item {
         item.remove(NMIDataComponentTypes.BOUND_DINING_TABLES);
     }
 
+    /** 同步控制器数据到手持物品 + 帽子（HUD 读取源） */
+    private static void syncToHatAndHand(ItemStack heldItem, CanteenControllerBlockEntity controller, Player player) {
+        syncControllerData(heldItem, controller);
+        if (player != null) {
+            ItemStack headItem = player.getItemBySlot(EquipmentSlot.HEAD);
+            if (headItem.is(NMIMainItems.MYSTIAS_HAT)) {
+                syncControllerData(headItem, controller);
+            }
+        }
+    }
+
+    /** 清除手持物品 + 帽子的控制器数据 */
+    private static void clearHatAndHand(ItemStack heldItem, Player player) {
+        clearControllerData(heldItem);
+        if (player != null) {
+            ItemStack headItem = player.getItemBySlot(EquipmentSlot.HEAD);
+            if (headItem.is(NMIMainItems.MYSTIAS_HAT)) {
+                clearControllerData(headItem);
+            }
+        }
+    }
+
     private static boolean isLimitReached(ItemStack item, boolean isKitchenware) {
         List<BlockPos> list = item.get(isKitchenware ? NMIDataComponentTypes.BOUND_KITCHENWARE : NMIDataComponentTypes.BOUND_DINING_TABLES);
         int max = isKitchenware ? MAX_KITCHENWARE : MAX_DINING_TABLES;
@@ -84,7 +108,7 @@ public class CanteenConfigItem extends Item {
      * 右键空气 → 清除两个角点
      */
     @Override
-    public @NonNull InteractionResult use(Level level, Player player, InteractionHand hand) {
+    public @NonNull InteractionResult use(Level level, @NonNull Player player, @NonNull InteractionHand hand) {
         if (level.isClientSide()) return InteractionResult.SUCCESS;
         ItemStack heldItem = player.getItemInHand(hand);
         clearCorners(heldItem);
@@ -140,8 +164,8 @@ public class CanteenConfigItem extends Item {
                 }
                 clearCorners(heldItem);
             } else {
-                // 选择控制器（存储当前关联数据用于手动绑定）
-                syncControllerData(heldItem, controllerBE);
+                // 选择控制器（存储当前关联数据用于手动绑定，同时同步帽子）
+                syncToHatAndHand(heldItem, controllerBE, player);
                 if (player != null) {
                     player.sendOverlayMessage(MSG_CONTROLLER_SELECTED);
                 }
@@ -196,12 +220,12 @@ public class CanteenConfigItem extends Item {
         BlockEntity controllerBE = level.getBlockEntity(controllerPos);
         if (!(controllerBE instanceof CanteenControllerBlockEntity controller)) {
             if (player != null) player.sendOverlayMessage(MSG_CONTROLLER_NOT_FOUND);
-            clearControllerData(heldItem);
+            clearHatAndHand(heldItem, player);
             return InteractionResult.FAIL;
         }
 
         boolean added = bindFunc.apply(controller, targetPos);
-        if (added) syncControllerData(heldItem, controller);
+        if (added) syncToHatAndHand(heldItem, controller, player);
         if (player != null) player.sendOverlayMessage(added ? successMsg : alreadyMsg);
         return InteractionResult.SUCCESS;
     }
@@ -210,7 +234,7 @@ public class CanteenConfigItem extends Item {
         BlockPos controllerPos = heldItem.get(NMIDataComponentTypes.BOUND_CONTROLLER);
 
         if (clickedBE instanceof CanteenControllerBlockEntity) {
-            clearControllerData(heldItem);
+            clearHatAndHand(heldItem, player);
             if (player != null) player.sendOverlayMessage(MSG_CONTROLLER_CLEARED);
             return;
         }
@@ -223,12 +247,12 @@ public class CanteenConfigItem extends Item {
         BlockEntity controllerBE = level.getBlockEntity(controllerPos);
         if (!(controllerBE instanceof CanteenControllerBlockEntity controller)) {
             if (player != null) player.sendOverlayMessage(MSG_CONTROLLER_NOT_FOUND);
-            clearControllerData(heldItem);
+            clearHatAndHand(heldItem, player);
             return;
         }
 
         boolean removed = controller.removeKitchenware(clickedPos) || controller.removeDiningTable(clickedPos);
-        if (removed) syncControllerData(heldItem, controller);
+        if (removed) syncToHatAndHand(heldItem, controller, player);
         if (player != null) player.sendOverlayMessage(removed ? MSG_UNBOUND : MSG_ALREADY_BOUND);
     }
 

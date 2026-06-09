@@ -155,7 +155,9 @@ public class CanteenControllerBlockEntity extends BlockEntity {
 
     private boolean removeDiningTableImpl(BlockPos pos) {
         if (level != null && level.isLoaded(pos) && level.getBlockEntity(pos) instanceof DiningTableBlockEntity table) {
-            table.unbindFromController();
+            table.clear();
+            table.resetIndex();
+            table.resetController();
         }
         boolean removed = dingingTableList.remove(pos);
         if (removed) {

@@ -36,6 +36,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -174,7 +175,7 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
     }
 
     @Override
-    protected AbstractContainerMenu createMenu(int i, Inventory inventory) {
+    protected @Nullable AbstractContainerMenu createMenu(int i, Inventory inventory) {
         return null;
     }
 
@@ -276,13 +277,12 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
         markUpdated();
     }
 
-    /**
-     * 解除与控制器绑定
-     */
-    public void unbindFromController() {
+    public void resetIndex() {
         this.tableIndex = -1;
+    }
+
+    public void resetController() {
         this.controllerPos = BlockPos.ZERO;
-        markUpdated();
     }
 
     /**
