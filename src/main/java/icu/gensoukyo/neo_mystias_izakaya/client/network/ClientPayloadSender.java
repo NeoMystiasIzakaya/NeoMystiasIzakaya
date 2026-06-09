@@ -5,6 +5,7 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.client.network;
 
+import icu.gensoukyo.neo_mystias_izakaya.content.economy.store.Cart;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
@@ -21,5 +22,9 @@ public class ClientPayloadSender {
 
     public static void sendOpenDishServingMessage() {
         ClientPacketDistributor.sendToServer(new OpenDishServingMessage());
+    }
+
+    public static void sendStorePurchaseMessage(Cart cart,Identifier store) {
+        ClientPacketDistributor.sendToServer(new StorePurchaseMessage(cart,store));
     }
 }

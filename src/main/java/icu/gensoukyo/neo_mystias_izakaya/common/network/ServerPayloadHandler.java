@@ -9,7 +9,9 @@ import icu.gensoukyo.neo_mystias_izakaya.client.gui.menu.DishServingMenu;
 import icu.gensoukyo.neo_mystias_izakaya.client.network.NMIIzakayaMenuSyncMessage;
 import icu.gensoukyo.neo_mystias_izakaya.client.network.NMIKitchenwareCookMessage;
 import icu.gensoukyo.neo_mystias_izakaya.client.network.OpenDishServingMessage;
+import icu.gensoukyo.neo_mystias_izakaya.client.network.StorePurchaseMessage;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonIzakayaUtil;
+import icu.gensoukyo.neo_mystias_izakaya.common.util.NMIServerStoreUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.cooking.IzakayaCookingUtil;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIDataComponentTypes;
 import net.minecraft.core.BlockPos;
@@ -45,5 +47,9 @@ public class ServerPayloadHandler {
                 ), byteBuf -> byteBuf.writeCollection(diningTables, BlockPos.STREAM_CODEC));
             }
         });
+    }
+
+    public static void handleStorePurchaseMessage(StorePurchaseMessage message, IPayloadContext context) {
+        context.enqueueWork(()-> NMIServerStoreUtil.purchase(context.player(),message.cart(),NMIServerStoreUtil.getStore(context.player(), message.store())));
     }
 }

@@ -12,6 +12,7 @@ import icu.gensoukyo.neo_mystias_izakaya.api.event.server.json.ModifyNMIEconomyJ
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.common.dal.ServerNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.common.network.ServerPayloadSender;
+import icu.gensoukyo.neo_mystias_izakaya.content.economy.store.NMIStoreMap;
 import lombok.Getter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.FileToIdConverter;
@@ -36,6 +37,8 @@ public class NMIEconomyReloadListener extends SimplePreparableReloadListener<NMI
     private final HolderLookup.Provider registries;
     @Getter
     private NMIEconomyMap economyMap = NMIEconomyMap.EMPTY;
+    @Getter
+    private NMIStoreMap storeMap = NMIStoreMap.EMPTY;
 
     public NMIEconomyReloadListener(HolderLookup.Provider registries) {
         this.registries = registries;
@@ -72,6 +75,7 @@ public class NMIEconomyReloadListener extends SimplePreparableReloadListener<NMI
     protected void apply(NMIEconomyMap map, ResourceManager resourceManager, ProfilerFiller profilerFiller) {
         this.economyMap = map;
         LOGGER.info("Loaded {} NMI economy prices", economyMap.getItemPriceMap().size());
+
         if (FMLEnvironment.getDist().isDedicatedServer()) {
             ServerNMIDataAccessor.INSTANCE.setEconomyMap(economyMap);
             if (ServerLifecycleHooks.getCurrentServer() != null) {
@@ -80,6 +84,18 @@ public class NMIEconomyReloadListener extends SimplePreparableReloadListener<NMI
         }else {
             ServerNMIDataAccessor.INSTANCE.setEconomyMap(economyMap);
             ClientNMIDataAccessor.INSTANCE.setEconomyMap(economyMap);
+        }
+
+        storeMap = NMIStoreMap.create();
+
+        if (FMLEnvironment.getDist().isDedicatedServer()) {
+            ServerNMIDataAccessor.INSTANCE.setStoreMap(storeMap);
+            if (ServerLifecycleHooks.getCurrentServer() != null) {
+                ServerPayloadSender.sendStoreMapSyncMessage(storeMap);
+            }
+        }else {
+            ServerNMIDataAccessor.INSTANCE.setStoreMap(storeMap);
+            ClientNMIDataAccessor.INSTANCE.setStoreMap(storeMap);
         }
     }
 }

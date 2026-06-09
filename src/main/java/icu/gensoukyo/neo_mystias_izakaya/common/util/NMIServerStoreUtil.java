@@ -45,13 +45,13 @@ public final class NMIServerStoreUtil {
         if (storeItem == null) {
             return 0;
         }
-        return storeItem.price() * item.count();
+        return (int) (storeItem.price() * item.count() * (1 - storeItem.discount()));
     }
 
     public static int calculatePrice(Player player, Cart cart,Store store){
         int p = 0;
-        for (int i = 0; i < cart.items().size(); i++) {
-            p += calculatePrice(player, cart.items().get(i),store);
+        for (int i = 0; i < cart.getItems().size(); i++) {
+            p += calculatePrice(player, cart.getItems().get(i),store);
         }
         return p;
     }
@@ -65,7 +65,7 @@ public final class NMIServerStoreUtil {
         NMICommonBalanceUtil.extract(player, NMIBalanceUnits.EN, price, false);
 
         List<ItemStack> readyToGive = new ArrayList<>();
-        List<CartItem> items = cart.items();
+        List<CartItem> items = cart.getItems();
         for (CartItem item : items) {
             StoreItem storeItem = store.getItemMap().get(item.id());
             if (storeItem == null) {

@@ -7,6 +7,7 @@ package icu.gensoukyo.neo_mystias_izakaya.datagen;
 
 import com.google.gson.JsonObject;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
+import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.StoreScreen;
 import icu.gensoukyo.neo_mystias_izakaya.content.customer.consts.*;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.consts.NMIBeveragesTags;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.consts.NMICuisinesTags;
@@ -2101,8 +2102,18 @@ public class NMILanguageProvider implements DataProvider {
         this.addEvaluation(RareCustomers.YUKARI_YAKUMO, CustomerEvaluationLevels.SEEN_REPELL, "", "我期待的幻想乡并非这种模样。");
     }
 
+    private void addGUI(){
+        addGUI(StoreScreen.ID,"balance","Balance: %d 円","余额: %d 円");
+        addGUI(StoreScreen.ID,"total","Total: %d 円","总计: %d 円");
+        addGUI(StoreScreen.ID,"ingredients","Buy Ingredients","购买食材");
+        addGUI(StoreScreen.ID,"beverages","Buy Beverages","购买酒水");
+        addGUI(StoreScreen.ID,"next_page","Next Page","下一页");
+        addGUI(StoreScreen.ID,"purchase","Purchase","购买");
+    }
+
     @Override
     public @NotNull CompletableFuture<?> run(@NotNull CachedOutput cache) {
+        this.addGUI();
         this.addTranslations();
         this.addTagTranslations();
         this.addItemTranslations();
@@ -2203,6 +2214,10 @@ public class NMILanguageProvider implements DataProvider {
 
     private void addEvaluation(Identifier key,String level, String en, String cn) {
         this.add(key.toLanguageKey("evaluation",level), en, cn);
+    }
+
+    private void addGUI(Identifier base,String suffix, String en, String cn) {
+        this.add(base.toLanguageKey("gui",suffix), en, cn);
     }
 
     @Override

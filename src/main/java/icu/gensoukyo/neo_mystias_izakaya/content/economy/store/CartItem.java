@@ -25,4 +25,8 @@ public record CartItem(Identifier id, int count) {
             Identifier.CODEC.fieldOf("id").forGetter(CartItem::id),
             Codec.INT.fieldOf("count").forGetter(CartItem::count)
     ).apply(ins, CartItem::new));
+
+    public CartItem copyWithCount(int count) {
+        return new CartItem(this.id, count);
+    }
 }
