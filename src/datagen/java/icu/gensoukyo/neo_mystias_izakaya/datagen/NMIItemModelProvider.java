@@ -92,6 +92,7 @@ public class NMIItemModelProvider extends ModelProvider {
         horizontallyBlock(blockModels, NMIBlocks.CUTTING_BOARD.get());
         horizontallyBlock(blockModels, NMIBlocks.CANTEEN.get());
         normalBlock(blockModels, NMIBlocks.DINING_TABLE.get());
+        normalBlock(blockModels, NMIBlocks.STORE.get());
     }
 
     private void registerItemModels(ItemModelGenerators itemModels) {
