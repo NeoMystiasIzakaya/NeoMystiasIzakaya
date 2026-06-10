@@ -40,9 +40,8 @@ public class KeyMappingRegister {
 
     @SubscribeEvent
     public static void onSttChatPress(InputEvent.Key event) {
-        if (CANTEEN_INFO_KEY.matches(event.getKeyEvent())) {
+        if (CANTEEN_INFO_KEY.consumeClick()) {
             ClientPayloadSender.sendOpenDishServingMessage();
-            CANTEEN_INFO_KEY.consumeClick();
         }
     }
 }

@@ -36,8 +36,6 @@ public class DishServingScreen extends AbstractContainerScreen<DishServingMenu> 
     // --- 渲染常量（与 CanteenOverlay 保持一致） ---
     private static final int DARK_RED = 0xFFAA0000;
     private static final int DARK_GREEN = 0xFF00FF00;
-    private static final int FILL_COLOR = 0x40FFFFFF;
-    private static final int BORDER_COLOR = 0xFFFFFFFF;
     private static final Identifier CONFIRM_SPRITE = Identifier.withDefaultNamespace("container/beacon/confirm");
     private static final Identifier CANCEL_SPRITE = Identifier.withDefaultNamespace("container/beacon/cancel");
 
@@ -105,7 +103,14 @@ public class DishServingScreen extends AbstractContainerScreen<DishServingMenu> 
             int x1 = x0 + DishServingMenu.CELL_WIDTH;
             int y1 = y0 + 24; // 单元格高度 24
 
-            drawItemRect(graphics, x0, y0, x1, y1);
+            graphics.fill(x0,y1,x1,y1+1, RecipeScreen.POSITIVE_OUT_COLOR);
+
+            // 绘制槽位区域边框（每个 18×18 槽位独立画框）
+            int slotTop = y0 + 2;
+            int cuisineLeft = x0 + DishServingMenu.SLOT_X_OFFSET - 1;
+            int beverageLeft = cuisineLeft + DishServingMenu.SLOT_SPACING;
+            drawSlotAreaBorder(graphics, cuisineLeft, slotTop, cuisineLeft + 18, slotTop + 18);
+            drawSlotAreaBorder(graphics, beverageLeft, slotTop, beverageLeft + 18, slotTop + 18);
 
             if (diningTable.isOccupied()) {
                 renderOccupiedTable(graphics, font, diningTable, x0, y0);
@@ -275,18 +280,18 @@ public class DishServingScreen extends AbstractContainerScreen<DishServingMenu> 
     }
 
     /**
-     * 绘制单个物品矩形（填充 + 边框）
+     * 绘制槽位区域边框（包裹菜品槽 + 饮品槽两个 18×18 槽位）
      */
-    private void drawItemRect(GuiGraphicsExtractor graphics, int x0, int y0, int x1, int y1) {
-        // 半透明填充
-        graphics.fill(x0 + 1, y0 + 1, x1 - 1, y1 - 1, FILL_COLOR);
+    private void drawSlotAreaBorder(GuiGraphicsExtractor graphics, int left, int top, int right, int bottom) {
+        // 浅色半透明填充
+        graphics.fill(left + 1, top + 1, right - 1, bottom - 1, 0x20FFFFFF);
         // 上边框
-        graphics.fill(x0, y0, x1, y0 + 1, BORDER_COLOR);
+        graphics.fill(left, top, right, top + 1, 0xFFAAAAAA);
         // 下边框
-        graphics.fill(x0, y1 - 1, x1, y1, BORDER_COLOR);
+        graphics.fill(left, bottom - 1, right, bottom, 0xFFAAAAAA);
         // 左边框
-        graphics.fill(x0, y0, x0 + 1, y1, BORDER_COLOR);
+        graphics.fill(left, top, left + 1, bottom, 0xFFAAAAAA);
         // 右边框
-        graphics.fill(x1 - 1, y0, x1, y1, BORDER_COLOR);
+        graphics.fill(right - 1, top, right, bottom, 0xFFAAAAAA);
     }
 }
