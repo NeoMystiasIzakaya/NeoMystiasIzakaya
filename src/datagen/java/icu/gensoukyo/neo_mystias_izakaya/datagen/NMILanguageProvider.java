@@ -69,6 +69,7 @@ public class NMILanguageProvider implements DataProvider {
         this.add(NMIMainItems.CANTEEN, "Canteen", "餐厅");
         this.add(NMIMainItems.CANTEEN_CONFIG, "Canteen Config", "餐厅配置器");
         this.add(NMIMainItems.MYSTIAS_HAT, "Mystia's Hat", "夜雀的帽子");
+        this.add(NMIMainItems.STORE, "Store", "河童电话");
 
         // CanteenConfigItem 提示消息
         this.add("item.neo_mystias_izakaya.canteen_config.controller_selected", "Controller selected!", "已选择控制器！");
