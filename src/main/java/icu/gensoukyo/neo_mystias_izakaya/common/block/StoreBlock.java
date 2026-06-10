@@ -1,7 +1,6 @@
 package icu.gensoukyo.neo_mystias_izakaya.common.block;
 
-import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.StoreScreen;
-import net.minecraft.client.Minecraft;
+import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -28,7 +27,7 @@ public class StoreBlock extends Block {
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (level.isClientSide()) {
-            Minecraft.getInstance().setScreen(new StoreScreen());
+            NMIClientUtil.openStoreScreen();
             return InteractionResult.SUCCESS;
         } else {
             return InteractionResult.SUCCESS_SERVER;
