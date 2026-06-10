@@ -7,6 +7,7 @@ package icu.gensoukyo.neo_mystias_izakaya.client.network;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
+import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.AbstractKitchenwareBE;
 import icu.gensoukyo.neo_mystias_izakaya.common.network.*;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonBalanceUtil;
@@ -62,8 +63,7 @@ public class ClientPayloadHandler {
 
     public static void handleDiningTableSaleMessage(DiningTableSaleMessage message, IPayloadContext context) {
         context.enqueueWork(() -> {
-            Minecraft minecraft = Minecraft.getInstance();
-            minecraft.getToastManager().addToast(SystemToast.multiline(minecraft, SystemToast.SystemToastId.NARRATOR_TOGGLE, Component.translatable("block.neo_mystias_izakaya.dining_table.sale", message.saleAmount()), Component.translatable(NeoMystiasIzakaya.MODID)));
+            NMIClientUtil.showToast(message.saleAmount());
         });
     }
 

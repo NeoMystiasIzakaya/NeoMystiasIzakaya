@@ -5,12 +5,14 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.client.util;
 
+import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.KitchenwareScreen;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.RecipeScreen;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.StoreScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.components.toasts.SystemToast;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
@@ -39,5 +41,10 @@ public final class NMIClientUtil {
 
     public static Player getPlayer() {
         return Minecraft.getInstance().player;
+    }
+
+    public static void showToast(int price) {
+        Minecraft minecraft = Minecraft.getInstance();
+        minecraft.getToastManager().addToast(SystemToast.multiline(minecraft, SystemToast.SystemToastId.NARRATOR_TOGGLE, Component.translatable("block.neo_mystias_izakaya.dining_table.sale", price), Component.translatable(NeoMystiasIzakaya.MODID)));
     }
 }
