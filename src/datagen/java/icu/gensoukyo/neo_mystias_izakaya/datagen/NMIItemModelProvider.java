@@ -78,7 +78,7 @@ public class NMIItemModelProvider extends ModelProvider {
         itemModels.generateFlatItem(NMIMainItems.CHROME_BALL.asItem(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(NMIMainItems.RECIPE_BOOK.asItem(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(NMIMainItems.CANTEEN_CONFIG.asItem(), ModelTemplates.FLAT_ITEM);
-        itemModels.generateFlatItem(NMIMainItems.MYSTIAS_HAT.asItem(), ModelTemplates.FLAT_ITEM);
+        itemModels.declareCustomModelItem(NMIMainItems.MYSTIAS_HAT.asItem());
 
         this.registerBlockModels(blockModels);
         this.registerItemModels(itemModels);
