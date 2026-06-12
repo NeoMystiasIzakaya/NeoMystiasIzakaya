@@ -8,11 +8,15 @@ package icu.gensoukyo.neo_mystias_izakaya.client.event;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.DishServingScreen;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.KitchenwareScreen;
+import icu.gensoukyo.neo_mystias_izakaya.client.model.MystiasHatModel;
 import icu.gensoukyo.neo_mystias_izakaya.client.overlay.CanteenOverlay;
 import icu.gensoukyo.neo_mystias_izakaya.client.render.DiningTableRenderer;
 import icu.gensoukyo.neo_mystias_izakaya.client.render.KitchenwareRenderer;
+import icu.gensoukyo.neo_mystias_izakaya.registry.ModelLayersRegistry;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockEntities;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIMenus;
+import net.minecraft.client.model.geom.LayerDefinitions;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -43,5 +47,10 @@ public class ClientRegister {
     @SubscribeEvent
     public static void registerOverlay(RegisterGuiLayersEvent event) {
         event.registerAbove(CROSSHAIR, NeoMystiasIzakaya.id("canteen_overlay"), new CanteenOverlay());
+    }
+
+    @SubscribeEvent
+    public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(ModelLayersRegistry.MYSTIAS_HAT,() -> LayerDefinition.create(MystiasHatModel.setup(LayerDefinitions.INNER_ARMOR_DEFORMATION),64,64));
     }
 }
