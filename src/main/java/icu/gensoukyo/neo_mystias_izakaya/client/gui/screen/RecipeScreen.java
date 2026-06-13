@@ -5,7 +5,6 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.client.gui.screen;
 
-import com.github.tartaricacid.touhoulittlemaid.TouhouLittleMaid;
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.menu.KitchenwareMenu;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.CuisineListWidget;
@@ -585,10 +584,7 @@ public class RecipeScreen extends Screen {
                 "gui.neo_mystias_izakaya.spell_card", baseX, startY, maxWidth, 0xFF593B1F);
 
         if (ModList.get().isLoaded("touhou_little_maid")) {
-            int middleX = (this.width - this.imageWidth) / 2 - 40;
-            int middleY = (this.height - this.imageHeight) / 2;
-            Identifier customerID = Identifier.fromNamespaceAndPath(TouhouLittleMaid.MOD_ID, key.getPath().replaceFirst("^customer/", ""));
-            TLMUtil.renderEntityPart(customerID.toString(), guiGraphics, mouseX, mouseY, middleX + 800,middleY - 10,0.7F);
+            TLMUtil.renderMaid(guiGraphics, mouseX, mouseY, key, this.width, this.height, this.imageWidth, this.imageHeight);
         }
     }
 

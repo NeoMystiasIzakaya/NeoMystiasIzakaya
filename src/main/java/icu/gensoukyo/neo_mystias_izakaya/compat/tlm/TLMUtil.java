@@ -5,6 +5,7 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.compat.tlm;
 
+import com.github.tartaricacid.touhoulittlemaid.TouhouLittleMaid;
 import com.github.tartaricacid.touhoulittlemaid.api.client.render.MaidRenderState;
 import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
 import com.google.common.cache.Cache;
@@ -14,6 +15,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.resources.Identifier;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -39,7 +41,7 @@ public class TLMUtil {
             maid.setModelId(modelID);
             maid.renderState = MaidRenderState.GARAGE_KIT;
             maid.tickCount = 0;
-            int centerX = (middleX - 256 / 2) / 2;
+            int centerX = middleX + 100;
             int yOffset = (int) (45 * (renderItemScale - 1));
 
             InventoryScreen.extractEntityInInventoryFollowsMouse(
@@ -56,5 +58,10 @@ public class TLMUtil {
         }
     }
 
-
+    public static void renderMaid(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, Identifier key, int width, int height, int imageWidth, int imageHeight) {
+        int middleX = (width - imageWidth) / 2;
+        int middleY = (height - imageHeight) / 2;
+        Identifier customerID = Identifier.fromNamespaceAndPath(TouhouLittleMaid.MOD_ID, key.getPath().replaceFirst("^customer/", ""));
+        renderEntityPart(customerID.toString(), guiGraphics, mouseX, mouseY, middleX + 170,middleY - 10,0.7F);
+    }
 }

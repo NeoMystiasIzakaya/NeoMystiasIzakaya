@@ -15,7 +15,6 @@ import icu.gensoukyo.neo_mystias_izakaya.client.render.KitchenwareRenderer;
 import icu.gensoukyo.neo_mystias_izakaya.registry.ModelLayersRegistry;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockEntities;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIMenus;
-import net.minecraft.client.model.geom.LayerDefinitions;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -51,6 +50,6 @@ public class ClientRegister {
 
     @SubscribeEvent
     public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(ModelLayersRegistry.MYSTIAS_HAT,() -> LayerDefinition.create(MystiasHatModel.setup(LayerDefinitions.INNER_ARMOR_DEFORMATION),64,64));
+        event.registerLayerDefinition(ModelLayersRegistry.MYSTIAS_HAT,() -> LayerDefinition.create(MystiasHatModel.setup(),64,64));
     }
 }
