@@ -1547,6 +1547,14 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .time(24)
                 .build();
 
+        this.builder(NMICuisinesItems.TACHIBANA_SHERII)
+                .input(Items.HONEY_BOTTLE)
+                .input(NMIIngredientItems.CREAM)
+                .input(Items.ICE)
+                .kitchenware(NMIVanillaTags.GRILL)
+                .time(7)
+                .build();
+
 //        this.builder(白果灵盅)
 //                .input(this.getEgg())
 //                .input(NMIIngredientItems.GINKGO_NUT)

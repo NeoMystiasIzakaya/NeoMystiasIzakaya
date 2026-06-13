@@ -1,0 +1,12 @@
+{
+  "input": [
+    "minecraft:honey_bottle",
+    "neo_mystias_izakaya:ingredient/cream",
+    "minecraft:ice"
+  ],
+  "kitchenware": "neo_mystias_izakaya:grill",
+  "output": {
+    "id": "neo_mystias_izakaya:cuisines/tachibana_sherii"
+  },
+  "time": 7
+}

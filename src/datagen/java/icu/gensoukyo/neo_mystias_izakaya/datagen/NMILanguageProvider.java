@@ -467,6 +467,8 @@ public class NMILanguageProvider implements DataProvider {
         this.add(NMIBeveragesItems.UMESHU, "Umeshu", "梅酒");
         this.add(NMIBeveragesItems.WIND_PRIESTESS, "Wind Priestess", "风祝");
         this.add(NMIBeveragesItems.ZUN_BEER, "ZUN Beer", "超ZUN啤酒");
+
+        this.add(NMICuisinesItems.TACHIBANA_SHERII, "Tachibana Sherii", "焗雪莉");
     }
 
     private void addItemDescTranslations() {
@@ -731,6 +733,8 @@ public class NMILanguageProvider implements DataProvider {
         this.addDescription(NMIIngredientItems.WAGYU_BEEF, "Legendary top-quality beef; also called \"snow beef\". Very high-grade.", "传闻是超优质的肉牛品种，又称雪花肉，非常高级");
         this.addDescription(NMIIngredientItems.RADISH, "Common radish grown in the Human Village.", "人里农田产的萝卜，较为常见");
         this.addDescription(NMIIngredientItems.BOAR_MEAT, "Boar meat hunted from the mountains. Somewhat rare and tastes of wildness.", "猎人们在山间猎回来的野猪肉，充满野性");
+
+        this.addDescription(NMICuisinesItems.TACHIBANA_SHERII, "Kawaii Sherii", "卡哇伊雪莉酱");
 
     }
 

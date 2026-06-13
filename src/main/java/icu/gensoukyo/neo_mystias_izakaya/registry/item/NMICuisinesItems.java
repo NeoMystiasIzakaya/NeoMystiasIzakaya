@@ -195,5 +195,6 @@ public class NMICuisinesItems {
     public static final DeferredItem<Item> VEGETABLE_SALAD = registerItem(ITEMS, "cuisines/vegetable_salad", Item::new, props -> props);
     public static final DeferredItem<Item> WHITE_DEER_UNYIELDING_PINE = registerItem(ITEMS, "cuisines/white_deer_unyielding_pine", Item::new, props -> props);
     public static final DeferredItem<Item> YASHOUMA_DANGO = registerItem(ITEMS, "cuisines/yashouma_dango", Item::new, props -> props);
+    public static final DeferredItem<Item> TACHIBANA_SHERII = registerItem(ITEMS, "cuisines/tachibana_sherii", Item::new, props -> props);
 
 }
