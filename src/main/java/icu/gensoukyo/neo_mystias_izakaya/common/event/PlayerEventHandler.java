@@ -5,6 +5,7 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.common.event;
 
+import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.common.dal.ServerNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.common.network.ServerPayloadSender;
 import net.minecraft.server.level.ServerPlayer;
@@ -13,7 +14,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 
-@EventBusSubscriber
+@EventBusSubscriber(modid = NeoMystiasIzakaya.MODID)
 public class PlayerEventHandler {
 
     @SubscribeEvent

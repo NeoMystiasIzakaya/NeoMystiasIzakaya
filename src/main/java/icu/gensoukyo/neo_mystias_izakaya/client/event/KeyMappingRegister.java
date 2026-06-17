@@ -18,7 +18,7 @@ import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import net.neoforged.neoforge.client.settings.KeyModifier;
 import org.lwjgl.glfw.GLFW;
 
-@EventBusSubscriber(value = Dist.CLIENT)
+@EventBusSubscriber(modid = NeoMystiasIzakaya.MODID,value = Dist.CLIENT)
 public class KeyMappingRegister {
     public static final KeyMapping.Category MAID_CATEGORY = new KeyMapping.Category(
             NeoMystiasIzakaya.id("main")

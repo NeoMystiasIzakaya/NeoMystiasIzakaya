@@ -5,6 +5,7 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.registry;
 
+import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.client.network.*;
 import icu.gensoukyo.neo_mystias_izakaya.common.network.*;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -12,7 +13,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
-@EventBusSubscriber
+@EventBusSubscriber(modid = NeoMystiasIzakaya.MODID)
 public class NMINetwork {
     @SubscribeEvent // on the mod event bus
     public static void register(RegisterPayloadHandlersEvent event) {

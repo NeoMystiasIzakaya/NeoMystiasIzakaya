@@ -5,6 +5,7 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.client.gui.screen;
 
+import icu.gensoukyo.kaguya.client.graphic.KaguyaUtil;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.NMICartItemButton;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.NMISimpleButton;
@@ -72,9 +73,9 @@ public class StoreScreen extends Screen {
     public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
         int rightPos = this.leftPos + this.iWidth;
         int bottomPos = this.topPos + this.iHeight;
-        guiGraphics.fill(this.leftPos, this.topPos, rightPos, bottomPos, 0xD0ffffff);
-        guiGraphics.fill(rightPos - 86, this.topPos + 87, rightPos - 2, bottomPos - 2, 0xfff0e0b0);
-        guiGraphics.fill(rightPos - 84, this.topPos + 89, rightPos - 4, bottomPos - 4, 0x808b4513);
+        KaguyaUtil.fillXYXY(guiGraphics,this.leftPos, this.topPos, rightPos, bottomPos, 0xD0ffffff);
+        KaguyaUtil.fillXYXY(guiGraphics,rightPos - 86, this.topPos + 87, rightPos - 2, bottomPos - 2, 0xfff0e0b0);
+        KaguyaUtil.fillXYXY(guiGraphics,rightPos - 84, this.topPos + 89, rightPos - 4, bottomPos - 4, 0x808b4513);
     }
 
     protected void extractLabels(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
@@ -82,7 +83,6 @@ public class StoreScreen extends Screen {
         MutableComponent total = NMICommonComponentUtil.translatableGUI(ID, "total", NMIClientStoreUtil.calculatePrice(getMinecraft().player, cart, currentStore));
 
         guiGraphics.text(getFont(), balance, leftPos + 88 - font.width(balance) / 2, topPos + 10, -12829636, false);
-        ;
         guiGraphics.text(getFont(), total, leftPos + 10, topPos + 145, -12829636, false);
     }
 
