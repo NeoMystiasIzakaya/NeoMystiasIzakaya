@@ -5,7 +5,7 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.common.blockentity;
 
-import icu.gensoukyo.neo_mystias_izakaya.common.menu.KitchenwareMenu;
+import icu.gensoukyo.neo_mystias_izakaya.content.cooking.KitchenwareType;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -22,7 +22,7 @@ public class SteamerBE extends AbstractKitchenwareBE {
     }
 
     @Override
-    public KitchenwareMenu.KitchenwareType getKitchenwareType() {
-        return KitchenwareMenu.KitchenwareType.STEAMER;
+    public KitchenwareType getKitchenwareType() {
+        return KitchenwareType.STEAMER;
     }
 }

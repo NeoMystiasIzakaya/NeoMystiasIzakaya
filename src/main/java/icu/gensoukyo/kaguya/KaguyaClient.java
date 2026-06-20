@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Kaguya154
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
+
 package icu.gensoukyo.kaguya;
 
 import net.neoforged.api.distmarker.Dist;

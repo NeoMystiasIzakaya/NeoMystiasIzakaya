@@ -7,8 +7,8 @@ package icu.gensoukyo.neo_mystias_izakaya.common.block;
 
 import com.mojang.serialization.MapCodec;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
-import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonItemTagUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.DiningTableBlockEntity;
+import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonItemTagUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMIServerRecipeUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockEntities;

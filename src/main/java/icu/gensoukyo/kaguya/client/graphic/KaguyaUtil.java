@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 Kaguya154
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
+
 package icu.gensoukyo.kaguya.client.graphic;
 
 import com.mojang.blaze3d.pipeline.RenderPipeline;

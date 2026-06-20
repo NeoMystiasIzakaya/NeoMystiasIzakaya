@@ -7,7 +7,7 @@ package icu.gensoukyo.neo_mystias_izakaya.common.blockentity;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.api.dal.NMIDataAccessor;
-import icu.gensoukyo.neo_mystias_izakaya.common.block.AbstractKitchenware;
+import icu.gensoukyo.neo_mystias_izakaya.common.block.KitchenwareBlock;
 import icu.gensoukyo.neo_mystias_izakaya.common.block.CanteenControllerBlock;
 import icu.gensoukyo.neo_mystias_izakaya.common.block.DiningTableBlock;
 import icu.gensoukyo.neo_mystias_izakaya.content.customer.Customer;
@@ -186,7 +186,7 @@ public class CanteenControllerBlockEntity extends BlockEntity {
 
         for (BlockPos pos : BlockPos.betweenClosed(minX, minY, minZ, maxX, maxY, maxZ)) {
             BlockState state = level.getBlockState(pos);
-            if (state.getBlock() instanceof AbstractKitchenware) {
+            if (state.getBlock() instanceof KitchenwareBlock) {
                 if (kitchenwareList.size() < maxKitchenware && addKitchenwareImpl(pos.immutable())) {
                     kitchenwareCount++;
                 }

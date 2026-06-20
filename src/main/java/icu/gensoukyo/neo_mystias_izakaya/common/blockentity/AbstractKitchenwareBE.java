@@ -9,6 +9,7 @@ import com.mojang.logging.LogUtils;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.common.menu.KitchenwareMenu;
 import icu.gensoukyo.neo_mystias_izakaya.common.network.ServerPayloadSender;
+import icu.gensoukyo.neo_mystias_izakaya.content.cooking.KitchenwareType;
 import lombok.Setter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -167,7 +168,7 @@ public abstract class AbstractKitchenwareBE extends RandomizableContainerBlockEn
         return items.subList(0, 5);
     }
 
-    public abstract KitchenwareMenu.KitchenwareType getKitchenwareType();
+    public abstract KitchenwareType getKitchenwareType();
 
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {

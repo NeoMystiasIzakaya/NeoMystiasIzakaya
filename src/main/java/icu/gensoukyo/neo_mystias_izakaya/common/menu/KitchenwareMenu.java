@@ -92,21 +92,4 @@ public class KitchenwareMenu extends AbstractNMIMenu {
         return access.evaluate((level, pos) -> player.isWithinBlockInteractionRange(pos, 4.0F), true);
     }
 
-    public enum KitchenwareType {
-        BOILING_POT(NMIVanillaTags.BOILING_POT, NMIMainItems.BOILING_POT.get(), NMICuisinesTags.Boiling_Pot),
-        CUTTING_BOARD(NMIVanillaTags.CUTTING_BOARD, NMIMainItems.CUTTING_BOARD.get(), NMICuisinesTags.Cutting_Board),
-        FRYING_PAN(NMIVanillaTags.FRYING_PAN, NMIMainItems.FRYING_PAN.get(), NMICuisinesTags.Frying_Pan),
-        GRILL(NMIVanillaTags.GRILL, NMIMainItems.GRILL.get(),  NMICuisinesTags.Grill),
-        STEAMER(NMIVanillaTags.STEAMER, NMIMainItems.STEAMER.get(), NMICuisinesTags.Steamer);
-
-        public final TagKey<Block> KITCHENWARE_TYPE;
-        public final Identifier KITCHENWARE_TAG;
-        public final Item KITCHENWARE_ITEM;
-
-        KitchenwareType(TagKey<Block> blockTagKey, Item kitchenwareItem, Identifier kitchenwareTag) {
-            this.KITCHENWARE_TYPE = blockTagKey;
-            this.KITCHENWARE_ITEM = kitchenwareItem;
-            this.KITCHENWARE_TAG = kitchenwareTag;
-        }
-    }
 }
