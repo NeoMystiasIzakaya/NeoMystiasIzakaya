@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-package icu.gensoukyo.neo_mystias_izakaya.client.gui.menu;
+package icu.gensoukyo.neo_mystias_izakaya.common.menu;
 
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;

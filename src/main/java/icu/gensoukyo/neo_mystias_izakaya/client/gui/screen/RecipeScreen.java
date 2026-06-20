@@ -6,7 +6,7 @@
 package icu.gensoukyo.neo_mystias_izakaya.client.gui.screen;
 
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
-import icu.gensoukyo.neo_mystias_izakaya.client.gui.menu.KitchenwareMenu;
+import icu.gensoukyo.neo_mystias_izakaya.common.menu.KitchenwareMenu;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.CuisineListWidget;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.CuisineListWidget.DisplayEntry;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.ImageStateButton;
