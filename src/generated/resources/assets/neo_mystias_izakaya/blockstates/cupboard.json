@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "neo_mystias_izakaya:block/cupboard",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "neo_mystias_izakaya:block/cupboard"
+    },
+    "facing=south": {
+      "model": "neo_mystias_izakaya:block/cupboard",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "neo_mystias_izakaya:block/cupboard",
+      "y": 270
+    }
+  }
+}

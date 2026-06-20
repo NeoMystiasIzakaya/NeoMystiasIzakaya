@@ -135,11 +135,6 @@ public class KitchenwareBlock extends BaseEntityBlock{
     }
 
     @Override
-    protected RenderShape getRenderShape(BlockState pState) {
-        return RenderShape.MODEL;
-    }
-
-    @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         if (state.getValue(BlockStateProperties.LIT)) {
             for (int i = 0; i < 5; i++) {
