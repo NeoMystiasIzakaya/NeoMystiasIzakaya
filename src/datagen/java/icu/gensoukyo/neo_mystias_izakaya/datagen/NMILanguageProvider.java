@@ -39,11 +39,11 @@ public class NMILanguageProvider implements DataProvider {
     private final Map<String, String> enData = new TreeMap<>();
     private final Map<String, String> cnData = new TreeMap<>();
     private final PackOutput output;
-    private final String locale;
+    private final String modid;
 
-    public NMILanguageProvider(PackOutput output, String locale) {
+    public NMILanguageProvider(PackOutput output,String modid) {
         this.output = output;
-        this.locale = locale;
+        this.modid = modid;
     }
 
     private void addTranslations() {
@@ -60,6 +60,7 @@ public class NMILanguageProvider implements DataProvider {
         this.add(NMIBlocks.STEAMER.get(), "Steamer", "蒸锅");
         this.add(NMIBlocks.CUTTING_BOARD.get(), "Cutting Board", "料理台");
         this.add(NMIBlocks.DINING_TABLE.get(), "Dining Table", "餐桌");
+        this.add(NMIBlocks.CUPBOARD, "CupBoard","橱柜");
 
         this.add(NMIMainItems.BOILING_POT, "Boiling Pot", "煮锅");
         this.add(NMIMainItems.GRILL, "Grill", "烤架");
@@ -71,6 +72,7 @@ public class NMILanguageProvider implements DataProvider {
         this.add(NMIMainItems.CANTEEN_CONFIG, "Canteen Config", "餐厅配置器");
         this.add(NMIMainItems.MYSTIAS_HAT, "Mystia's Hat", "夜雀的帽子");
         this.add(NMIMainItems.STORE, "Store", "河童电话");
+        this.add(NMIMainItems.CUPBOARD, "CupBoard","橱柜");
 
         // CanteenConfigItem 提示消息
         this.add("item.neo_mystias_izakaya.canteen_config.controller_selected", "Controller selected!", "已选择控制器！");
@@ -126,6 +128,7 @@ public class NMILanguageProvider implements DataProvider {
         this.add("task.neo_mystias_izakaya.mystias_izakaya_task.desc", "Find nearest dining table", "寻找最近的餐桌");
 
 
+        this.add("blockentity.neo_mystias_izakaya.cupboard", "CupBoard","橱柜");
         this.add(Kitchenware.BOILING_POT.toLanguageKey("blockentity"),"Boiling Pot", "煮锅");
         this.add(Kitchenware.GRILL.toLanguageKey("blockentity"), "Grill", "烤架");
         this.add(Kitchenware.FRYING_PAN.toLanguageKey("blockentity"), "Frying Pan", "油锅");
@@ -2132,15 +2135,9 @@ public class NMILanguageProvider implements DataProvider {
         this.addRareCustomerTranslations();
         Path path = this.output.getOutputFolder(PackOutput.Target.RESOURCE_PACK)
                 .resolve(NeoMystiasIzakaya.MODID).resolve("lang");
-        if (this.locale.equals("en_us") && !this.enData.isEmpty()) {
-            return this.save(this.enData, cache, path.resolve("en_us.json"));
-        }
 
-        if (this.locale.equals("zh_cn") && !this.cnData.isEmpty()) {
-            return this.save(this.cnData, cache, path.resolve("zh_cn.json"));
-        }
-
-        return CompletableFuture.allOf();
+        return CompletableFuture.allOf(this.save(this.enData, cache, path.resolve("en_us.json")),
+                this.save(this.cnData, cache, path.resolve("zh_cn.json")));
     }
 
     private CompletableFuture<?> save(Map<String, String> data, CachedOutput cache, Path target) {
@@ -2166,9 +2163,10 @@ public class NMILanguageProvider implements DataProvider {
     }
 
     private void add(String key, String en, String cn) {
-        if (this.locale.equals("en_us") && !this.enData.containsKey(key)) {
+        if (!this.enData.containsKey(key)) {
             this.enData.put(key, en);
-        } else if (this.locale.equals("zh_cn") && !this.cnData.containsKey(key)) {
+        }
+        if (!this.cnData.containsKey(key)) {
             this.cnData.put(key, cn);
         }
     }
@@ -2231,6 +2229,6 @@ public class NMILanguageProvider implements DataProvider {
 
     @Override
     public @NotNull String getName() {
-        return "language:" + this.locale;
+        return "language:" + this.modid;
     }
 }

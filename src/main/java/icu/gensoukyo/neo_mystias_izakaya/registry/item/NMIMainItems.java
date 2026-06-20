@@ -28,6 +28,7 @@ public class NMIMainItems {
     public static final DeferredItem<Item> DINING_TABLE = ITEMS.registerItem("misc/dining_table", (properties) -> new BlockItem(NMIBlocks.DINING_TABLE.get(), properties), properties -> properties);
     public static final DeferredItem<Item> CANTEEN_CONFIG = ITEMS.registerItem("misc/canteen_config", CanteenConfigItem::new, properties -> properties);
     public static final DeferredItem<Item> STORE = ITEMS.registerItem("misc/store", (properties) -> new BlockItem(NMIBlocks.STORE.get(), properties), properties -> properties);
+    public static final DeferredItem<Item> CUPBOARD = ITEMS.registerItem("misc/cupboard", (properties) -> new BlockItem(NMIBlocks.CUPBOARD.get(), properties), properties -> properties);
 
     public static final DeferredItem<Item> CHROME_BALL = ITEMS.registerItem("misc/chrome_ball", Item::new, properties -> properties);
     public static final DeferredItem<Item> RECIPE_BOOK = ITEMS.registerItem("misc/recipe_book", RecipeItem::new, properties -> properties);
