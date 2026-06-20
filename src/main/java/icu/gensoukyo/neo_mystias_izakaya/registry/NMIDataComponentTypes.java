@@ -12,6 +12,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.NotNull;
@@ -88,5 +89,15 @@ public class NMIDataComponentTypes {
             builder -> builder
                     .persistent(BlockPos.CODEC)
                     .networkSynchronized(BlockPos.STREAM_CODEC)
+    );
+
+    /**
+     * 食谱书中当前记录的食谱标识符
+     */
+    public static final DeferredHolder<DataComponentType<?>, @NotNull DataComponentType<Identifier>> RECORDED_RECIPE = DATA_COMPONENT_TYPES.registerComponentType(
+            "recorded_recipe",
+            builder -> builder
+                    .persistent(Identifier.CODEC)
+                    .networkSynchronized(Identifier.STREAM_CODEC)
     );
 }

@@ -27,4 +27,8 @@ public class ClientPayloadSender {
     public static void sendStorePurchaseMessage(Cart cart,Identifier store) {
         ClientPacketDistributor.sendToServer(new StorePurchaseMessage(cart,store));
     }
+
+    public static void sendRecordRecipeMessage(Identifier recipeKey) {
+        ClientPacketDistributor.sendToServer(new RecordRecipeMessage(recipeKey));
+    }
 }

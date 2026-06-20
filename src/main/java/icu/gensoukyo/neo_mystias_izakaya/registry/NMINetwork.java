@@ -117,5 +117,11 @@ public class NMINetwork {
                 StorePurchaseMessage.STREAM_CODEC,
                 ServerPayloadHandler::handleStorePurchaseMessage
         );
+
+        registrar.playToServer(
+                RecordRecipeMessage.TYPE,
+                RecordRecipeMessage.STREAM_CODEC,
+                ServerPayloadHandler::handleRecordRecipeMessage
+        );
     }
 }

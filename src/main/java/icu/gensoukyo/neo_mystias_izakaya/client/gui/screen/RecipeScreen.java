@@ -7,6 +7,7 @@ package icu.gensoukyo.neo_mystias_izakaya.client.gui.screen;
 
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.CuisineListWidget;
+import icu.gensoukyo.neo_mystias_izakaya.client.network.ClientPayloadSender;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.CuisineListWidget.DisplayEntry;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.ImageStateButton;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.KitchenwareButton;
@@ -111,6 +112,7 @@ public class RecipeScreen extends Screen {
     EditBox search;
     String lastFilterText = "";
     CuisineListWidget cuisineListWidget;
+    Button recordButton;
     boolean needsRefresh = false;
 
     public RecipeScreen() {
@@ -125,6 +127,11 @@ public class RecipeScreen extends Screen {
         int j = (this.height - this.imageHeight) / 2;
         graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, i, j, 0.0F, 0.0F, 256, 256, 256, 256);
         graphics.blit(RenderPipelines.GUI_TEXTURED, SIDE, i + 256, j, 0.0F, 0.0F, 256, 256, 256, 256);
+
+        // 只有选中食谱时才显示记录按钮
+        if (this.recordButton != null) {
+            this.recordButton.visible = this.selected != null && this.selected.isRecipe();
+        }
 
         if (this.selected != null) {
             if (selected.isRecipe()) {
@@ -154,6 +161,20 @@ public class RecipeScreen extends Screen {
         this.cuisineListWidget.setX(i + 262);
         addRenderableWidget(this.search);
         addRenderableWidget(this.cuisineListWidget);
+
+        // 记录食谱按钮（搜索框右侧）
+        this.recordButton = Button.builder(
+                Component.translatable("gui.neo_mystias_izakaya.record_recipe"),
+                btn -> {
+                    if (this.selected != null && this.selected.isRecipe()) {
+                        ClientPayloadSender.sendRecordRecipeMessage(this.selected.getRecipe().key());
+                    }
+                }
+        )
+        .bounds(i + 116, j + 9, 48, 15)
+        .build();
+        this.recordButton.visible = false;
+        addRenderableWidget(this.recordButton);
 
         // 根据当前模式构建过滤器按钮
         rebuildFilterButtons(i, j);
@@ -204,7 +225,7 @@ public class RecipeScreen extends Screen {
                 i + TAG_OFFSET_X, j + TAG_OFFSET_Y,
                 TAG_ITEM_WIDTH, TAG_ITEM_HEIGHT,
                 Component.literal("全选"),
-                button -> {
+                _ -> {
                     if (!isAllSelected) {
                         isAllSelected = true;
                         foodTagSelected.clear();
@@ -225,7 +246,7 @@ public class RecipeScreen extends Screen {
             int y = j + adjustedIndex / TAG_COLS_PER_ROW * TAG_ROW_HEIGHT + TAG_OFFSET_Y;
             TagButton tb = new TagButton(x, y, TAG_ITEM_WIDTH, TAG_ITEM_HEIGHT,
                     Component.translatable(tag.toLanguageKey("tag")),
-                    button -> handleRecipeTagClick(tag),
+                    _ -> handleRecipeTagClick(tag),
                     DEFAULT_NARRATION);
             tagButtons.add(tb);
             addRenderableWidget(tb);
@@ -236,7 +257,7 @@ public class RecipeScreen extends Screen {
                 KITCHENWARE_ITEM_WIDTH, KITCHENWARE_ITEM_HEIGHT,
                 Component.literal("全选"),
                 net.minecraft.world.item.ItemStack.EMPTY,
-                button -> {
+                _ -> {
                     if (!isAllKitchenwareSelected) {
                         isAllKitchenwareSelected = true;
                         selectedKitchenwareTypes.clear();
@@ -257,7 +278,7 @@ public class RecipeScreen extends Screen {
             KitchenwareButton kb = new KitchenwareButton(x, y, KITCHENWARE_ITEM_WIDTH, KITCHENWARE_ITEM_HEIGHT,
                     NMICommonComponentUtil.translatableTag(type.getKitchenwareTag()),
                     type.getKitchenwareItem().getDefaultInstance(),
-                    button -> handleKitchenwareClick(type),
+                    _ -> handleKitchenwareClick(type),
                     DEFAULT_NARRATION);
             kitchenwareButtons.add(kb);
             addRenderableWidget(kb);
@@ -272,7 +293,7 @@ public class RecipeScreen extends Screen {
                 i + TAG_OFFSET_X, j + TAG_OFFSET_Y,
                 TAG_ITEM_WIDTH, TAG_ITEM_HEIGHT,
                 Component.literal("全选"),
-                button -> {
+                _ -> {
                     if (!isAllBeverageSelected) {
                         isAllBeverageSelected = true;
                         beverageTagSelected.clear();
@@ -293,7 +314,7 @@ public class RecipeScreen extends Screen {
             int y = j + adjustedIndex / TAG_COLS_PER_ROW * TAG_ROW_HEIGHT + TAG_OFFSET_Y;
             TagButton tb = new TagButton(x, y, TAG_ITEM_WIDTH, TAG_ITEM_HEIGHT,
                     Component.translatable(tag.toLanguageKey("tag")),
-                    button -> handleBeverageTagClick(tag),
+                    _ -> handleBeverageTagClick(tag),
                     DEFAULT_NARRATION);
             tagButtons.add(tb);
             addRenderableWidget(tb);
@@ -311,7 +332,7 @@ public class RecipeScreen extends Screen {
             ImageStateButton btn = new ImageStateButton(
                     x, y, 40, 16,
                     Component.translatable("gui.neo_mystias_izakaya." + mode.name().toLowerCase()),
-                    button -> switchMode(mode),
+                    _ -> switchMode(mode),
                     DEFAULT_NARRATION);
             screenModeButtons.add(btn);
             addRenderableWidget(btn);
