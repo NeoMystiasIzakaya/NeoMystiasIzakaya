@@ -6,7 +6,6 @@
 package icu.gensoukyo.neo_mystias_izakaya.client.gui.screen;
 
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
-import icu.gensoukyo.neo_mystias_izakaya.client.gui.menu.KitchenwareMenu;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.CuisineListWidget;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.CuisineListWidget.DisplayEntry;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.ImageStateButton;
@@ -15,6 +14,7 @@ import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.TagButton;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientEconomyUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonComponentUtil;
 import icu.gensoukyo.neo_mystias_izakaya.compat.tlm.TLMUtil;
+import icu.gensoukyo.neo_mystias_izakaya.content.cooking.Kitchenware;
 import icu.gensoukyo.neo_mystias_izakaya.content.customer.Customer;
 import icu.gensoukyo.neo_mystias_izakaya.content.customer.CustomerHolder;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipe;
@@ -22,6 +22,7 @@ import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeHolder;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.consts.NMIBeveragesTags;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.consts.NMICuisinesTags;
+import icu.gensoukyo.neo_mystias_izakaya.registry.NMIKitchenware;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIBeveragesItems;
 import lombok.Setter;
 import net.minecraft.client.gui.Font;
@@ -79,7 +80,7 @@ public class RecipeScreen extends Screen {
             .stream().filter(c -> c instanceof icu.gensoukyo.neo_mystias_izakaya.content.customer.CommonCustomerHolder).toList();
     final List<CustomerHolder> allRareCustomers = ClientNMIDataAccessor.INSTANCE.getCustomerMap().getAllCustomers()
             .stream().filter(c -> c instanceof icu.gensoukyo.neo_mystias_izakaya.content.customer.RareCustomerHolder).toList();
-    private final KitchenwareMenu.KitchenwareType[] kitchenwareTypes = KitchenwareMenu.KitchenwareType.values();
+    private final Kitchenware[] kitchenwareTypes = NMIKitchenware.REGISTRY.stream().toArray(Kitchenware[]::new);
     private final ScreenMode[] ScreenModes = ScreenMode.values();
     private final int imageWidth;
     private final int imageHeight;
@@ -90,7 +91,7 @@ public class RecipeScreen extends Screen {
     // === 食谱/酒水模式过滤状态 ===
     ArrayList<Identifier> foodTagSelected = new ArrayList<>();
     boolean isAllSelected = true;
-    ArrayList<KitchenwareMenu.KitchenwareType> selectedKitchenwareTypes = new ArrayList<>();
+    ArrayList<Kitchenware> selectedKitchenwareTypes = new ArrayList<>();
     boolean isAllKitchenwareSelected = true;
     // === 酒水模式过滤状态 ===
     ArrayList<Identifier> beverageTagSelected = new ArrayList<>();
@@ -249,13 +250,13 @@ public class RecipeScreen extends Screen {
         addRenderableWidget(allSelectKitchenwareButton);
 
         for (int k = 0; k < kitchenwareTypes.length; k++) {
-            KitchenwareMenu.KitchenwareType type = kitchenwareTypes[k];
+            Kitchenware type = kitchenwareTypes[k];
             int adjustedIndex = k + 1;
             int x = i + KITCHENWARE_OFFSET_X;
             int y = j + KITCHENWARE_OFFSET_Y + adjustedIndex * KITCHENWARE_ROW_HEIGHT;
             KitchenwareButton kb = new KitchenwareButton(x, y, KITCHENWARE_ITEM_WIDTH, KITCHENWARE_ITEM_HEIGHT,
-                    Component.translatable(type.KITCHENWARE_TAG.toLanguageKey("tag")),
-                    type.KITCHENWARE_ITEM.getDefaultInstance(),
+                    NMICommonComponentUtil.translatableTag(type.getKitchenwareTag()),
+                    type.getKitchenwareItem().getDefaultInstance(),
                     button -> handleKitchenwareClick(type),
                     DEFAULT_NARRATION);
             kitchenwareButtons.add(kb);
@@ -352,7 +353,7 @@ public class RecipeScreen extends Screen {
         needsRefresh = true;
     }
 
-    private void handleKitchenwareClick(KitchenwareMenu.KitchenwareType type) {
+    private void handleKitchenwareClick(Kitchenware type) {
         if (isAllKitchenwareSelected) {
             isAllKitchenwareSelected = false;
         }
@@ -481,7 +482,7 @@ public class RecipeScreen extends Screen {
                     .getItemToTagMap().get(recipeHolder.key()).positiveTags();
             boolean containTag = isAllSelected || new HashSet<>(identifiers).containsAll(foodTagSelected);
             boolean containKitchenware = isAllKitchenwareSelected || selectedKitchenwareTypes.stream()
-                    .anyMatch(type -> type.KITCHENWARE_TYPE.equals(recipe.kitchenware()));
+                    .anyMatch(type -> type.getBlockTagKey().equals(recipe.kitchenware()));
 
             return containTag && containKitchenware;
         }).collect(java.util.stream.Collectors.toList());

@@ -8,10 +8,11 @@ package icu.gensoukyo.neo_mystias_izakaya.client.overlay;
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientItemTagUtil;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientUtil;
-import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.AbstractKitchenwareBE;
+import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.KitchenwareBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.DiningTableBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaOrder;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIDataComponentTypes;
+import icu.gensoukyo.neo_mystias_izakaya.registry.NMIKitchenware;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -106,8 +107,8 @@ public class CanteenOverlay implements GuiLayer {
             drawItemRect(guiGraphics, 0, y0, ITEM_RECT_WIDTH, y1);
 
             BlockPos blockPos = kitchenwareList.get(i);
-            if (level.isLoaded(blockPos) && level.getBlockEntity(blockPos) instanceof AbstractKitchenwareBE kitchenware) {
-                ItemStack defaultInstance = kitchenware.getKitchenwareType().KITCHENWARE_ITEM.getDefaultInstance();
+            if (level.isLoaded(blockPos) && level.getBlockEntity(blockPos) instanceof KitchenwareBlockEntity kitchenware) {
+                ItemStack defaultInstance = NMIKitchenware.REGISTRY.getValue(kitchenware.getKitchenwareTypeId()).getKitchenwareItem().getDefaultInstance();
                 guiGraphics.item(defaultInstance, 1, y0 + 1);
                 if (!kitchenware.getResultItem().isEmpty()) {
                     guiGraphics.item(kitchenware.getResultItem(), 20, y0 + 3);

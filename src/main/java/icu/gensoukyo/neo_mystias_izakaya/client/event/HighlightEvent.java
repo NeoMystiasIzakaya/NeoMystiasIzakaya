@@ -5,6 +5,7 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.client.event;
 
+import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIDataComponentTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -20,7 +21,7 @@ import net.neoforged.neoforge.client.event.ExtractLevelRenderStateEvent;
 
 import java.util.List;
 
-@EventBusSubscriber(value = Dist.CLIENT)
+@EventBusSubscriber(modid = NeoMystiasIzakaya.MODID, value = Dist.CLIENT)
 public class HighlightEvent {
 
     private static final int COLOR_CONTROLLER = 0xFFFFFFFF;   // 白色 - 控制器

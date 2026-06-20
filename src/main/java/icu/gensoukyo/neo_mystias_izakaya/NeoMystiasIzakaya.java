@@ -35,6 +35,7 @@ public class NeoMystiasIzakaya {
         NMIAttachmentTypes.ATTACHMENT_TYPES.register(modEventBus);
         NMIPoi.POI_TYPES.register(modEventBus);
         NMIMemoryTypes.MEMORY_MODULE_TYPES.register(modEventBus);
+        NMIKitchenware.KITCHENWARE.register(modEventBus);
     }
 
     public static Identifier id(String key) {

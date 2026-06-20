@@ -25,7 +25,7 @@ import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 import static net.neoforged.neoforge.client.gui.VanillaGuiLayers.CROSSHAIR;
 
-@EventBusSubscriber(value = Dist.CLIENT)
+@EventBusSubscriber(modid = NeoMystiasIzakaya.MODID, value = Dist.CLIENT)
 public class ClientRegister {
     @SubscribeEvent
     public static void registerScreens(RegisterMenuScreensEvent event) {

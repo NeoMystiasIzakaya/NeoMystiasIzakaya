@@ -6,6 +6,7 @@
 package icu.gensoukyo.neo_mystias_izakaya.common.event;
 
 import com.mojang.logging.LogUtils;
+import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import lombok.Getter;
 import net.minecraft.server.MinecraftServer;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -13,7 +14,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import org.slf4j.Logger;
 
-@EventBusSubscriber
+@EventBusSubscriber(modid = NeoMystiasIzakaya.MODID)
 public class ServerEventHandler {
 
     private static final Logger LOGGER = LogUtils.getLogger();

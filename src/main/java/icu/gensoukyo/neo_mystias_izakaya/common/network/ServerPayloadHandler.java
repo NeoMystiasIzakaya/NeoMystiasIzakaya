@@ -5,7 +5,7 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.common.network;
 
-import icu.gensoukyo.neo_mystias_izakaya.client.gui.menu.DishServingMenu;
+import icu.gensoukyo.neo_mystias_izakaya.common.menu.DishServingMenu;
 import icu.gensoukyo.neo_mystias_izakaya.client.network.NMIIzakayaMenuSyncMessage;
 import icu.gensoukyo.neo_mystias_izakaya.client.network.NMIKitchenwareCookMessage;
 import icu.gensoukyo.neo_mystias_izakaya.client.network.OpenDishServingMessage;

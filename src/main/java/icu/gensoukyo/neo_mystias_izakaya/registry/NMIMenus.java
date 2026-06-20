@@ -6,8 +6,8 @@
 package icu.gensoukyo.neo_mystias_izakaya.registry;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
-import icu.gensoukyo.neo_mystias_izakaya.client.gui.menu.DishServingMenu;
-import icu.gensoukyo.neo_mystias_izakaya.client.gui.menu.KitchenwareMenu;
+import icu.gensoukyo.neo_mystias_izakaya.common.menu.DishServingMenu;
+import icu.gensoukyo.neo_mystias_izakaya.common.menu.KitchenwareMenu;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.inventory.MenuType;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;

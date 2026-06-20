@@ -9,7 +9,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.client.render.state.KitchenwareRenderState;
-import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.AbstractKitchenwareBE;
+import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.KitchenwareBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -27,7 +27,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import org.jspecify.annotations.Nullable;
 
-public class KitchenwareRenderer<T extends AbstractKitchenwareBE> implements BlockEntityRenderer<T, KitchenwareRenderState> {
+public class KitchenwareRenderer<T extends KitchenwareBlockEntity> implements BlockEntityRenderer<T, KitchenwareRenderState> {
     private final ItemModelResolver itemModelResolver;
     private static final Identifier CONFIRM_SPRITE = NeoMystiasIzakaya.id("textures/gui/confirm.png");
     public static final RenderType RENDER_TYPE = RenderTypes.entityCutout(CONFIRM_SPRITE);
