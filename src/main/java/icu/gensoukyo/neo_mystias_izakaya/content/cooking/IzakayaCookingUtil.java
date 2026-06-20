@@ -9,12 +9,13 @@ import com.mojang.logging.LogUtils;
 import icu.gensoukyo.neo_mystias_izakaya.api.event.server.cooking.GetAdditionalItemsEvent;
 import icu.gensoukyo.neo_mystias_izakaya.api.event.server.cooking.IzakayaCookingEvent;
 import icu.gensoukyo.neo_mystias_izakaya.api.event.server.cooking.IzakayaCookingTagEvent;
-import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.AbstractKitchenwareBE;
+import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.KitchenwareBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMIServerItemTagUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMIServerRecipeUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipe;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeHolder;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
+import icu.gensoukyo.neo_mystias_izakaya.registry.NMIKitchenware;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMICuisinesItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
@@ -33,7 +34,7 @@ import java.util.List;
 public final class IzakayaCookingUtil {
     public static final Logger LOGGER = LogUtils.getLogger();
 
-    public static List<ItemStack> getAdditionalItems(Player player, AbstractKitchenwareBE kitchenwareBE, NMIRecipe recipe, List<ItemStack> inputs){
+    public static List<ItemStack> getAdditionalItems(Player player, KitchenwareBlockEntity kitchenwareBE, NMIRecipe recipe, List<ItemStack> inputs){
 
         NeoForge.EVENT_BUS.post(new GetAdditionalItemsEvent.Pre(player, kitchenwareBE, recipe, inputs));
 
@@ -44,7 +45,7 @@ public final class IzakayaCookingUtil {
 
         return list;
     }
-    public static List<Identifier> collectTag(Player player, AbstractKitchenwareBE kitchenwareBE, ItemTagList cuisine, List<ItemTagList> additional){
+    public static List<Identifier> collectTag(Player player, KitchenwareBlockEntity kitchenwareBE, ItemTagList cuisine, List<ItemTagList> additional){
         // 没有冲突，计算两者的 positiveTags 的并集
         List<Identifier> resultPositiveTags = new ArrayList<>(cuisine.positiveTags());
         for (ItemTagList tagList : additional) {
@@ -54,14 +55,14 @@ public final class IzakayaCookingUtil {
                 }
             }
         }
-        resultPositiveTags.add(kitchenwareBE.getKitchenwareType().KITCHENWARE_TAG);
+        resultPositiveTags.add(NMIKitchenware.REGISTRY.getValue(kitchenwareBE.getKitchenwareTypeId()).getKitchenwareTag());
 
         IzakayaCookingTagEvent.Collect post = NeoForge.EVENT_BUS.post(new IzakayaCookingTagEvent.Collect(player, kitchenwareBE, cuisine, additional,resultPositiveTags));
 
         return post.getResult();
     }
 
-    public static boolean hasConflictTag(Player player, AbstractKitchenwareBE kitchenwareBE, ItemTagList cuisine, List<ItemTagList> additional){
+    public static boolean hasConflictTag(Player player, KitchenwareBlockEntity kitchenwareBE, ItemTagList cuisine, List<ItemTagList> additional){
         // 检查 cuisineList 的 negativeTags 与 additionalList 中的 positiveTags 是否有交集
         boolean hasConflict = additional.stream()
                 .anyMatch(tagList ->
@@ -72,14 +73,14 @@ public final class IzakayaCookingUtil {
         return post.isHasConflict();
     }
 
-    public static void spawnDarkMatter(Player player, AbstractKitchenwareBE kitchenwareBE){
+    public static void spawnDarkMatter(Player player, KitchenwareBlockEntity kitchenwareBE){
         IzakayaCookingEvent.SpawnDarkMatter.Pre post = NeoForge.EVENT_BUS.post(new IzakayaCookingEvent.SpawnDarkMatter.Pre(player, kitchenwareBE));
         if (post.isCanceled()) return;
         spawnResult(player, kitchenwareBE, NMICuisinesItems.DARK_MATTER.toStack());
         NeoForge.EVENT_BUS.post(new IzakayaCookingEvent.SpawnDarkMatter.Post(player, kitchenwareBE));
     }
 
-    public static void spawnResult(Player player, AbstractKitchenwareBE kitchenwareBE, ItemStack result){
+    public static void spawnResult(Player player, KitchenwareBlockEntity kitchenwareBE, ItemStack result){
         NonNullList<ItemStack> inputs = NonNullList.copyOf(kitchenwareBE.getItems().subList(0, 4));
         IzakayaCookingEvent.ConsumeIngredients.Pre ingredients = NeoForge.EVENT_BUS.post(new IzakayaCookingEvent.ConsumeIngredients.Pre(player, kitchenwareBE, inputs,NonNullList.createWithCapacity(5)));
         if (ingredients.isCanceled()) return;
@@ -92,7 +93,7 @@ public final class IzakayaCookingUtil {
         NeoForge.EVENT_BUS.post(new IzakayaCookingEvent.SpawnResult.Post(player, kitchenwareBE, post.getResult()));
     }
 
-    public static void setCookingTime(Player player, AbstractKitchenwareBE kitchenwareBE, int cookingTime){
+    public static void setCookingTime(Player player, KitchenwareBlockEntity kitchenwareBE, int cookingTime){
         IzakayaCookingEvent.SetCookingTime post = NeoForge.EVENT_BUS.post(new IzakayaCookingEvent.SetCookingTime(player, kitchenwareBE, cookingTime));
         kitchenwareBE.setCookingTime(post.getCookingTimeTick());
         kitchenwareBE.setTotalCookingTime(post.getCookingTotalTimeTick());
@@ -108,11 +109,11 @@ public final class IzakayaCookingUtil {
         }
 
         BlockEntity blockEntity = player.level().getBlockEntity(pos);
-        if (blockEntity instanceof AbstractKitchenwareBE kitchenware) {
+        if (blockEntity instanceof KitchenwareBlockEntity kitchenware) {
             IzakayaCookingEvent.Trigger post = NeoForge.EVENT_BUS.post(new IzakayaCookingEvent.Trigger(player, kitchenware));
             if (post.isCanceled()) return;
 
-            List<NMIRecipeHolder> recipes = NMIServerRecipeUtil.getRecipesByInputAndKitchenware(player,kitchenware.getIngredientItems(), kitchenware.getKitchenwareType().KITCHENWARE_TYPE);
+            List<NMIRecipeHolder> recipes = NMIServerRecipeUtil.getRecipesByInputAndKitchenware(player,kitchenware.getIngredientItems(), NMIKitchenware.REGISTRY.getValue(kitchenware.getKitchenwareTypeId()).getBlockTagKey());
 
             boolean valid = recipes.stream().anyMatch(holder -> holder.key().equals(recipe));
 

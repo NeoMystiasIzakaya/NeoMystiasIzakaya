@@ -5,18 +5,15 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.client.network;
 
-import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientUtil;
-import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.AbstractKitchenwareBE;
+import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.KitchenwareBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.common.network.*;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonBalanceUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonIzakayaUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaOrderList;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.toasts.SystemToast;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public class ClientPayloadHandler {
@@ -72,7 +69,7 @@ public class ClientPayloadHandler {
             ClientLevel level = Minecraft.getInstance().level;
             if (level != null && level.isLoaded(message.pos())) {
                 var blockEntity = level.getBlockEntity(message.pos());
-                if (blockEntity instanceof AbstractKitchenwareBE target) {
+                if (blockEntity instanceof KitchenwareBlockEntity target) {
                     target.setCookingTime(message.cookTime());
                 }
             }

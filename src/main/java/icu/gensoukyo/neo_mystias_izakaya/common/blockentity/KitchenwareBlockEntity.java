@@ -9,13 +9,17 @@ import com.mojang.logging.LogUtils;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.common.menu.KitchenwareMenu;
 import icu.gensoukyo.neo_mystias_izakaya.common.network.ServerPayloadSender;
-import icu.gensoukyo.neo_mystias_izakaya.content.cooking.KitchenwareType;
+import icu.gensoukyo.neo_mystias_izakaya.content.cooking.Kitchenware;
+import icu.gensoukyo.neo_mystias_izakaya.registry.NMIKitchenware;
+import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Containers;
@@ -36,7 +40,7 @@ import org.slf4j.Logger;
 
 import java.util.List;
 
-public abstract class AbstractKitchenwareBE extends RandomizableContainerBlockEntity {
+public class KitchenwareBlockEntity extends RandomizableContainerBlockEntity {
 
     private static final Logger LOGGER = LogUtils.getLogger();
     /**
@@ -53,8 +57,8 @@ public abstract class AbstractKitchenwareBE extends RandomizableContainerBlockEn
         @Override
         public int get(int pIndex) {
             return switch (pIndex) {
-                case 0 -> AbstractKitchenwareBE.this.cookingTime;
-                case 1 -> AbstractKitchenwareBE.this.totalCookingTime;
+                case 0 -> KitchenwareBlockEntity.this.cookingTime;
+                case 1 -> KitchenwareBlockEntity.this.totalCookingTime;
                 default -> 0;
             };
         }
@@ -62,8 +66,8 @@ public abstract class AbstractKitchenwareBE extends RandomizableContainerBlockEn
         @Override
         public void set(int pIndex, int pValue) {
             switch (pIndex) {
-                case 0 -> AbstractKitchenwareBE.this.cookingTime = pValue;
-                case 1 -> AbstractKitchenwareBE.this.totalCookingTime = pValue;
+                case 0 -> KitchenwareBlockEntity.this.cookingTime = pValue;
+                case 1 -> KitchenwareBlockEntity.this.totalCookingTime = pValue;
             }
         }
 
@@ -73,11 +77,18 @@ public abstract class AbstractKitchenwareBE extends RandomizableContainerBlockEn
         }
     };
 
-    public AbstractKitchenwareBE(BlockEntityType<?> type, BlockPos worldPosition, BlockState blockState) {
+    @Getter
+    private Identifier kitchenwareTypeId;
+
+    public KitchenwareBlockEntity(BlockEntityType<?> type, BlockPos worldPosition, BlockState blockState) {
         super(type, worldPosition, blockState);
     }
+    public KitchenwareBlockEntity(Identifier kitchenwareTypeId, BlockPos worldPosition, BlockState blockState) {
+        super(NMIKitchenware.REGISTRY.getValue(kitchenwareTypeId).getBlockEntityType(), worldPosition, blockState);
+        this.kitchenwareTypeId = kitchenwareTypeId;
+    }
 
-    public static void serverTick(Level pLevel, BlockPos pPos, BlockState pState, AbstractKitchenwareBE pBlockEntity) {
+    public static void serverTick(Level pLevel, BlockPos pPos, BlockState pState, KitchenwareBlockEntity pBlockEntity) {
         if (pState.getValue(BlockStateProperties.LIT)) {
             pBlockEntity.cookingTime--;
             ServerPayloadSender.sendKitchenwareSyncMessage(pBlockEntity.getBlockPos(), pBlockEntity.cookingTime);
@@ -140,6 +151,11 @@ public abstract class AbstractKitchenwareBE extends RandomizableContainerBlockEn
         output.putInt("TotalCookingTime", this.totalCookingTime);
     }
 
+    @Override
+    protected Component getDefaultName() {
+        return Component.translatable(kitchenwareTypeId.toLanguageKey("blockentity"));
+    }
+
     public boolean canStartCooking() {
         return this.getTargetItem().isEmpty() && this.getResultItem().isEmpty() && !this.getBlockState().getValue(BlockStateProperties.LIT);
     }
@@ -168,8 +184,6 @@ public abstract class AbstractKitchenwareBE extends RandomizableContainerBlockEn
         return items.subList(0, 5);
     }
 
-    public abstract KitchenwareType getKitchenwareType();
-
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
@@ -191,6 +205,32 @@ public abstract class AbstractKitchenwareBE extends RandomizableContainerBlockEn
         if (this.level != null) {
             this.getIngredientItems().forEach(stack -> Containers.dropItemStack(this.level, pos.getX(), pos.getY(), pos.getZ(), stack));
             Containers.dropItemStack(this.level, pos.getX(), pos.getY(), pos.getZ(), this.getResultItem());
+        }
+    }
+
+    public static class BoilingPot extends KitchenwareBlockEntity {
+        public BoilingPot(BlockPos worldPosition, BlockState blockState) {
+            super(Kitchenware.BOILING_POT, worldPosition, blockState);
+        }
+    }
+    public static class FryingPan extends KitchenwareBlockEntity {
+        public FryingPan(BlockPos worldPosition, BlockState blockState) {
+            super(Kitchenware.FRYING_PAN, worldPosition, blockState);
+        }
+    }
+    public static class CuttingBoard extends KitchenwareBlockEntity {
+        public CuttingBoard(BlockPos worldPosition, BlockState blockState) {
+            super(Kitchenware.CUTTING_BOARD, worldPosition, blockState);
+        }
+    }
+    public static class Grill extends KitchenwareBlockEntity {
+        public Grill(BlockPos worldPosition, BlockState blockState) {
+            super(Kitchenware.GRILL, worldPosition, blockState);
+        }
+    }
+    public static class Steamer extends KitchenwareBlockEntity {
+        public Steamer(BlockPos worldPosition, BlockState blockState) {
+            super(Kitchenware.STEAMER, worldPosition, blockState);
         }
     }
 }

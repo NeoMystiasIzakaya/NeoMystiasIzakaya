@@ -240,7 +240,7 @@ public class CanteenControllerBlockEntity extends BlockEntity {
                 !pLevel.isLoaded(pos) || !(pLevel.getBlockEntity(pos) instanceof DiningTableBlockEntity)
         );
         changed |= kitchenwareList.removeIf(pos ->
-                !pLevel.isLoaded(pos) || !(pLevel.getBlockEntity(pos) instanceof AbstractKitchenwareBE)
+                !pLevel.isLoaded(pos) || !(pLevel.getBlockEntity(pos) instanceof KitchenwareBlockEntity)
         );
 
         if (changed) {

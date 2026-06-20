@@ -8,6 +8,7 @@ package icu.gensoukyo.neo_mystias_izakaya.datagen;
 import com.google.gson.JsonObject;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.StoreScreen;
+import icu.gensoukyo.neo_mystias_izakaya.content.cooking.Kitchenware;
 import icu.gensoukyo.neo_mystias_izakaya.content.customer.consts.*;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.consts.NMIBeveragesTags;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.consts.NMICuisinesTags;
@@ -123,6 +124,13 @@ public class NMILanguageProvider implements DataProvider {
 
         this.add("task.neo_mystias_izakaya.mystias_izakaya_task", "Neo Mystia's Izakaya", "夜雀食堂");
         this.add("task.neo_mystias_izakaya.mystias_izakaya_task.desc", "Find nearest dining table", "寻找最近的餐桌");
+
+
+        this.add(Kitchenware.BOILING_POT.toLanguageKey("blockentity"),"Boiling Pot", "煮锅");
+        this.add(Kitchenware.GRILL.toLanguageKey("blockentity"), "Grill", "烤架");
+        this.add(Kitchenware.FRYING_PAN.toLanguageKey("blockentity"), "Frying Pan", "油锅");
+        this.add(Kitchenware.STEAMER.toLanguageKey("blockentity"), "Steamer", "蒸锅");
+        this.add(Kitchenware.CUTTING_BOARD.toLanguageKey("blockentity"), "Cutting Board", "料理台");
     }
 
     private void addTagTranslations() {

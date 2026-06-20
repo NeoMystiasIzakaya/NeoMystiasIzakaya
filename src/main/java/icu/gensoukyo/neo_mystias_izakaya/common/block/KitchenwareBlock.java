@@ -8,8 +8,7 @@ package icu.gensoukyo.neo_mystias_izakaya.common.block;
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
-import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.AbstractKitchenwareBE;
+import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.KitchenwareBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.content.cooking.Kitchenware;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIKitchenware;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMainItems;
@@ -99,9 +98,9 @@ public class KitchenwareBlock extends BaseEntityBlock{
 
     @Nullable
     protected static <T extends BlockEntity> BlockEntityTicker<T> createCookTicker(
-            Level pLevel, BlockEntityType<T> pServerType, BlockEntityType<? extends AbstractKitchenwareBE> pClientType
+            Level pLevel, BlockEntityType<T> pServerType, BlockEntityType<? extends KitchenwareBlockEntity> pClientType
     ) {
-        return pLevel.isClientSide() ? null : createTickerHelper(pServerType, pClientType, AbstractKitchenwareBE::serverTick);
+        return pLevel.isClientSide() ? null : createTickerHelper(pServerType, pClientType, KitchenwareBlockEntity::serverTick);
     }
 
     protected static ToIntFunction<BlockState> litBlockEmission(int lightEmission) {
@@ -115,7 +114,7 @@ public class KitchenwareBlock extends BaseEntityBlock{
                 return super.useWithoutItem(state, level, pos, player, hitResult);
             }
             BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof AbstractKitchenwareBE kitchenwareBE) {
+            if (blockEntity instanceof KitchenwareBlockEntity kitchenwareBE) {
                 player.openMenu(kitchenwareBE, friendlyByteBuf -> friendlyByteBuf.writeBlockPos(kitchenwareBE.getBlockPos()));
                 return InteractionResult.SUCCESS_SERVER;
             }
