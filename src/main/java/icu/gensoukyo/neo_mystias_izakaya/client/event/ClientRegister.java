@@ -9,7 +9,8 @@ import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.DishServingScreen;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.KitchenwareScreen;
 import icu.gensoukyo.neo_mystias_izakaya.client.model.MystiasHatModel;
-import icu.gensoukyo.neo_mystias_izakaya.client.overlay.CanteenOverlay;
+import icu.gensoukyo.neo_mystias_izakaya.client.overlay.CanteenInfoOverlay;
+import icu.gensoukyo.neo_mystias_izakaya.client.overlay.DinningTableInfoOverlay;
 import icu.gensoukyo.neo_mystias_izakaya.client.render.DiningTableRenderer;
 import icu.gensoukyo.neo_mystias_izakaya.client.render.KitchenwareRenderer;
 import icu.gensoukyo.neo_mystias_izakaya.registry.ModelLayersRegistry;
@@ -45,7 +46,8 @@ public class ClientRegister {
 
     @SubscribeEvent
     public static void registerOverlay(RegisterGuiLayersEvent event) {
-        event.registerAbove(CROSSHAIR, NeoMystiasIzakaya.id("canteen_overlay"), new CanteenOverlay());
+        event.registerAbove(CROSSHAIR, NeoMystiasIzakaya.id("canteen_overlay"), new CanteenInfoOverlay());
+        event.registerAbove(CROSSHAIR, NeoMystiasIzakaya.id("dinning_table_overlay"), new DinningTableInfoOverlay());
     }
 
     @SubscribeEvent
