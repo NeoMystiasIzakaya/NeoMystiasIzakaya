@@ -6,6 +6,7 @@
 package icu.gensoukyo.neo_mystias_izakaya.common.block;
 
 import com.mojang.serialization.MapCodec;
+import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.CanteenControllerBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.DiningTableBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockEntities;
@@ -145,51 +146,20 @@ public class CanteenControllerBlock extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        // EXTENSION 的 BE 内部代理到 MAIN，直接使用 pos 即可
-        if (!level.isClientSide() && level.getBlockEntity(pos) instanceof CanteenControllerBlockEntity controller) {
-            ItemStack mainHandItem = player.getMainHandItem();
-            //开店时同步信息进入帽子进行高亮显示
-            ItemStack headItem = player.getItemBySlot(EquipmentSlot.HEAD);
-            if (mainHandItem.isEmpty() && headItem.is(NMIMainItems.MYSTIAS_HAT)) {
-                boolean open = !controller.isOpen();
-                controller.setOpen(open, open ? player.getUUID() : null);
-                player.sendSystemMessage(
-                        Component.translatable(open
-                                ? "block.neo_mystias_izakaya.canteen_controller.open"
-                                : "block.neo_mystias_izakaya.canteen_controller.close")
-                );
-
-                //闭店时抹去餐桌的信息
-                if (!open) {
-                    controller.getDiningTableList().forEach(tablePos -> {
-                        BlockEntity tableBE = level.getBlockEntity(tablePos);
-                        if (tableBE instanceof DiningTableBlockEntity diningTable) {
-                            diningTable.clear();
-                        }
-                    });
-                }
-
-                if (open) {
-                    headItem.set(NMIDataComponentTypes.BOUND_CONTROLLER, controller.getControllerPos());
-                    headItem.set(NMIDataComponentTypes.BOUND_KITCHENWARE, new ArrayList<>(controller.getKitchenwareList()));
-                    headItem.set(NMIDataComponentTypes.BOUND_DINING_TABLES, new ArrayList<>(controller.getDiningTableList()));
-                } else {
-                    headItem.remove(NMIDataComponentTypes.BOUND_CONTROLLER);
-                    headItem.remove(NMIDataComponentTypes.BOUND_KITCHENWARE);
-                    headItem.remove(NMIDataComponentTypes.BOUND_DINING_TABLES);
-                }
-
-            }
-            if (mainHandItem.is(NMIMainItems.CANTEEN_CONFIG)) {
+        if (level.isClientSide()) {
+            NMIClientUtil.openCanteenScreen(pos);
+            return InteractionResult.SUCCESS;
+        }
+        // 服务端：手持配置器时显示状态
+        if (level.getBlockEntity(pos) instanceof CanteenControllerBlockEntity controller) {
+            if (player.getMainHandItem().is(NMIMainItems.CANTEEN_CONFIG)) {
                 player.sendSystemMessage(
                         Component.translatable("block.neo_mystias_izakaya.canteen_controller.status",
                                 controller.getKitchenwareList().size(),
                                 controller.getDiningTableList().size())
                 );
-                return super.useWithoutItem(state, level, pos, player, hitResult);
             }
         }
-
         return InteractionResult.SUCCESS;
     }
 

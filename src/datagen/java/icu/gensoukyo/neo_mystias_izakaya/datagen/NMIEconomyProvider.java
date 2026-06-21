@@ -294,6 +294,6 @@ public class NMIEconomyProvider extends EconomyProvider {
         addEconomy(Items.HONEY_BOTTLE, 15);
         addEconomy(Items.COCOA_BEANS, 22);
 
-        addEconomy(TACHIBANA_SHERII, 1);
+        addEconomy(TACHIBANA_SHERII, 667);
     }
 }

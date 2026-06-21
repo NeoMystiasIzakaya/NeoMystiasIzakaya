@@ -6,6 +6,7 @@
 package icu.gensoukyo.neo_mystias_izakaya.client.util;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
+import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.CanteenScreen;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.KitchenwareScreen;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.RecipeScreen;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.StoreScreen;
@@ -14,6 +15,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.toasts.SystemToast;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 
@@ -31,6 +33,14 @@ public final class NMIClientUtil {
 
     public static void openStoreScreen() {
         Minecraft.getInstance().setScreen(new StoreScreen());
+    }
+
+    public static void openCanteenScreen() {
+        Minecraft.getInstance().setScreen(new CanteenScreen());
+    }
+
+    public static void openCanteenScreen(BlockPos controllerPos) {
+        Minecraft.getInstance().setScreen(new CanteenScreen(controllerPos));
     }
 
     public static void renderScaledText(GuiGraphicsExtractor graphics, Font font, Component component, int x, int y, int color, boolean dropShadow, float scale) {

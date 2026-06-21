@@ -5,6 +5,8 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.common.network;
 
+import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.CanteenControllerBlockEntity;
+import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.DiningTableBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.common.item.RecipeItem;
 import icu.gensoukyo.neo_mystias_izakaya.common.menu.DishServingMenu;
 import icu.gensoukyo.neo_mystias_izakaya.client.network.NMIIzakayaMenuSyncMessage;
@@ -12,10 +14,12 @@ import icu.gensoukyo.neo_mystias_izakaya.client.network.NMIKitchenwareCookMessag
 import icu.gensoukyo.neo_mystias_izakaya.client.network.OpenDishServingMessage;
 import icu.gensoukyo.neo_mystias_izakaya.client.network.RecordRecipeMessage;
 import icu.gensoukyo.neo_mystias_izakaya.client.network.StorePurchaseMessage;
+import icu.gensoukyo.neo_mystias_izakaya.client.network.ToggleCanteenOpenMessage;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonIzakayaUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMIServerStoreUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.cooking.IzakayaCookingUtil;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIDataComponentTypes;
+import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMainItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -26,6 +30,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ServerPayloadHandler {
@@ -77,6 +82,41 @@ public class ServerPayloadHandler {
             player.sendOverlayMessage(
                     Component.translatable("gui.neo_mystias_izakaya.need_recipe_book")
             );
+        });
+    }
+
+    public static void handleToggleCanteenOpen(ToggleCanteenOpenMessage message, IPayloadContext context) {
+        context.enqueueWork(() -> {
+            Player player = context.player();
+            BlockPos pos = message.controllerPos();
+            if (player.level().getBlockEntity(pos) instanceof CanteenControllerBlockEntity controller) {
+                ItemStack headItem = player.getItemBySlot(EquipmentSlot.HEAD);
+                if (headItem.is(NMIMainItems.MYSTIAS_HAT)) {
+                    boolean open = !controller.isOpen();
+                    controller.setOpen(open, open ? player.getUUID() : null);
+                    player.sendSystemMessage(
+                            Component.translatable(open
+                                    ? "block.neo_mystias_izakaya.canteen_controller.open"
+                                    : "block.neo_mystias_izakaya.canteen_controller.close")
+                    );
+                    if (!open) {
+                        controller.getDiningTableList().forEach(tablePos -> {
+                            if (player.level().getBlockEntity(tablePos) instanceof DiningTableBlockEntity diningTable) {
+                                diningTable.clear();
+                            }
+                        });
+                    }
+                    if (open) {
+                        headItem.set(NMIDataComponentTypes.BOUND_CONTROLLER, controller.getControllerPos());
+                        headItem.set(NMIDataComponentTypes.BOUND_KITCHENWARE, new ArrayList<>(controller.getKitchenwareList()));
+                        headItem.set(NMIDataComponentTypes.BOUND_DINING_TABLES, new ArrayList<>(controller.getDiningTableList()));
+                    } else {
+                        headItem.remove(NMIDataComponentTypes.BOUND_CONTROLLER);
+                        headItem.remove(NMIDataComponentTypes.BOUND_KITCHENWARE);
+                        headItem.remove(NMIDataComponentTypes.BOUND_DINING_TABLES);
+                    }
+                }
+            }
         });
     }
 }

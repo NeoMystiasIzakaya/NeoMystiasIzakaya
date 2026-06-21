@@ -31,4 +31,8 @@ public class ClientPayloadSender {
     public static void sendRecordRecipeMessage(Identifier recipeKey) {
         ClientPacketDistributor.sendToServer(new RecordRecipeMessage(recipeKey));
     }
+
+    public static void sendToggleCanteenOpen(BlockPos controllerPos) {
+        ClientPacketDistributor.sendToServer(new ToggleCanteenOpenMessage(controllerPos));
+    }
 }

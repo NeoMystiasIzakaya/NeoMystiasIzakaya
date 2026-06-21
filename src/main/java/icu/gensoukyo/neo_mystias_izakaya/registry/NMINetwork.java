@@ -123,5 +123,11 @@ public class NMINetwork {
                 RecordRecipeMessage.STREAM_CODEC,
                 ServerPayloadHandler::handleRecordRecipeMessage
         );
+
+        registrar.playToServer(
+                ToggleCanteenOpenMessage.TYPE,
+                ToggleCanteenOpenMessage.STREAM_CODEC,
+                ServerPayloadHandler::handleToggleCanteenOpen
+        );
     }
 }
