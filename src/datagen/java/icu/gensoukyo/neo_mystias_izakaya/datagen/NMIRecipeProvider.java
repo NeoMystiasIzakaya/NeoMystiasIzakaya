@@ -5,7 +5,6 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.datagen;
 
-import icu.gensoukyo.neo_mystias_izakaya.datagen.api.NMIRecipeProvider;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIVanillaTags;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMICuisinesItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIIngredientItems;
@@ -14,9 +13,9 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 
-public class NMINMIRecipeProvider extends NMIRecipeProvider {
+public class NMIRecipeProvider extends icu.gensoukyo.neo_mystias_izakaya.datagen.api.NMIRecipeProvider {
 
-    protected NMINMIRecipeProvider(PackOutput output, String modid) {
+    protected NMIRecipeProvider(PackOutput output, String modid) {
         super(output, modid);
     }
 

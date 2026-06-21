@@ -22,7 +22,7 @@ public class DataGenerator {
         event.createProvider(NMIBlockTagProvider::new);
         event.createProvider(output -> new NMILanguageProvider(output,NeoMystiasIzakaya.MODID));
         event.createProvider(output -> new NMITagItemListProvider(output, NeoMystiasIzakaya.MODID));
-        event.createProvider(output -> new NMINMIRecipeProvider(output, NeoMystiasIzakaya.MODID));
+        event.createProvider(output -> new NMIRecipeProvider(output, NeoMystiasIzakaya.MODID));
         event.createProvider(output -> new NMICustomerProvider(output, NeoMystiasIzakaya.MODID));
         event.createProvider(output -> new NMIEconomyProvider(output, NeoMystiasIzakaya.MODID));
         event.createProvider(output -> new NMIVanillaItemTagProvider(output, registries, NeoMystiasIzakaya.MODID));
