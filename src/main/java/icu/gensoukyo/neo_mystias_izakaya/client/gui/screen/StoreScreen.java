@@ -13,6 +13,7 @@ import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.button.NMIStoreItemBu
 import icu.gensoukyo.neo_mystias_izakaya.client.network.ClientPayloadSender;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientStoreUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonBalanceUtil;
+import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonComponentUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.economy.store.Cart;
 import icu.gensoukyo.neo_mystias_izakaya.content.economy.store.CartItem;
 import icu.gensoukyo.neo_mystias_izakaya.content.economy.store.Store;
@@ -74,20 +75,20 @@ public class StoreScreen extends Screen {
     }
 
     protected void extractLabels(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
-        Matrix3x2fStack pose = guiGraphics.pose();
-        pose.pushMatrix();
-        pose.translate(leftPos, topPos);
-        pose.scale(2,2);
-//        MutableComponent balance_text = NMICommonComponentUtil.translatableGUI(ID, "balance_text");
-        MutableComponent balance = Component.literal(""+NMICommonBalanceUtil.getEn(getMinecraft().player));
-//        MutableComponent total_text = NMICommonComponentUtil.translatableGUI(ID, "total_text");
-        MutableComponent total = Component.literal(""+NMIClientStoreUtil.calculatePrice(getMinecraft().player, cart, currentStore));
+//        Matrix3x2fStack pose = guiGraphics.pose();
+//        pose.pushMatrix();
+//        pose.translate(leftPos, topPos);
+//        pose.scale(2,2);
+        MutableComponent balance_text = NMICommonComponentUtil.translatableGUI(ID, "balance_text");
+        MutableComponent balance = Component.literal(NMICommonBalanceUtil.getEn(getMinecraft().player)+"円");
+        MutableComponent total_text = NMICommonComponentUtil.translatableGUI(ID, "total_text");
+        MutableComponent total = Component.literal(NMIClientStoreUtil.calculatePrice(getMinecraft().player, cart, currentStore)+"円");
 
-//        guiGraphics.text(getFont(), balance_text, leftPos + 22 - font.width(balance_text) / 2, topPos + 124, -12829636, false);
-        guiGraphics.text(getFont(), balance, 12 - font.width(balance) / 2, 63, -12829636, false);
-//        guiGraphics.text(getFont(), total_text, leftPos + 306, topPos + 198, -12829636, false);
-        guiGraphics.text(getFont(), total, 155, 100, -12829636, false);
-        pose.popMatrix();
+        guiGraphics.text(getFont(), balance_text, leftPos + 22 - font.width(balance_text) / 2, topPos + 124, -12829636, false);
+        guiGraphics.text(getFont(), balance, leftPos + 22 - font.width(balance) / 2, topPos + 134, -12829636, false);
+        guiGraphics.text(getFont(), total_text, leftPos + 306, topPos + 200, -12829636, false);
+        guiGraphics.text(getFont(), total, leftPos + 310, topPos + 210, -12829636, false);
+//        pose.popMatrix();
     }
 
     protected void extractHighLights(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {

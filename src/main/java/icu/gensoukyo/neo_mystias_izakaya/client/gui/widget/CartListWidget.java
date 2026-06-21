@@ -71,8 +71,8 @@ public class CartListWidget extends ObjectSelectionList<CartListWidget.Entry> {
         int scrollerY = this.scrollBarY();
 
         if (this.scrollable()) {
-            KaguyaUtil.fillXYWH(graphics,scrollbarX,getY(),this.scrollbarWidth(), this.getHeight(),0x40E3CA40);
-            KaguyaUtil.fillXYWH(graphics,scrollbarX, scrollerY, this.scrollbarWidth(), scrollerHeight,0x40947B58);
+//            KaguyaUtil.fillXYWH(graphics, getX(), getY(), this.scrollbarWidth(), this.getHeight(), 0x40E3CA40);
+            KaguyaUtil.fillXYWH(graphics, getX(), scrollerY, this.scrollbarWidth(), scrollerHeight, 0x40947B58);
 //            graphics.blitSprite(RenderPipelines.GUI_TEXTURED, this.scrollbarSettings.backgroundSprite(), scrollbarX, this.getY(), this.scrollbarWidth(), this.getHeight());
 //            graphics.blitSprite(RenderPipelines.GUI_TEXTURED, this.scrollbarSettings.scrollerSprite(), scrollbarX, scrollerY, this.scrollbarWidth(), scrollerHeight);
             if (this.isOverScrollbar(mouseX, mouseY)) {
@@ -83,12 +83,12 @@ public class CartListWidget extends ObjectSelectionList<CartListWidget.Entry> {
 
     public static class Entry extends ObjectSelectionList.Entry<Entry> {
 
-        protected final ItemStackHolder itemStack= new ItemStackHolder();
+        protected final ItemStackHolder itemStack = new ItemStackHolder();
         protected final Consumer<CartItem> removeCart;
         private CartItem cartItem;
         private Store store;
 
-        public Entry(Consumer<CartItem> removeCart,Store store, CartItem cartItem) {
+        public Entry(Consumer<CartItem> removeCart, Store store, CartItem cartItem) {
             this.removeCart = removeCart;
             StoreItem storeItem = store.getItemMap().get(cartItem.id());
             this.itemStack.set(storeItem.stack().create());
@@ -113,11 +113,12 @@ public class CartListWidget extends ObjectSelectionList<CartListWidget.Entry> {
 
         @Override
         public void extractContent(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, boolean b, float v) {
-            guiGraphics.item(this.itemStack.get(), this.getX() , this.getY());
+            guiGraphics.item(this.itemStack.get(), this.getX(), this.getY());
             Font font = Minecraft.getInstance().font;
-            int cost = NMIClientStoreUtil.calculatePrice(Minecraft.getInstance().player, cartItem,store);
-            guiGraphics.text(font,Component.literal("x"+ cartItem.count() + "個"), this.getX() + 20, this.getY()+3, 0xFFFFFFFF);
-            guiGraphics.text(font,Component.literal(cost + " 円"), this.getX() + 70-font.width(cost + " 円"), this.getY()+3, 0xFFFFFFFF);
+            int cost = NMIClientStoreUtil.calculatePrice(Minecraft.getInstance().player, cartItem, store);
+            guiGraphics.text(font, Component.literal("x"), this.getX() + 20, this.getY() + 3, 0xFF000000, false);
+            guiGraphics.text(font, Component.literal(cartItem.count() + "個"), this.getX() + 45 - font.width(cartItem.count() + "個"), this.getY() + 3, 0xFF000000, false);
+            guiGraphics.text(font, Component.literal(cost + " 円"), this.getX() + 75 - font.width(cost + " 円"), this.getY() + 3, 0xFF000000, false);
         }
     }
 }
