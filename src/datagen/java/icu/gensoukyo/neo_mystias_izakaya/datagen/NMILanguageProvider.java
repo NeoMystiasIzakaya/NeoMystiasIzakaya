@@ -2126,10 +2126,13 @@ public class NMILanguageProvider implements DataProvider {
     }
 
     private void addGUI(){
-        addGUI(StoreScreen.ID,"balance","Balance: %d 円","余额: %d 円");
-        addGUI(StoreScreen.ID,"total","Total: %d 円","总计: %d 円");
+        addGUI(StoreScreen.ID,"balance_text","Balance","余额");
+        addGUI(StoreScreen.ID,"balance","%d 円","%d 円");
+        addGUI(StoreScreen.ID,"total_text","Total: ","总计: ");
+        addGUI(StoreScreen.ID,"total","%d 円","%d 円");
         addGUI(StoreScreen.ID,"ingredients","Buy Ingredients","购买食材");
         addGUI(StoreScreen.ID,"beverages","Buy Beverages","购买酒水");
+        addGUI(StoreScreen.ID,"last_page","Last Page","上一页");
         addGUI(StoreScreen.ID,"next_page","Next Page","下一页");
         addGUI(StoreScreen.ID,"purchase","Purchase","购买");
     }

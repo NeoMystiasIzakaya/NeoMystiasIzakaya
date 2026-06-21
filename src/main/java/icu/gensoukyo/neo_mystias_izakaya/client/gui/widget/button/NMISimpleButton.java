@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-package icu.gensoukyo.neo_mystias_izakaya.client.gui.widget;
+package icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.button;
 
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
@@ -30,13 +30,6 @@ public class NMISimpleButton extends Button {
 
     @Override
     protected void extractContents(GuiGraphicsExtractor guiGraphics, int i, int i1, float v) {
-        guiGraphics.fill(getX()-1, getY()-1, getX()+w+1, getY()+h+1, 0xFFFEEBD1);
-        if(this.isHovered()) {
-            guiGraphics.fill(getX(), getY(), getX()+w, getY()+h, 0xFFfbefcb);
-        }
-        else {
-            guiGraphics.fill(getX(), getY(), getX()+w, getY()+h, 0xFFf0e0b0);
-        }
         this.extractDefaultLabel(guiGraphics.textRendererForWidget(this, GuiGraphicsExtractor.HoveredTextEffects.NONE));
     }
 

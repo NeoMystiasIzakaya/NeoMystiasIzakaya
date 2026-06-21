@@ -7,11 +7,11 @@ package icu.gensoukyo.neo_mystias_izakaya.client.gui.screen;
 
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.CuisineListWidget;
-import icu.gensoukyo.neo_mystias_izakaya.client.network.ClientPayloadSender;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.CuisineListWidget.DisplayEntry;
-import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.ImageStateButton;
-import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.KitchenwareButton;
-import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.TagButton;
+import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.button.ImageStateButton;
+import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.button.KitchenwareButton;
+import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.button.TagButton;
+import icu.gensoukyo.neo_mystias_izakaya.client.network.ClientPayloadSender;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientEconomyUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonComponentUtil;
 import icu.gensoukyo.neo_mystias_izakaya.compat.tlm.TLMUtil;

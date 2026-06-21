@@ -41,6 +41,12 @@ public class KaguyaPipelines {
                     .withColorTargetState(new ColorTargetState(BlendFunction.TRANSLUCENT))
                     .withVertexFormat(DefaultVertexFormat.POSITION_TEX_COLOR, VertexFormat.Mode.QUADS)
                     .buildSnippet();
+    //GUI_TEXTURED_SNIPPET = RenderPipeline.builder(new RenderPipeline.Snippet[]
+    // {MATRICES_PROJECTION_SNIPPET}).withVertexShader("core/position_tex_color")
+    // .withFragmentShader("core/position_tex_color").withSampler("Sampler0")
+    // .withColorTargetState(new ColorTargetState(BlendFunction.TRANSLUCENT))
+    // .withVertexFormat(DefaultVertexFormat.POSITION_TEX_COLOR, VertexFormat.Mode.QUADS).buildSnippet();
+
 
     public static final RenderPipeline POSITION_COLOR = RenderPipeline.builder(POSITION_COLOR_SNIPPET)
             .withLocation(Kaguya.id("pipeline/position_color"))
