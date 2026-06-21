@@ -13,9 +13,11 @@ import icu.gensoukyo.neo_mystias_izakaya.client.overlay.CanteenInfoOverlay;
 import icu.gensoukyo.neo_mystias_izakaya.client.overlay.DinningTableInfoOverlay;
 import icu.gensoukyo.neo_mystias_izakaya.client.render.DiningTableRenderer;
 import icu.gensoukyo.neo_mystias_izakaya.client.render.KitchenwareRenderer;
+import icu.gensoukyo.neo_mystias_izakaya.client.render.NMIArmorRender;
 import icu.gensoukyo.neo_mystias_izakaya.registry.ModelLayersRegistry;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockEntities;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIMenus;
+import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMainItems;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -23,11 +25,12 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 
 import static net.neoforged.neoforge.client.gui.VanillaGuiLayers.CROSSHAIR;
 
 @EventBusSubscriber(modid = NeoMystiasIzakaya.MODID, value = Dist.CLIENT)
-public class ClientRegister {
+public class ClientEventHandler {
     @SubscribeEvent
     public static void registerScreens(RegisterMenuScreensEvent event) {
         event.register(NMIMenus.KITCHENWARE_MENU.get(), KitchenwareScreen::new);
@@ -53,5 +56,10 @@ public class ClientRegister {
     @SubscribeEvent
     public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(ModelLayersRegistry.MYSTIAS_HAT,() -> LayerDefinition.create(MystiasHatModel.setup(),64,64));
+    }
+
+    @SubscribeEvent
+    public static void registerRender(RegisterClientExtensionsEvent event) {
+        event.registerItem(new NMIArmorRender(), NMIMainItems.MYSTIAS_HAT.get());
     }
 }

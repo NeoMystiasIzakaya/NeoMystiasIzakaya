@@ -44,7 +44,10 @@ public class NMIItemModelProvider extends ModelProvider {
     }
 
     private static void horizontallyBlock(BlockModelGenerators blockModels, Block block) {
-        Variant variant = new Variant(ModelLocationUtils.getModelLocation(block));
+        horizontallyBlock(blockModels, block, ModelLocationUtils.getModelLocation(block));
+    }
+    private static void horizontallyBlock(BlockModelGenerators blockModels, Block block,Identifier identifier) {
+        Variant variant = new Variant(identifier);
         blockModels.blockStateOutput.accept(MultiVariantGenerator
                 .dispatch(block, BlockModelGenerators.variant(variant))
                 .with(PropertyDispatch.modify(BlockStateProperties.HORIZONTAL_FACING)
@@ -57,8 +60,12 @@ public class NMIItemModelProvider extends ModelProvider {
 
     private static void horizontallyLitBlock(BlockModelGenerators blockModels, Block block) {
         Identifier key = BuiltInRegistries.BLOCK.getKey(block);
-        Identifier lit = key.withSuffix("_lit").withPrefix("block/");
-        Variant variant = new Variant(key.withPrefix("block/"));
+        horizontallyLitBlock(blockModels, block, key);
+    }
+
+    private static void horizontallyLitBlock(BlockModelGenerators blockModels, Block block,Identifier identifier) {
+        Identifier lit = identifier.withSuffix("_lit").withPrefix("block/");
+        Variant variant = new Variant(identifier.withPrefix("block/"));
         blockModels.blockStateOutput.accept(MultiVariantGenerator
                 .dispatch(block, BlockModelGenerators.variant(variant))
                 .with(PropertyDispatch.modify(BlockStateProperties.HORIZONTAL_FACING, BlockStateProperties.LIT)
@@ -94,6 +101,7 @@ public class NMIItemModelProvider extends ModelProvider {
         normalBlock(blockModels, NMIBlocks.DINING_TABLE.get());
         normalBlock(blockModels, NMIBlocks.STORE.get());
         horizontallyBlock(blockModels, NMIBlocks.CUPBOARD.get());
+        horizontallyBlock(blockModels, NMIBlocks.CREATIVE_CUPBOARD.get(),NMIBlocks.CUPBOARD.getId());
     }
 
     private void registerItemModels(ItemModelGenerators itemModels) {

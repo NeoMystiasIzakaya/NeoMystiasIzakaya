@@ -61,6 +61,7 @@ public class NMILanguageProvider implements DataProvider {
         this.add(NMIBlocks.CUTTING_BOARD.get(), "Cutting Board", "料理台");
         this.add(NMIBlocks.DINING_TABLE.get(), "Dining Table", "餐桌");
         this.add(NMIBlocks.CUPBOARD, "CupBoard","橱柜");
+        this.add(NMIBlocks.CREATIVE_CUPBOARD, "CupBoard (Creative)","橱柜 (创造)");
 
         this.add(NMIMainItems.BOILING_POT, "Boiling Pot", "煮锅");
         this.add(NMIMainItems.GRILL, "Grill", "烤架");
@@ -73,6 +74,7 @@ public class NMILanguageProvider implements DataProvider {
         this.add(NMIMainItems.MYSTIAS_HAT, "Mystia's Hat", "夜雀的帽子");
         this.add(NMIMainItems.STORE, "Store", "河童电话");
         this.add(NMIMainItems.CUPBOARD, "CupBoard","橱柜");
+        this.add(NMIMainItems.CREATIVE_CUPBOARD, "CupBoard (Creative)","橱柜 (创造)");
 
         // CanteenConfigItem 提示消息
         this.add("item.neo_mystias_izakaya.canteen_config.controller_selected", "Controller selected!", "已选择控制器！");
@@ -140,6 +142,7 @@ public class NMILanguageProvider implements DataProvider {
 
 
         this.add("blockentity.neo_mystias_izakaya.cupboard", "CupBoard","橱柜");
+        this.add("blockentity.neo_mystias_izakaya.creative_cupboard", "CupBoard (Creative)","橱柜 (创造)");
         this.add(Kitchenware.BOILING_POT.toLanguageKey("blockentity"),"Boiling Pot", "煮锅");
         this.add(Kitchenware.GRILL.toLanguageKey("blockentity"), "Grill", "烤架");
         this.add(Kitchenware.FRYING_PAN.toLanguageKey("blockentity"), "Frying Pan", "油锅");
