@@ -3,30 +3,27 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-package icu.gensoukyo.neo_mystias_izakaya.client.gui.widget;
+package icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.button;
 
+import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientUtil;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.ItemStack;
 
 import static icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.RecipeScreen.POSITIVE_IN_COLOR;
 import static icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.RecipeScreen.POSITIVE_OUT_COLOR;
 
-public class KitchenwareButton extends Button {
+public class TagButton extends Button {
     @Getter
     @Setter
     private boolean selected;
 
-    @Getter
-    private final ItemStack icon;
-
-    public KitchenwareButton(int x, int y, int width, int height, Component message, ItemStack icon, OnPress onPress, CreateNarration createNarration) {
+    public TagButton(int x, int y, int width, int height, Component message, OnPress onPress, CreateNarration createNarration) {
         super(x, y, width, height, message, onPress, createNarration);
-        this.icon = icon;
     }
 
     @Override
@@ -36,13 +33,18 @@ public class KitchenwareButton extends Button {
         int textColor = selected ? POSITIVE_OUT_COLOR : POSITIVE_IN_COLOR;
         guiGraphicsExtractor.fill(getX(), getY(), getX() + getWidth(), getY() + getHeight(), bgColor);
 
-        // 渲染图标
-        guiGraphicsExtractor.item(icon, getX() + 2, getY());
-
         // 渲染文本
-        var font = Minecraft.getInstance().font;
-        var text = getMessage();
+        Font font = Minecraft.getInstance().font;
+        Component text = getMessage();
         var textToRender = text.getVisualOrderText();
-        guiGraphicsExtractor.text(font, textToRender, getX() + 22, getY() + 6, textColor, false);
+        int fontWidth = font.width(textToRender);
+        int textX = getX();
+        int textY = getY() + 1;
+        if (fontWidth > 40) {
+            NMIClientUtil.renderScaledText(guiGraphicsExtractor, font, text, textX, textY, textColor, false, (float) 40 / fontWidth);
+        } else {
+            textX = getX() + (getWidth() - font.width(textToRender)) / 2;
+            guiGraphicsExtractor.text(font, textToRender, textX, textY, textColor, false);
+        }
     }
 }

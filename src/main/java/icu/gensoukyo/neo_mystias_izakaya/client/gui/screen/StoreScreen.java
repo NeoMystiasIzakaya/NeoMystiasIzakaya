@@ -7,46 +7,44 @@ package icu.gensoukyo.neo_mystias_izakaya.client.gui.screen;
 
 import icu.gensoukyo.kaguya.client.graphic.KaguyaUtil;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
-import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.NMICartItemButton;
-import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.NMISimpleButton;
-import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.NMIStoreItemButton;
+import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.CartListWidget;
+import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.button.NMISimpleButton;
+import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.button.NMIStoreItemButton;
 import icu.gensoukyo.neo_mystias_izakaya.client.network.ClientPayloadSender;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientStoreUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonBalanceUtil;
-import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonComponentUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.economy.store.Cart;
 import icu.gensoukyo.neo_mystias_izakaya.content.economy.store.CartItem;
 import icu.gensoukyo.neo_mystias_izakaya.content.economy.store.Store;
 import icu.gensoukyo.neo_mystias_izakaya.content.economy.store.StoreItem;
-import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIBeveragesItems;
-import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIIngredientItems;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.ItemStack;
+import org.joml.Matrix3x2fStack;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class StoreScreen extends Screen {
 
+    public static final Identifier BACKGROUND = NeoMystiasIzakaya.id("textures/gui/store.png");
     public static final Identifier ID = NeoMystiasIzakaya.id("store_screen");
 
     private int leftPos;
     private int topPos;
-    private int iWidth;
-    private int iHeight;
+    private final int iWidth;
+    private final int iHeight;
 
     private List<NMIStoreItemButton> storeButtons;
-    private List<NMICartItemButton> cartButtons;
+//    private List<NMICartItemButton> cartButtons;
+    private NMISimpleButton lastPageButton;
     private NMISimpleButton nextPageButton;
     private NMISimpleButton purchaseButton;
 
-    private NMIStoreItemButton ingredientsStoreButton;
-    private NMIStoreItemButton beveragesStoreButton;
+    private CartListWidget cartListWidget;
 
     private int currentPage;
     private Store currentStore;
@@ -56,10 +54,10 @@ public class StoreScreen extends Screen {
     public StoreScreen() {
         super(Component.empty());
 
-        this.iWidth = 176;
-        this.iHeight = 166;
+        this.iWidth = 181*2;
+        this.iHeight = 113*2;
 
-        this.currentStore = Store.EMPTY;
+        this.currentStore = NMIClientStoreUtil.getStore(Minecraft.getInstance().player,Store.ALL);
         this.cart = Cart.empty();
     }
 
@@ -67,23 +65,41 @@ public class StoreScreen extends Screen {
     public void extractRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
         super.extractRenderState(guiGraphics, mouseX, mouseY, partialTicks);
         this.extractLabels(guiGraphics, mouseX, mouseY);
+        this.extractHighLights(guiGraphics,mouseX,mouseY);
     }
 
     @Override
     public void extractBackground(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
-        int rightPos = this.leftPos + this.iWidth;
-        int bottomPos = this.topPos + this.iHeight;
-        KaguyaUtil.fillXYXY(guiGraphics,this.leftPos, this.topPos, rightPos, bottomPos, 0xD0ffffff);
-        KaguyaUtil.fillXYXY(guiGraphics,rightPos - 86, this.topPos + 87, rightPos - 2, bottomPos - 2, 0xfff0e0b0);
-        KaguyaUtil.fillXYXY(guiGraphics,rightPos - 84, this.topPos + 89, rightPos - 4, bottomPos - 4, 0x808b4513);
+        KaguyaUtil.blitXYWHUVWH(guiGraphics, BACKGROUND, leftPos, topPos, iWidth, iHeight, 0, 0, 181, 113);
     }
 
     protected void extractLabels(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
-        MutableComponent balance = NMICommonComponentUtil.translatableGUI(ID, "balance", NMICommonBalanceUtil.getEn(getMinecraft().player));
-        MutableComponent total = NMICommonComponentUtil.translatableGUI(ID, "total", NMIClientStoreUtil.calculatePrice(getMinecraft().player, cart, currentStore));
+        Matrix3x2fStack pose = guiGraphics.pose();
+        pose.pushMatrix();
+        pose.translate(leftPos, topPos);
+        pose.scale(2,2);
+//        MutableComponent balance_text = NMICommonComponentUtil.translatableGUI(ID, "balance_text");
+        MutableComponent balance = Component.literal(""+NMICommonBalanceUtil.getEn(getMinecraft().player));
+//        MutableComponent total_text = NMICommonComponentUtil.translatableGUI(ID, "total_text");
+        MutableComponent total = Component.literal(""+NMIClientStoreUtil.calculatePrice(getMinecraft().player, cart, currentStore));
 
-        guiGraphics.text(getFont(), balance, leftPos + 88 - font.width(balance) / 2, topPos + 10, -12829636, false);
-        guiGraphics.text(getFont(), total, leftPos + 10, topPos + 145, -12829636, false);
+//        guiGraphics.text(getFont(), balance_text, leftPos + 22 - font.width(balance_text) / 2, topPos + 124, -12829636, false);
+        guiGraphics.text(getFont(), balance, 12 - font.width(balance) / 2, 63, -12829636, false);
+//        guiGraphics.text(getFont(), total_text, leftPos + 306, topPos + 198, -12829636, false);
+        guiGraphics.text(getFont(), total, 155, 100, -12829636, false);
+        pose.popMatrix();
+    }
+
+    protected void extractHighLights(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
+        if (lastPageButton.isHoveredOrFocused()){
+            KaguyaUtil.blitXYWHUVWH(guiGraphics,BACKGROUND,leftPos+27*2,topPos+102*2,27*2,11*2,0,114,27,11);
+        }
+        if (nextPageButton.isHoveredOrFocused()){
+            KaguyaUtil.blitXYWHUVWH(guiGraphics,BACKGROUND,leftPos+106*2,topPos+102*2,27*2,11*2,0,125,27,11);
+        }
+        if (purchaseButton.isHoveredOrFocused()){
+            KaguyaUtil.blitXYWHUVWH(guiGraphics,BACKGROUND,leftPos+140*2,topPos+98*2,13*2,13*2,27,114,13,13);
+        }
     }
 
     @Override
@@ -99,21 +115,18 @@ public class StoreScreen extends Screen {
         this.leftPos = centerX - this.iWidth / 2;
         this.topPos = centerY - this.iHeight / 2;
         for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 4; j++) {
-                int p = j + i * 4;
-                storeButtons.get(p).setPosition(leftPos + 10 + 20 * j, topPos + 30 + 20 * i);
+            for (int j = 0; j < 6; j++) {
+                int p = j + i * 6;
+                storeButtons.get(p).setPosition(leftPos + 36*2 + 16*2 * j, topPos + 36*2 + 19*2 * i);
             }
         }
-        ingredientsStoreButton.setPosition(leftPos + 10, topPos + 30);
-        beveragesStoreButton.setPosition(leftPos + 10, topPos + 50);
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 5; j++) {
-                int p = j + i * 5;
-                cartButtons.get(p).setPosition(leftPos + iWidth - 20 - 16 * j, topPos + iHeight - 20 - 20 * i);
-            }
-        }
-        nextPageButton.setPosition(leftPos + 10, topPos + 10 + 20 * 4);
-        purchaseButton.setPosition(leftPos + 10, topPos + 15 + 20 * 5);
+
+        cartListWidget.setPosition(leftPos+280,topPos+100);
+        reloadCart();
+
+        lastPageButton.setPosition(leftPos + 28*2, topPos + 103*2);
+        nextPageButton.setPosition(leftPos + 107*2, topPos + 103*2);
+        purchaseButton.setPosition(leftPos + 141*2, topPos + 99*2);
     }
 
     @Override
@@ -126,81 +139,75 @@ public class StoreScreen extends Screen {
         this.topPos = centerY - this.iHeight / 2;
 
         storeButtons = new ArrayList<>();
-        cartButtons = new ArrayList<>();
+//        cartButtons = new ArrayList<>();
 
         for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 4; j++) {
-                int p = j + i * 4;
+            for (int j = 0; j < 6; j++) {
+                int p = j + i * 6;
                 storeButtons.add(new NMIStoreItemButton.Builder(Component.empty(), e -> {
                     int count = getMinecraft().hasShiftDown() ? 10 : 1;
                     addCart(storeButtons.get(p).getStoreItem().asCartItem(count));
-                    reloadCart();
-                }).pos(leftPos + 10 + 20 * j, topPos + 30 + 20 * i).build());
+                }).pos(leftPos + 36*2 + 16*2 * j, topPos + 36*2 + 19*2 * i).disableBg().build());
             }
         }
         reloadStore();
 
-        ingredientsStoreButton = new NMIStoreItemButton.Builder(Component.empty(), e -> {
-            ingredientsStoreButton.disableRender();
-            beveragesStoreButton.disableRender();
-            this.currentStore = NMIClientStoreUtil.getIngredientStore(getMinecraft().player);
+        lastPageButton = new NMISimpleButton.Builder(Component.empty(), e -> {
+            currentPage--;
             reloadStore();
-        }).pos(leftPos + 10, topPos + 30).itemStack(NMIIngredientItems.LAMPREY.toStack())
-                .tooltip(Tooltip.create(NMICommonComponentUtil.translatableGUI(ID, "ingredients"))).build();
+            reloadCart();
+        }).pos(leftPos + 28*2, topPos + 103*2).size(25*2, 9*2).build();
 
-        beveragesStoreButton = new NMIStoreItemButton.Builder(Component.empty(), e -> {
-            ingredientsStoreButton.disableRender();
-            beveragesStoreButton.disableRender();
-            this.currentStore = NMIClientStoreUtil.getBeveragesStore(getMinecraft().player);
-            reloadStore();
-        }).pos(leftPos + 10, topPos + 50).itemStack(NMIBeveragesItems.GREEN_TEA.toStack())
-                .tooltip(Tooltip.create(NMICommonComponentUtil.translatableGUI(ID, "beverages"))).build();
-
-
-        nextPageButton = new NMISimpleButton.Builder(NMICommonComponentUtil.translatableGUI(ID, "next_page"), e -> {
+        nextPageButton = new NMISimpleButton.Builder(Component.empty(), e -> {
             currentPage++;
             reloadStore();
             reloadCart();
-        }).pos(leftPos + 10, topPos + 10 + 20 * 4).size(54, 20).build();
+        }).pos(leftPos + 107*2, topPos + 103*2).size(25*2, 9*2).build();
 
-        purchaseButton = new NMISimpleButton.Builder(NMICommonComponentUtil.translatableGUI(ID, "purchase"), e -> {
+        purchaseButton = new NMISimpleButton.Builder(Component.empty(), e -> {
             ClientPayloadSender.sendStorePurchaseMessage(cart, currentStore.getId());
             cart = Cart.empty();
             reloadCart();
             onClose();
-        }).pos(leftPos + 10, topPos + 15 + 20 * 5).size(54, 20).build();
+        }).pos(leftPos + 141*2, topPos + 99*2).size(11*2, 11*2).build();
+
+        cartListWidget = new CartListWidget(getMinecraft(),80,90,100);
+        cartListWidget.setPosition(leftPos+280,topPos+100);
+
+//        for (int i = 0; i < 4; i++) {
+//            for (int j = 0; j < 5; j++) {
+//                int p = j + i * 5;
+//                cartButtons.add(new NMICartItemButton.Builder(Component.empty(), e -> {
+//                    int count = getMinecraft().hasShiftDown() ? 10 : 1;
+//                    removeCart(cartButtons.get(p).getCartItem().copyWithCount(count));
+//                    reloadCart();
+//                }).pos(leftPos + iWidth - 20 - 16 * (4 - j), topPos + iHeight - 20 - 20 * (3 - i)).build());
+//            }
+//        }
 
 
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 5; j++) {
-                int p = j + i * 5;
-                cartButtons.add(new NMICartItemButton.Builder(Component.empty(), e -> {
-                    int count = getMinecraft().hasShiftDown() ? 10 : 1;
-                    removeCart(cartButtons.get(p).getCartItem().copyWithCount(count));
-                    reloadCart();
-                }).pos(leftPos + iWidth - 20 - 16 * (4 - j), topPos + iHeight - 20 - 20 * (3 - i)).build());
-            }
-        }
-        reloadCart();
-
-
+        this.addRenderableWidget(lastPageButton);
         this.addRenderableWidget(nextPageButton);
         this.addRenderableWidget(purchaseButton);
-        this.addRenderableWidget(ingredientsStoreButton);
-        this.addRenderableWidget(beveragesStoreButton);
 
         storeButtons.forEach(this::addRenderableWidget);
-        cartButtons.forEach(this::addRenderableWidget);
+
+        this.addRenderableWidget(cartListWidget);
+//        cartButtons.forEach(this::addRenderableWidget);
     }
 
     private void reloadStore() {
         List<StoreItem> items = currentStore.getItems();
-        int offset = currentPage * 12;
+        int offset = currentPage * 18;
         if (offset >= items.size()) {
+            currentPage--;
+            offset = currentPage * 18;
+        }
+        if (offset < 0) {
             currentPage = 0;
             offset = 0;
         }
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 18; i++) {
             if (i + offset >= items.size()) {
                 storeButtons.get(i).clearStoreItem();
                 storeButtons.get(i).disableRender();
@@ -214,23 +221,18 @@ public class StoreScreen extends Screen {
 
     private void reloadCart() {
         List<CartItem> cartItems = cart.getItems();
-        for (int i = 0; i < cartItems.size(); i++) {
-            CartItem cartItem = cartItems.get(i);
-            cartButtons.get(cartButtons.size() - i - 1).setStoreAndCartItem(currentStore, cartItem);
-            cartButtons.get(cartButtons.size() - i - 1).enableRender();
-        }
-        for (int i = cartItems.size(); i < 20; i++) {
-            cartButtons.get(cartButtons.size() - i - 1).setItemStack(ItemStack.EMPTY);
-            cartButtons.get(cartButtons.size() - i - 1).disableRender();
-        }
+        cartListWidget.clearEntries();
+        cartItems.forEach(e->cartListWidget.addEntry(new CartListWidget.Entry(this::removeCart,currentStore,e)));
     }
 
     private void addCart(CartItem item) {
         cart.addItem(item);
+        reloadCart();
     }
 
     private void removeCart(CartItem item) {
         cart.removeItem(item);
+        reloadCart();
     }
 
 }
