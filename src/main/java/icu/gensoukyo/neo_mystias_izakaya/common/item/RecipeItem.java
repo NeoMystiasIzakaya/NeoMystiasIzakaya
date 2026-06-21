@@ -5,9 +5,11 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.common.item;
 
+import icu.gensoukyo.neo_mystias_izakaya.api.dal.NMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.KitchenwareBlockEntity;
+import icu.gensoukyo.neo_mystias_izakaya.content.cooking.IzakayaCookingUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.cooking.Kitchenware;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipe;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeHolder;
@@ -20,6 +22,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
@@ -34,6 +37,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import org.jspecify.annotations.NonNull;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 public class RecipeItem extends Item {
@@ -50,7 +54,76 @@ public class RecipeItem extends Item {
         BlockPos clickedPos = context.getClickedPos();
         Level level = player.level();
         if (level.getBlockEntity(clickedPos) instanceof KitchenwareBlockEntity kitchenware) {
+            if (!level.isClientSide()) {
+                ItemStack stack = context.getItemInHand();
+                Identifier recipeKey = stack.get(NMIDataComponentTypes.RECORDED_RECIPE);
+                if (recipeKey == null) {
+                    player.sendSystemMessage(Component.translatable("gui.neo_mystias_izakaya.not_recorded"));
+                    return InteractionResult.FAIL;
+                }
 
+                // 获取食谱
+                NMIRecipeHolder holder = NMIDataAccessor.server()
+                        .getRecipeMap().getRecipeMap().get(recipeKey);
+                if (holder == null) return InteractionResult.FAIL;
+                NMIRecipe recipe = holder.recipe();
+
+                // 检查厨具类型是否匹配
+                var kitchenwareObj = NMIKitchenware.REGISTRY.getValue(kitchenware.getKitchenwareTypeId());
+                if (kitchenwareObj == null || !kitchenwareObj.blockTagKey().equals(recipe.kitchenware())) {
+                    player.sendSystemMessage(Component.translatable("gui.neo_mystias_izakaya.wrong_kitchenware"));
+                    return InteractionResult.FAIL;
+                }
+
+                // 检查厨具是否空闲
+                if (!kitchenware.canStartCooking()) {
+                    player.sendSystemMessage(Component.translatable("gui.neo_mystias_izakaya.kitchenware_busy"));
+                    return InteractionResult.FAIL;
+                }
+
+                // 从背包查找食材
+                List<Ingredient> requiredInputs = recipe.input();
+                NonNullList<ItemStack> ingredients = NonNullList.withSize(5, ItemStack.EMPTY);
+                boolean allFound = true;
+
+                for (int i = 0; i < requiredInputs.size() && i < 5; i++) {
+                    Ingredient ingredient = requiredInputs.get(i);
+                    boolean found = false;
+                    for (ItemStack invStack : player.getInventory().getNonEquipmentItems()) {
+                        if (ingredient.test(invStack)) {
+                            ItemStack consumed = invStack.split(1);
+                            ingredients.set(i, consumed);
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        allFound = false;
+                        break;
+                    }
+                }
+
+                if (!allFound) {
+                    // 归还已消耗的物品
+                    for (ItemStack ing : ingredients) {
+                        if (!ing.isEmpty()) {
+                            player.getInventory().add(ing);
+                        }
+                    }
+                    player.sendSystemMessage(Component.translatable("gui.neo_mystias_izakaya.missing_ingredients"));
+                    return InteractionResult.FAIL;
+                }
+
+                // 放入厨具
+                kitchenware.setIngredients(ingredients);
+
+                if (player.isShiftKeyDown()) {
+                    IzakayaCookingUtil.processCooking(player, recipeKey, clickedPos);
+                    player.sendSystemMessage(Component.translatable("gui.neo_mystias_izakaya.ingredients_placed_started"));
+                } else {
+                    player.sendSystemMessage(Component.translatable("gui.neo_mystias_izakaya.ingredients_placed"));
+                }
+            }
             return InteractionResult.SUCCESS;
         } else {
             return InteractionResult.PASS;

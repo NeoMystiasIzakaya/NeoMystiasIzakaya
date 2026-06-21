@@ -114,6 +114,11 @@ public class NMILanguageProvider implements DataProvider {
         this.add("gui.neo_mystias_izakaya.record_recipe", "Record", "记录食谱");
         this.add("gui.neo_mystias_izakaya.recorded_recipe", "Recorded:", "已记录：");
         this.add("gui.neo_mystias_izakaya.not_recorded", "None", "未记录");
+        this.add("gui.neo_mystias_izakaya.wrong_kitchenware", "Wrong kitchenware type!", "厨具类型不匹配！");
+        this.add("gui.neo_mystias_izakaya.kitchenware_busy", "Kitchenware is busy!", "厨具正在使用中！");
+        this.add("gui.neo_mystias_izakaya.missing_ingredients", "Missing ingredients!", "所需食材不足！");
+        this.add("gui.neo_mystias_izakaya.ingredients_placed", "Ingredients placed. [Sneak+Use] to start cooking.", "食材已放入。蹲下+使用 可立即开始烹饪");
+        this.add("gui.neo_mystias_izakaya.ingredients_placed_started", "Ingredients placed, cooking started!", "食材已放入，开始烹饪！");
         this.add("gui.neo_mystias_izakaya.recipe_recorded", "Recipe recorded!", "食谱已记录！");
         this.add("gui.neo_mystias_izakaya.recipe_already_recorded", "Recipe already recorded", "该食谱已记录过");
         this.add("gui.neo_mystias_izakaya.need_recipe_book", "You need to hold a Recipe Book!", "需要手持食谱书！");

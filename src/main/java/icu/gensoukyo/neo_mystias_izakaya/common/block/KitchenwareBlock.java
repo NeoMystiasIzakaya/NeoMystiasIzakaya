@@ -20,8 +20,10 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -104,6 +106,14 @@ public class KitchenwareBlock extends BaseEntityBlock{
 
     protected static ToIntFunction<BlockState> litBlockEmission(int lightEmission) {
         return state -> state.getValue(BlockStateProperties.LIT) ? lightEmission : 0;
+    }
+
+    @Override
+    protected InteractionResult useItemOn(ItemStack itemStack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (player.getMainHandItem().is(NMIMainItems.RECIPE_BOOK)) {
+            return InteractionResult.PASS;
+        }
+        return super.useItemOn(itemStack, state, level, pos, player, hand, hitResult);
     }
 
     @Override
