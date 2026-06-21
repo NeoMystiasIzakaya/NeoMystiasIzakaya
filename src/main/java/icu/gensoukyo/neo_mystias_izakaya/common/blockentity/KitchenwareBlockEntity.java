@@ -84,7 +84,7 @@ public class KitchenwareBlockEntity extends RandomizableContainerBlockEntity {
         super(type, worldPosition, blockState);
     }
     public KitchenwareBlockEntity(Identifier kitchenwareTypeId, BlockPos worldPosition, BlockState blockState) {
-        super(NMIKitchenware.REGISTRY.getValue(kitchenwareTypeId).getBlockEntityType(), worldPosition, blockState);
+        super(NMIKitchenware.REGISTRY.getValue(kitchenwareTypeId).blockEntityType(), worldPosition, blockState);
         this.kitchenwareTypeId = kitchenwareTypeId;
     }
 

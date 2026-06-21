@@ -165,7 +165,7 @@ public class RecipeScreen extends Screen {
         // 记录食谱按钮（搜索框右侧）
         this.recordButton = Button.builder(
                 Component.translatable("gui.neo_mystias_izakaya.record_recipe"),
-                btn -> {
+                        _ -> {
                     if (this.selected != null && this.selected.isRecipe()) {
                         ClientPayloadSender.sendRecordRecipeMessage(this.selected.getRecipe().key());
                     }
@@ -276,8 +276,8 @@ public class RecipeScreen extends Screen {
             int x = i + KITCHENWARE_OFFSET_X;
             int y = j + KITCHENWARE_OFFSET_Y + adjustedIndex * KITCHENWARE_ROW_HEIGHT;
             KitchenwareButton kb = new KitchenwareButton(x, y, KITCHENWARE_ITEM_WIDTH, KITCHENWARE_ITEM_HEIGHT,
-                    NMICommonComponentUtil.translatableTag(type.getKitchenwareTag()),
-                    type.getKitchenwareItem().getDefaultInstance(),
+                    NMICommonComponentUtil.translatableTag(type.kitchenwareTag()),
+                    type.kitchenwareItem().getDefaultInstance(),
                     _ -> handleKitchenwareClick(type),
                     DEFAULT_NARRATION);
             kitchenwareButtons.add(kb);
@@ -503,7 +503,7 @@ public class RecipeScreen extends Screen {
                     .getItemToTagMap().get(recipeHolder.key()).positiveTags();
             boolean containTag = isAllSelected || new HashSet<>(identifiers).containsAll(foodTagSelected);
             boolean containKitchenware = isAllKitchenwareSelected || selectedKitchenwareTypes.stream()
-                    .anyMatch(type -> type.getBlockTagKey().equals(recipe.kitchenware()));
+                    .anyMatch(type -> type.blockTagKey().equals(recipe.kitchenware()));
 
             return containTag && containKitchenware;
         }).collect(java.util.stream.Collectors.toList());
@@ -514,7 +514,6 @@ public class RecipeScreen extends Screen {
      */
     private List<Object> filterBeverages(List<ItemStack> source, String searchText) {
         var tagMap = ClientNMIDataAccessor.INSTANCE.getTagItemListMap().getItemToTagMap();
-        List<Identifier> beverageTags = NMIBeveragesTags.ALL;
 
         return source.stream().filter(stack -> {
             String name = getTranslatedString(

@@ -107,7 +107,7 @@ public class CanteenInfoOverlay implements GuiLayer {
 
             BlockPos blockPos = kitchenwareList.get(i);
             if (level.isLoaded(blockPos) && level.getBlockEntity(blockPos) instanceof KitchenwareBlockEntity kitchenware) {
-                ItemStack defaultInstance = NMIKitchenware.REGISTRY.getValue(kitchenware.getKitchenwareTypeId()).getKitchenwareItem().getDefaultInstance();
+                ItemStack defaultInstance = NMIKitchenware.REGISTRY.getValue(kitchenware.getKitchenwareTypeId()).kitchenwareItem().getDefaultInstance();
                 guiGraphics.item(defaultInstance, 1, y0 + 1);
                 if (!kitchenware.getResultItem().isEmpty()) {
                     guiGraphics.item(kitchenware.getResultItem(), 20, y0 + 3);

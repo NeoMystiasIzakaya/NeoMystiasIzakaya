@@ -27,7 +27,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -92,7 +91,7 @@ public class KitchenwareBlock extends BaseEntityBlock{
             LOGGER.warn("Failed to create BlockEntityTicker for KitchenwareBlock at {}, because the KitchenwareType {} is not registered.", blockState, kitchenwareTypeId);
             return null;
         }
-        return createCookTicker(level, type, kitchenware.getBlockEntityType());
+        return createCookTicker(level, type, kitchenware.blockEntityType());
     }
 
 
