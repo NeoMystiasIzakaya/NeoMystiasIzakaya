@@ -1358,6 +1358,7 @@
   "gui.neo_mystias_izakaya.location": "Location",
   "gui.neo_mystias_izakaya.maid_dining": "Maid",
   "gui.neo_mystias_izakaya.need_recipe_book": "You need to hold a Recipe Book!",
+  "gui.neo_mystias_izakaya.not_recorded": "None",
   "gui.neo_mystias_izakaya.price": "Price",
   "gui.neo_mystias_izakaya.progress": "Progress",
   "gui.neo_mystias_izakaya.rare_customer": "Rare Customer",

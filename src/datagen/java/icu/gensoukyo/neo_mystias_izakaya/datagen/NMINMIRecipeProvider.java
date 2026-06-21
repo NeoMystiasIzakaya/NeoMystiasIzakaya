@@ -9,6 +9,7 @@ import icu.gensoukyo.neo_mystias_izakaya.datagen.api.NMIRecipeProvider;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIVanillaTags;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMICuisinesItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIIngredientItems;
+import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMainItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -1551,6 +1552,7 @@ public class NMINMIRecipeProvider extends NMIRecipeProvider {
                 .input(Items.HONEY_BOTTLE)
                 .input(NMIIngredientItems.CREAM)
                 .input(Items.ICE)
+                .input(NMIMainItems.CHROME_BALL)
                 .kitchenware(NMIVanillaTags.GRILL)
                 .time(7)
                 .build();

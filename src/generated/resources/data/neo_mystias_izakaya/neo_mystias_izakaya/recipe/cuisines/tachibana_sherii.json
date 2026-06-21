@@ -2,7 +2,8 @@
   "input": [
     "minecraft:honey_bottle",
     "neo_mystias_izakaya:ingredient/cream",
-    "minecraft:ice"
+    "minecraft:ice",
+    "neo_mystias_izakaya:misc/chrome_ball"
   ],
   "kitchenware": "neo_mystias_izakaya:grill",
   "output": {
