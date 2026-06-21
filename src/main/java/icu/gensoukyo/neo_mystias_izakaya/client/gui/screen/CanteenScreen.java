@@ -79,9 +79,9 @@ public class CanteenScreen extends Screen {
     // === 滚动 ===
     int scrollOffset = 0;
 
-    // === 选中 ===
-    int selectedIndex = -1;
-    Object selectedData = null;
+    // === 悬浮详情 ===
+    int hoveredIndex = -1;
+    Object hoveredData = null;
 
     // === 控件 ===
     Button toggleDishBeverageBtn;
@@ -127,15 +127,16 @@ public class CanteenScreen extends Screen {
         i = (this.width - IMAGE_WIDTH) / 2;
         j = (this.height - IMAGE_HEIGHT) / 2;
 
-        if (minecraft != null && minecraft.player != null) {
+        if (minecraft.player != null) {
             currentMenu = NMICommonIzakayaUtil.getMenu(minecraft.player);
         }
 
         // 前往开店按钮
         goToOpenBtn = Button.builder(
                 Component.translatable("gui.neo_mystias_izakaya.go_open"),
-                btn -> {
+                _ -> {
                     if (controllerPos != null) {
+                        ClientPayloadSender.sendIzakayaMenuSyncMessage(currentMenu);
                         ClientPayloadSender.sendToggleCanteenOpen(controllerPos);
                     }
                 }
@@ -145,10 +146,10 @@ public class CanteenScreen extends Screen {
         // 切换菜品/饮料按钮
         toggleDishBeverageBtn = Button.builder(
                 Component.translatable("gui.neo_mystias_izakaya.show_beverages"),
-                btn -> {
+                _ -> {
                     showDishes = !showDishes;
-                    selectedIndex = -1;
-                    selectedData = null;
+                    hoveredIndex = -1;
+                    hoveredData = null;
                     scrollOffset = 0;
                     updateToggleText();
                 }
@@ -158,7 +159,7 @@ public class CanteenScreen extends Screen {
         // Tag 切换按钮
         addRenderableWidget(Button.builder(
                 Component.literal("T"),
-                btn -> showTags = !showTags
+                _ -> showTags = !showTags
         ).bounds(i + LEFT_PANEL_WIDTH - 18, j + IMAGE_HEIGHT - 30, 14, 14).build());
     }
 
@@ -171,6 +172,8 @@ public class CanteenScreen extends Screen {
         scrollOffset = Math.clamp(scrollOffset, 0, maxScroll);
 
         int gy = j + GRID_OFFSET_Y;
+        hoveredIndex = -1;
+        hoveredData = null;
 
         for (int row = 0; row < GRID_VISIBLE_ROWS; row++) {
             for (int col = 0; col < GRID_COLS; col++) {
@@ -184,9 +187,8 @@ public class CanteenScreen extends Screen {
                         && mouseY >= y && mouseY < y + GRID_ITEM_SIZE;
                 if (hovered) {
                     graphics.fill(x, y, x + GRID_ITEM_SIZE, y + GRID_ITEM_SIZE, GRID_HOVER);
-                }
-                if (idx == selectedIndex) {
-                    graphics.fill(x, y, x + GRID_ITEM_SIZE, y + GRID_ITEM_SIZE, GRID_SELECTED);
+                    hoveredIndex = idx;
+                    hoveredData = items.get(idx);
                 }
 
                 Object obj = items.get(idx);
@@ -208,66 +210,68 @@ public class CanteenScreen extends Screen {
 
         graphics.fill(i, dy - 2, i + LEFT_PANEL_WIDTH, dy - 1, TEXT_DARK);
 
-        if (selectedData == null) {
-            graphics.text(font, Component.translatable("gui.neo_mystias_izakaya.select_hint"),
+        switch (hoveredData) {
+            case null -> graphics.text(font, Component.translatable("gui.neo_mystias_izakaya.select_hint"),
                     i + 8, dy + 4, TEXT_DARK, false);
-            return;
-        }
+            case NMIRecipeHolder(
+                    Identifier key, icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipe recipe1
+            ) -> {
+                Item item = recipe1.output().item().value();
 
-        if (selectedData instanceof NMIRecipeHolder(
-                Identifier key, icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipe recipe1
-        )) {
-            Item item = recipe1.output().item().value();
+                graphics.text(font,
+                        Component.translatable(item.getDescriptionId()).withStyle(ChatFormatting.BOLD),
+                        i + 8, dy + 4, TEXT_DARK, false);
 
-            graphics.text(font,
-                    Component.translatable(item.getDescriptionId()).withStyle(ChatFormatting.BOLD),
-                    i + 8, dy + 4, TEXT_DARK, false);
+                Integer price = NMIClientEconomyUtil.getItemPrice(item);
+                graphics.text(font,
+                        Component.translatable("gui.neo_mystias_izakaya.price")
+                                .append(": " + (price != null ? price : 0) + " ")
+                                .append(NMICommonComponentUtil.unitEn()),
+                        i + 8, dy + 16, PRICE_RED, false);
 
-            Integer price = NMIClientEconomyUtil.getItemPrice(item);
-            graphics.text(font,
-                    Component.translatable("gui.neo_mystias_izakaya.price")
-                            .append(": " + (price != null ? price : 0) + " ")
-                            .append(NMICommonComponentUtil.unitEn()),
-                    i + 8, dy + 16, PRICE_RED, false);
-
-            if (showTags) {
-                var tagMap = ClientNMIDataAccessor.INSTANCE.getTagItemListMap().getItemToTagMap();
-                var tags = tagMap.get(key);
-                if (tags != null) {
-                    KitchenwareScreen.renderTags(graphics, font, i, dy + 28, tags);
+                if (showTags) {
+                    var tagMap = ClientNMIDataAccessor.INSTANCE.getTagItemListMap().getItemToTagMap();
+                    var tags = tagMap.get(key);
+                    if (tags != null) {
+                        KitchenwareScreen.renderTags(graphics, font, i, dy + 28, tags);
+                    }
+                } else {
+                    MutableComponent desc = Component.translatable(item.getDescriptionId() + ".desc");
+                    drawWrappedText(graphics, font, desc, i + 8, dy + 28, LEFT_PANEL_WIDTH - 16, DESC_GRAY);
                 }
-            } else {
-                MutableComponent desc = Component.translatable(item.getDescriptionId() + ".desc");
+
+                // 原料图标
+                List<ItemStack> inputs = recipe1.input().stream()
+                        .map(ingredient -> {
+                            var v = ingredient.getValues();
+                            return v.size() > 0 ? v.get(0).value().getDefaultInstance() : null;
+                        })
+                        .filter(java.util.Objects::nonNull)
+                        .toList();
+                int ix = i + 8;
+                int iy = dy + dh - 22;
+                for (int k = 0; k < inputs.size() && k < 5; k++) {
+                    graphics.fill(ix + k * 20, iy, ix + k * 20 + 18, iy + 18, 0xAA593B1F);
+                    graphics.item(inputs.get(k), ix + k * 20 + 1, iy + 1);
+                }
+            }
+            case ItemStack stack -> {
+                graphics.text(font,
+                        Component.translatable(stack.getItem().getDescriptionId()),
+                        i + 8, dy + 4, TEXT_DARK, false);
+                Integer beveragePrice = NMIClientEconomyUtil.getItemStackPriceBase(stack);
+                graphics.text(font,
+                        Component.translatable("gui.neo_mystias_izakaya.price")
+                                .append(": " + (beveragePrice != null ? beveragePrice : 0) + " ")
+                                .append(NMICommonComponentUtil.unitEn()),
+                        i + 8, dy + 16, PRICE_RED, false);
+                MutableComponent desc = Component.translatable(stack.getItem().getDescriptionId() + ".desc");
                 drawWrappedText(graphics, font, desc, i + 8, dy + 28, LEFT_PANEL_WIDTH - 16, DESC_GRAY);
             }
-
-            // 原料图标
-            List<ItemStack> inputs = recipe1.input().stream()
-                    .map(ingredient -> {
-                        var v = ingredient.getValues();
-                        return v.size() > 0 ? v.get(0).value().getDefaultInstance() : null;
-                    })
-                    .filter(java.util.Objects::nonNull)
-                    .toList();
-            int ix = i + 8;
-            int iy = dy + dh - 22;
-            for (int k = 0; k < inputs.size() && k < 5; k++) {
-                graphics.fill(ix + k * 20, iy, ix + k * 20 + 18, iy + 18, 0xAA593B1F);
-                graphics.item(inputs.get(k), ix + k * 20 + 1, iy + 1);
+            default -> {
             }
-        } else if (selectedData instanceof ItemStack stack) {
-            graphics.text(font,
-                    Component.translatable(stack.getItem().getDescriptionId()),
-                    i + 8, dy + 4, TEXT_DARK, false);
-            Integer beveragePrice = NMIClientEconomyUtil.getItemStackPriceBase(stack);
-            graphics.text(font,
-                    Component.translatable("gui.neo_mystias_izakaya.price")
-                            .append(": " + (beveragePrice != null ? beveragePrice : 0) + " ")
-                            .append(NMICommonComponentUtil.unitEn()),
-                    i + 8, dy + 16, PRICE_RED, false);
-            MutableComponent desc = Component.translatable(stack.getItem().getDescriptionId() + ".desc");
-            drawWrappedText(graphics, font, desc, i + 8, dy + 28, LEFT_PANEL_WIDTH - 16, DESC_GRAY);
         }
+
     }
 
     // ========== 右侧货架 ==========
@@ -303,23 +307,25 @@ public class CanteenScreen extends Screen {
 
     private void renderBeverageSection(GuiGraphicsExtractor graphics) {
         int bx = i + RIGHT_PANEL_X + 4;
-        int by = j + 158;
+        int by = j + 108;
 
-        graphics.fill(bx - 2, by, bx + RIGHT_PANEL_W - 6, by + 16, BG_SHELF);
+        graphics.fill(bx - 2, by, bx + RIGHT_PANEL_W - 6, by + 80, BG_SHELF);
         graphics.text(font, Component.translatable("gui.neo_mystias_izakaya.beverages"),
                 bx + 4, by + 2, TEXT_GOLD, false);
 
         List<Identifier> beverages = currentMenu.beverages();
-        for (int k = 0; k < beverages.size() && k < 4; k++) {
-            int slotX = bx + 2 + k * 28;
-            int slotY = by + 18;
+        for (int k = 0; k < 8; k++) {
+            int slotX = bx + 2 + (k % 4) * 28;
+            int slotY = by + 16 + (k / 4) * 30;
             graphics.fill(slotX, slotY, slotX + 24, slotY + 24, 0xAA000000);
-            ItemStack stack = net.minecraft.core.registries.BuiltInRegistries.ITEM
-                    .getOptional(beverages.get(k))
-                    .map(ItemStack::new)
-                    .orElse(ItemStack.EMPTY);
-            if (!stack.isEmpty()) {
-                graphics.item(stack, slotX + 4, slotY + 4);
+            if (k < beverages.size()) {
+                ItemStack stack = net.minecraft.core.registries.BuiltInRegistries.ITEM
+                        .getOptional(beverages.get(k))
+                        .map(ItemStack::new)
+                        .orElse(ItemStack.EMPTY);
+                if (!stack.isEmpty()) {
+                    graphics.item(stack, slotX + 4, slotY + 4);
+                }
             }
         }
     }
@@ -328,7 +334,7 @@ public class CanteenScreen extends Screen {
 
     private void renderKitchenwareSection(GuiGraphicsExtractor graphics) {
         int kx = i + RIGHT_PANEL_X + 4;
-        int ky = j + 202;
+        int ky = j + 196;
 
         graphics.text(font, Component.translatable("gui.neo_mystias_izakaya.kitchenware"),
                 kx, ky, TEXT_GOLD, false);
@@ -349,40 +355,76 @@ public class CanteenScreen extends Screen {
 
     @Override
     public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
-        if (event.button() == 0) {
-            double mx = event.x();
-            double my = event.y();
-            List<?> items = showDishes ? allRecipes : allBeverages;
-            int gy = j + GRID_OFFSET_Y;
+        double mouseX = event.x();
+        double mouseY = event.y();
 
-            for (int row = 0; row < GRID_VISIBLE_ROWS; row++) {
-                for (int col = 0; col < GRID_COLS; col++) {
-                    int idx = (row + scrollOffset) * GRID_COLS + col;
-                    if (idx >= items.size()) break;
-
-                    int x = i + GRID_OFFSET_X + col * GRID_CELL_W;
-                    int y = gy + row * GRID_CELL_H;
-
-                    if (mx >= x && mx < x + GRID_ITEM_SIZE && my >= y && my < y + GRID_ITEM_SIZE) {
-                        selectedIndex = idx;
-                        selectedData = items.get(idx);
-                        return true;
-                    }
+        // 左右键：移除货架/饮品
+        if (event.button() == 0 || event.button() == 1) {
+            int rightX = i + RIGHT_PANEL_X + 4;
+            int shelfY = j + 8;
+            // 货架区点击
+            if (mouseX >= rightX && mouseX < rightX + RIGHT_PANEL_W - 6
+                    && mouseY >= shelfY + 14 && mouseY < shelfY + 14 + 60) {
+                int column = (int) ((mouseX - rightX) / 28);
+                int row = (int) ((mouseY - (shelfY + 14)) / 30);
+                int slotIndex = row * 4 + column;
+                List<Identifier> cuisines = new ArrayList<>(currentMenu.cuisines());
+                if (slotIndex >= 0 && slotIndex < cuisines.size()) {
+                    cuisines.remove(slotIndex);
+                    currentMenu = new IzakayaMenu(cuisines, currentMenu.beverages());
+                    return true;
                 }
+            }
+            // 饮品区点击
+            int beverageY = j + 108;
+            if (mouseX >= rightX + 2 && mouseX < rightX + 2 + 4 * 28
+                    && mouseY >= beverageY + 16 && mouseY < beverageY + 16 + 60) {
+                int column = (int) ((mouseX - rightX) / 28);
+                int row = (int) ((mouseY - (beverageY + 16)) / 30);
+                int slotIndex = row * 4 + column;
+                List<Identifier> beverages = new ArrayList<>(currentMenu.beverages());
+                if (slotIndex >= 0 && slotIndex < beverages.size()) {
+                    beverages.remove(slotIndex);
+                    currentMenu = new IzakayaMenu(currentMenu.cuisines(), beverages);
+                    return true;
+                }
+            }
+        }
+
+        // 左键：加入菜单
+        if (event.button() == 0 && hoveredData != null) {
+            if (showDishes && hoveredData instanceof NMIRecipeHolder recipe) {
+                Identifier key = recipe.key();
+                List<Identifier> cuisines = new ArrayList<>(currentMenu.cuisines());
+                if (cuisines.size() >= 8) return true;
+                if (!cuisines.contains(key)) {
+                    cuisines.add(key);
+                    currentMenu = new IzakayaMenu(cuisines, currentMenu.beverages());
+                }
+                return true;
+            } else if (!showDishes && hoveredData instanceof ItemStack stack) {
+                Identifier key = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());
+                List<Identifier> beverages = new ArrayList<>(currentMenu.beverages());
+                if (beverages.size() >= 8) return true;
+                if (!beverages.contains(key)) {
+                    beverages.add(key);
+                    currentMenu = new IzakayaMenu(currentMenu.cuisines(), beverages);
+                }
+                return true;
             }
         }
         return super.mouseClicked(event, doubleClick);
     }
 
     @Override
-    public boolean mouseScrolled(double mx, double my, double sx, double sy) {
-        if (mx >= i && mx < i + LEFT_PANEL_WIDTH) {
+    public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
+        if (mouseX >= i && mouseX < i + LEFT_PANEL_WIDTH) {
             List<?> items = showDishes ? allRecipes : allBeverages;
             int maxScroll = Math.max(0, (items.size() + GRID_COLS - 1) / GRID_COLS - GRID_VISIBLE_ROWS);
-            scrollOffset = (int) Math.clamp(scrollOffset - sy, 0, maxScroll);
+            scrollOffset = (int) Math.clamp(scrollOffset - scrollY, 0, maxScroll);
             return true;
         }
-        return super.mouseScrolled(mx, my, sx, sy);
+        return super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
     }
 
     // ========== 辅助 ==========
