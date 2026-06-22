@@ -294,4 +294,8 @@ public class DishServingScreen extends AbstractContainerScreen<DishServingMenu> 
         // 右边框
         graphics.fill(right - 1, top, right, bottom, 0xFFAAAAAA);
     }
+
+    public boolean isPauseScreen() {
+        return true;
+    }
 }

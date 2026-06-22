@@ -11,10 +11,12 @@ import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.CuisineGridWidget;
 import icu.gensoukyo.neo_mystias_izakaya.client.network.ClientPayloadSender;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientEconomyUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.CanteenControllerBlockEntity;
+import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.KitchenwareBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonComponentUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonIzakayaUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaMenu;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeHolder;
+import icu.gensoukyo.neo_mystias_izakaya.registry.NMIKitchenware;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIBeveragesItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
@@ -24,11 +26,13 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -115,6 +119,8 @@ public class CanteenScreen extends Screen {
         renderBeverageSection(graphics);
         renderKitchenwareSection(graphics);
         renderStatusDots(graphics);
+
+        drawShelfTooltips(graphics, mouseX, mouseY);
 
         super.extractRenderState(graphics, mouseX, mouseY, a);
     }
@@ -265,28 +271,30 @@ public class CanteenScreen extends Screen {
 
     // ========== 右侧货架 ==========
 
-    private void renderShelf(GuiGraphicsExtractor graphics) {
-        int sx = i + RIGHT_PANEL_X + 4;
-        int sy = j + 8;
-        int shelfH = 140;
+    private static final int SECTION_H = 74;
+    private static final int SHELF_Y = 4;
+    private static final int BEVERAGE_Y = SHELF_Y + SECTION_H;
+    private static final int KITCHENWARE_Y = BEVERAGE_Y + SECTION_H;
 
-        graphics.fill(sx - 2, sy - 2, sx + RIGHT_PANEL_W - 6, sy + shelfH, BG_SHELF);
+    private void renderShelf(GuiGraphicsExtractor graphics) {
+        int rx = i + RIGHT_PANEL_X + 4;
+        int ry = j + SHELF_Y;
+
+        graphics.fill(rx - 2, ry, rx + RIGHT_PANEL_W - 6, ry + SECTION_H, BG_SHELF);
         graphics.text(font, Component.translatable("gui.neo_mystias_izakaya.shelf"),
-                sx + 4, sy, TEXT_GOLD, false);
+                rx + 4, ry + 2, TEXT_GOLD, false);
 
         List<Identifier> cuisines = currentMenu.cuisines();
         for (int k = 0; k < 8; k++) {
-            int sx2 = sx + 2 + (k % 4) * 28;
-            int sy2 = sy + 14 + (k / 4) * 30;
-
-            graphics.fill(sx2, sy2, sx2 + 24, sy2 + 24, 0xAA000000);
-
+            int slotX = rx + 2 + (k % 4) * 28;
+            int slotY = ry + 16 + (k / 4) * 30;
+            graphics.fill(slotX, slotY, slotX + 24, slotY + 24, 0xAA000000);
             if (k < cuisines.size()) {
                 var holder = ClientNMIDataAccessor.INSTANCE.getRecipeMap()
                         .getRecipeMap().get(cuisines.get(k));
                 if (holder != null) {
                     Item item = holder.recipe().output().item().value();
-                    graphics.item(item.getDefaultInstance(), sx2 + 4, sy2 + 4);
+                    graphics.item(item.getDefaultInstance(), slotX + 4, slotY + 4);
                 }
             }
         }
@@ -295,17 +303,17 @@ public class CanteenScreen extends Screen {
     // ========== 右侧饮品 ==========
 
     private void renderBeverageSection(GuiGraphicsExtractor graphics) {
-        int bx = i + RIGHT_PANEL_X + 4;
-        int by = j + 108;
+        int rx = i + RIGHT_PANEL_X + 4;
+        int ry = j + BEVERAGE_Y;
 
-        graphics.fill(bx - 2, by, bx + RIGHT_PANEL_W - 6, by + 80, BG_SHELF);
+        graphics.fill(rx - 2, ry, rx + RIGHT_PANEL_W - 6, ry + SECTION_H, BG_SHELF);
         graphics.text(font, Component.translatable("gui.neo_mystias_izakaya.beverages"),
-                bx + 4, by + 2, TEXT_GOLD, false);
+                rx + 4, ry + 2, TEXT_GOLD, false);
 
         List<Identifier> beverages = currentMenu.beverages();
         for (int k = 0; k < 8; k++) {
-            int slotX = bx + 2 + (k % 4) * 28;
-            int slotY = by + 16 + (k / 4) * 30;
+            int slotX = rx + 2 + (k % 4) * 28;
+            int slotY = ry + 16 + (k / 4) * 30;
             graphics.fill(slotX, slotY, slotX + 24, slotY + 24, 0xAA000000);
             if (k < beverages.size()) {
                 ItemStack stack = net.minecraft.core.registries.BuiltInRegistries.ITEM
@@ -322,11 +330,77 @@ public class CanteenScreen extends Screen {
     // ========== 右侧厨具 ==========
 
     private void renderKitchenwareSection(GuiGraphicsExtractor graphics) {
-        int kx = i + RIGHT_PANEL_X + 4;
-        int ky = j + 196;
+        int rx = i + RIGHT_PANEL_X + 4;
+        int ry = j + KITCHENWARE_Y;
 
+        graphics.fill(rx - 2, ry, rx + RIGHT_PANEL_W - 6, ry + SECTION_H, BG_SHELF);
         graphics.text(font, Component.translatable("gui.neo_mystias_izakaya.kitchenware"),
-                kx, ky, TEXT_GOLD, false);
+                rx + 4, ry + 2, TEXT_GOLD, false);
+
+        if (minecraft.level == null || controllerPos == null) return;
+
+        List<BlockPos> kitchenwareList = new ArrayList<>();
+        if (minecraft.level.getBlockEntity(controllerPos) instanceof CanteenControllerBlockEntity controller) {
+            kitchenwareList.addAll(controller.getKitchenwareList());
+        }
+
+        for (int k = 0; k < kitchenwareList.size() && k < 8; k++) {
+            BlockPos pos = kitchenwareList.get(k);
+            if (minecraft.level.getBlockEntity(pos) instanceof KitchenwareBlockEntity kwBe) {
+                var kw = NMIKitchenware.REGISTRY.getValue(kwBe.getKitchenwareTypeId());
+                if (kw != null) {
+                    int slotX = rx + 2 + (k % 4) * 28;
+                    int slotY = ry + 16 + (k / 4) * 30;
+                    graphics.fill(slotX, slotY, slotX + 24, slotY + 24, 0xAA000000);
+                    graphics.item(kw.kitchenwareItem().getDefaultInstance(), slotX + 4, slotY + 4);
+                }
+            }
+        }
+    }
+
+    // ========== 货架 Tooltip ==========
+
+    private void drawShelfTooltips(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+        int rx = i + RIGHT_PANEL_X + 4;
+        int shelfBaseY = j + SHELF_Y;
+        List<Identifier> cuisines = currentMenu.cuisines();
+
+        for (int k = 0; k < cuisines.size(); k++) {
+            int slotX = rx + 2 + (k % 4) * 28;
+            int slotY = shelfBaseY + 16 + (k / 4) * 30;
+            if (mouseX >= slotX && mouseX < slotX + 24 && mouseY >= slotY && mouseY < slotY + 24) {
+                var holder = ClientNMIDataAccessor.INSTANCE.getRecipeMap().getRecipeMap().get(cuisines.get(k));
+                if (holder != null) {
+                    ItemStack stack = holder.recipe().output().item().value().getDefaultInstance();
+                    graphics.setTooltipForNextFrame(this.font, getTooltipLines(stack), stack.getTooltipImage(), stack, mouseX, mouseY, null);
+                }
+                return;
+            }
+        }
+
+        int beverageBaseY = j + BEVERAGE_Y;
+        List<Identifier> beverages = currentMenu.beverages();
+        for (int k = 0; k < beverages.size(); k++) {
+            int slotX = rx + 2 + (k % 4) * 28;
+            int slotY = beverageBaseY + 16 + (k / 4) * 30;
+            if (mouseX >= slotX && mouseX < slotX + 24 && mouseY >= slotY && mouseY < slotY + 24) {
+                ItemStack stack = BuiltInRegistries.ITEM
+                        .getOptional(beverages.get(k))
+                        .map(ItemStack::new)
+                        .orElse(ItemStack.EMPTY);
+                if (!stack.isEmpty()) {
+                    graphics.setTooltipForNextFrame(this.font, getTooltipLines(stack), stack.getTooltipImage(), stack, mouseX, mouseY, null);
+                }
+                return;
+            }
+        }
+    }
+
+    private List<Component> getTooltipLines(ItemStack stack) {
+        if (minecraft.player != null) {
+            return stack.getTooltipLines(Item.TooltipContext.of(minecraft.level), minecraft.player, TooltipFlag.Default.NORMAL);
+        }
+        return List.of(Component.translatable(stack.getItem().getDescriptionId()));
     }
 
     // ========== 状态指示点 ==========
@@ -377,13 +451,13 @@ public class CanteenScreen extends Screen {
 
         // 左右键：移除货架/饮品（开店时禁止）
         if (!isShopOpen && (event.button() == 0 || event.button() == 1)) {
-            int rightX = i + RIGHT_PANEL_X + 4;
-            int shelfY = j + 8;
+            int rx = i + RIGHT_PANEL_X + 4;
+            int shelfBaseY = j + SHELF_Y;
             // 货架区点击
-            if (mouseX >= rightX && mouseX < rightX + RIGHT_PANEL_W - 6
-                    && mouseY >= shelfY + 14 && mouseY < shelfY + 14 + 60) {
-                int column = (int) ((mouseX - rightX) / 28);
-                int row = (int) ((mouseY - (shelfY + 14)) / 30);
+            if (mouseX >= rx && mouseX < rx + RIGHT_PANEL_W - 6
+                    && mouseY >= shelfBaseY + 16 && mouseY < shelfBaseY + 16 + 60) {
+                int column = (int) ((mouseX - rx) / 28);
+                int row = (int) ((mouseY - (shelfBaseY + 16)) / 30);
                 int slotIndex = row * 4 + column;
                 List<Identifier> cuisines = new ArrayList<>(currentMenu.cuisines());
                 if (slotIndex >= 0 && slotIndex < cuisines.size()) {
@@ -393,11 +467,11 @@ public class CanteenScreen extends Screen {
                 }
             }
             // 饮品区点击
-            int beverageY = j + 108;
-            if (mouseX >= rightX + 2 && mouseX < rightX + 2 + 4 * 28
-                    && mouseY >= beverageY + 16 && mouseY < beverageY + 16 + 60) {
-                int column = (int) ((mouseX - rightX) / 28);
-                int row = (int) ((mouseY - (beverageY + 16)) / 30);
+            int beverageBaseY = j + BEVERAGE_Y;
+            if (mouseX >= rx + 2 && mouseX < rx + 2 + 4 * 28
+                    && mouseY >= beverageBaseY + 16 && mouseY < beverageBaseY + 16 + 60) {
+                int column = (int) ((mouseX - rx) / 28);
+                int row = (int) ((mouseY - (beverageBaseY + 16)) / 30);
                 int slotIndex = row * 4 + column;
                 List<Identifier> beverages = new ArrayList<>(currentMenu.beverages());
                 if (slotIndex >= 0 && slotIndex < beverages.size()) {

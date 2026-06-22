@@ -246,4 +246,8 @@ public class StoreScreen extends Screen {
         }
         return false;
     }
+
+    public boolean isPauseScreen() {
+        return false;
+    }
 }
