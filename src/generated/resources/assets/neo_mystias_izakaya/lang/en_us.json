@@ -1354,6 +1354,7 @@
   "gui.neo_mystias_izakaya.budget": "Budget",
   "gui.neo_mystias_izakaya.common_customer": "Common Customer",
   "gui.neo_mystias_izakaya.dislikes": "Dislikes",
+  "gui.neo_mystias_izakaya.go_close": "Close",
   "gui.neo_mystias_izakaya.go_open": "Open",
   "gui.neo_mystias_izakaya.idle": "Idle",
   "gui.neo_mystias_izakaya.ingredients_placed": "Ingredients placed. [Sneak+Use] to start cooking.",

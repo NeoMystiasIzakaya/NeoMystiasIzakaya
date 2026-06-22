@@ -5,6 +5,7 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.client.gui.screen;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.CuisineListWidget;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.CuisineListWidget.DisplayEntry;
@@ -31,6 +32,7 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -674,6 +676,18 @@ public class RecipeScreen extends Screen {
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
+    }
+
+    @Override
+    public boolean keyPressed(KeyEvent event) {
+        InputConstants.Key key = InputConstants.getKey(event);
+        if (super.keyPressed(event)) {
+            return true;
+        } else if (this.minecraft.options.keyInventory.isActiveAndMatches(key)) {
+            this.onClose();
+            return true;
+        }
+        return false;
     }
 
     public enum ScreenMode {

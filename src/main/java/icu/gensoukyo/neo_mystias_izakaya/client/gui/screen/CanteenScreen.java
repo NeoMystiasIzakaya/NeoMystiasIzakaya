@@ -5,6 +5,7 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.client.gui.screen;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.CuisineGridWidget;
 import icu.gensoukyo.neo_mystias_izakaya.client.network.ClientPayloadSender;
@@ -20,6 +21,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.KeyEvent;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -69,6 +71,10 @@ public class CanteenScreen extends Screen {
     boolean showDishes = true;
     boolean showTags = false;
 
+    // === 选中记忆 ===
+    NMIRecipeHolder lastSelectedDish;
+    ItemStack lastSelectedBeverage;
+
     // === 菜单 ===
     IzakayaMenu currentMenu = IzakayaMenu.EMPTY;
 
@@ -76,6 +82,8 @@ public class CanteenScreen extends Screen {
     CuisineGridWidget cuisineGrid;
     Button toggleDishBeverageBtn;
     Button goToOpenBtn;
+
+    boolean isShopOpen;
 
     @Nullable
     BlockPos controllerPos;
@@ -120,6 +128,12 @@ public class CanteenScreen extends Screen {
             currentMenu = NMICommonIzakayaUtil.getMenu(minecraft.player);
         }
 
+        // 检查餐厅状态
+        isShopOpen = isKitchenwareReady() && controllerPos != null
+                && minecraft.level != null
+                && minecraft.level.getBlockEntity(controllerPos) instanceof CanteenControllerBlockEntity c
+                && c.isOpen();
+
         // 菜品/饮料网格
         cuisineGrid = new CuisineGridWidget(
                 i + GRID_OFFSET_X, j + GRID_OFFSET_Y,
@@ -131,17 +145,22 @@ public class CanteenScreen extends Screen {
         cuisineGrid.setOnBeverageClick(this::onBeverageClick);
         addRenderableWidget(cuisineGrid);
 
-        // 前往开店按钮
+        // 前往开店/闭店按钮
         goToOpenBtn = Button.builder(
-                Component.translatable("gui.neo_mystias_izakaya.go_open"),
+                Component.translatable(isShopOpen
+                        ? "gui.neo_mystias_izakaya.go_close"
+                        : "gui.neo_mystias_izakaya.go_open"),
                 _ -> {
                     if (controllerPos != null) {
-                        ClientPayloadSender.sendIzakayaMenuSyncMessage(currentMenu);
+                        if (!isShopOpen) {
+                            ClientPayloadSender.sendIzakayaMenuSyncMessage(currentMenu);
+                        }
                         ClientPayloadSender.sendToggleCanteenOpen(controllerPos);
+                        this.onClose();
                     }
                 }
         ).bounds(i + 4, j + 2, 60, 16).build();
-        goToOpenBtn.active = false;
+        goToOpenBtn.active = isShopOpen || hasFullMenu();
         addRenderableWidget(goToOpenBtn);
 
         // 切换菜品/饮料按钮
@@ -172,10 +191,12 @@ public class CanteenScreen extends Screen {
 
         NMIRecipeHolder hoveredDish = cuisineGrid.getHoveredDish();
         ItemStack hoveredBeverage = cuisineGrid.getHoveredBeverage();
+        NMIRecipeHolder displayDish = hoveredDish != null ? hoveredDish : lastSelectedDish;
+        ItemStack displayBeverage = hoveredBeverage != null ? hoveredBeverage : lastSelectedBeverage;
 
-        if (hoveredDish != null) {
-            Identifier key = hoveredDish.key();
-            var recipe1 = hoveredDish.recipe();
+        if (displayDish != null) {
+            Identifier key = displayDish.key();
+            var recipe1 = displayDish.recipe();
             Item item = recipe1.output().item().value();
 
             graphics.text(font,
@@ -214,11 +235,11 @@ public class CanteenScreen extends Screen {
                 graphics.fill(ix + k * 20, iy, ix + k * 20 + 18, iy + 18, 0xAA593B1F);
                 graphics.item(inputs.get(k), ix + k * 20 + 1, iy + 1);
             }
-        } else if (hoveredBeverage != null) {
+        } else if (displayBeverage != null) {
             graphics.text(font,
-                    Component.translatable(hoveredBeverage.getItem().getDescriptionId()),
+                    Component.translatable(displayBeverage.getItem().getDescriptionId()),
                     i + 8, dy + 4, TEXT_DARK, false);
-            Integer beveragePrice = NMIClientEconomyUtil.getItemStackPriceBase(hoveredBeverage);
+            Integer beveragePrice = NMIClientEconomyUtil.getItemStackPriceBase(displayBeverage);
             graphics.text(font,
                     Component.translatable("gui.neo_mystias_izakaya.price")
                             .append(": " + (beveragePrice != null ? beveragePrice : 0) + " ")
@@ -227,13 +248,13 @@ public class CanteenScreen extends Screen {
 
             if (showTags) {
                 var tagMap = ClientNMIDataAccessor.INSTANCE.getTagItemListMap().getItemToTagMap();
-                Identifier beverageKey = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(hoveredBeverage.getItem());
+                Identifier beverageKey = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(displayBeverage.getItem());
                 var tags = tagMap.get(beverageKey);
                 if (tags != null) {
                     KitchenwareScreen.renderTags(graphics, font, i - 7, dy - 11, tags);
                 }
             } else {
-                MutableComponent desc = Component.translatable(hoveredBeverage.getItem().getDescriptionId() + ".desc");
+                MutableComponent desc = Component.translatable(displayBeverage.getItem().getDescriptionId() + ".desc");
                 drawWrappedText(graphics, font, desc, i + 8, dy + 28, LEFT_PANEL_WIDTH - 16, DESC_GRAY);
             }
         } else {
@@ -330,11 +351,17 @@ public class CanteenScreen extends Screen {
         graphics.text(font, Component.translatable("gui.neo_mystias_izakaya.status_kitchenware"),
                 dx + 10, dy + 16, TEXT_DARK, false);
 
-        goToOpenBtn.active = hasCuisine && hasBeverage && hasKitchenware;
+        goToOpenBtn.active = isShopOpen || hasFullMenu();
+    }
+
+    private boolean hasFullMenu() {
+        return !currentMenu.cuisines().isEmpty()
+                && !currentMenu.beverages().isEmpty()
+                && isKitchenwareReady();
     }
 
     private boolean isKitchenwareReady() {
-        if (controllerPos == null || minecraft == null || minecraft.level == null) return false;
+        if (controllerPos == null || minecraft.level == null) return false;
         if (minecraft.level.getBlockEntity(controllerPos) instanceof CanteenControllerBlockEntity controller) {
             return !controller.getKitchenwareList().isEmpty();
         }
@@ -348,8 +375,8 @@ public class CanteenScreen extends Screen {
         double mouseX = event.x();
         double mouseY = event.y();
 
-        // 左右键：移除货架/饮品
-        if (event.button() == 0 || event.button() == 1) {
+        // 左右键：移除货架/饮品（开店时禁止）
+        if (!isShopOpen && (event.button() == 0 || event.button() == 1)) {
             int rightX = i + RIGHT_PANEL_X + 4;
             int shelfY = j + 8;
             // 货架区点击
@@ -384,9 +411,24 @@ public class CanteenScreen extends Screen {
         return super.mouseClicked(event, doubleClick);
     }
 
+    @Override
+    public boolean keyPressed(KeyEvent event) {
+        InputConstants.Key key = InputConstants.getKey(event);
+        if (super.keyPressed(event)) {
+            return true;
+        } else if (this.minecraft.options.keyInventory.isActiveAndMatches(key)) {
+            this.onClose();
+            return true;
+        }
+        return false;
+    }
+
     // ========== 网格点击回调 ==========
 
     private void onDishClick(NMIRecipeHolder recipe) {
+        if (isShopOpen) return;
+        lastSelectedDish = recipe;
+        lastSelectedBeverage = null;
         Identifier key = recipe.key();
         List<Identifier> cuisines = new ArrayList<>(currentMenu.cuisines());
         if (cuisines.size() >= 8) return;
@@ -397,6 +439,9 @@ public class CanteenScreen extends Screen {
     }
 
     private void onBeverageClick(ItemStack stack) {
+        if (isShopOpen) return;
+        lastSelectedBeverage = stack;
+        lastSelectedDish = null;
         Identifier key = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(stack.getItem());
         List<Identifier> beverages = new ArrayList<>(currentMenu.beverages());
         if (beverages.size() >= 8) return;
@@ -404,11 +449,6 @@ public class CanteenScreen extends Screen {
             beverages.add(key);
             currentMenu = new IzakayaMenu(currentMenu.cuisines(), beverages);
         }
-    }
-
-    @Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
-        return super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
     }
 
     // ========== 辅助 ==========

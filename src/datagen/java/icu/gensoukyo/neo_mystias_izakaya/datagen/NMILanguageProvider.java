@@ -124,6 +124,7 @@ public class NMILanguageProvider implements DataProvider {
 
         // CanteenScreen
         this.add("gui.neo_mystias_izakaya.go_open", "Open", "前往开店");
+        this.add("gui.neo_mystias_izakaya.go_close", "Close", "闭店");
         this.add("gui.neo_mystias_izakaya.show_beverages", "Beverages", "切换饮料");
         this.add("gui.neo_mystias_izakaya.show_dishes", "Dishes", "切换菜品");
         this.add("gui.neo_mystias_izakaya.select_hint", "Select a dish", "请选择一道菜品");
