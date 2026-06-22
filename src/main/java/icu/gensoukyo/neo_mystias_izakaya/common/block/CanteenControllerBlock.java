@@ -8,9 +8,7 @@ package icu.gensoukyo.neo_mystias_izakaya.common.block;
 import com.mojang.serialization.MapCodec;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.CanteenControllerBlockEntity;
-import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.DiningTableBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockEntities;
-import icu.gensoukyo.neo_mystias_izakaya.registry.NMIDataComponentTypes;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMainItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -18,7 +16,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -40,11 +37,9 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jspecify.annotations.Nullable;
 
-import java.util.ArrayList;
-
 public class CanteenControllerBlock extends BaseEntityBlock {
-    public static final MapCodec<CanteenControllerBlock> CODEC = simpleCodec(CanteenControllerBlock::new);
     public static final EnumProperty<CanteenPart> PART = EnumProperty.create("part", CanteenPart.class);
+    public static final MapCodec<CanteenControllerBlock> CODEC = simpleCodec(CanteenControllerBlock::new);
 
     public CanteenControllerBlock(Properties properties) {
         super(properties.noOcclusion());
@@ -59,6 +54,10 @@ public class CanteenControllerBlock extends BaseEntityBlock {
             Level pLevel, BlockEntityType<T> pServerType, BlockEntityType<? extends CanteenControllerBlockEntity> pClientType
     ) {
         return pLevel.isClientSide() ? null : createTickerHelper(pServerType, pClientType, CanteenControllerBlockEntity::serverTick);
+    }
+
+    private static Direction getNeighbourDirection(CanteenPart part, Direction facing) {
+        return part == CanteenPart.MAIN ? facing.getCounterClockWise() : facing.getClockWise();
     }
 
     @Override
@@ -138,10 +137,6 @@ public class CanteenControllerBlock extends BaseEntityBlock {
                     ? state
                     : Blocks.AIR.defaultBlockState();
         }
-    }
-
-    private static Direction getNeighbourDirection(CanteenPart part, Direction facing) {
-        return part == CanteenPart.MAIN ? facing.getCounterClockWise() : facing.getClockWise();
     }
 
     @Override

@@ -127,6 +127,10 @@ public class NMILanguageProvider implements DataProvider {
         this.add("gui.neo_mystias_izakaya.show_beverages", "Beverages", "切换饮料");
         this.add("gui.neo_mystias_izakaya.show_dishes", "Dishes", "切换菜品");
         this.add("gui.neo_mystias_izakaya.select_hint", "Select a dish", "请选择一道菜品");
+        this.add("gui.neo_mystias_izakaya.show_tags", "Tags", "标签");
+        this.add("gui.neo_mystias_izakaya.status_dish", "Dish", "菜品");
+        this.add("gui.neo_mystias_izakaya.status_beverage", "Drink", "饮料");
+        this.add("gui.neo_mystias_izakaya.status_kitchenware", "Kitchen", "厨具");
         this.add("gui.neo_mystias_izakaya.shelf", "Shelf", "货架");
         this.add("gui.neo_mystias_izakaya.kitchenware", "Kitchenware", "已绑定厨具");
         this.add("gui.neo_mystias_izakaya.recipe_recorded", "Recipe recorded!", "食谱已记录！");

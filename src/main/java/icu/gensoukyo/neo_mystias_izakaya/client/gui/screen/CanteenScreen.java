@@ -123,7 +123,7 @@ public class CanteenScreen extends Screen {
         // 菜品/饮料网格
         cuisineGrid = new CuisineGridWidget(
                 i + GRID_OFFSET_X, j + GRID_OFFSET_Y,
-                LEFT_PANEL_WIDTH - GRID_OFFSET_X - 10, GRID_HEIGHT);
+                CuisineGridWidget.COLS * CuisineGridWidget.CELL_W + 10, GRID_HEIGHT);
         cuisineGrid.setDishes(allRecipes);
         cuisineGrid.setBeverages(allBeverages);
         cuisineGrid.setShowingDishes(showDishes);
@@ -157,9 +157,9 @@ public class CanteenScreen extends Screen {
 
         // Tag 切换按钮
         addRenderableWidget(Button.builder(
-                Component.literal("T"),
+                Component.translatable("gui.neo_mystias_izakaya.show_tags"),
                 _ -> showTags = !showTags
-        ).bounds(i + LEFT_PANEL_WIDTH - 18, j + IMAGE_HEIGHT - 30, 14, 14).build());
+        ).bounds(i + LEFT_PANEL_WIDTH - 52, j + IMAGE_HEIGHT - 30, 48, 14).build());
     }
 
     // ========== 左侧详情 ==========
@@ -193,7 +193,7 @@ public class CanteenScreen extends Screen {
                 var tagMap = ClientNMIDataAccessor.INSTANCE.getTagItemListMap().getItemToTagMap();
                 var tags = tagMap.get(key);
                 if (tags != null) {
-                    KitchenwareScreen.renderTags(graphics, font, i, dy + 28, tags);
+                    KitchenwareScreen.renderTags(graphics, font, i - 7, dy - 11, tags);
                 }
             } else {
                 MutableComponent desc = Component.translatable(item.getDescriptionId() + ".desc");
@@ -224,8 +224,18 @@ public class CanteenScreen extends Screen {
                             .append(": " + (beveragePrice != null ? beveragePrice : 0) + " ")
                             .append(NMICommonComponentUtil.unitEn()),
                     i + 8, dy + 16, PRICE_RED, false);
-            MutableComponent desc = Component.translatable(hoveredBeverage.getItem().getDescriptionId() + ".desc");
-            drawWrappedText(graphics, font, desc, i + 8, dy + 28, LEFT_PANEL_WIDTH - 16, DESC_GRAY);
+
+            if (showTags) {
+                var tagMap = ClientNMIDataAccessor.INSTANCE.getTagItemListMap().getItemToTagMap();
+                Identifier beverageKey = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(hoveredBeverage.getItem());
+                var tags = tagMap.get(beverageKey);
+                if (tags != null) {
+                    KitchenwareScreen.renderTags(graphics, font, i - 7, dy - 11, tags);
+                }
+            } else {
+                MutableComponent desc = Component.translatable(hoveredBeverage.getItem().getDescriptionId() + ".desc");
+                drawWrappedText(graphics, font, desc, i + 8, dy + 28, LEFT_PANEL_WIDTH - 16, DESC_GRAY);
+            }
         } else {
             graphics.text(font, Component.translatable("gui.neo_mystias_izakaya.select_hint"),
                     i + 8, dy + 4, TEXT_DARK, false);
@@ -301,7 +311,7 @@ public class CanteenScreen extends Screen {
     // ========== 状态指示点 ==========
 
     private void renderStatusDots(GuiGraphicsExtractor graphics) {
-        int dx = i + LEFT_PANEL_WIDTH - 30;
+        int dx = i + LEFT_PANEL_WIDTH - 60;
         int dy = j + 5;
 
         boolean hasCuisine = !currentMenu.cuisines().isEmpty();
@@ -309,10 +319,17 @@ public class CanteenScreen extends Screen {
         boolean hasKitchenware = isKitchenwareReady();
 
         graphics.fill(dx, dy, dx + 6, dy + 6, hasCuisine ? DOT_GREEN : DOT_RED);
-        graphics.fill(dx, dy + 8, dx + 6, dy + 14, hasBeverage ? DOT_GREEN : DOT_RED);
-        graphics.fill(dx, dy + 16, dx + 6, dy + 22, hasKitchenware ? DOT_GREEN : DOT_RED);
+        graphics.text(font, Component.translatable("gui.neo_mystias_izakaya.status_dish"),
+                dx + 10, dy, TEXT_DARK, false);
 
-        // 只有全部就绪才能开店
+        graphics.fill(dx, dy + 8, dx + 6, dy + 14, hasBeverage ? DOT_GREEN : DOT_RED);
+        graphics.text(font, Component.translatable("gui.neo_mystias_izakaya.status_beverage"),
+                dx + 10, dy + 8, TEXT_DARK, false);
+
+        graphics.fill(dx, dy + 16, dx + 6, dy + 22, hasKitchenware ? DOT_GREEN : DOT_RED);
+        graphics.text(font, Component.translatable("gui.neo_mystias_izakaya.status_kitchenware"),
+                dx + 10, dy + 16, TEXT_DARK, false);
+
         goToOpenBtn.active = hasCuisine && hasBeverage && hasKitchenware;
     }
 
