@@ -12,10 +12,10 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import org.jspecify.annotations.NonNull;
 
-public record NMIIzakayaMenuSyncMessage(IzakayaMenu izakayaMenu)implements CustomPacketPayload {
+public record NMIIzakayaMenuSyncMessage(IzakayaMenu izakayaMenu) implements CustomPacketPayload {
     public static final CustomPacketPayload.Type<NMIIzakayaMenuSyncMessage> TYPE = new CustomPacketPayload.Type<>(NeoMystiasIzakaya.id("izakaya_menu_sync"));
 
-    public static final StreamCodec<ByteBuf,NMIIzakayaMenuSyncMessage> STREAM_CODEC = StreamCodec.composite(
+    public static final StreamCodec<ByteBuf, NMIIzakayaMenuSyncMessage> STREAM_CODEC = StreamCodec.composite(
             IzakayaMenu.STREAM_CODEC, NMIIzakayaMenuSyncMessage::izakayaMenu,
             NMIIzakayaMenuSyncMessage::new
     );
