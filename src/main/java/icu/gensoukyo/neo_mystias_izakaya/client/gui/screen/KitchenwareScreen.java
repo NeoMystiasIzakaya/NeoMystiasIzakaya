@@ -14,12 +14,15 @@ import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.KitchenwareBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.common.menu.KitchenwareMenu;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonComponentUtil;
+import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonIzakayaUtil;
+import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaMenu;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipe;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeHolder;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIKitchenware;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -33,6 +36,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.common.NeoForge;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import static icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya.id;
@@ -49,11 +53,22 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
     private final int MAX_Y = 90;
     private final KitchenwareBlockEntity kitchenwareBE;
     List<NMIRecipeHolder> possibleRecipes;
+    private final List<Identifier> menuCuisineIds = new ArrayList<>();
 
     public KitchenwareScreen(KitchenwareMenu menu, Inventory inv, Component title) {
         super(menu, inv, title, 230, 219);
         this.kitchenwareBE = this.getMenu().getKitchenwareBE();
         this.possibleRecipes = NMIClientRecipeUtil.getRecipesByInputAndKitchenware(NMIClientUtil.getPlayer(), List.copyOf(kitchenwareBE.getItems()), NMIKitchenware.REGISTRY.getValue(kitchenwareBE.getKitchenwareTypeId()).blockTagKey());
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        menuCuisineIds.clear();
+
+        if (minecraft == null || minecraft.player == null) return;
+        IzakayaMenu menu = NMICommonIzakayaUtil.getMenu(minecraft.player);
+        menuCuisineIds.addAll(menu.cuisines());
     }
 
     public static void renderCuisineInfo(GuiGraphicsExtractor guiGraphics, Font font, NMIRecipeHolder recipeHolder, int i, int j) {
@@ -117,6 +132,10 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
     @Override
     public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
         super.extractRenderState(graphics, mouseX, mouseY, a);
+
+        // 右侧菜单物品渲染
+        renderMenuCuisines(graphics, mouseX, mouseY);
+
         boolean isLit = kitchenwareBE.getBlockState().getValue(BlockStateProperties.LIT);
         if (isLit) {
             renderProgress(graphics, mouseX, mouseY);
@@ -131,6 +150,14 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
 
     @Override
     public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
+        // 右侧菜单点击
+        int clickedMenuIndex = getMenuCuisineIndex((int) event.x(), (int) event.y());
+        if (clickedMenuIndex >= 0 && clickedMenuIndex < menuCuisineIds.size() && kitchenwareBE.canStartCooking()) {
+            Identifier key = menuCuisineIds.get(clickedMenuIndex);
+            ClientPayloadSender.sendKitchenwareCookMessage(key, kitchenwareBE.getBlockPos());
+            return true;
+        }
+
         int hoveredRecipeIndex = getHoveredRecipeIndex((int) event.x(), (int) event.y());
         if (hoveredRecipeIndex >= 0 && hoveredRecipeIndex < possibleRecipes.size() && kitchenwareBE.canStartCooking()) {
             Identifier key = this.possibleRecipes.get(hoveredRecipeIndex).key();
@@ -215,6 +242,46 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
 
     @Override
     protected void extractLabels(GuiGraphicsExtractor graphics, int xm, int ym) {
+    }
+
+    // ========== 右侧菜单渲染 ==========
+
+    private void renderMenuCuisines(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+        if (menuCuisineIds.isEmpty()) return;
+
+        int leftPos = (this.width - this.imageWidth) / 2;
+        int topPos = (this.height - this.imageHeight) / 2;
+        int iconX = leftPos + this.imageWidth + 2;
+        int hovered = getMenuCuisineIndex(mouseX, mouseY);
+
+        for (int k = 0; k < menuCuisineIds.size(); k++) {
+            int iconY = topPos + 4 + k * 18;
+            Identifier cuisineId = menuCuisineIds.get(k);
+            var holder = ClientNMIDataAccessor.INSTANCE.getRecipeMap().getRecipeMap().get(cuisineId);
+            if (holder == null) continue;
+            Item item = holder.recipe().output().item().value();
+
+            if (k == hovered) {
+                graphics.fill(iconX, iconY, iconX + 16, iconY + 16, 0x44FFD700);
+            }
+            graphics.item(item.getDefaultInstance(), iconX, iconY);
+        }
+    }
+
+    private int getMenuCuisineIndex(int mouseX, int mouseY) {
+        if (menuCuisineIds.isEmpty()) return -1;
+        int leftPos = (this.width - this.imageWidth) / 2;
+        int topPos = (this.height - this.imageHeight) / 2;
+        int iconX = leftPos + this.imageWidth + 2;
+        int iconY = topPos + 4;
+
+        if (mouseX >= iconX && mouseX < iconX + 16) {
+            int index = (mouseY - iconY) / 18;
+            if (index >= 0 && index < menuCuisineIds.size()) {
+                return index;
+            }
+        }
+        return -1;
     }
 
     public record TagRenderState(int currentX, int startY) {
