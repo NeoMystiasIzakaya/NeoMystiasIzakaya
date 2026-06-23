@@ -141,6 +141,9 @@ public class CanteenControllerBlock extends BaseEntityBlock {
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        if (!player.getMainHandItem().isEmpty()) {
+            return InteractionResult.PASS;
+        }
         if (level.isClientSide()) {
             NMIClientUtil.openCanteenScreen(pos);
             return InteractionResult.SUCCESS;
