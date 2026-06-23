@@ -16,9 +16,11 @@ import icu.gensoukyo.neo_mystias_izakaya.client.render.KitchenwareRenderer;
 import icu.gensoukyo.neo_mystias_izakaya.client.render.NMIArmorRender;
 import icu.gensoukyo.neo_mystias_izakaya.registry.ModelLayersRegistry;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockEntities;
+import icu.gensoukyo.neo_mystias_izakaya.registry.NMIEntities;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIMenus;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMainItems;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -45,6 +47,8 @@ public class ClientEventHandler {
         event.registerBlockEntityRenderer(NMIBlockEntities.STEAMER.get(), KitchenwareRenderer::new);
         event.registerBlockEntityRenderer(NMIBlockEntities.CUTTING_BOARD.get(), KitchenwareRenderer::new);
         event.registerBlockEntityRenderer(NMIBlockEntities.DINING_TABLE.get(), DiningTableRenderer::new);
+
+        event.registerEntityRenderer(NMIEntities.CHROME_BALL_ENTITY.get(), ThrownItemRenderer::new);
     }
 
     @SubscribeEvent

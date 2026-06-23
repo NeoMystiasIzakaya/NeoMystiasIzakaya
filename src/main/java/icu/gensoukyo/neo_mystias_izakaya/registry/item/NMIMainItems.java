@@ -7,6 +7,7 @@ package icu.gensoukyo.neo_mystias_izakaya.registry.item;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.common.item.CanteenConfigItem;
+import icu.gensoukyo.neo_mystias_izakaya.common.item.ChromeBallItem;
 import icu.gensoukyo.neo_mystias_izakaya.common.item.MystiaHatItem;
 import icu.gensoukyo.neo_mystias_izakaya.common.item.RecipeItem;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlocks;
@@ -31,6 +32,6 @@ public class NMIMainItems {
     public static final DeferredItem<Item> CUPBOARD = ITEMS.registerItem("misc/cupboard", (properties) -> new BlockItem(NMIBlocks.CUPBOARD.get(), properties), properties -> properties);
     public static final DeferredItem<Item> CREATIVE_CUPBOARD = ITEMS.registerItem("misc/creative_cupboard", (properties) -> new BlockItem(NMIBlocks.CREATIVE_CUPBOARD.get(), properties), properties -> properties);
 
-    public static final DeferredItem<Item> CHROME_BALL = ITEMS.registerItem("misc/chrome_ball", Item::new, properties -> properties);
+    public static final DeferredItem<Item> CHROME_BALL = ITEMS.registerItem("misc/chrome_ball", ChromeBallItem::new, properties -> properties);
     public static final DeferredItem<Item> RECIPE_BOOK = ITEMS.registerItem("misc/recipe_book", RecipeItem::new, properties -> properties);
 }

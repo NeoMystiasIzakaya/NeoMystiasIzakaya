@@ -30,6 +30,7 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -123,8 +124,11 @@ public class CanteenControllerBlockEntity extends BlockEntity {
             beverageId = pickRandom(customer.beverage(), random);
         } else {
             // 普客：从菜单中根据标签匹配度加权随机选取
-            IzakayaMenu menu = NMICommonIzakayaUtil.getMenu(
-                    level.getPlayerByUUID(controller.getOwner()));
+            UUID ownerId = controller.getOwner();
+            if (ownerId == null) return null;
+            Player player = level.getPlayerByUUID(ownerId);
+            if (player == null) return null;
+            IzakayaMenu menu = NMICommonIzakayaUtil.getMenu(player);
             TagItemListMap tagItemListMap = NMIDataAccessor.server().getTagItemListMap();
 
             cuisineId = pickWeightedByTags(menu.cuisines(), customer.likes(), tagItemListMap, random);
