@@ -88,6 +88,7 @@ public class RecipeScreen extends Screen {
     private final int imageWidth;
     private final int imageHeight;
     Identifier BACKGROUND = id("textures/gui/recipe_bg.png");
+    Identifier BACKGROUND_CUSTOMER = id("textures/gui/recipe_bg_customer.png");
     Identifier SIDE = id("textures/gui/recipe_side.png");
     // === 模式状态 ===
     ScreenMode selectedScreenMode = ScreenMode.RECIPE;
@@ -107,8 +108,11 @@ public class RecipeScreen extends Screen {
     KitchenwareButton allSelectKitchenwareButton;
     List<KitchenwareButton> kitchenwareButtons = new ArrayList<>();
     List<ImageStateButton> screenModeButtons = new ArrayList<>();
-    // === 当前展示的数据 ===
-    List<Object> displayItems = new ArrayList<>();
+    // === 当前展示的数据（按模式分类型） ===
+    List<NMIRecipeHolder> filteredRecipes = new ArrayList<>();
+    List<ItemStack> filteredBeverages = new ArrayList<>();
+    List<CustomerHolder> filteredCommonCustomers = new ArrayList<>();
+    List<CustomerHolder> filteredRareCustomers = new ArrayList<>();
     @Setter
     DisplayEntry selected;
     EditBox search;
@@ -127,7 +131,8 @@ public class RecipeScreen extends Screen {
     public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
         int i = (this.width - this.imageWidth) / 2 - 40;
         int j = (this.height - this.imageHeight) / 2;
-        graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, i, j, 0.0F, 0.0F, 256, 256, 256, 256);
+        Identifier bg = selectedScreenMode == ScreenMode.RECIPE ? BACKGROUND : BACKGROUND_CUSTOMER;
+        graphics.blit(RenderPipelines.GUI_TEXTURED, bg, i, j, 0.0F, 0.0F, 256, 256, 256, 256);
         graphics.blit(RenderPipelines.GUI_TEXTURED, SIDE, i + 256, j, 0.0F, 0.0F, 256, 256, 256, 256);
 
         // 只有选中食谱时才显示记录按钮
@@ -185,7 +190,7 @@ public class RecipeScreen extends Screen {
         buildScreenModeButtons(i, j);
 
         // 初始化数据
-        reloadData();
+        applyFilters("");
         cuisineListWidget.refreshList();
     }
 
@@ -436,32 +441,33 @@ public class RecipeScreen extends Screen {
         int j = (this.height - this.imageHeight) / 2;
         rebuildFilterButtons(i, j);
         updateScreenModeButtons();
-        reloadData();
+        applyFilters("");
         cuisineListWidget.refreshList();
     }
 
-    // === 数据加载 ===
-
-    private void reloadData() {
-        displayItems.clear();
-        switch (selectedScreenMode) {
-            case RECIPE -> displayItems.addAll(allRecipes);
-            case BEVERAGES -> displayItems.addAll(allBeverages);
-            case COMMON_CUSTOMER -> displayItems.addAll(allCommonCustomers);
-            case RARE_CUSTOMER -> displayItems.addAll(allRareCustomers);
-        }
-    }
-
-    // === buildImageList: 将被过滤后的列表构建到 CuisineListWidget ===
+    // === buildImageList: 将过滤后的列表构建到 CuisineListWidget ===
 
     public void buildImageList(java.util.function.Consumer<DisplayEntry> addEntry) {
-        for (Object item : displayItems) {
-            if (item instanceof NMIRecipeHolder recipe) {
-                addEntry.accept(new DisplayEntry(recipe, this, selectedScreenMode));
-            } else if (item instanceof CustomerHolder customer) {
-                addEntry.accept(new DisplayEntry(customer, this, selectedScreenMode));
-            } else if (item instanceof ItemStack stack) {
-                addEntry.accept(new DisplayEntry(stack, this, selectedScreenMode));
+        switch (selectedScreenMode) {
+            case RECIPE -> {
+                for (NMIRecipeHolder recipe : filteredRecipes) {
+                    addEntry.accept(new DisplayEntry(recipe, this));
+                }
+            }
+            case BEVERAGES -> {
+                for (ItemStack stack : filteredBeverages) {
+                    addEntry.accept(new DisplayEntry(stack, this, selectedScreenMode));
+                }
+            }
+            case COMMON_CUSTOMER -> {
+                for (CustomerHolder customer : filteredCommonCustomers) {
+                    addEntry.accept(new DisplayEntry(customer, this, selectedScreenMode));
+                }
+            }
+            case RARE_CUSTOMER -> {
+                for (CustomerHolder customer : filteredRareCustomers) {
+                    addEntry.accept(new DisplayEntry(customer, this, selectedScreenMode));
+                }
             }
         }
     }
@@ -472,8 +478,6 @@ public class RecipeScreen extends Screen {
     public void tick() {
         String value = search.getValue();
         if (!lastFilterText.equals(value) || needsRefresh) {
-            // 重新加载全量数据并过滤
-            reloadData();
             applyFilters(value);
             this.lastFilterText = value;
             this.needsRefresh = false;
@@ -483,18 +487,18 @@ public class RecipeScreen extends Screen {
     }
 
     private void applyFilters(String searchText) {
-        displayItems = switch (selectedScreenMode) {
-            case RECIPE -> filterRecipes(allRecipes, searchText);
-            case BEVERAGES -> filterBeverages(allBeverages, searchText);
-            case COMMON_CUSTOMER -> filterCustomers(allCommonCustomers, searchText);
-            case RARE_CUSTOMER -> filterCustomers(allRareCustomers, searchText);
-        };
+        switch (selectedScreenMode) {
+            case RECIPE -> filteredRecipes = filterRecipes(allRecipes, searchText);
+            case BEVERAGES -> filteredBeverages = filterBeverages(allBeverages, searchText);
+            case COMMON_CUSTOMER -> filteredCommonCustomers = filterCustomers(allCommonCustomers, searchText);
+            case RARE_CUSTOMER -> filteredRareCustomers = filterCustomers(allRareCustomers, searchText);
+        }
     }
 
     /**
      * 食谱模式过滤：按名称 + 菜系标签 + 厨具
      */
-    private List<Object> filterRecipes(List<NMIRecipeHolder> source, String searchText) {
+    private List<NMIRecipeHolder> filterRecipes(List<NMIRecipeHolder> source, String searchText) {
         return source.stream().filter(recipeHolder -> {
             NMIRecipe recipe = recipeHolder.recipe();
             MutableComponent translatable = Component.translatable(recipe.output().item().value().getDescriptionId());
@@ -514,7 +518,7 @@ public class RecipeScreen extends Screen {
     /**
      * 酒水模式过滤：按名称 + 酒水标签（从 tagItemListMap 查找标签）
      */
-    private List<Object> filterBeverages(List<ItemStack> source, String searchText) {
+    private List<ItemStack> filterBeverages(List<ItemStack> source, String searchText) {
         var tagMap = ClientNMIDataAccessor.INSTANCE.getTagItemListMap().getItemToTagMap();
 
         return source.stream().filter(stack -> {
@@ -534,7 +538,7 @@ public class RecipeScreen extends Screen {
     /**
      * 顾客模式过滤：按名称
      */
-    private List<Object> filterCustomers(List<CustomerHolder> source, String searchText) {
+    private List<CustomerHolder> filterCustomers(List<CustomerHolder> source, String searchText) {
         return source.stream().filter(customerHolder -> {
             Identifier key = customerHolder.key();
             MutableComponent translatable = Component.translatable("customer.neo_mystias_izakaya." + key.getPath());
@@ -571,20 +575,22 @@ public class RecipeScreen extends Screen {
         Customer customer = customerHolder.customer();
         Identifier key = customerHolder.key();
         int lineHeight = font.lineHeight;
-        int baseX = i + 15;
+        int baseX = i + 12;
         int startY = j + 30;
-        int maxWidth = 160;
+        int maxWidth = 240;
 
         // 顾客名称
         guiGraphics.text(font, Component.translatable("customer.neo_mystias_izakaya." + key.getPath()),
                 baseX, startY, 0xFF000000, false);
         startY += lineHeight + 2;
 
-        // 预算
-        guiGraphics.text(font, Component.translatable("gui.neo_mystias_izakaya.budget")
-                        .append(": " + customer.budget().min() + "~" + customer.budget().max()),
-                baseX, startY, 0xFF000000, false);
-        startY += lineHeight + 4;
+        // 预算（仅稀客）
+        if (selectedScreenMode == ScreenMode.RARE_CUSTOMER) {
+            guiGraphics.text(font, Component.translatable("gui.neo_mystias_izakaya.budget")
+                            .append(": " + customer.budget().min() + "~" + customer.budget().max()),
+                    baseX, startY, 0xFF000000, false);
+            startY += lineHeight + 4;
+        }
 
         // 地点
         startY = renderCustomerTagSection(guiGraphics, font, "location", customer.locations(),
@@ -605,6 +611,27 @@ public class RecipeScreen extends Screen {
         // 符卡
         startY = renderCustomerTagSection(guiGraphics, font, "tag", customer.spellCards(),
                 "gui.neo_mystias_izakaya.spell_card", baseX, startY, maxWidth, 0xFF593B1F);
+
+        // 顾客描述（固定 Y，最多三行，超出末尾替换为...）
+        String descSuffix = selectedScreenMode == ScreenMode.RARE_CUSTOMER ? ".desc.1" : ".desc";
+        Component desc = Component.translatable("customer.neo_mystias_izakaya." + key.getPath() + descSuffix);
+        List<FormattedCharSequence> descLines = font.split(desc, maxWidth);
+        int descY = j + 168;
+        int maxLines = Math.min(descLines.size(), 3);
+        boolean truncated = descLines.size() > 3;
+        for (int k = 0; k < maxLines; k++) {
+            FormattedCharSequence line = descLines.get(k);
+            if (truncated && k == maxLines - 1) {
+                StringBuilder sb = getTranslatedString(line);
+                if (sb.length() > 3) {
+                    sb.replace(sb.length() - 3, sb.length(), "...");
+                }
+                guiGraphics.text(font, Component.literal(sb.toString()), baseX, descY, 0xFF000000, false);
+            } else {
+                guiGraphics.text(font, line, baseX, descY, 0xFF000000, false);
+            }
+            descY += lineHeight;
+        }
 
         if (ModList.get().isLoaded("touhou_little_maid")) {
             TLMUtil.renderMaid(guiGraphics, mouseX, mouseY, key, this.width, this.height, this.imageWidth, this.imageHeight);
