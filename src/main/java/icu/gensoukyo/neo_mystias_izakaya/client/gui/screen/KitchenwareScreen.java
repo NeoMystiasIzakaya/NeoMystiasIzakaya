@@ -22,7 +22,6 @@ import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIKitchenware;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -52,23 +51,13 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
     private final int MAX_X = 215;
     private final int MAX_Y = 90;
     private final KitchenwareBlockEntity kitchenwareBE;
-    List<NMIRecipeHolder> possibleRecipes;
     private final List<Identifier> menuCuisineIds = new ArrayList<>();
+    List<NMIRecipeHolder> possibleRecipes;
 
     public KitchenwareScreen(KitchenwareMenu menu, Inventory inv, Component title) {
         super(menu, inv, title, 230, 219);
         this.kitchenwareBE = this.getMenu().getKitchenwareBE();
         this.possibleRecipes = NMIClientRecipeUtil.getRecipesByInputAndKitchenware(NMIClientUtil.getPlayer(), List.copyOf(kitchenwareBE.getItems()), NMIKitchenware.REGISTRY.getValue(kitchenwareBE.getKitchenwareTypeId()).blockTagKey());
-    }
-
-    @Override
-    protected void init() {
-        super.init();
-        menuCuisineIds.clear();
-
-        if (minecraft == null || minecraft.player == null) return;
-        IzakayaMenu menu = NMICommonIzakayaUtil.getMenu(minecraft.player);
-        menuCuisineIds.addAll(menu.cuisines());
     }
 
     public static void renderCuisineInfo(GuiGraphicsExtractor guiGraphics, Font font, NMIRecipeHolder recipeHolder, int i, int j) {
@@ -130,6 +119,27 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
     }
 
     @Override
+    protected void init() {
+        super.init();
+        menuCuisineIds.clear();
+
+        if (minecraft.player == null) return;
+        IzakayaMenu menu = NMICommonIzakayaUtil.getMenu(minecraft.player);
+
+        // 只保留当前厨具能制作的菜品
+        var kw = NMIKitchenware.REGISTRY.getValue(kitchenwareBE.getKitchenwareTypeId());
+        if (kw == null) return;
+        var blockTag = kw.blockTagKey();
+
+        for (Identifier cuisineId : menu.cuisines()) {
+            var holder = ClientNMIDataAccessor.INSTANCE.getRecipeMap().getRecipeMap().get(cuisineId);
+            if (holder != null && holder.recipe().kitchenware().equals(blockTag)) {
+                menuCuisineIds.add(cuisineId);
+            }
+        }
+    }
+
+    @Override
     public void extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
         super.extractRenderState(graphics, mouseX, mouseY, a);
 
@@ -150,11 +160,10 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
 
     @Override
     public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
-        // 右侧菜单点击
+        // 右侧菜单点击 → 自动放入食材并开始烹饪
         int clickedMenuIndex = getMenuCuisineIndex((int) event.x(), (int) event.y());
         if (clickedMenuIndex >= 0 && clickedMenuIndex < menuCuisineIds.size() && kitchenwareBE.canStartCooking()) {
-            Identifier key = menuCuisineIds.get(clickedMenuIndex);
-            ClientPayloadSender.sendKitchenwareCookMessage(key, kitchenwareBE.getBlockPos());
+            this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, clickedMenuIndex);
             return true;
         }
 
