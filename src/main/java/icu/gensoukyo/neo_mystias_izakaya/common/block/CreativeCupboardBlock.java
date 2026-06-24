@@ -6,6 +6,7 @@
 package icu.gensoukyo.neo_mystias_izakaya.common.block;
 
 import com.mojang.serialization.MapCodec;
+import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.CreativeCupboardBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.CupboardBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -27,7 +28,7 @@ public class CreativeCupboardBlock extends CupboardBlock {
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new CupboardBlockEntity(blockPos,blockState);
+        return new CreativeCupboardBlockEntity(blockPos,blockState);
     }
 
 }

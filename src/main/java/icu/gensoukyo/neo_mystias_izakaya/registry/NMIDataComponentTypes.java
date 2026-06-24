@@ -100,4 +100,11 @@ public class NMIDataComponentTypes {
                     .persistent(Identifier.CODEC)
                     .networkSynchronized(Identifier.STREAM_CODEC)
     );
+
+    public static final DeferredHolder<DataComponentType<?>, @NotNull DataComponentType<List<BlockPos>>> BOUND_CUPBOARD = DATA_COMPONENT_TYPES.registerComponentType(
+            "bound_cupboard",
+            builder -> builder
+                    .persistent(BlockPos.CODEC.listOf())
+                    .networkSynchronized(BlockPos.STREAM_CODEC.apply(ByteBufCodecs.list()))
+    );
 }

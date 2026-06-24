@@ -8,6 +8,9 @@ package icu.gensoukyo.neo_mystias_izakaya.common.item;
 import icu.gensoukyo.neo_mystias_izakaya.common.block.KitchenwareBlock;
 import icu.gensoukyo.neo_mystias_izakaya.common.block.DiningTableBlock;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.CanteenControllerBlockEntity;
+import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.CanteenConfigUtil;
+import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.CanteenConfigUtil.BindResult;
+import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.CanteenConfigUtil.UnbindResult;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIDataComponentTypes;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMainItems;
 import net.minecraft.core.BlockPos;
@@ -24,7 +27,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jspecify.annotations.NonNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CanteenConfigItem extends Item {
@@ -53,38 +55,26 @@ public class CanteenConfigItem extends Item {
         super(properties.useCooldown(1.0F));
     }
 
-    // ==================== 控制器数据同步 ====================
-
-    private static void syncControllerData(ItemStack item, CanteenControllerBlockEntity controller) {
-        item.set(NMIDataComponentTypes.BOUND_CONTROLLER, controller.getControllerPos());
-        item.set(NMIDataComponentTypes.BOUND_KITCHENWARE, new ArrayList<>(controller.getKitchenwareList()));
-        item.set(NMIDataComponentTypes.BOUND_DINING_TABLES, new ArrayList<>(controller.getDiningTableList()));
-    }
-
-    private static void clearControllerData(ItemStack item) {
-        item.remove(NMIDataComponentTypes.BOUND_CONTROLLER);
-        item.remove(NMIDataComponentTypes.BOUND_KITCHENWARE);
-        item.remove(NMIDataComponentTypes.BOUND_DINING_TABLES);
-    }
+    // ==================== 控制器数据同步（表现层：手持 + 帽子） ====================
 
     /** 同步控制器数据到手持物品 + 帽子（HUD 读取源） */
     private static void syncToHatAndHand(ItemStack heldItem, CanteenControllerBlockEntity controller, Player player) {
-        syncControllerData(heldItem, controller);
+        CanteenConfigUtil.syncControllerData(heldItem, controller);
         if (player != null) {
             ItemStack headItem = player.getItemBySlot(EquipmentSlot.HEAD);
             if (headItem.is(NMIMainItems.MYSTIAS_HAT)) {
-                syncControllerData(headItem, controller);
+                CanteenConfigUtil.syncControllerData(headItem, controller);
             }
         }
     }
 
     /** 清除手持物品 + 帽子的控制器数据 */
     private static void clearHatAndHand(ItemStack heldItem, Player player) {
-        clearControllerData(heldItem);
+        CanteenConfigUtil.clearControllerData(heldItem);
         if (player != null) {
             ItemStack headItem = player.getItemBySlot(EquipmentSlot.HEAD);
             if (headItem.is(NMIMainItems.MYSTIAS_HAT)) {
-                clearControllerData(headItem);
+                CanteenConfigUtil.clearControllerData(headItem);
             }
         }
     }
@@ -158,7 +148,7 @@ public class CanteenConfigItem extends Item {
             BlockPos cornerB = heldItem.get(NMIDataComponentTypes.SCAN_CORNER_B);
             if (cornerA != null && cornerB != null) {
                 // 两角点齐全 → 区域扫描绑定
-                int[] result = controllerBE.scanAndBind(level, cornerA, cornerB, MAX_KITCHENWARE, MAX_DINING_TABLES);
+                int[] result = CanteenConfigUtil.scan(level, player, heldItem, controllerBE, cornerA, cornerB, MAX_KITCHENWARE, MAX_DINING_TABLES);
                 if (player != null) {
                     player.sendOverlayMessage(Component.translatable(SCAN_RESULT_KEY, result[0], result[1]));
                 }
@@ -182,17 +172,13 @@ public class CanteenConfigItem extends Item {
                         if (player != null) player.sendOverlayMessage(MSG_KITCHENWARE_FULL);
                         return InteractionResult.FAIL;
                     }
-                    return bindToController(level, clickedPos, player, heldItem,
-                            CanteenControllerBlockEntity::addKitchenware,
-                            MSG_KITCHENWARE_BOUND, MSG_ALREADY_BOUND);
+                    return doBind(level, player, heldItem, clickedPos, true, MSG_KITCHENWARE_BOUND, MSG_ALREADY_BOUND);
                 } else {
                     if (isLimitReached(heldItem, false)) {
                         if (player != null) player.sendOverlayMessage(MSG_DINING_TABLE_FULL);
                         return InteractionResult.FAIL;
                     }
-                    return bindToController(level, clickedPos, player, heldItem,
-                            CanteenControllerBlockEntity::addDiningTable,
-                            MSG_DINING_TABLE_BOUND, MSG_ALREADY_BOUND);
+                    return doBind(level, player, heldItem, clickedPos, false, MSG_DINING_TABLE_BOUND, MSG_ALREADY_BOUND);
                 }
             }
             // 未选控制器 → 设为角点A
@@ -209,55 +195,57 @@ public class CanteenConfigItem extends Item {
 
     // ==================== 手动绑定/解绑 ====================
 
-    private InteractionResult bindToController(Level level, BlockPos targetPos, Player player, ItemStack heldItem,
-                                               BindingFunction bindFunc, Component successMsg, Component alreadyMsg) {
-        BlockPos controllerPos = heldItem.get(NMIDataComponentTypes.BOUND_CONTROLLER);
-        if (controllerPos == null) {
-            if (player != null) player.sendOverlayMessage(MSG_NO_CONTROLLER);
-            return InteractionResult.FAIL;
+    private InteractionResult doBind(Level level, Player player, ItemStack heldItem, BlockPos target,
+                                     boolean isKitchenware, Component successMsg, Component alreadyMsg) {
+        BindResult result = CanteenConfigUtil.bind(level, player, heldItem, target, isKitchenware);
+        switch (result) {
+            case NO_CONTROLLER -> {
+                if (player != null) player.sendOverlayMessage(MSG_NO_CONTROLLER);
+                return InteractionResult.FAIL;
+            }
+            case NOT_FOUND -> {
+                if (player != null) player.sendOverlayMessage(MSG_CONTROLLER_NOT_FOUND);
+                clearHatAndHand(heldItem, player);
+                return InteractionResult.FAIL;
+            }
+            case BOUND -> {
+                if (player != null) player.sendOverlayMessage(successMsg);
+                CanteenControllerBlockEntity controller = CanteenConfigUtil.getBoundController(level, heldItem);
+                if (controller != null) syncToHatAndHand(heldItem, controller, player);
+                return InteractionResult.SUCCESS;
+            }
+            case ALREADY_BOUND -> {
+                if (player != null) player.sendOverlayMessage(alreadyMsg);
+                return InteractionResult.SUCCESS;
+            }
+            case CANCELLED -> {
+                return InteractionResult.SUCCESS;
+            }
         }
-
-        BlockEntity controllerBE = level.getBlockEntity(controllerPos);
-        if (!(controllerBE instanceof CanteenControllerBlockEntity controller)) {
-            if (player != null) player.sendOverlayMessage(MSG_CONTROLLER_NOT_FOUND);
-            clearHatAndHand(heldItem, player);
-            return InteractionResult.FAIL;
-        }
-
-        boolean added = bindFunc.apply(controller, targetPos);
-        if (added) syncToHatAndHand(heldItem, controller, player);
-        if (player != null) player.sendOverlayMessage(added ? successMsg : alreadyMsg);
         return InteractionResult.SUCCESS;
     }
 
     private void handleUnbindMode(Level level, BlockPos clickedPos, BlockEntity clickedBE, Player player, ItemStack heldItem) {
-        BlockPos controllerPos = heldItem.get(NMIDataComponentTypes.BOUND_CONTROLLER);
-
         if (clickedBE instanceof CanteenControllerBlockEntity) {
             clearHatAndHand(heldItem, player);
             if (player != null) player.sendOverlayMessage(MSG_CONTROLLER_CLEARED);
             return;
         }
 
-        if (controllerPos == null) {
-            if (player != null) player.sendOverlayMessage(MSG_NO_CONTROLLER);
-            return;
+        UnbindResult result = CanteenConfigUtil.unbind(level, player, heldItem, clickedPos);
+        switch (result) {
+            case NO_CONTROLLER -> { if (player != null) player.sendOverlayMessage(MSG_NO_CONTROLLER); }
+            case NOT_FOUND -> {
+                if (player != null) player.sendOverlayMessage(MSG_CONTROLLER_NOT_FOUND);
+                clearHatAndHand(heldItem, player);
+            }
+            case REMOVED -> {
+                if (player != null) player.sendOverlayMessage(MSG_UNBOUND);
+                CanteenControllerBlockEntity controller = CanteenConfigUtil.getBoundController(level, heldItem);
+                if (controller != null) syncToHatAndHand(heldItem, controller, player);
+            }
+            case NOT_BOUND -> { if (player != null) player.sendOverlayMessage(MSG_ALREADY_BOUND); }
+            case CANCELLED -> { }
         }
-
-        BlockEntity controllerBE = level.getBlockEntity(controllerPos);
-        if (!(controllerBE instanceof CanteenControllerBlockEntity controller)) {
-            if (player != null) player.sendOverlayMessage(MSG_CONTROLLER_NOT_FOUND);
-            clearHatAndHand(heldItem, player);
-            return;
-        }
-
-        boolean removed = controller.removeKitchenware(clickedPos) || controller.removeDiningTable(clickedPos);
-        if (removed) syncToHatAndHand(heldItem, controller, player);
-        if (player != null) player.sendOverlayMessage(removed ? MSG_UNBOUND : MSG_ALREADY_BOUND);
-    }
-
-    @FunctionalInterface
-    private interface BindingFunction {
-        boolean apply(CanteenControllerBlockEntity controller, BlockPos pos);
     }
 }

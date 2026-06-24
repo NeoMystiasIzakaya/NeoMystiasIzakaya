@@ -6,20 +6,10 @@
 package icu.gensoukyo.neo_mystias_izakaya.common.blockentity;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
-import icu.gensoukyo.neo_mystias_izakaya.api.dal.NMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.common.block.CanteenControllerBlock;
 import icu.gensoukyo.neo_mystias_izakaya.common.block.DiningTableBlock;
 import icu.gensoukyo.neo_mystias_izakaya.common.block.KitchenwareBlock;
-import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonIzakayaUtil;
-import icu.gensoukyo.neo_mystias_izakaya.content.customer.Customer;
-import icu.gensoukyo.neo_mystias_izakaya.content.customer.CustomerHolder;
-import icu.gensoukyo.neo_mystias_izakaya.content.customer.CustomerMap;
-import icu.gensoukyo.neo_mystias_izakaya.content.customer.RareCustomerHolder;
-import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaMenu;
-import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaOrder;
-import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeMap;
-import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
-import icu.gensoukyo.neo_mystias_izakaya.content.tag.TagItemListMap;
+import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.CanteenOrderUtil;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -27,10 +17,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.resources.Identifier;
 import net.minecraft.util.ProblemReporter;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -46,14 +33,11 @@ import java.util.List;
 import java.util.UUID;
 
 public class CanteenControllerBlockEntity extends BlockEntity {
-    /** 每轮每张空闲餐桌有客入座的概率（0.0 ~ 1.0） */
-    private static final float SEAT_CHANCE = 0.3F;
     /** 派发间隔（tick） */
     private static final int DISPATCH_INTERVAL = 100;
-    /** 稀客出现概率 */
-    private static final float RARE_CUSTOMER_CHANCE = 0.15F;
     private LinkedHashSet<BlockPos> kitchenwareList = new LinkedHashSet<>();
     private LinkedHashSet<BlockPos> dingingTableList = new LinkedHashSet<>();
+    private LinkedHashSet<BlockPos> cupboardList = new LinkedHashSet<>();
 
     // ==================== 代理层：EXTENSION 透明指向 MAIN ====================
     private boolean isOpen;
@@ -67,7 +51,7 @@ public class CanteenControllerBlockEntity extends BlockEntity {
     // ==================== 公开访问器（全部委托到 MAIN） ====================
 
     /**
-     * 主控 Tick：营业期间按概率向空闲餐桌派发订单；
+     * 主控 Tick：营业期间向空闲餐桌派发订单（单桌派发逻辑见 {@link CanteenOrderUtil#dispatch}）；
      * 同时校验关联方块完整性，发现已破坏的则移除并重排序号。
      */
     public static void serverTick(Level pLevel, BlockPos pPos, BlockState pState, CanteenControllerBlockEntity pBlockEntity) {
@@ -78,128 +62,12 @@ public class CanteenControllerBlockEntity extends BlockEntity {
 
         if (!pBlockEntity.isOpen) return;
 
-        // 为每张空闲餐桌按概率派发订单
+        // 逐桌委托派发：空桌判定、概率入座、生成订单均由 CanteenOrderUtil 处理
         for (BlockPos tablePos : pBlockEntity.dingingTableList) {
             if (!pLevel.isLoaded(tablePos)) continue;
             if (!(pLevel.getBlockEntity(tablePos) instanceof DiningTableBlockEntity table)) continue;
-            if (!table.isIdle()) continue;
-
-            // 按概率派发：只有命中概率才入座
-            if (pLevel.getRandom().nextFloat() >= SEAT_CHANCE) continue;
-
-            IzakayaOrder order = generateOrder(pLevel, pBlockEntity);
-            if (order != null) {
-                table.seatCustomer(order);
-            }
+            CanteenOrderUtil.dispatch(pLevel, pBlockEntity, table);
         }
-    }
-
-    /**
-     * 生成新订单：随机选顾客 → 匹配菜品/饮品标签 → 构建 IzakayaOrder
-     */
-    private static @Nullable IzakayaOrder generateOrder(Level level, CanteenControllerBlockEntity controller) {
-        CustomerMap customerMap = NMIDataAccessor.server().getCustomerMap();
-        NMIRecipeMap recipeMap = NMIDataAccessor.server().getRecipeMap();
-        RandomSource random = level.getRandom();
-
-        // 确保标签索引已构建（首次调用时构建，后续命中缓存）
-        if (recipeMap.getOutputTagToItemMap().isEmpty()) {
-            recipeMap.buildOutputTagToItemMap(NMIDataAccessor.server().getTagItemListMap());
-        }
-
-        // ① 选择顾客（概率加权）
-        CustomerHolder holder = pickCustomer(customerMap, random);
-        if (holder == null) return null;
-        Customer customer = holder.customer();
-        boolean isRare = holder instanceof RareCustomerHolder;
-
-        Identifier cuisineId;
-        Identifier beverageId;
-        Identifier rareCustomerId = holder.key();
-
-        if (isRare) {
-            // 稀客：两个都是 Tag
-            cuisineId = pickRandom(customer.likes(), random);
-            if (cuisineId == null) return null;
-            beverageId = pickRandom(customer.beverage(), random);
-        } else {
-            // 普客：从菜单中根据标签匹配度加权随机选取
-            UUID ownerId = controller.getOwner();
-            if (ownerId == null) return null;
-            Player player = level.getPlayerByUUID(ownerId);
-            if (player == null) return null;
-            IzakayaMenu menu = NMICommonIzakayaUtil.getMenu(player);
-            TagItemListMap tagItemListMap = NMIDataAccessor.server().getTagItemListMap();
-
-            cuisineId = pickWeightedByTags(menu.cuisines(), customer.likes(), tagItemListMap, random);
-            if (cuisineId == null) return null;
-            beverageId = pickWeightedByTags(menu.beverages(), customer.beverage(), tagItemListMap, random);
-        }
-        if (beverageId == null) return null;
-
-        return new IzakayaOrder(cuisineId, beverageId, rareCustomerId, isRare);
-    }
-
-    /**
-     * 从顾客池中按概率选一位（稀客 15%，普客 85%）
-     */
-    private static @Nullable CustomerHolder pickCustomer(CustomerMap customerMap, RandomSource random) {
-        boolean isRare = random.nextFloat() < RARE_CUSTOMER_CHANCE;
-        List<? extends CustomerHolder> pool;
-
-        if (isRare) {
-            pool = customerMap.getRareCustomers();
-            if (pool.isEmpty()) pool = customerMap.getCommonCustomers();
-        } else {
-            pool = customerMap.getCommonCustomers();
-            if (pool.isEmpty()) pool = customerMap.getRareCustomers();
-        }
-
-        if (pool.isEmpty()) return null;
-        return pool.get(random.nextInt(pool.size()));
-    }
-
-    /**
-     * 从菜单项中按标签匹配数加权随机选取。
-     * 匹配越多权重越高，未匹配也有基础权重 1。
-     */
-    private static @Nullable Identifier pickWeightedByTags(
-            List<Identifier> menuItems, List<Identifier> customerTags,
-            TagItemListMap tagItemListMap, RandomSource random) {
-        if (menuItems.isEmpty() || customerTags.isEmpty()) {
-            return menuItems.isEmpty() ? null : menuItems.get(random.nextInt(menuItems.size()));
-        }
-
-        // 计算每个菜单项的权重：匹配标签数 + 1
-        int[] weights = new int[menuItems.size()];
-        int totalWeight = 0;
-        for (int i = 0; i < menuItems.size(); i++) {
-            ItemTagList itemTags = tagItemListMap.getItemToTagMap().get(menuItems.get(i));
-            int matches = 0;
-            if (itemTags != null) {
-                for (Identifier tag : itemTags.positiveTags()) {
-                    if (customerTags.contains(tag)) matches++;
-                }
-            }
-            weights[i] = matches + 1; // 基础权重 1，确保未匹配的也有机会
-            totalWeight += weights[i];
-        }
-
-        int roll = random.nextInt(totalWeight);
-        int cumulative = 0;
-        for (int i = 0; i < menuItems.size(); i++) {
-            cumulative += weights[i];
-            if (roll < cumulative) {
-                return menuItems.get(i);
-            }
-        }
-        return menuItems.get(random.nextInt(menuItems.size()));
-    }
-
-    @Nullable
-    private static <T> T pickRandom(List<T> list, RandomSource random) {
-        if (list.isEmpty()) return null;
-        return list.get(random.nextInt(list.size()));
     }
 
     /**
