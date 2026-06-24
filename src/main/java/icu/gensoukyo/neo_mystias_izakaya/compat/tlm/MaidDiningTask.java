@@ -11,6 +11,7 @@ import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
 import com.github.tartaricacid.touhoulittlemaid.init.InitBrains;
 import com.google.common.collect.ImmutableMap;
 import icu.gensoukyo.neo_mystias_izakaya.common.block.DiningTableBlock;
+import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.CanteenControllerBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.DiningTableBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIMemoryTypes;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIPoi;
@@ -129,8 +130,10 @@ public class MaidDiningTask extends MaidCheckRateTask {
         PoiManager poiManager = world.getPoiManager();
         int range = (int) maid.searchRadius();
         return poiManager.getInRange(type -> type.value().equals(NMIPoi.DINING_TABLE.get()), blockPos, range, PoiManager.Occupancy.ANY)
-                .map(PoiRecord::getPos).filter(pos -> !isOccupied(world, pos))
-                .min(Comparator.comparingDouble(pos -> pos.distSqr(maid.blockPosition()))).orElse(null);
+                .map(PoiRecord::getPos)
+                .filter(pos -> !isOccupied(world, pos) && isCanteenOpen(world, pos))
+                .min(Comparator.comparingDouble(pos -> pos.distSqr(maid.blockPosition())))
+                .orElse(null);
     }
 
     private boolean isOccupied(ServerLevel worldIn, BlockPos pos) {
@@ -139,5 +142,15 @@ public class MaidDiningTask extends MaidCheckRateTask {
             return tableBlockEntityTE.isOccupied();
         }
         return true;
+    }
+
+    private boolean isCanteenOpen(ServerLevel world, BlockPos tablePos) {
+        if (world.getBlockEntity(tablePos) instanceof DiningTableBlockEntity table) {
+            BlockPos controllerPos = table.getControllerPos();
+            if (world.getBlockEntity(controllerPos) instanceof CanteenControllerBlockEntity controller) {
+                return controller.isOpen();
+            }
+        }
+        return false;
     }
 }
