@@ -5,11 +5,11 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.client.util;
 
-import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.CanteenScreen;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.KitchenwareScreen;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.RecipeScreen;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.StoreScreen;
+import icu.gensoukyo.neo_mystias_izakaya.content.customer.consts.CustomerEvaluation;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -53,8 +53,10 @@ public final class NMIClientUtil {
         return Minecraft.getInstance().player;
     }
 
-    public static void showToast(int price) {
+    public static void showToast(int price, CustomerEvaluation evaluation) {
         Minecraft minecraft = Minecraft.getInstance();
-        minecraft.getToastManager().addToast(SystemToast.multiline(minecraft, SystemToast.SystemToastId.NARRATOR_TOGGLE, Component.translatable("block.neo_mystias_izakaya.dining_table.sale", price), Component.translatable(NeoMystiasIzakaya.MODID)));
+        Component title = Component.translatable("block.neo_mystias_izakaya.dining_table.sale", price);
+        Component desc = Component.translatable(evaluation.getTranslationKey());
+        minecraft.getToastManager().addToast(SystemToast.multiline(minecraft, SystemToast.SystemToastId.NARRATOR_TOGGLE, title, desc));
     }
 }

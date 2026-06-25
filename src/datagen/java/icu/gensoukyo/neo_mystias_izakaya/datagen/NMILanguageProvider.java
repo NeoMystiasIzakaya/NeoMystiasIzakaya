@@ -76,6 +76,13 @@ public class NMILanguageProvider implements DataProvider {
         this.add(NMIMainItems.CUPBOARD, "CupBoard","橱柜");
         this.add(NMIMainItems.CREATIVE_CUPBOARD, "CupBoard (Creative)","橱柜 (创造)");
 
+        // --- 通用评价等级 ---
+        this.add("evaluation.neo_mystias_izakaya.ex_bad", "Terrible", "超差评");
+        this.add("evaluation.neo_mystias_izakaya.bad", "Bad", "差评");
+        this.add("evaluation.neo_mystias_izakaya.norm", "Normal", "一般");
+        this.add("evaluation.neo_mystias_izakaya.good", "Good", "好评");
+        this.add("evaluation.neo_mystias_izakaya.ex_good", "Excellent", "超好评");
+
         // CanteenConfigItem 提示消息
         this.add("item.neo_mystias_izakaya.canteen_config.controller_selected", "Controller selected!", "已选择控制器！");
         this.add("item.neo_mystias_izakaya.canteen_config.kitchenware_bound", "Kitchenware bound!", "厨房用具已绑定！");

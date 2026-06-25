@@ -14,6 +14,7 @@ import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonIzakayaUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaOrderList;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public class ClientPayloadHandler {
@@ -60,7 +61,10 @@ public class ClientPayloadHandler {
 
     public static void handleDiningTableSaleMessage(DiningTableSaleMessage message, IPayloadContext context) {
         context.enqueueWork(() -> {
-            NMIClientUtil.showToast(message.saleAmount());
+            NMIClientUtil.showToast(message.saleAmount(), message.evaluation());
+            if (Minecraft.getInstance().player != null) {
+                Minecraft.getInstance().player.sendSystemMessage(Component.translatable(message.textKey()));
+            }
         });
     }
 

@@ -13,6 +13,10 @@ import icu.gensoukyo.neo_mystias_izakaya.common.util.NMIServerEconomyUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMIServerItemTagUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.economy.transaction.NMIBalanceTransactionReasons;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaOrder;
+import icu.gensoukyo.neo_mystias_izakaya.content.customer.Customer;
+import icu.gensoukyo.neo_mystias_izakaya.content.customer.CustomerHolder;
+import icu.gensoukyo.neo_mystias_izakaya.content.customer.CustomerMap;
+import icu.gensoukyo.neo_mystias_izakaya.content.customer.consts.CustomerEvaluation;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeHolder;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockEntities;
@@ -28,6 +32,7 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.ProblemReporter;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -95,6 +100,8 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
      */
     private UUID seatEntityId = null;
 
+    private static final RandomSource random = RandomSource.create(943);
+
     public DiningTableBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(NMIBlockEntities.DINING_TABLE.get(), blockPos, blockState);
     }
@@ -118,6 +125,12 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
         }
 
         IzakayaOrder order = pBlockEntity.getCurrentOrder();
+        
+        // 计算顾客评价
+        CustomerEvaluation evaluation = evaluateCustomer(pBlockEntity, order);
+        // 解析文本键：稀客用 evaluation 键，普客随机挑选 chat
+        String textKey = resolveTextKey(pBlockEntity, order, evaluation);
+            
         int price = 0;
 
         if (order.isRare()) {
@@ -149,12 +162,15 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
                 }
             }
         }
+        // 应用评价倍率
+        int finalPrice = evaluation.apply(price);
+        
         if (pBlockEntity.level != null
                 && pBlockEntity.level.getBlockEntity(pBlockEntity.controllerPos) instanceof CanteenControllerBlockEntity canteen
                 && canteen.getOwner() != null
                 && pLevel.getEntity(canteen.getOwner()) instanceof ServerPlayer serverPlayer) {
-            NMICommonBalanceUtil.insertEn(serverPlayer, price, false, NMIBalanceTransactionReasons.ORDER_PAY, "DiningTable", serverPlayer.getPlainTextName());
-            ServerPayloadSender.sendDiningTableSaleMessage(serverPlayer, price);
+            NMICommonBalanceUtil.insertEn(serverPlayer, finalPrice, false, NMIBalanceTransactionReasons.ORDER_PAY, "DiningTable", serverPlayer.getPlainTextName());
+            ServerPayloadSender.sendDiningTableSaleMessage(serverPlayer, finalPrice, evaluation, textKey);
         }
         // 完成后进入随机 10~20 秒 CD
         pBlockEntity.cooldownTicks = pLevel.getRandom().nextInt(200, 401);
@@ -337,6 +353,113 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
         if (this.level != null) {
             this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);
         }
+    }
+
+    /**
+     * 根据顾客喜好与上菜匹配度计算评价等级。
+     *
+     * <h3>评分规则</h3>
+     * <table>
+     * <tr><th>条件</th><th>分值</th></tr>
+     * <tr><td>菜品 tag 命中 customer.likes</td><td>+1 per match</td></tr>
+     * <tr><td>饮品 tag 命中 customer.likes</td><td>+1 per match</td></tr>
+     * <tr><td>饮品 tag 命中 customer.beverage</td><td>+1 per match（独立于 likes 额外加分）</td></tr>
+     * <tr><td>命中 customer.dislikes（菜品或饮品）</td><td>-2 per match</td></tr>
+     * </table>
+     *
+     * <h3>评价映射</h3>
+     * <table>
+     * <tr><th>总分</th><th>评价</th></tr>
+     * <tr><td>≥ 3</td><td>{@link CustomerEvaluation#EX_GOOD}</td></tr>
+     * <tr><td>1 ~ 2</td><td>{@link CustomerEvaluation#GOOD}</td></tr>
+     * <tr><td>0</td><td>{@link CustomerEvaluation#NORM}</td></tr>
+     * <tr><td>-1 ~ -2</td><td>{@link CustomerEvaluation#BAD}</td></tr>
+     * <tr><td>≤ -3</td><td>{@link CustomerEvaluation#EX_BAD}</td></tr>
+     * </table>
+     *
+     * <h3>特殊规则</h3>
+     * <ul>
+     * <li><b>普通客人</b>：上菜物品必须与订单指定食谱的输出物品完全一致，
+     *     不匹配则直接返回 {@link CustomerEvaluation#BAD}，不检查标签。</li>
+     * <li><b>稀客</b>：若任何标签命中 customer.dislikes，
+     *     则最高只能获得 {@link CustomerEvaluation#GOOD}，即使总分 ≥ 3。</li>
+     * </ul>
+     *
+     * @param table 餐桌方块实体（需已上菜）
+     * @param order 当前订单
+     * @return 评价枚举，附带价格倍率
+     */
+    private static CustomerEvaluation evaluateCustomer(DiningTableBlockEntity table, IzakayaOrder order) {
+        CustomerMap customerMap = NMIDataAccessor.server().getCustomerMap();
+        CustomerHolder holder = customerMap.getAllCustomerMap().get(table.customerId);
+        if (holder == null) return CustomerEvaluation.NORM;
+        Customer customer = holder.customer();
+
+        // 计算评分
+        int score = 0;
+        boolean hitDislike = false;
+
+        // 菜品标签匹配
+        ItemTagList cuisineTags = NMIServerItemTagUtil.get(table.getCuisine());
+        for (Identifier tag : cuisineTags.positiveTags()) {
+            if (customer.likes().contains(tag)) score++;
+            if (customer.dislikes().contains(tag)) { score -= 2; hitDislike = true; }
+        }
+
+        // 饮品标签匹配
+        ItemTagList beverageTags = NMIServerItemTagUtil.get(table.getBeverage());
+        for (Identifier tag : beverageTags.positiveTags()) {
+            if (customer.likes().contains(tag)) score++;
+            if (customer.beverage().contains(tag)) score++; // 饮品偏好额外加分
+            if (customer.dislikes().contains(tag)) { score -= 2; hitDislike = true; }
+        }
+
+        // 普通客人：菜品必须匹配订单
+        if (!order.isRare()) {
+            NMIRecipeHolder recipeHolder = NMIDataAccessor.server().getRecipeMap().getRecipeMap().get(order.cuisine());
+            if (recipeHolder == null) return CustomerEvaluation.BAD;
+            Item expectedItem = recipeHolder.recipe().output().item().value();
+            if (!table.getCuisine().is(expectedItem)) {
+                return CustomerEvaluation.BAD;
+            }
+        }
+
+        // 稀客：踩中 dislike 则最高 GOOD
+        if (order.isRare() && hitDislike) {
+            return score >= 1 ? CustomerEvaluation.GOOD : mapScore(score);
+        }
+
+        return mapScore(score);
+    }
+
+    private static CustomerEvaluation mapScore(int score) {
+        if (score >= 3) return CustomerEvaluation.EX_GOOD;
+        if (score >= 1) return CustomerEvaluation.GOOD;
+        if (score == 0) return CustomerEvaluation.NORM;
+        if (score >= -2) return CustomerEvaluation.BAD;
+        return CustomerEvaluation.EX_BAD;
+    }
+
+    /**
+     * 解析客户端显示的翻译键。
+     * <ul>
+     * <li><b>稀客</b>：使用 {@code customerId.toLanguageKey("evaluation", level)}，
+     *     对应 {@code NMILanguageProvider#addEvaluation} 的键。</li>
+     * <li><b>普客</b>：从 {@code customer.chats()} 随机抽取一个 chat ID，
+     *     使用 {@code chatId.toLanguageKey("customer")} 转换为翻译键。</li>
+     * </ul>
+     */
+    private static String resolveTextKey(DiningTableBlockEntity table, IzakayaOrder order, CustomerEvaluation evaluation) {
+        if (order.isRare()) {
+            return table.customerId.toLanguageKey("evaluation", evaluation.getLevel());
+        }
+        CustomerMap customerMap = NMIDataAccessor.server().getCustomerMap();
+        CustomerHolder holder = customerMap.getAllCustomerMap().get(table.customerId);
+        if (holder == null) return "";
+        var chats = holder.customer().chats();
+        if (chats.isEmpty()) return "";
+        var chatId = chats.get(random.nextInt(chats.size()));
+        return chatId.toLanguageKey("customer");
     }
 
     /**
