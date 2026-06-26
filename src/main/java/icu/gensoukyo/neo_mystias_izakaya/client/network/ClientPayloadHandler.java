@@ -6,6 +6,7 @@
 package icu.gensoukyo.neo_mystias_izakaya.client.network;
 
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
+import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.CupBoardHud;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.KitchenwareBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.common.network.*;
@@ -76,6 +77,22 @@ public class ClientPayloadHandler {
                 if (blockEntity instanceof KitchenwareBlockEntity target) {
                     target.setCookingTime(message.cookTime());
                 }
+            }
+        });
+    }
+
+    public static void handleCupBoardItemResourceFullSyncMessage(CupBoardItemResourceFullSyncMessage message, IPayloadContext context) {
+        context.enqueueWork(() -> {
+            if (CupBoardHud.CurrentActive !=null){
+                CupBoardHud.CurrentActive.refresh(message.itemResourceList());
+            }
+        });
+    }
+
+    public static void handleCupBoardItemResourceUpdateMessage(CupBoardItemResourceConsumedMessage message, IPayloadContext context) {
+        context.enqueueWork(() -> {
+            if (CupBoardHud.CurrentActive !=null){
+                CupBoardHud.CurrentActive.update(message.itemResource());
             }
         });
     }

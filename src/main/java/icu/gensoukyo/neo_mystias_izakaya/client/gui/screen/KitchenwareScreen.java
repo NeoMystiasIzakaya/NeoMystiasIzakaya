@@ -7,12 +7,14 @@ package icu.gensoukyo.neo_mystias_izakaya.client.gui.screen;
 
 import icu.gensoukyo.neo_mystias_izakaya.api.event.server.cooking.IzakayaCookingEvent;
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
+import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.CupBoardHud;
 import icu.gensoukyo.neo_mystias_izakaya.client.network.ClientPayloadSender;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientEconomyUtil;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientRecipeUtil;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.KitchenwareBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.common.menu.KitchenwareMenu;
+import icu.gensoukyo.neo_mystias_izakaya.common.resource.ItemResourceWithCount;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonComponentUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonIzakayaUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaMenu;
@@ -54,10 +56,13 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
     private final List<Identifier> menuCuisineIds = new ArrayList<>();
     List<NMIRecipeHolder> possibleRecipes;
 
+    private CupBoardHud cupBoardHud;
+
     public KitchenwareScreen(KitchenwareMenu menu, Inventory inv, Component title) {
         super(menu, inv, title, 230, 219);
         this.kitchenwareBE = this.getMenu().getKitchenwareBE();
         this.possibleRecipes = NMIClientRecipeUtil.getRecipesByInputAndKitchenware(NMIClientUtil.getPlayer(), List.copyOf(kitchenwareBE.getItems()), NMIKitchenware.REGISTRY.getValue(kitchenwareBE.getKitchenwareTypeId()).blockTagKey());
+
     }
 
     public static void renderCuisineInfo(GuiGraphicsExtractor guiGraphics, Font font, NMIRecipeHolder recipeHolder, int i, int j) {
@@ -137,6 +142,14 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
                 menuCuisineIds.add(cuisineId);
             }
         }
+
+        cupBoardHud = new CupBoardHud(10,10,getLeftPos()-20,getImageHeight(),this::onHudItemResourceClick);
+        addRenderableWidget(cupBoardHud);
+        ClientPayloadSender.sendRequestCupboardInfoMessage();
+    }
+
+    private void onHudItemResourceClick(ItemResourceWithCount resource) {
+        ClientPayloadSender.sendRequestExtractItemToKitchenwareMessage(resource.itemResource(),kitchenwareBE.getBlockPos());
     }
 
     @Override
@@ -163,7 +176,7 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
         // 右侧菜单点击 → 自动放入食材并开始烹饪
         int clickedMenuIndex = getMenuCuisineIndex((int) event.x(), (int) event.y());
         if (clickedMenuIndex >= 0 && clickedMenuIndex < menuCuisineIds.size() && kitchenwareBE.canStartCooking()) {
-            this.minecraft.gameMode.handleInventoryButtonClick(this.menu.containerId, clickedMenuIndex);
+            ClientPayloadSender.sendRequestExtractToKitchenwareMessage(clickedMenuIndex,kitchenwareBE.getBlockPos());
             return true;
         }
 
@@ -292,6 +305,16 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
         }
         return -1;
     }
+
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
+        boolean b = super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
+        if (cupBoardHud.isMouseOver(mouseX, mouseY)) {
+            return cupBoardHud.mouseScrolled(mouseX, mouseY, scrollX, scrollY) || b;
+        }
+        return b;
+    }
+
 
     public record TagRenderState(int currentX, int startY) {
     }

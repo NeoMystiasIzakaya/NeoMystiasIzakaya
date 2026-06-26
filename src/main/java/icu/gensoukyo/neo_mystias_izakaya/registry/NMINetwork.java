@@ -90,6 +90,18 @@ public class NMINetwork {
                 DiningTableSaleMessage.STREAM_CODEC,
                 ClientPayloadHandler::handleDiningTableSaleMessage
         );
+
+        registrar.playToClient(
+                CupBoardItemResourceFullSyncMessage.TYPE,
+                CupBoardItemResourceFullSyncMessage.STREAM_CODEC,
+                ClientPayloadHandler::handleCupBoardItemResourceFullSyncMessage
+        );
+
+        registrar.playToClient(
+                CupBoardItemResourceConsumedMessage.TYPE,
+                CupBoardItemResourceConsumedMessage.STREAM_CODEC,
+                ClientPayloadHandler::handleCupBoardItemResourceUpdateMessage
+        );
     }
 
     private static void registerClientBound(PayloadRegistrar registrar) {
@@ -128,6 +140,24 @@ public class NMINetwork {
                 ToggleCanteenOpenMessage.TYPE,
                 ToggleCanteenOpenMessage.STREAM_CODEC,
                 ServerPayloadHandler::handleToggleCanteenOpen
+        );
+
+        registrar.playToServer(
+                RequestCupboardInfoMessage.TYPE,
+                RequestCupboardInfoMessage.STREAM_CODEC,
+                ServerPayloadHandler::handleRequestCupboardInfoMessage
+        );
+
+        registrar.playToServer(
+                RequestExtractMenuToKitchenwareMessage.TYPE,
+                RequestExtractMenuToKitchenwareMessage.STREAM_CODEC,
+                ServerPayloadHandler::handleRequestExtractMenuToKitchenwareMessage
+        );
+
+        registrar.playToServer(
+                RequestExtractItemToKitchenwareMessage.TYPE,
+                RequestExtractItemToKitchenwareMessage.STREAM_CODEC,
+                ServerPayloadHandler::handleRequestExtractItemToKitchenwareMessage
         );
     }
 }

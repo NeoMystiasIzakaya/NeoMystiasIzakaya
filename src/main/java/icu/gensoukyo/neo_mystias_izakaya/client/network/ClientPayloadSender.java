@@ -10,6 +10,7 @@ import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
 public class ClientPayloadSender {
     public static void sendKitchenwareCookMessage(Identifier cuisine, BlockPos blockPos) {
@@ -34,5 +35,17 @@ public class ClientPayloadSender {
 
     public static void sendToggleCanteenOpen(BlockPos controllerPos) {
         ClientPacketDistributor.sendToServer(new ToggleCanteenOpenMessage(controllerPos));
+    }
+
+    public static void sendRequestCupboardInfoMessage() {
+        ClientPacketDistributor.sendToServer(new RequestCupboardInfoMessage());
+    }
+
+    public static void sendRequestExtractToKitchenwareMessage(int menuId,BlockPos blockPos){
+        ClientPacketDistributor.sendToServer(new RequestExtractMenuToKitchenwareMessage(menuId,blockPos));
+    }
+
+    public static void sendRequestExtractItemToKitchenwareMessage(ItemResource resource, BlockPos blockPos){
+        ClientPacketDistributor.sendToServer(new RequestExtractItemToKitchenwareMessage(resource,blockPos));
     }
 }

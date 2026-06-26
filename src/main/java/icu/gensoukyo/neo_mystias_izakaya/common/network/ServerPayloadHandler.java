@@ -15,11 +15,13 @@ import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonIzakayaUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMIServerStoreUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.cooking.IzakayaCookingUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.CanteenConfigUtil;
+import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.CupBoardUtil;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIDataComponentTypes;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMainItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -112,5 +114,29 @@ public class ServerPayloadHandler {
         });
     }
 
+    public static void handleRequestCupboardInfoMessage(RequestCupboardInfoMessage message, IPayloadContext context) {
+        context.enqueueWork(() -> {
+            if (context.player() instanceof ServerPlayer serverPlayer) {
+                ServerPayloadSender.sendCupBoardItemResourceFullSyncMessage(serverPlayer, CupBoardUtil.extractItemResourceList(serverPlayer));
+            }
+        });
+    }
+
+    public static void handleRequestExtractMenuToKitchenwareMessage(RequestExtractMenuToKitchenwareMessage message, IPayloadContext context) {
+        context.enqueueWork(() -> {
+            if (context.player() instanceof ServerPlayer serverPlayer) {
+                CupBoardUtil.extractMenuIngredientToKitchenware(serverPlayer, message.menuId(), message.blockPos());
+            }
+        });
+    }
+
+
+    public static void handleRequestExtractItemToKitchenwareMessage(RequestExtractItemToKitchenwareMessage message, IPayloadContext context) {
+        context.enqueueWork(() -> {
+            if (context.player() instanceof ServerPlayer serverPlayer) {
+                CupBoardUtil.extractItemToKitchenware(serverPlayer, message.resource(), message.blockPos());
+            }
+        });
+    }
 }
 

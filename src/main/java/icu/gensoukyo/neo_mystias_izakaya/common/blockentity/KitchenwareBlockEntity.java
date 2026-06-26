@@ -95,7 +95,6 @@ public class KitchenwareBlockEntity extends RandomizableContainerBlockEntity {
             if (pBlockEntity.cookingTime <= 0) {
                 pBlockEntity.cookingTime = 0;
                 ItemStack copy = pBlockEntity.getTargetItem().copy();
-                pBlockEntity.getItems().clear();
                 pBlockEntity.setResultItem(copy);
                 pLevel.setBlock(pPos, pState.setValue(BlockStateProperties.LIT, false), Block.UPDATE_CLIENTS);
             }
@@ -108,11 +107,11 @@ public class KitchenwareBlockEntity extends RandomizableContainerBlockEntity {
     }
 
     @Override
-    protected void setItems(NonNullList<ItemStack> itemStacks) {
+    public void setItems(NonNullList<ItemStack> itemStacks) {
         if (itemStacks.size() != 7) {
             LOGGER.error("Attempted to set items with a list of size {}, but expected size is 7. This may cause unexpected behavior.", itemStacks.size());
         }
-        this.items = NonNullList.copyOf(itemStacks);
+        this.items = itemStacks;
     }
 
     @Override
@@ -124,8 +123,8 @@ public class KitchenwareBlockEntity extends RandomizableContainerBlockEntity {
         if (itemStacks.size() != 5) {
             LOGGER.error("Attempted to set ingredient items with a list of size {}, but expected size is 5. This may cause unexpected behavior.", itemStacks.size());
         }
-        for (int i = 0; i < Math.min(itemStacks.size(), 5); i++) {
-            this.items.set(i, itemStacks.get(i));
+        for (int i = 0; i < 5; i++) {
+            this.items.set(i, i < itemStacks.size() ? itemStacks.get(i).copy() : ItemStack.EMPTY);
         }
     }
 

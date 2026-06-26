@@ -5,6 +5,7 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.common.network;
 
+import icu.gensoukyo.neo_mystias_izakaya.common.resource.ItemResourceWithCount;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonBalanceUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonIzakayaUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.customer.CustomerMap;
@@ -20,6 +21,9 @@ import icu.gensoukyo.neo_mystias_izakaya.content.tag.TagItemListMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+
+import java.util.List;
 
 public class ServerPayloadSender {
 
@@ -93,5 +97,13 @@ public class ServerPayloadSender {
 
     public static void sendDiningTableSaleMessage(ServerPlayer player, int saleAmount, CustomerEvaluation evaluation, String textKey) {
         PacketDistributor.sendToPlayer(player, new DiningTableSaleMessage(saleAmount, evaluation, textKey));
+    }
+
+    public static void sendCupBoardItemResourceFullSyncMessage(ServerPlayer player, List<ItemResourceWithCount> itemResourceList) {
+        PacketDistributor.sendToPlayer(player, new CupBoardItemResourceFullSyncMessage(itemResourceList));
+    }
+
+    public static void sendCupBoardItemResourceConsumedMessage(ServerPlayer player, ItemResource itemResource) {
+        PacketDistributor.sendToPlayer(player, new CupBoardItemResourceConsumedMessage(itemResource));
     }
 }

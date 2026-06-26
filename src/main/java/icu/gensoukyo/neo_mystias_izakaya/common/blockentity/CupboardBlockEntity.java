@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 NeoMystiasIzakaya Team
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
+
 package icu.gensoukyo.neo_mystias_izakaya.common.blockentity;
 
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockEntities;
@@ -17,6 +22,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper;
 
 public class CupboardBlockEntity extends RandomizableContainerBlockEntity {
 
@@ -24,7 +30,7 @@ public class CupboardBlockEntity extends RandomizableContainerBlockEntity {
 
     NonNullList<ItemStack> items = NonNullList.withSize(SLOT_COUNT, ItemStack.EMPTY);
 
-    private final ItemStacksResourceHandler itemStacksResourceHandler= new ItemStacksResourceHandler(items);
+    private final ResourceHandler<ItemResource> itemStacksResourceHandler= VanillaContainerWrapper.of(this);
 
     public CupboardBlockEntity(BlockPos worldPosition, BlockState blockState) {
         super(NMIBlockEntities.CUPBOARD.get(), worldPosition, blockState);

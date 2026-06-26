@@ -38,7 +38,7 @@ public class CartListWidget extends ObjectSelectionList<CartListWidget.Entry> {
 
     @Override
     protected int scrollBarX() {
-        return (super.scrollBarX() - 8);
+        return getRowLeft();
     }
 
     @Override
@@ -66,15 +66,11 @@ public class CartListWidget extends ObjectSelectionList<CartListWidget.Entry> {
 
     @Override
     protected void extractScrollbar(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
-        int scrollbarX = this.scrollBarX();
         int scrollerHeight = this.scrollerHeight();
         int scrollerY = this.scrollBarY();
 
         if (this.scrollable()) {
-//            KaguyaUtil.fillXYWH(graphics, getX(), getY(), this.scrollbarWidth(), this.getHeight(), 0x40E3CA40);
             KaguyaUtil.fillXYWH(graphics, getX(), scrollerY, this.scrollbarWidth(), scrollerHeight, 0x40947B58);
-//            graphics.blitSprite(RenderPipelines.GUI_TEXTURED, this.scrollbarSettings.backgroundSprite(), scrollbarX, this.getY(), this.scrollbarWidth(), this.getHeight());
-//            graphics.blitSprite(RenderPipelines.GUI_TEXTURED, this.scrollbarSettings.scrollerSprite(), scrollbarX, scrollerY, this.scrollbarWidth(), scrollerHeight);
             if (this.isOverScrollbar(mouseX, mouseY)) {
                 graphics.requestCursor(this.scrolling ? CursorTypes.RESIZE_NS : CursorTypes.POINTING_HAND);
             }

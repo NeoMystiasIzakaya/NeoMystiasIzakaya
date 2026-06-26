@@ -10,8 +10,10 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredItem;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public  final class NMICommonItemUtil {
 

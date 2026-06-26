@@ -1,3 +1,8 @@
+/*
+ * Copyright 2026 NeoMystiasIzakaya Team
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
+
 package icu.gensoukyo.neo_mystias_izakaya.common.blockentity;
 
 import icu.gensoukyo.neo_mystias_izakaya.common.resource.InfiniteItemResourceHandler;
@@ -12,6 +17,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -33,10 +39,21 @@ public class CreativeCupboardBlockEntity extends CupboardBlockEntity {
     public CreativeCupboardBlockEntity(BlockPos worldPosition, BlockState blockState) {
         super(NMIBlockEntities.CREATIVE_CUPBOARD.get(), worldPosition, blockState);
 
-        List<DeferredItem<Item>> itemList = new ArrayList<>();
-        itemList.addAll(NMIIngredientItems.ITEM_LIST);
-        itemList.addAll(NMIBeveragesItems.ITEM_LIST);
-        this.infiniteItemResourceHandler = InfiniteItemResourceHandler.withDeferredItem(itemList);
+        List<Item> itemList = new ArrayList<>();
+        itemList.addAll(NMIIngredientItems.ITEM_LIST.stream().map(DeferredItem::get).toList());
+        itemList.addAll(NMIBeveragesItems.ITEM_LIST.stream().map(DeferredItem::get).toList());
+        itemList.add(Items.PUFFERFISH);
+        itemList.add(Items.PUMPKIN);
+        itemList.add(Items.KELP);
+        itemList.add(Items.BROWN_MUSHROOM);
+        itemList.add(Items.POTATO);
+        itemList.add(Items.PORKCHOP);
+        itemList.add(Items.BEEF);
+        itemList.add(Items.EGG);
+        itemList.add(Items.ICE);
+        itemList.add(Items.HONEY_BOTTLE);
+        itemList.add(Items.COCOA_BEANS);
+        this.infiniteItemResourceHandler = InfiniteItemResourceHandler.withItem(itemList);
     }
 
     @Override

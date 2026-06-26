@@ -11,8 +11,10 @@ import icu.gensoukyo.neo_mystias_izakaya.content.tag.TagItemListHolder;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIDataComponentTypes;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
 import java.util.Map;
+import java.util.function.Predicate;
 
 public class NMICommonItemTagUtil {
 
