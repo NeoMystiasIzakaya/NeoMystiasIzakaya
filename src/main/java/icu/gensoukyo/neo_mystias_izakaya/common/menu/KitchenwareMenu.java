@@ -7,20 +7,25 @@ package icu.gensoukyo.neo_mystias_izakaya.common.menu;
 
 import icu.gensoukyo.neo_mystias_izakaya.api.dal.NMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientUtil;
+import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.CreativeCupboardBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.KitchenwareBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonIzakayaUtil;
+import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.CanteenConfigData;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaMenu;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipe;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeHolder;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIKitchenware;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIMenus;
+import icu.gensoukyo.neo_mystias_izakaya.registry.NMIDataComponentTypes;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIVanillaTags;
+import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMainItems;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.Container;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
@@ -124,27 +129,43 @@ public class KitchenwareMenu extends AbstractNMIMenu {
         if (holder == null) return false;
         NMIRecipe recipe = holder.recipe();
 
-        // 从背包匹配食材
+        // 检测是否存在创造橱柜
+        boolean hasCreativeCupboard = hasCreativeCupboard(player);
+
+        // 从背包匹配食材（创造橱柜则直接创建物品，不消耗背包）
         List<Ingredient> requiredInputs = recipe.input();
         NonNullList<ItemStack> ingredients = NonNullList.withSize(5, ItemStack.EMPTY);
         boolean allFound = true;
         for (int i = 0; i < requiredInputs.size() && i < 5; i++) {
-            boolean found = false;
-            for (ItemStack invStack : player.getInventory().getNonEquipmentItems()) {
-                if (requiredInputs.get(i).test(invStack)) {
-                    ingredients.set(i, invStack.split(1));
-                    found = true;
+            if (hasCreativeCupboard) {
+                // 创造模式：取 Ingredient 的第一个匹配物品作为默认实例
+                var values = requiredInputs.get(i).getValues();
+                if (values.size() > 0) {
+                    ingredients.set(i, new ItemStack(values.get(0).value()));
+                } else {
+                    allFound = false;
+                    break;
+                }
+            } else {
+                boolean found = false;
+                for (ItemStack invStack : player.getInventory().getNonEquipmentItems()) {
+                    if (requiredInputs.get(i).test(invStack)) {
+                        ingredients.set(i, invStack.split(1));
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    allFound = false;
                     break;
                 }
             }
-            if (!found) {
-                allFound = false;
-                break;
-            }
         }
         if (!allFound) {
-            for (ItemStack ing : ingredients) {
-                if (!ing.isEmpty()) player.getInventory().add(ing);
+            if (!hasCreativeCupboard) {
+                for (ItemStack ing : ingredients) {
+                    if (!ing.isEmpty()) player.getInventory().add(ing);
+                }
             }
             return false;
         }
@@ -160,6 +181,23 @@ public class KitchenwareMenu extends AbstractNMIMenu {
 
         kitchenwareBE.setIngredients(ingredients);
         return true;
+    }
+
+    /**
+     * 检查玩家帽子中是否有绑定的创造橱柜。
+     */
+    private static boolean hasCreativeCupboard(Player player) {
+        var hat = player.getItemBySlot(EquipmentSlot.HEAD);
+        if (!hat.is(NMIMainItems.MYSTIAS_HAT)) return false;
+        CanteenConfigData data = hat.get(NMIDataComponentTypes.CANTEEN_CONFIG);
+        if (data == null) return false;
+        var level = player.level();
+        for (BlockPos pos : data.cupboardList()) {
+            if (level.isLoaded(pos) && level.getBlockEntity(pos) instanceof CreativeCupboardBlockEntity) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
