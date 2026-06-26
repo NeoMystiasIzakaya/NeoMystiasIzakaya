@@ -7,7 +7,6 @@ package icu.gensoukyo.neo_mystias_izakaya.common.block;
 
 import com.mojang.serialization.MapCodec;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.CupboardBlockEntity;
-import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.KitchenwareBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMainItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -41,12 +40,15 @@ public class CupboardBlock extends BaseEntityBlock {
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new CupboardBlockEntity(blockPos,blockState);
+        return new CupboardBlockEntity(blockPos, blockState);
     }
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (!level.isClientSide()) {
+            if (player.getMainHandItem().is(NMIMainItems.CANTEEN_CONFIG)) {
+                return super.useWithoutItem(state, level, pos, player, hitResult);
+            }
             BlockEntity blockEntity = level.getBlockEntity(pos);
             if (blockEntity instanceof CupboardBlockEntity cupboardBlockEntity) {
                 player.openMenu(cupboardBlockEntity, friendlyByteBuf -> friendlyByteBuf.writeBlockPos(cupboardBlockEntity.getBlockPos()));

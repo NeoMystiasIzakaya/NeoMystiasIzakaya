@@ -7,6 +7,7 @@ package icu.gensoukyo.neo_mystias_izakaya.common.blockentity;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.common.block.CanteenControllerBlock;
+import icu.gensoukyo.neo_mystias_izakaya.common.block.CupboardBlock;
 import icu.gensoukyo.neo_mystias_izakaya.common.block.DiningTableBlock;
 import icu.gensoukyo.neo_mystias_izakaya.common.block.KitchenwareBlock;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.CanteenOrderUtil;
@@ -109,6 +110,10 @@ public class CanteenControllerBlockEntity extends BlockEntity {
         return getMain().dingingTableList;
     }
 
+    public LinkedHashSet<BlockPos> getCupboardList() {
+        return getMain().cupboardList;
+    }
+
     // ==================== 内部实现（仅在 MAIN 上执行） ====================
 
     public boolean isOpen() {
@@ -136,12 +141,20 @@ public class CanteenControllerBlockEntity extends BlockEntity {
         return getMain().removeDiningTableImpl(pos);
     }
 
+    public boolean addCupboard(BlockPos pos) {
+        return getMain().addCupboardImpl(pos);
+    }
+
+    public boolean removeCupboard(BlockPos pos) {
+        return getMain().removeCupboardImpl(pos);
+    }
+
     public void setOpen(boolean open, @Nullable UUID ownerUUID) {
         getMain().setOpenImpl(open, ownerUUID);
     }
 
-    public int[] scanAndBind(Level level, BlockPos cornerA, BlockPos cornerB, int maxKitchenware, int maxDiningTables) {
-        return getMain().scanAndBindImpl(level, cornerA, cornerB, maxKitchenware, maxDiningTables);
+    public int[] scanAndBind(Level level, BlockPos cornerA, BlockPos cornerB, int maxKitchenware, int maxDiningTables, int maxCupboards) {
+        return getMain().scanAndBindImpl(level, cornerA, cornerB, maxKitchenware, maxDiningTables, maxCupboards);
     }
 
     private boolean addKitchenwareImpl(BlockPos pos) {
@@ -179,13 +192,25 @@ public class CanteenControllerBlockEntity extends BlockEntity {
         return removed;
     }
 
+    private boolean addCupboardImpl(BlockPos pos) {
+        boolean added = cupboardList.add(pos);
+        if (added) markUpdated();
+        return added;
+    }
+
+    private boolean removeCupboardImpl(BlockPos pos) {
+        boolean removed = cupboardList.remove(pos);
+        if (removed) markUpdated();
+        return removed;
+    }
+
     private void setOpenImpl(boolean open, @Nullable UUID ownerUUID) {
         this.isOpen = open;
         this.owner = open ? ownerUUID : null;
         markUpdated();
     }
 
-    private int[] scanAndBindImpl(Level level, BlockPos cornerA, BlockPos cornerB, int maxKitchenware, int maxDiningTables) {
+    private int[] scanAndBindImpl(Level level, BlockPos cornerA, BlockPos cornerB, int maxKitchenware, int maxDiningTables, int maxCupboards) {
         int minX = Math.min(cornerA.getX(), cornerB.getX());
         int minY = Math.min(cornerA.getY(), cornerB.getY());
         int minZ = Math.min(cornerA.getZ(), cornerB.getZ());
@@ -195,6 +220,7 @@ public class CanteenControllerBlockEntity extends BlockEntity {
 
         int kitchenwareCount = 0;
         int diningTableCount = 0;
+        int cupboardCount = 0;
 
         for (BlockPos pos : BlockPos.betweenClosed(minX, minY, minZ, maxX, maxY, maxZ)) {
             BlockState state = level.getBlockState(pos);
@@ -206,9 +232,13 @@ public class CanteenControllerBlockEntity extends BlockEntity {
                 if (dingingTableList.size() < maxDiningTables && addDiningTableImpl(pos.immutable())) {
                     diningTableCount++;
                 }
+            } else if (state.getBlock() instanceof CupboardBlock) {
+                if (cupboardList.size() < maxCupboards && addCupboardImpl(pos.immutable())) {
+                    cupboardCount++;
+                }
             }
         }
-        return new int[]{kitchenwareCount, diningTableCount};
+        return new int[]{kitchenwareCount, diningTableCount, cupboardCount};
     }
 
     /**
@@ -220,6 +250,9 @@ public class CanteenControllerBlockEntity extends BlockEntity {
         );
         changed |= kitchenwareList.removeIf(pos ->
                 !pLevel.isLoaded(pos) || !(pLevel.getBlockEntity(pos) instanceof KitchenwareBlockEntity)
+        );
+        changed |= cupboardList.removeIf(pos ->
+                !pLevel.isLoaded(pos) || !(pLevel.getBlockEntity(pos) instanceof CupboardBlockEntity)
         );
 
         if (changed) {
@@ -234,6 +267,7 @@ public class CanteenControllerBlockEntity extends BlockEntity {
         super.saveAdditional(output);
         output.store("kitchenware", BlockPos.CODEC.listOf(), new ArrayList<>(this.kitchenwareList));
         output.store("diningTable", BlockPos.CODEC.listOf(), new ArrayList<>(this.dingingTableList));
+        output.store("cupboard", BlockPos.CODEC.listOf(), new ArrayList<>(this.cupboardList));
         output.putBoolean("isOpen", this.isOpen);
         if (this.owner != null) {
             output.store("Owner", UUIDUtil.CODEC, this.owner);
@@ -246,6 +280,7 @@ public class CanteenControllerBlockEntity extends BlockEntity {
         super.loadAdditional(input);
         this.kitchenwareList = new LinkedHashSet<>(input.read("kitchenware", BlockPos.CODEC.listOf()).orElse(List.of()));
         this.dingingTableList = new LinkedHashSet<>(input.read("diningTable", BlockPos.CODEC.listOf()).orElse(List.of()));
+        this.cupboardList = new LinkedHashSet<>(input.read("cupboard", BlockPos.CODEC.listOf()).orElse(List.of()));
         this.isOpen = input.getBooleanOr("isOpen", false);
         this.owner = input.read("Owner", UUIDUtil.CODEC).orElse(null);
     }

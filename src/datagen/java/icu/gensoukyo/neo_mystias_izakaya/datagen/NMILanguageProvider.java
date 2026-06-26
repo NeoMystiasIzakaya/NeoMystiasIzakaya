@@ -94,10 +94,12 @@ public class NMILanguageProvider implements DataProvider {
         this.add("item.neo_mystias_izakaya.canteen_config.unbound", "Unbound from controller.", "已从控制器解绑。");
         this.add("item.neo_mystias_izakaya.canteen_config.kitchenware_full", "Maximum 8 kitchenware reached!", "最多只能绑定8个厨房用具！");
         this.add("item.neo_mystias_izakaya.canteen_config.dining_table_full", "Maximum 8 dining tables reached!", "最多只能绑定8张餐桌！");
+        this.add("item.neo_mystias_izakaya.canteen_config.cupboard_bound", "Cupboard bound!", "已绑定橱柜！");
+        this.add("item.neo_mystias_izakaya.canteen_config.cupboard_full", "Maximum 4 cupboards reached!", "最多只能绑定4个橱柜！");
         this.add("item.neo_mystias_izakaya.canteen_config.corner_a_set", "Corner A set! Shift+Right-click another block to set Corner B, then Right-click the Controller to scan.", "角点A已设置！Shift+右键另一处方块设置角点B，再右键控制器执行扫描。");
         this.add("item.neo_mystias_izakaya.canteen_config.corner_b_set", "Corner B set! Right-click the Controller to scan and bind all blocks in range.", "角点B已设置！右键控制器以扫描并绑定范围内的所有方块。");
         this.add("item.neo_mystias_izakaya.canteen_config.corners_cleared", "Corners cleared.", "已清除角点。");
-        this.add("item.neo_mystias_izakaya.canteen_config.scan_result", "Scan complete! Kitchenware: %s, Dining Tables: %s", "扫描完成！厨房用具：%s，餐桌：%s");
+        this.add("item.neo_mystias_izakaya.canteen_config.scan_result", "Scan complete! Kitchenware: %s, Dining Tables: %s, Cupboards: %s", "扫描完成！厨房用具：%s，餐桌：%s，橱柜：%s");
 
         this.add("block.neo_mystias_izakaya.canteen_controller.open", "§aCanteen Opened! §7Customers will arrive.", "§a餐厅已营业！§7顾客即将光临。");
         this.add("block.neo_mystias_izakaya.canteen_controller.close", "§cCanteen Closed! §7No more new customers.", "§c餐厅已打烊！§7不再接待新顾客。");

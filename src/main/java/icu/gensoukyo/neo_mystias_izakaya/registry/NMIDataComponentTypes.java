@@ -7,8 +7,8 @@ package icu.gensoukyo.neo_mystias_izakaya.registry;
 
 import com.mojang.serialization.Codec;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
+import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.CanteenConfigData;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -16,8 +16,6 @@ import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 public class NMIDataComponentTypes {
 
@@ -42,53 +40,13 @@ public class NMIDataComponentTypes {
     );
 
     /**
-     * 厨房配置工具已绑定的控制器坐标
+     * 食堂配置工具/帽子的全部绑定数据（控制器、厨具、餐桌、橱柜、角点）。
      */
-    public static final DeferredHolder<DataComponentType<?>, @NotNull DataComponentType<BlockPos>> BOUND_CONTROLLER = DATA_COMPONENT_TYPES.registerComponentType(
-            "bound_controller",
+    public static final DeferredHolder<DataComponentType<?>, @NotNull DataComponentType<CanteenConfigData>> CANTEEN_CONFIG = DATA_COMPONENT_TYPES.registerComponentType(
+            "canteen_config",
             builder -> builder
-                    .persistent(BlockPos.CODEC)
-                    .networkSynchronized(BlockPos.STREAM_CODEC)
-    );
-
-    /**
-     * 厨房配置工具已绑定的厨房用具坐标列表
-     */
-    public static final DeferredHolder<DataComponentType<?>, @NotNull DataComponentType<List<BlockPos>>> BOUND_KITCHENWARE = DATA_COMPONENT_TYPES.registerComponentType(
-            "bound_kitchenware",
-            builder -> builder
-                    .persistent(BlockPos.CODEC.listOf())
-                    .networkSynchronized(BlockPos.STREAM_CODEC.apply(ByteBufCodecs.list()))
-    );
-
-    /**
-     * 厨房配置工具已绑定的餐桌坐标列表
-     */
-    public static final DeferredHolder<DataComponentType<?>, @NotNull DataComponentType<List<BlockPos>>> BOUND_DINING_TABLES = DATA_COMPONENT_TYPES.registerComponentType(
-            "bound_dining_tables",
-            builder -> builder
-                    .persistent(BlockPos.CODEC.listOf())
-                    .networkSynchronized(BlockPos.STREAM_CODEC.apply(ByteBufCodecs.list()))
-    );
-
-    /**
-     * 区域扫描模式：第一个角点
-     */
-    public static final DeferredHolder<DataComponentType<?>, @NotNull DataComponentType<BlockPos>> SCAN_CORNER_A = DATA_COMPONENT_TYPES.registerComponentType(
-            "scan_corner_a",
-            builder -> builder
-                    .persistent(BlockPos.CODEC)
-                    .networkSynchronized(BlockPos.STREAM_CODEC)
-    );
-
-    /**
-     * 区域扫描模式：第二个角点
-     */
-    public static final DeferredHolder<DataComponentType<?>, @NotNull DataComponentType<BlockPos>> SCAN_CORNER_B = DATA_COMPONENT_TYPES.registerComponentType(
-            "scan_corner_b",
-            builder -> builder
-                    .persistent(BlockPos.CODEC)
-                    .networkSynchronized(BlockPos.STREAM_CODEC)
+                    .persistent(CanteenConfigData.CODEC)
+                    .networkSynchronized(CanteenConfigData.STREAM_CODEC)
     );
 
     /**
@@ -99,12 +57,5 @@ public class NMIDataComponentTypes {
             builder -> builder
                     .persistent(Identifier.CODEC)
                     .networkSynchronized(Identifier.STREAM_CODEC)
-    );
-
-    public static final DeferredHolder<DataComponentType<?>, @NotNull DataComponentType<List<BlockPos>>> BOUND_CUPBOARD = DATA_COMPONENT_TYPES.registerComponentType(
-            "bound_cupboard",
-            builder -> builder
-                    .persistent(BlockPos.CODEC.listOf())
-                    .networkSynchronized(BlockPos.STREAM_CODEC.apply(ByteBufCodecs.list()))
     );
 }

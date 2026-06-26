@@ -10,6 +10,7 @@ import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.CanteenControllerBlo
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.DiningTableBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.common.item.RecipeItem;
 import icu.gensoukyo.neo_mystias_izakaya.common.menu.DishServingMenu;
+import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.CanteenConfigData;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonIzakayaUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMIServerStoreUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.cooking.IzakayaCookingUtil;
@@ -41,10 +42,10 @@ public class ServerPayloadHandler {
         context.enqueueWork(() -> {
             Player player = context.player();
             ItemStack itemBySlot = player.getItemBySlot(EquipmentSlot.HEAD);
-            // 餐桌列表
-            List<BlockPos> diningTables = itemBySlot.get(NMIDataComponentTypes.BOUND_DINING_TABLES);
+            CanteenConfigData data = itemBySlot.get(NMIDataComponentTypes.CANTEEN_CONFIG);
+            List<BlockPos> diningTables = data != null ? data.diningTableList() : List.of();
 
-            if (diningTables != null && !diningTables.isEmpty()) {
+            if (!diningTables.isEmpty()) {
                 player.openMenu(new SimpleMenuProvider(
                         (containerId, inventory, _) -> new DishServingMenu(containerId, inventory, diningTables),
                         Component.literal("Dish Serving")

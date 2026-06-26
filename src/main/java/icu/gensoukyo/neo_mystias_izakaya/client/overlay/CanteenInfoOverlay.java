@@ -10,6 +10,7 @@ import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientItemTagUtil;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.KitchenwareBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.DiningTableBlockEntity;
+import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.CanteenConfigData;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaOrder;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIDataComponentTypes;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIKitchenware;
@@ -76,10 +77,13 @@ public class CanteenInfoOverlay implements GuiLayer {
         int screenHeight = window.getGuiScaledHeight();
         int centerY = screenHeight / 2;
 
+        CanteenConfigData data = itemBySlot.get(NMIDataComponentTypes.CANTEEN_CONFIG);
+        if (data == null) data = CanteenConfigData.EMPTY;
+
         // 厨房用具列表
-        List<BlockPos> kitchenware = itemBySlot.get(NMIDataComponentTypes.BOUND_KITCHENWARE);
+        List<BlockPos> kitchenware = data.kitchenwareList();
         // 餐桌列表
-        List<BlockPos> diningTables = itemBySlot.get(NMIDataComponentTypes.BOUND_DINING_TABLES);
+        List<BlockPos> diningTables = data.diningTableList();
 
         // --- 左侧：厨房用具矩形组 ---
         if (kitchenware != null && !kitchenware.isEmpty()) {

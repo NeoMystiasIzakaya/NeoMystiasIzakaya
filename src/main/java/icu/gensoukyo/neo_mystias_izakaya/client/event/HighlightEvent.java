@@ -6,6 +6,7 @@
 package icu.gensoukyo.neo_mystias_izakaya.client.event;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
+import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.CanteenConfigData;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIDataComponentTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -19,14 +20,13 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ExtractLevelRenderStateEvent;
 
-import java.util.List;
-
 @EventBusSubscriber(modid = NeoMystiasIzakaya.MODID, value = Dist.CLIENT)
 public class HighlightEvent {
 
     private static final int COLOR_CONTROLLER = 0xFFFFFFFF;   // 白色 - 控制器
     private static final int COLOR_KITCHENWARE = 0xFFFF8C00;  // 橙色 - 厨房用具
     private static final int COLOR_DINING_TABLE = 0xFF00BFFF;  // 蓝色 - 餐桌
+    private static final int COLOR_CUPBOARD = 0xFF8B4513;       // 棕色 - 橱柜
     private static final int COLOR_CORNER_A = 0xFF00FF00;      // 绿色 - 角点A
     private static final int COLOR_CORNER_B = 0xFFFFFF00;      // 黄色 - 角点B
     private static final int COLOR_REGION_EDGE = 0x80FFFF00;   // 半透明黄 - 区域边框
@@ -38,16 +38,19 @@ public class HighlightEvent {
         if (!(mc.player instanceof LocalPlayer localPlayer)) return;
 
         ItemStack mainHandItem = localPlayer.getMainHandItem();
-        BlockPos controllerPos = mainHandItem.get(NMIDataComponentTypes.BOUND_CONTROLLER);
+        CanteenConfigData data = mainHandItem.get(NMIDataComponentTypes.CANTEEN_CONFIG);
+        if (data == null) data = CanteenConfigData.EMPTY;
+
+        BlockPos controllerPos = data.controller();
 
         // 高亮角点 A（绿色）
-        BlockPos cornerA = mainHandItem.get(NMIDataComponentTypes.SCAN_CORNER_A);
+        BlockPos cornerA = data.cornerA();
         if (cornerA != null) {
             Gizmos.cuboid(cornerA, GizmoStyle.stroke(COLOR_CORNER_A, 6));
         }
 
         // 高亮角点 B（黄色）
-        BlockPos cornerB = mainHandItem.get(NMIDataComponentTypes.SCAN_CORNER_B);
+        BlockPos cornerB = data.cornerB();
         if (cornerB != null) {
             Gizmos.cuboid(cornerB, GizmoStyle.stroke(COLOR_CORNER_B, 6));
         }
@@ -63,16 +66,13 @@ public class HighlightEvent {
         Gizmos.cuboid(controllerPos, GizmoStyle.stroke(COLOR_CONTROLLER, 8));
 
         // 高亮厨房用具
-        List<BlockPos> kitchenware = mainHandItem.get(NMIDataComponentTypes.BOUND_KITCHENWARE);
-        if (kitchenware != null) {
-            kitchenware.forEach(pos -> Gizmos.cuboid(pos, GizmoStyle.stroke(COLOR_KITCHENWARE, 4)));
-        }
+        data.kitchenwareList().forEach(pos -> Gizmos.cuboid(pos, GizmoStyle.stroke(COLOR_KITCHENWARE, 4)));
 
         // 高亮餐桌
-        List<BlockPos> diningTables = mainHandItem.get(NMIDataComponentTypes.BOUND_DINING_TABLES);
-        if (diningTables != null) {
-            diningTables.forEach(pos -> Gizmos.cuboid(pos, GizmoStyle.stroke(COLOR_DINING_TABLE, 4)));
-        }
+        data.diningTableList().forEach(pos -> Gizmos.cuboid(pos, GizmoStyle.stroke(COLOR_DINING_TABLE, 4)));
+
+        // 高亮橱柜
+        data.cupboardList().forEach(pos -> Gizmos.cuboid(pos, GizmoStyle.stroke(COLOR_CUPBOARD, 4)));
     }
 
     /**
