@@ -5,22 +5,23 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.content.izakaya;
 
+import icu.gensoukyo.neo_mystias_izakaya.api.common.ICupboard;
 import icu.gensoukyo.neo_mystias_izakaya.api.dal.NMIDataAccessor;
-import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.CupboardBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.KitchenwareBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.common.network.ServerPayloadSender;
 import icu.gensoukyo.neo_mystias_izakaya.common.resource.ItemResourceWithCount;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonIzakayaUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeHolder;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIDataComponentTypes;
+import icu.gensoukyo.neo_mystias_izakaya.registry.NMIVanillaTags;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMainItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.NonNullList;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -45,24 +46,36 @@ public final class CupBoardUtil {
         List<BlockPos> blockPosList = data.cupboardList();
         List<ResourceHandler<ItemResource>> resourceHandlerList = new ArrayList<>();
         for (BlockPos blockPos : blockPosList) {
-            if (serverLevel.isLoaded(blockPos) && serverLevel.getBlockEntity(blockPos) instanceof CupboardBlockEntity entity) {
+            if (serverLevel.isLoaded(blockPos) && serverLevel.getBlockEntity(blockPos) instanceof ICupboard entity) {
                 resourceHandlerList.add(entity.getItemHandler());
             }
         }
         return new CombinedResourceHandler<>(resourceHandlerList);
     }
 
-    public static List<ItemResourceWithCount> extractItemResourceList(ServerPlayer serverPlayer) {
-        return extractItemResourceList(getItemResourceHandler(serverPlayer));
+    public static List<ItemResourceWithCount> extractBeveragesItemResourceList(ServerPlayer serverPlayer) {
+        return extractIngredientItemResourceList(getItemResourceHandler(serverPlayer));
     }
 
-    public static List<ItemResourceWithCount> extractItemResourceList(ResourceHandler<ItemResource> resourceHandler) {
+    public static List<ItemResourceWithCount> extractBeveragesItemResourceList(ResourceHandler<ItemResource> resourceHandler) {
+        return extractItemResourceListByTag(resourceHandler, NMIVanillaTags.BEVERAGES);
+    }
+
+    public static List<ItemResourceWithCount> extractIngredientItemResourceList(ServerPlayer serverPlayer) {
+        return extractIngredientItemResourceList(getItemResourceHandler(serverPlayer));
+    }
+
+    public static List<ItemResourceWithCount> extractIngredientItemResourceList(ResourceHandler<ItemResource> resourceHandler) {
+        return extractItemResourceListByTag(resourceHandler, NMIVanillaTags.INGREDIENT);
+    }
+
+    public static List<ItemResourceWithCount> extractItemResourceListByTag(ResourceHandler<ItemResource> resourceHandler, TagKey<Item> tagKey) {
         Map<ItemResource, Long> itemResourceLongHashMap = new HashMap<>();
         for (int i = 0; i < resourceHandler.size(); i++) {
             Long count = itemResourceLongHashMap.getOrDefault(resourceHandler.getResource(i), 0L);
             itemResourceLongHashMap.put(resourceHandler.getResource(i), count == Long.MAX_VALUE ? count : count + resourceHandler.getAmountAsLong(i));
         }
-        return itemResourceLongHashMap.keySet().stream().map(itemResource -> new ItemResourceWithCount(itemResource, itemResourceLongHashMap.get(itemResource))).toList();
+        return itemResourceLongHashMap.keySet().stream().filter(i->i.is(tagKey)).map(itemResource -> new ItemResourceWithCount(itemResource, itemResourceLongHashMap.get(itemResource))).toList();
     }
 
     public static void extractMenuIngredientToKitchenware(ServerPlayer serverPlayer, int menuId, BlockPos kitchenwarePos) {
@@ -81,7 +94,7 @@ public final class CupBoardUtil {
 
 
         PlayerInventoryWrapper playerResourceHandler = PlayerInventoryWrapper.of(serverPlayer);
-        ItemStacksResourceHandler kitchenwareResourceHandler = new ItemStacksResourceHandler(kitchenwareBlockEntity.getItems());
+        ResourceHandler<ItemResource> kitchenwareResourceHandler = kitchenwareBlockEntity.getItemHandler();
         ResourceHandler<ItemResource> combinedResourceHandler = new CombinedResourceHandler<>(getItemResourceHandler(serverPlayer),
                 playerResourceHandler,
                 kitchenwareResourceHandler);
@@ -112,7 +125,6 @@ public final class CupBoardUtil {
             }
 
             transaction.commit();
-            kitchenwareBlockEntity.setItems(kitchenwareResourceHandler.copyToList());
         }
     }
 
@@ -122,8 +134,8 @@ public final class CupBoardUtil {
             return;
         }
 
-        ItemStacksResourceHandler playerResourceHandler = new ItemStacksResourceHandler(serverPlayer.getInventory().getNonEquipmentItems());
-        ItemStacksResourceHandler kitchenwareResourceHandler = new ItemStacksResourceHandler(kitchenwareBlockEntity.getItems());
+        PlayerInventoryWrapper playerResourceHandler = PlayerInventoryWrapper.of(serverPlayer);
+        ResourceHandler<ItemResource> kitchenwareResourceHandler = kitchenwareBlockEntity.getItemHandler();
         ResourceHandler<ItemResource> combinedResourceHandler = new CombinedResourceHandler<>(getItemResourceHandler(serverPlayer),
                 playerResourceHandler);
 
@@ -136,7 +148,6 @@ public final class CupBoardUtil {
                 }
             }
             transaction.commit();
-            kitchenwareBlockEntity.setItems(kitchenwareResourceHandler.copyToList());
             ServerPayloadSender.sendCupBoardItemResourceConsumedMessage(serverPlayer, itemResource);
         }
     }

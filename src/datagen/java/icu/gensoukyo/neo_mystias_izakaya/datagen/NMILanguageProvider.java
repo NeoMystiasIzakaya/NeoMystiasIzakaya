@@ -8,6 +8,9 @@ package icu.gensoukyo.neo_mystias_izakaya.datagen;
 import com.google.gson.JsonObject;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.StoreScreen;
+import icu.gensoukyo.neo_mystias_izakaya.compat.ae2.registry.NMIMEBlocks;
+import icu.gensoukyo.neo_mystias_izakaya.compat.ae2.registry.NMIMECreativeModeTabs;
+import icu.gensoukyo.neo_mystias_izakaya.compat.ae2.registry.NMIMEItems;
 import icu.gensoukyo.neo_mystias_izakaya.content.cooking.Kitchenware;
 import icu.gensoukyo.neo_mystias_izakaya.content.customer.consts.*;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.consts.NMIBeveragesTags;
@@ -24,6 +27,7 @@ import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -53,6 +57,7 @@ public class NMILanguageProvider implements DataProvider {
         this.addItemGroup(NMICreativeModeTabs.CUISINES_ID, "Neo Mystia's Izakaya - Cuisines", "新夜雀食堂 - 料理");
         this.addItemGroup(NMICreativeModeTabs.INGREDIENT_ID, "Neo Mystia's Izakaya - Ingredient", "新夜雀食堂 - 食材");
         this.addItemGroup(NMICreativeModeTabs.MAIN_ID, "Neo Mystia's Izakaya - Main", "新夜雀食堂 - 主体");
+        this.addItemGroup(NMIMECreativeModeTabs.AE2_ID, "Neo Mystia's Izakaya - AE2", "新夜雀食堂 - AE2");
 
         this.add(NMIBlocks.BOILING_POT.get(), "Boiling Pot", "煮锅");
         this.add(NMIBlocks.GRILL.get(), "Grill", "烤架");
@@ -62,6 +67,7 @@ public class NMILanguageProvider implements DataProvider {
         this.add(NMIBlocks.DINING_TABLE.get(), "Dining Table", "餐桌");
         this.add(NMIBlocks.CUPBOARD, "CupBoard","橱柜");
         this.add(NMIBlocks.CREATIVE_CUPBOARD, "CupBoard (Creative)","橱柜 (创造)");
+        this.add(NMIMEBlocks.ME_CUPBOARD.get(), "CupBoard (ME)","橱柜 (ME)");
 
         this.add(NMIMainItems.BOILING_POT, "Boiling Pot", "煮锅");
         this.add(NMIMainItems.GRILL, "Grill", "烤架");
@@ -75,6 +81,7 @@ public class NMILanguageProvider implements DataProvider {
         this.add(NMIMainItems.STORE, "Store", "河童电话");
         this.add(NMIMainItems.CUPBOARD, "CupBoard","橱柜");
         this.add(NMIMainItems.CREATIVE_CUPBOARD, "CupBoard (Creative)","橱柜 (创造)");
+        this.add(NMIMEItems.AE2_CUPBOARD.get(), "CupBoard (ME)","橱柜 (ME)");
 
         // --- 通用评价等级 ---
         this.add("evaluation.neo_mystias_izakaya.ex_bad", "Terrible", "超差评");
@@ -2199,6 +2206,9 @@ public class NMILanguageProvider implements DataProvider {
     }
 
     public void add(Item key, String en, String cn) {
+        this.add(key.getDescriptionId(), en, cn);
+    }
+    public void add(BlockItem key, String en, String cn) {
         this.add(key.getDescriptionId(), en, cn);
     }
 

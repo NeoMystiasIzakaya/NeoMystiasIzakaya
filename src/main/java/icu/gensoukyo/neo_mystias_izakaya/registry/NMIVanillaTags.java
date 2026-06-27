@@ -21,8 +21,11 @@ public class NMIVanillaTags {
     public static final TagKey<Block> STEAMER = ofBlock("steamer");
 
     public static final TagKey<Item> INGREDIENT  = ofItem("ingredient");
+    public static final TagKey<Item> BEVERAGES  = ofItem("beverages");
 
     public static final TagKey<Item> REPAIRS_HAT = ofItem("repairs_hat");
+
+    public static final TagKey<Item> CHROME_BALLS = ofItem(Identifier.parse("c:chromeballs"));
 
     public static TagKey<Block> ofBlock(String name) {
         return ofBlock(NeoMystiasIzakaya.id(name));

@@ -6,6 +6,7 @@
 package icu.gensoukyo.neo_mystias_izakaya.datagen;
 
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIVanillaTags;
+import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIBeveragesItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIIngredientItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMainItems;
 import net.minecraft.core.HolderLookup;
@@ -38,9 +39,13 @@ public class NMIVanillaItemTagProvider extends ItemTagsProvider {
                 Items.HONEY_BOTTLE,
                 Items.COCOA_BEANS
         );
+        NMIBeveragesItems.ITEM_LIST.forEach(item -> tag(NMIVanillaTags.BEVERAGES).add(item.get()));
 
         tag(ItemTags.HEAD_ARMOR).add(NMIMainItems.MYSTIAS_HAT.get());
         tag(ItemTags.HEAD_ARMOR_ENCHANTABLE).add(NMIMainItems.MYSTIAS_HAT.get());
         tag(ItemTags.FREEZE_IMMUNE_WEARABLES).add(NMIMainItems.MYSTIAS_HAT.get());
+
+        tag(NMIVanillaTags.CHROME_BALLS).add(NMIMainItems.CHROME_BALL.get());
+
     }
 }

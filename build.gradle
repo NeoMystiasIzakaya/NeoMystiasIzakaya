@@ -113,6 +113,9 @@ dependencies {
 
     implementation 'com.github.TouhouLittleMaid:TouhouLittleMaid-26.1:7c11c1d0a4'
 
+    implementation "org.appliedenergistics:appliedenergistics2:${ae2_version}:api"
+    implementation "org.appliedenergistics:appliedenergistics2:${ae2_version}"
+
 //    compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:${rei_version}"
 //    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:${rei_version}"
 //

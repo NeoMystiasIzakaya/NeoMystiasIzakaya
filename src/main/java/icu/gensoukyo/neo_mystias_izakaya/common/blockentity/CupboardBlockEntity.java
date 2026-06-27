@@ -5,6 +5,7 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.common.blockentity;
 
+import icu.gensoukyo.neo_mystias_izakaya.api.common.ICupboard;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
@@ -21,10 +22,9 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
-import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper;
 
-public class CupboardBlockEntity extends RandomizableContainerBlockEntity {
+public class CupboardBlockEntity extends RandomizableContainerBlockEntity implements ICupboard {
 
     private static final int SLOT_COUNT = 27;
 

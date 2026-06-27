@@ -5,7 +5,7 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.common.item;
 
-import icu.gensoukyo.neo_mystias_izakaya.common.block.CupboardBlock;
+import icu.gensoukyo.neo_mystias_izakaya.api.common.ICupboard;
 import icu.gensoukyo.neo_mystias_izakaya.common.block.DiningTableBlock;
 import icu.gensoukyo.neo_mystias_izakaya.common.block.KitchenwareBlock;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.CanteenControllerBlockEntity;
@@ -134,7 +134,7 @@ public class CanteenConfigItem extends Item {
 
         boolean isKitchenware = clickedState.getBlock() instanceof KitchenwareBlock;
         boolean isDiningTable = clickedState.getBlock() instanceof DiningTableBlock;
-        boolean isCupboard = clickedState.getBlock() instanceof CupboardBlock;
+        boolean isCupboard = clickedBE instanceof ICupboard;
         boolean isController = clickedBE instanceof CanteenControllerBlockEntity;
         boolean isSpecial = isKitchenware || isDiningTable || isCupboard || isController;
 

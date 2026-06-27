@@ -117,7 +117,7 @@ public class ServerPayloadHandler {
     public static void handleRequestCupboardInfoMessage(RequestCupboardInfoMessage message, IPayloadContext context) {
         context.enqueueWork(() -> {
             if (context.player() instanceof ServerPlayer serverPlayer) {
-                ServerPayloadSender.sendCupBoardItemResourceFullSyncMessage(serverPlayer, CupBoardUtil.extractItemResourceList(serverPlayer));
+                ServerPayloadSender.sendCupBoardItemResourceFullSyncMessage(serverPlayer, CupBoardUtil.extractIngredientItemResourceList(serverPlayer));
             }
         });
     }

@@ -80,7 +80,7 @@ public class NMICreativeModeTabs {
     public static final DeferredHolder<CreativeModeTab,?> MAIN = CREATIVE_MODE_TABS.register("main", () ->
             CreativeModeTab.builder()
                     .title(NMICommonComponentUtil.translatableItemGroup(MAIN_ID))
-                    .icon(()-> NMIMainItems.CHROME_BALL.get().getDefaultInstance())
+                    .icon(()-> NMIMainItems.MYSTIAS_HAT.get().getDefaultInstance())
                     .displayItems((parameters, output) -> {
                         NMIMainItems.ITEMS.getEntries().forEach(
                                 item -> output.accept(item.get())

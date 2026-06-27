@@ -52,7 +52,7 @@ public class CupBoardHud extends AbstractContainerWidget {
     public void update(ItemResource itemResource){
         for (int i = 0; i < itemResourceWithCountList.size(); i++) {
             if (itemResourceWithCountList.get(i).itemResource().equals(itemResource) && itemResourceWithCountList.get(i).count() != Long.MAX_VALUE){
-                itemResourceWithCountList.set(i,new ItemResourceWithCount(itemResource,itemResourceWithCountList.get(i).count()+1));
+                itemResourceWithCountList.set(i,new ItemResourceWithCount(itemResource,itemResourceWithCountList.get(i).count()-1));
                 refresh();
                 return;
             }

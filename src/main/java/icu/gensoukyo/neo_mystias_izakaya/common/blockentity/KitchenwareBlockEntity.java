@@ -36,6 +36,9 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper;
 import org.slf4j.Logger;
 
 import java.util.List;
@@ -49,6 +52,10 @@ public class KitchenwareBlockEntity extends RandomizableContainerBlockEntity {
      * 6为保存烹饪过程中的目标物品
      */
     NonNullList<ItemStack> items = NonNullList.withSize(7, ItemStack.EMPTY);
+
+
+    private final ResourceHandler<ItemResource> itemStacksResourceHandler= VanillaContainerWrapper.of(this);
+
     @Setter
     private int cookingTime = 0;
     @Setter
@@ -205,6 +212,10 @@ public class KitchenwareBlockEntity extends RandomizableContainerBlockEntity {
             this.getIngredientItems().forEach(stack -> Containers.dropItemStack(this.level, pos.getX(), pos.getY(), pos.getZ(), stack));
             Containers.dropItemStack(this.level, pos.getX(), pos.getY(), pos.getZ(), this.getResultItem());
         }
+    }
+
+    public ResourceHandler<ItemResource> getItemHandler() {
+        return itemStacksResourceHandler;
     }
 
     public static class BoilingPot extends KitchenwareBlockEntity {

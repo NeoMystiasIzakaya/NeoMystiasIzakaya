@@ -7,6 +7,7 @@ package icu.gensoukyo.neo_mystias_izakaya.datagen;
 
 import com.mojang.math.Quadrant;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
+import icu.gensoukyo.neo_mystias_izakaya.compat.ae2.registry.NMIMEBlocks;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlocks;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIBeveragesItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMICuisinesItems;
@@ -102,6 +103,7 @@ public class NMIItemModelProvider extends ModelProvider {
         normalBlock(blockModels, NMIBlocks.STORE.get());
         horizontallyBlock(blockModels, NMIBlocks.CUPBOARD.get());
         horizontallyBlock(blockModels, NMIBlocks.CREATIVE_CUPBOARD.get());
+        horizontallyBlock(blockModels, NMIMEBlocks.ME_CUPBOARD.get());
     }
 
     private void registerItemModels(ItemModelGenerators itemModels) {
