@@ -79,7 +79,7 @@ description='''
 [[dependencies."${mod_id}"]]
     modId="${kaguya_mod_id}"
     type="optional"
-    versionRange="[26.1.0.0,)"
+    versionRange="[26.1.0,)"
     ordering="NONE"
     side="CLIENT"
 # Features are specific properties of the game environment, that you may want to declare you require. This example declares
