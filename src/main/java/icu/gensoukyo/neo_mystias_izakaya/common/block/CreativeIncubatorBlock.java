@@ -7,6 +7,7 @@ package icu.gensoukyo.neo_mystias_izakaya.common.block;
 
 import com.mojang.serialization.MapCodec;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.CreativeCupboardBlockEntity;
+import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.CreativeIncubatorBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -35,7 +36,7 @@ public class CreativeIncubatorBlock extends BaseEntityBlock {
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new CreativeCupboardBlockEntity(blockPos,blockState);
+        return new CreativeIncubatorBlockEntity(blockPos,blockState);
     }
 
     @Override

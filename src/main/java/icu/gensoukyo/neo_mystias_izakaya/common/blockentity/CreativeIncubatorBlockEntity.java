@@ -33,9 +33,7 @@ public class CreativeIncubatorBlockEntity extends BlockEntity implements IIncuba
     public CreativeIncubatorBlockEntity(BlockPos worldPosition, BlockState blockState) {
         super(NMIBlockEntities.CREATIVE_INCUBATOR.get(), worldPosition, blockState);
 
-        List<Item> itemList = new ArrayList<>();
-        itemList.addAll(NMICuisinesItems.ITEM_LIST.stream().map(DeferredItem::get).toList());
-        this.infiniteItemResourceHandler = InfiniteItemResourceHandler.withItem(itemList);
+        this.infiniteItemResourceHandler = InfiniteItemResourceHandler.withDeferredItem(NMICuisinesItems.ITEM_LIST);
     }
 
     public ResourceHandler<ItemResource> getItemHandler() {

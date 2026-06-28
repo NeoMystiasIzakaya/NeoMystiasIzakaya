@@ -35,7 +35,7 @@ public class IncubatorHud extends AbstractContainerWidget {
         super(x, y, width, height, Component.empty(),AbstractScrollArea.defaultSettings(10));
         this.onItemClick = onItemClick;
         CurrentActive = this;
-        this.itemResourceListWidget = new ItemResourceListWidget(Minecraft.getInstance(),this.getWidth(),this.getHeight()/2,getX(),getY(), ArrayList::new,(_)->{});
+        this.itemResourceListWidget = new ItemResourceListWidget(Minecraft.getInstance(),this.getWidth(),this.getHeight(),getX(),getY(), ArrayList::new,(_)->{});
     }
 
     public void refresh(List<ItemResourceWithCount> itemResourceWithCountList){
@@ -54,7 +54,7 @@ public class IncubatorHud extends AbstractContainerWidget {
     }
 
     public void refresh(){
-        this.itemResourceListWidget = new ItemResourceListWidget(Minecraft.getInstance(),this.getWidth(),this.getHeight()/2,getX(),getY(),()->itemResourceWithCountList,onItemClick);
+        this.itemResourceListWidget = new ItemResourceListWidget(Minecraft.getInstance(),this.getWidth(),this.getHeight(),getX(),getY(),()->itemResourceWithCountList,onItemClick);
         this.itemResourceListWidget.refresh();
         CurrentActive = this;
     }

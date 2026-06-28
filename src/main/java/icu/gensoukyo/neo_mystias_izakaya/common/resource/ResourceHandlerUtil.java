@@ -17,7 +17,7 @@ import java.util.Map;
 public final class ResourceHandlerUtil {
 
     public static List<ItemResourceWithCount> extractCuisinesItemResourceList(ResourceHandler<ItemResource> resourceHandler) {
-        return extractItemResourceListByTag(resourceHandler, NMIVanillaTags.BEVERAGES);
+        return extractItemResourceListByTag(resourceHandler, NMIVanillaTags.CUISINES);
     }
 
     public static List<ItemResourceWithCount> extractBeveragesItemResourceList(ResourceHandler<ItemResource> resourceHandler) {

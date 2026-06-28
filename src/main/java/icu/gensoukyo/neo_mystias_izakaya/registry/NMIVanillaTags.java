@@ -22,6 +22,7 @@ public class NMIVanillaTags {
 
     public static final TagKey<Item> INGREDIENT  = ofItem("ingredient");
     public static final TagKey<Item> BEVERAGES  = ofItem("beverages");
+    public static final TagKey<Item> CUISINES  = ofItem("cuisines");
 
     public static final TagKey<Item> REPAIRS_HAT = ofItem("repairs_hat");
 

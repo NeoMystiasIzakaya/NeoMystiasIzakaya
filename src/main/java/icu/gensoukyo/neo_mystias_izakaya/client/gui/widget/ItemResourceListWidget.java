@@ -15,8 +15,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.ObjectSelectionList;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -33,7 +37,7 @@ public class ItemResourceListWidget extends ObjectSelectionList<ItemResourceList
         super(minecraft, width, height, y, 20);
         setPosition(x,y);
         this.listWidth = width;
-        this.itemPreRow = (width-10)/20;
+        this.itemPreRow = (width-12)/20;
         this.itemResourceWithCountAssessor = itemResourceWithCountAssessor;
         this.onItemClick = onItemClick;
     }
@@ -94,7 +98,7 @@ public class ItemResourceListWidget extends ObjectSelectionList<ItemResourceList
 
         @Override
         public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
-            if (event.button() == InputConstants.MOUSE_BUTTON_LEFT) {
+            if (event.button() == InputConstants.MOUSE_BUTTON_LEFT && event.x()-10 > this.getContentX()) {
                 int index = ((int)(event.x()-10 - getX()) / 20);
                 if (index >= itemResourceWithCountList.size()) return false;
                 resourceConsumer.accept(itemResourceWithCountList.get(index));
@@ -116,7 +120,15 @@ public class ItemResourceListWidget extends ObjectSelectionList<ItemResourceList
                 String formatCount = KaguyaFormatUtil.formatCount(itemResourceWithCountList.get(i).count());
                 guiGraphics.text(font, formatCount,this.getContentX()+i*20+10+20-font.width(formatCount)-1,this.getY()+20-font.lineHeight-1,0xFFFFFFFF);
             }
+            if (isMouseOver(mouseX,mouseY)&& mouseX-10 > this.getContentX()){
+                int index = ((mouseX-10 - getX()) / 20);
+                ItemStack stack = this.itemResourceWithCountList.get(index).itemResource().toStack();
+                if (index >= itemResourceWithCountList.size()) return;
+                guiGraphics.setTooltipForNextFrame(font, this.getTooltipFromContainerItem(stack), stack.getTooltipImage(), stack, mouseX, mouseY, stack.get(DataComponents.TOOLTIP_STYLE));
+            }
         }
-
+        protected List<Component> getTooltipFromContainerItem(ItemStack itemStack) {
+            return Screen.getTooltipFromItem(Minecraft.getInstance(), itemStack);
+        }
     }
 }

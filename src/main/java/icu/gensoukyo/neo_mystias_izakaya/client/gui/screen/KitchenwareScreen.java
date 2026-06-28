@@ -143,7 +143,8 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
             }
         }
 
-        cupBoardHud = new CupboardHud(10,10,getLeftPos()-20,getImageHeight(),this::onHudItemResourceClick);
+        int x2 = Math.max(getLeftPos()-130,10);
+        cupBoardHud = new CupboardHud(x2,getTopPos(),getLeftPos()-x2-10,getImageHeight(),this::onHudItemResourceClick);
         addRenderableWidget(cupBoardHud);
         ClientPayloadSender.sendRequestCupboardIngredientInfoMessage();
     }

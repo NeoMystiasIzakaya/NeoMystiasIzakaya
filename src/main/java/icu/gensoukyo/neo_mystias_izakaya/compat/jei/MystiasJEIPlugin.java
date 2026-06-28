@@ -5,6 +5,7 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.compat.jei;
 
+import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.DishServingScreen;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.KitchenwareScreen;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientRecipeUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonRecipeUtil;
@@ -69,6 +70,7 @@ public class MystiasJEIPlugin implements IModPlugin {
     @Override
     public void registerGuiHandlers(IGuiHandlerRegistration registration) {
         registration.addGuiContainerHandler(KitchenwareScreen.class, new KitchenwareContainerHandler());
+        registration.addGuiContainerHandler(DishServingScreen.class, new DishServingContainerHandler());
     }
 
     @Override

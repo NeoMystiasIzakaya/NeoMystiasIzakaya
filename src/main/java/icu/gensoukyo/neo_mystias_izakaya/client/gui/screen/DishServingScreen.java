@@ -54,8 +54,11 @@ public class DishServingScreen extends AbstractContainerScreen<DishServingMenu> 
     protected void init(){
         super.init();
 
-        cupBoardHud = new CupboardHud(leftPos,10,imageWidth/2,topPos-20,this::onCupboardHudItemResourceClick);
-        incubatorHud = new IncubatorHud(leftPos+imageWidth/2,10,imageWidth/2,topPos-20,this::onIncubatorHudItemResourceClick);
+        int x1 = getLeftPos()+getImageWidth()+4;
+        int width = Math.min(130,getMinecraft().getWindow().getGuiScaledWidth()-x1-10);
+        int x2 = Math.max(getLeftPos()-130,10);
+        cupBoardHud = new CupboardHud(x2,getTopPos(),getLeftPos()-x2-4,getImageHeight(),this::onCupboardHudItemResourceClick);
+        incubatorHud = new IncubatorHud(x1,getTopPos(),width,getImageHeight(),this::onIncubatorHudItemResourceClick);
         addRenderableWidget(cupBoardHud);
         addRenderableWidget(incubatorHud);
         ClientPayloadSender.sendRequestCupboardBeveragesInfoMessage();
@@ -90,8 +93,6 @@ public class DishServingScreen extends AbstractContainerScreen<DishServingMenu> 
     @Override
     public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
         super.extractBackground(graphics, mouseX, mouseY, a);
-        int leftPos = (this.width - this.imageWidth) / 2;
-        int topPos = (this.height - this.imageHeight) / 2;
         graphics.blit(RenderPipelines.GUI_TEXTURED, BACKGROUND, leftPos, topPos, 0.0F, 0.0F, 256, 256, 256, 256);
 
         // 绘制餐桌详细信息
@@ -326,6 +327,9 @@ public class DishServingScreen extends AbstractContainerScreen<DishServingMenu> 
         boolean b = super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
         if (cupBoardHud.isMouseOver(mouseX, mouseY)) {
             return cupBoardHud.mouseScrolled(mouseX, mouseY, scrollX, scrollY) || b;
+        }
+        if (incubatorHud.isMouseOver(mouseX, mouseY)) {
+            return incubatorHud.mouseScrolled(mouseX, mouseY, scrollX, scrollY) || b;
         }
         return b;
     }
