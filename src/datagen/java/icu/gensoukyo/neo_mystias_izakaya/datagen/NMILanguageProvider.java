@@ -70,6 +70,7 @@ public class NMILanguageProvider implements DataProvider {
         this.add(NMIBlocks.INCUBATOR,"Incubator","保温箱");
         this.add(NMIBlocks.CREATIVE_INCUBATOR,"Incubator (Creative)","保温箱 (创造)");
         this.add(NMIMEBlocks.ME_CUPBOARD, "CupBoard (ME)", "橱柜 (ME)");
+        this.add(NMIMEBlocks.ME_INCUBATOR, "Incubator (ME)", "保温箱 (ME)");
 
         this.add(NMIMainItems.BOILING_POT, "Boiling Pot", "煮锅");
         this.add(NMIMainItems.GRILL, "Grill", "烤架");
@@ -86,6 +87,7 @@ public class NMILanguageProvider implements DataProvider {
         this.add(NMIMainItems.INCUBATOR, "Incubator", "保温箱");
         this.add(NMIMainItems.CREATIVE_INCUBATOR, "Incubator (Creative)", "保温箱 (创造)");;
         this.add(NMIMEItems.ME_CUPBOARD, "CupBoard (ME)", "橱柜 (ME)");
+        this.add(NMIMEItems.ME_INCUBATOR, "Incubator (ME)", "保温箱 (ME)");
 
         // --- 通用评价等级 ---
         this.add("evaluation.neo_mystias_izakaya.ex_bad", "Terrible", "超差评");

@@ -9,4 +9,5 @@ public class NMIMEItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(NeoMystiasIzakaya.MODID);
 
     public static final DeferredItem<BlockItem> ME_CUPBOARD = ITEMS.registerSimpleBlockItem("me_cupboard", NMIMEBlocks.ME_CUPBOARD);
+    public static final DeferredItem<BlockItem> ME_INCUBATOR = ITEMS.registerSimpleBlockItem("me_incubator", NMIMEBlocks.ME_INCUBATOR);
 }

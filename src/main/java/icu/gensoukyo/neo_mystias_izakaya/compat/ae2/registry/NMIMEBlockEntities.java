@@ -7,6 +7,7 @@ import appeng.blockentity.ServerTickingBlockEntity;
 import com.google.common.base.Preconditions;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.compat.ae2.blockentity.MECupboardBlockEntity;
+import icu.gensoukyo.neo_mystias_izakaya.compat.ae2.blockentity.MEIncubatorBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -22,6 +23,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class NMIMEBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, NeoMystiasIzakaya.MODID);
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<MECupboardBlockEntity>> ME_CUPBOARD = create("me_cupboard",MECupboardBlockEntity.class, MECupboardBlockEntity::new, NMIMEBlocks.ME_CUPBOARD);
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<MEIncubatorBlockEntity>> ME_INCUBATOR = create("me_incubator",MEIncubatorBlockEntity.class, MEIncubatorBlockEntity::new, NMIMEBlocks.ME_INCUBATOR);
 
     private static <T extends AEBaseBlockEntity> DeferredHolder<BlockEntityType<?>, BlockEntityType<T>> create(String shortId,
                                                                                    Class<T> entityClass,

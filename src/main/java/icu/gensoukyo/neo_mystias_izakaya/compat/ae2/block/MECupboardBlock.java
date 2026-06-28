@@ -10,9 +10,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
-public class MECupBoardBlock extends AEBaseEntityBlock<MECupboardBlockEntity> {
+public class MECupboardBlock extends AEBaseEntityBlock<MECupboardBlockEntity> {
 
-    public MECupBoardBlock(BlockBehaviour.Properties properties) {
+    public MECupboardBlock(BlockBehaviour.Properties properties) {
         super(properties.noOcclusion());
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
