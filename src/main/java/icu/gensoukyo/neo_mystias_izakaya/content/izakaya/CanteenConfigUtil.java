@@ -28,8 +28,9 @@ public final class CanteenConfigUtil {
 
     public enum BindResult { NO_CONTROLLER, NOT_FOUND, CANCELLED, BOUND, ALREADY_BOUND }
     public enum UnbindResult { NO_CONTROLLER, NOT_FOUND, CANCELLED, REMOVED, NOT_BOUND }
+    public enum BindType { KITCHENWARE, DINING_TABLE,CUPBOARD,INCUBATOR}
 
-    public record ScanResult(int kitchenwareCount,int diningTableCount,int cupboardCount ){}
+    public record ScanResult(int kitchenwareCount,int diningTableCount,int cupboardCount,int incubatorCount ){}
 
     // ==================== 控制器数据读写 ====================
 
@@ -47,6 +48,7 @@ public final class CanteenConfigUtil {
                         new ArrayList<>(controller.getKitchenwareList()),
                         new ArrayList<>(controller.getDiningTableList()),
                         new ArrayList<>(controller.getCupboardList()),
+                        new ArrayList<>(controller.getIncubatorList()),
                         null, null
                 ));
     }
@@ -72,7 +74,7 @@ public final class CanteenConfigUtil {
      * 将目标方块绑定到物品记录的控制器。
      * 触发 {@link CanteenConfigEvent.Bind.Pre}/{@code .Post}。
      */
-    public static BindResult bind(Level level, Player player, ItemStack heldItem, BlockPos target, boolean isKitchenware) {
+    public static BindResult bind(Level level, Player player, ItemStack heldItem, BlockPos target, BindType bindType) {
         CanteenConfigData data = getConfig(heldItem);
         BlockPos controllerPos = data.controller();
         if (controllerPos == null) return BindResult.NO_CONTROLLER;
@@ -82,13 +84,19 @@ public final class CanteenConfigUtil {
         }
 
         CanteenConfigEvent.Bind.Pre pre = NeoForge.EVENT_BUS.post(
-                new CanteenConfigEvent.Bind.Pre(player, heldItem, controller, target, isKitchenware));
+                new CanteenConfigEvent.Bind.Pre(player, heldItem, controller, target, bindType));
         if (pre.isCanceled()) return BindResult.CANCELLED;
 
-        boolean added = isKitchenware ? controller.addKitchenware(target) : controller.addDiningTable(target);
+        boolean bind = switch (bindType) {
+            case CUPBOARD -> controller.addCupboard(target);
+            case KITCHENWARE -> controller.addKitchenware(target);
+            case DINING_TABLE -> controller.addDiningTable(target);
+            case INCUBATOR -> controller.addIncubator(target);
+        };
 
-        NeoForge.EVENT_BUS.post(new CanteenConfigEvent.Bind.Post(player, heldItem, controller, target, isKitchenware, added));
-        return added ? BindResult.BOUND : BindResult.ALREADY_BOUND;
+
+        NeoForge.EVENT_BUS.post(new CanteenConfigEvent.Bind.Post(player, heldItem, controller, target, bindType, bind));
+        return bind ? BindResult.BOUND : BindResult.ALREADY_BOUND;
     }
 
     /**
@@ -116,40 +124,18 @@ public final class CanteenConfigUtil {
     }
 
     /**
-     * 将目标橱柜绑定到物品记录的控制器。
-     */
-    public static BindResult bindCupboard(Level level, Player player, ItemStack heldItem, BlockPos target) {
-        CanteenConfigData data = getConfig(heldItem);
-        BlockPos controllerPos = data.controller();
-        if (controllerPos == null) return BindResult.NO_CONTROLLER;
-        if (!level.isLoaded(controllerPos)
-                || !(level.getBlockEntity(controllerPos) instanceof CanteenControllerBlockEntity controller)) {
-            return BindResult.NOT_FOUND;
-        }
-
-        CanteenConfigEvent.Bind.Pre pre = NeoForge.EVENT_BUS.post(
-                new CanteenConfigEvent.Bind.Pre(player, heldItem, controller, target, false));
-        if (pre.isCanceled()) return BindResult.CANCELLED;
-
-        boolean added = controller.addCupboard(target);
-
-        NeoForge.EVENT_BUS.post(new CanteenConfigEvent.Bind.Post(player, heldItem, controller, target, false, added));
-        return added ? BindResult.BOUND : BindResult.ALREADY_BOUND;
-    }
-
-    /**
      * 区域扫描绑定：在两角点构成的范围内扫描厨具/餐桌/橱柜并绑定到控制器。
      * 触发 {@link CanteenConfigEvent.Scan.Pre}/{@code .Post}（Post 结果可改写）。
      *
      * @return {厨具绑定数, 餐桌绑定数, 橱柜绑定数}
      */
     public static ScanResult scan(Level level, Player player, ItemStack heldItem, CanteenControllerBlockEntity controller,
-                             BlockPos cornerA, BlockPos cornerB, int maxKitchenware, int maxDiningTables, int maxCupboards) {
+                             BlockPos cornerA, BlockPos cornerB, int maxKitchenware, int maxDiningTables, int maxCupboards,int maxIncubators) {
         CanteenConfigEvent.Scan.Pre pre = NeoForge.EVENT_BUS.post(
                 new CanteenConfigEvent.Scan.Pre(player, heldItem, controller, cornerA, cornerB));
-        if (pre.isCanceled()) return new ScanResult(0, 0, 0);
+        if (pre.isCanceled()) return new ScanResult(0, 0, 0,0);
 
-        ScanResult result = controller.scanAndBind(level, cornerA, cornerB, maxKitchenware, maxDiningTables, maxCupboards);
+        ScanResult result = controller.scanAndBind(level, cornerA, cornerB, maxKitchenware, maxDiningTables, maxCupboards,maxIncubators);
 
         CanteenConfigEvent.Scan.Post post = NeoForge.EVENT_BUS.post(
                 new CanteenConfigEvent.Scan.Post(player, heldItem, controller, cornerA, cornerB, result));

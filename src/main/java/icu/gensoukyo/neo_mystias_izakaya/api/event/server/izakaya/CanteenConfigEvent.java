@@ -34,19 +34,19 @@ public abstract class CanteenConfigEvent extends Event {
     public abstract static class Bind extends CanteenConfigEvent {
         private final CanteenControllerBlockEntity controller;
         private final BlockPos target;
-        private final boolean isKitchenware;
+        private final CanteenConfigUtil.BindType bindType;
 
-        public Bind(Player player, ItemStack heldItem, CanteenControllerBlockEntity controller, BlockPos target, boolean isKitchenware) {
+        public Bind(Player player, ItemStack heldItem, CanteenControllerBlockEntity controller, BlockPos target, CanteenConfigUtil.BindType bindType) {
             super(player, heldItem);
             this.controller = controller;
             this.target = target;
-            this.isKitchenware = isKitchenware;
+            this.bindType = bindType;
         }
 
         /** 绑定前触发，可取消以阻止本次绑定。 */
         public static class Pre extends Bind implements ICancellableEvent {
-            public Pre(Player player, ItemStack heldItem, CanteenControllerBlockEntity controller, BlockPos target, boolean isKitchenware) {
-                super(player, heldItem, controller, target, isKitchenware);
+            public Pre(Player player, ItemStack heldItem, CanteenControllerBlockEntity controller, BlockPos target, CanteenConfigUtil.BindType bindType) {
+                super(player, heldItem, controller, target, bindType);
             }
         }
 
@@ -55,8 +55,8 @@ public abstract class CanteenConfigEvent extends Event {
             @Getter
             private final boolean bound;
 
-            public Post(Player player, ItemStack heldItem, CanteenControllerBlockEntity controller, BlockPos target, boolean isKitchenware, boolean bound) {
-                super(player, heldItem, controller, target, isKitchenware);
+            public Post(Player player, ItemStack heldItem, CanteenControllerBlockEntity controller, BlockPos target, CanteenConfigUtil.BindType bindType, boolean bound) {
+                super(player, heldItem, controller, target, bindType);
                 this.bound = bound;
             }
         }

@@ -27,6 +27,7 @@ public class HighlightEvent {
     private static final int COLOR_KITCHENWARE = 0xFFFF8C00;  // 橙色 - 厨房用具
     private static final int COLOR_DINING_TABLE = 0xFF00BFFF;  // 蓝色 - 餐桌
     private static final int COLOR_CUPBOARD = 0xFF8B4513;       // 棕色 - 橱柜
+    private static final int COLOR_INCUBATOR = 0xFFC0C0C0;      // 银色 - 培养箱
     private static final int COLOR_CORNER_A = 0xFF00FF00;      // 绿色 - 角点A
     private static final int COLOR_CORNER_B = 0xFFFFFF00;      // 黄色 - 角点B
     private static final int COLOR_REGION_EDGE = 0x80FFFF00;   // 半透明黄 - 区域边框
@@ -73,6 +74,8 @@ public class HighlightEvent {
 
         // 高亮橱柜
         data.cupboardList().forEach(pos -> Gizmos.cuboid(pos, GizmoStyle.stroke(COLOR_CUPBOARD, 4)));
+
+        data.incubatorList().forEach(pos -> Gizmos.cuboid(pos, GizmoStyle.stroke(COLOR_INCUBATOR, 4)));
     }
 
     /**

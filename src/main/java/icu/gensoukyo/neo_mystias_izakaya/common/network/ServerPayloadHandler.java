@@ -15,7 +15,8 @@ import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonIzakayaUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMIServerStoreUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.cooking.IzakayaCookingUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.CanteenConfigUtil;
-import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.CupBoardUtil;
+import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.CupboardUtil;
+import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IncubatorUtil;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIDataComponentTypes;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMainItems;
 import net.minecraft.core.BlockPos;
@@ -117,7 +118,7 @@ public class ServerPayloadHandler {
     public static void handleRequestCupboardIngredientInfoMessage(RequestCupboardIngredientInfoMessage message, IPayloadContext context) {
         context.enqueueWork(() -> {
             if (context.player() instanceof ServerPlayer serverPlayer) {
-                ServerPayloadSender.sendCupBoardItemResourceFullSyncMessage(serverPlayer, CupBoardUtil.extractIngredientItemResourceList(serverPlayer));
+                ServerPayloadSender.sendCupboardItemResourceFullSyncMessage(serverPlayer, CupboardUtil.extractIngredientItemResourceList(serverPlayer));
             }
         });
     }
@@ -125,7 +126,7 @@ public class ServerPayloadHandler {
     public static void handleRequestCupboardBeveragesInfoMessage(RequestCupboardBeveragesInfoMessage message, IPayloadContext context) {
         context.enqueueWork(() -> {
             if (context.player() instanceof ServerPlayer serverPlayer) {
-                ServerPayloadSender.sendCupBoardItemResourceFullSyncMessage(serverPlayer, CupBoardUtil.extractBeveragesItemResourceList(serverPlayer));
+                ServerPayloadSender.sendCupboardItemResourceFullSyncMessage(serverPlayer, CupboardUtil.extractBeveragesItemResourceList(serverPlayer));
             }
         });
     }
@@ -133,7 +134,7 @@ public class ServerPayloadHandler {
     public static void handleRequestExtractMenuToKitchenwareMessage(RequestExtractMenuToKitchenwareMessage message, IPayloadContext context) {
         context.enqueueWork(() -> {
             if (context.player() instanceof ServerPlayer serverPlayer) {
-                CupBoardUtil.extractMenuIngredientToKitchenware(serverPlayer, message.menuId(), message.blockPos());
+                CupboardUtil.extractMenuIngredientToKitchenware(serverPlayer, message.menuId(), message.blockPos());
             }
         });
     }
@@ -142,15 +143,31 @@ public class ServerPayloadHandler {
     public static void handleRequestExtractItemToKitchenwareMessage(RequestExtractItemToKitchenwareMessage message, IPayloadContext context) {
         context.enqueueWork(() -> {
             if (context.player() instanceof ServerPlayer serverPlayer) {
-                CupBoardUtil.extractItemToKitchenware(serverPlayer, message.resource(), message.blockPos());
+                CupboardUtil.extractItemToKitchenware(serverPlayer, message.resource(), message.blockPos());
             }
         });
     }
 
-    public static void handleRequestExtractItemToPlayerHandMessage(RequestExtractItemToPlayerHandMessage message, IPayloadContext context) {
+    public static void handleRequestCupboardExtractItemToPlayerHandMessage(RequestCupboardExtractItemToPlayerHandMessage message, IPayloadContext context) {
         context.enqueueWork(() -> {
             if (context.player() instanceof ServerPlayer serverPlayer) {
-                CupBoardUtil.extractItemToPlayerHand(serverPlayer, message.resource());
+                CupboardUtil.extractItemToPlayerHand(serverPlayer, message.resource());
+            }
+        });
+    }
+
+    public static void handleRequestIncubatorCuisinesInfoMessage(RequestIncubatorCuisinesInfoMessage message, IPayloadContext context) {
+        context.enqueueWork(() -> {
+            if (context.player() instanceof ServerPlayer serverPlayer) {
+                ServerPayloadSender.sendIncubatorItemResourceFullSyncMessage(serverPlayer, IncubatorUtil.extractCuisinesItemResourceList(serverPlayer));
+            }
+        });
+    }
+
+    public static void handleRequestIncubatorExtractItemToPlayerHandMessage(RequestIncubatorExtractItemToPlayerHandMessage message, IPayloadContext context) {
+        context.enqueueWork(() -> {
+            if (context.player() instanceof ServerPlayer serverPlayer) {
+                IncubatorUtil.extractItemToPlayerHand(serverPlayer, message.resource());
             }
         });
     }

@@ -45,7 +45,7 @@ public class NMILanguageProvider implements DataProvider {
     private final PackOutput output;
     private final String modid;
 
-    public NMILanguageProvider(PackOutput output,String modid) {
+    public NMILanguageProvider(PackOutput output, String modid) {
         this.output = output;
         this.modid = modid;
     }
@@ -59,15 +59,17 @@ public class NMILanguageProvider implements DataProvider {
         this.addItemGroup(NMICreativeModeTabs.MAIN_ID, "Neo Mystia's Izakaya - Main", "新夜雀食堂 - 主体");
         this.addItemGroup(NMIMECreativeModeTabs.AE2_ID, "Neo Mystia's Izakaya - AE2", "新夜雀食堂 - AE2");
 
-        this.add(NMIBlocks.BOILING_POT.get(), "Boiling Pot", "煮锅");
-        this.add(NMIBlocks.GRILL.get(), "Grill", "烤架");
-        this.add(NMIBlocks.FRYING_PAN.get(), "Frying Pan", "油锅");
-        this.add(NMIBlocks.STEAMER.get(), "Steamer", "蒸锅");
-        this.add(NMIBlocks.CUTTING_BOARD.get(), "Cutting Board", "料理台");
-        this.add(NMIBlocks.DINING_TABLE.get(), "Dining Table", "餐桌");
-        this.add(NMIBlocks.CUPBOARD, "CupBoard","橱柜");
-        this.add(NMIBlocks.CREATIVE_CUPBOARD, "CupBoard (Creative)","橱柜 (创造)");
-        this.add(NMIMEBlocks.ME_CUPBOARD.get(), "CupBoard (ME)","橱柜 (ME)");
+        this.add(NMIBlocks.BOILING_POT, "Boiling Pot", "煮锅");
+        this.add(NMIBlocks.GRILL, "Grill", "烤架");
+        this.add(NMIBlocks.FRYING_PAN, "Frying Pan", "油锅");
+        this.add(NMIBlocks.STEAMER, "Steamer", "蒸锅");
+        this.add(NMIBlocks.CUTTING_BOARD, "Cutting Board", "料理台");
+        this.add(NMIBlocks.DINING_TABLE, "Dining Table", "餐桌");
+        this.add(NMIBlocks.CUPBOARD, "CupBoard", "橱柜");
+        this.add(NMIBlocks.CREATIVE_CUPBOARD, "CupBoard (Creative)", "橱柜 (创造)");
+        this.add(NMIBlocks.INCUBATOR,"Incubator","保温箱");
+        this.add(NMIBlocks.CREATIVE_INCUBATOR,"Incubator (Creative)","保温箱 (创造)");
+        this.add(NMIMEBlocks.ME_CUPBOARD, "CupBoard (ME)", "橱柜 (ME)");
 
         this.add(NMIMainItems.BOILING_POT, "Boiling Pot", "煮锅");
         this.add(NMIMainItems.GRILL, "Grill", "烤架");
@@ -79,9 +81,11 @@ public class NMILanguageProvider implements DataProvider {
         this.add(NMIMainItems.CANTEEN_CONFIG, "Canteen Config", "餐厅配置器");
         this.add(NMIMainItems.MYSTIAS_HAT, "Mystia's Hat", "夜雀的帽子");
         this.add(NMIMainItems.STORE, "Store", "河童电话");
-        this.add(NMIMainItems.CUPBOARD, "CupBoard","橱柜");
-        this.add(NMIMainItems.CREATIVE_CUPBOARD, "CupBoard (Creative)","橱柜 (创造)");
-        this.add(NMIMEItems.AE2_CUPBOARD.get(), "CupBoard (ME)","橱柜 (ME)");
+        this.add(NMIMainItems.CUPBOARD, "CupBoard", "橱柜");
+        this.add(NMIMainItems.CREATIVE_CUPBOARD, "CupBoard (Creative)", "橱柜 (创造)");
+        this.add(NMIMainItems.INCUBATOR, "Incubator", "保温箱");
+        this.add(NMIMainItems.CREATIVE_INCUBATOR, "Incubator (Creative)", "保温箱 (创造)");;
+        this.add(NMIMEItems.ME_CUPBOARD, "CupBoard (ME)", "橱柜 (ME)");
 
         // --- 通用评价等级 ---
         this.add("evaluation.neo_mystias_izakaya.ex_bad", "Terrible", "超差评");
@@ -103,6 +107,8 @@ public class NMILanguageProvider implements DataProvider {
         this.add("item.neo_mystias_izakaya.canteen_config.dining_table_full", "Maximum 8 dining tables reached!", "最多只能绑定8张餐桌！");
         this.add("item.neo_mystias_izakaya.canteen_config.cupboard_bound", "Cupboard bound!", "已绑定橱柜！");
         this.add("item.neo_mystias_izakaya.canteen_config.cupboard_full", "Maximum 4 cupboards reached!", "最多只能绑定4个橱柜！");
+        this.add("item.neo_mystias_izakaya.canteen_config.incubator_bound", "Incubator bound!", "已绑定保温箱！");
+        this.add("item.neo_mystias_izakaya.canteen_config.incubator_full", "Maximum 4 incubators reached!", "最多只能绑定4个保温箱！");
         this.add("item.neo_mystias_izakaya.canteen_config.corner_a_set", "Corner A set! Shift+Right-click another block to set Corner B, then Right-click the Controller to scan.", "角点A已设置！Shift+右键另一处方块设置角点B，再右键控制器执行扫描。");
         this.add("item.neo_mystias_izakaya.canteen_config.corner_b_set", "Corner B set! Right-click the Controller to scan and bind all blocks in range.", "角点B已设置！右键控制器以扫描并绑定范围内的所有方块。");
         this.add("item.neo_mystias_izakaya.canteen_config.corners_cleared", "Corners cleared.", "已清除角点。");
@@ -116,7 +122,7 @@ public class NMILanguageProvider implements DataProvider {
         this.add("container.neo_mystias_izakaya.dining_table", "Dining Table", "餐桌");
 
         this.add("gui.neo_mystias_izakaya.time", "Time", "时间");
-        this.add("gui.neo_mystias_izakaya.price","Price", "价格");
+        this.add("gui.neo_mystias_izakaya.price", "Price", "价格");
         this.add("gui.neo_mystias_izakaya.progress", "Progress", "进度");
         this.add("gui.neo_mystias_izakaya.recipe", "Recipe", "食谱");
         this.add("gui.neo_mystias_izakaya.beverages", "Beverages", "酒水");
@@ -128,7 +134,7 @@ public class NMILanguageProvider implements DataProvider {
         this.add("gui.neo_mystias_izakaya.maid_dining", "Maid", "女仆");
         this.add("gui.neo_mystias_izakaya.rare_customer", "Rare Customer", "稀客");
         this.add("gui.neo_mystias_izakaya.common_customer", "Common Customer", "普客");
-        this.add("gui.neo_mystias_izakaya.idle","Idle", "闲置");
+        this.add("gui.neo_mystias_izakaya.idle", "Idle", "闲置");
         this.add("gui.neo_mystias_izakaya.record_recipe", "Record", "记录食谱");
         this.add("gui.neo_mystias_izakaya.recorded_recipe", "Recorded:", "已记录：");
         this.add("gui.neo_mystias_izakaya.not_recorded", "None", "未记录");
@@ -170,9 +176,9 @@ public class NMILanguageProvider implements DataProvider {
         this.add("task.neo_mystias_izakaya.mystias_izakaya_task.desc", "Find nearest dining table", "寻找最近的餐桌");
 
 
-        this.add("blockentity.neo_mystias_izakaya.cupboard", "CupBoard","橱柜");
-        this.add("blockentity.neo_mystias_izakaya.creative_cupboard", "CupBoard (Creative)","橱柜 (创造)");
-        this.add(Kitchenware.BOILING_POT.toLanguageKey("blockentity"),"Boiling Pot", "煮锅");
+        this.add("blockentity.neo_mystias_izakaya.cupboard", "CupBoard", "橱柜");
+        this.add("blockentity.neo_mystias_izakaya.creative_cupboard", "CupBoard (Creative)", "橱柜 (创造)");
+        this.add(Kitchenware.BOILING_POT.toLanguageKey("blockentity"), "Boiling Pot", "煮锅");
         this.add(Kitchenware.GRILL.toLanguageKey("blockentity"), "Grill", "烤架");
         this.add(Kitchenware.FRYING_PAN.toLanguageKey("blockentity"), "Frying Pan", "油锅");
         this.add(Kitchenware.STEAMER.toLanguageKey("blockentity"), "Steamer", "蒸锅");
@@ -812,7 +818,7 @@ public class NMILanguageProvider implements DataProvider {
         this.addLocation(CustomerLocations.MAKAI, "Makai", "魔界");
 
     }
-    
+
     private void addCommonerCustomerTranslations() {
         this.addCustomer(CommonCustomers.YOUKAI_RABBIT, "Youkai Rabbit", "妖怪兔");
         this.addCustomer(CommonCustomers.YOUKAI_CAT, "Youkai Cat", "妖怪猫");
@@ -1119,7 +1125,7 @@ public class NMILanguageProvider implements DataProvider {
         this.addCustomerChat(CommonCustomersChat.LUNAR_EMISSARY_CHAT_0, "", "最近训练强度是不是加大了呀。");
         this.addCustomerChat(CommonCustomersChat.LUNAR_EMISSARY_CHAT_1, "", "感觉我好像长出了肌肉。");
     }
-    
+
     private void addRareCustomerTranslations() {
         this.addCustomer(RareCustomers.WRIGGLE_NIGHTBUG, "Wriggle Nightbug", "莉格露");
         this.addCustomer(RareCustomers.RUMIA, "Rumia", "露米娅");
@@ -2162,16 +2168,16 @@ public class NMILanguageProvider implements DataProvider {
         this.addEvaluation(RareCustomers.YUKARI_YAKUMO, CustomerEvaluationLevels.SEEN_REPELL, "", "我期待的幻想乡并非这种模样。");
     }
 
-    private void addGUI(){
-        addGUI(StoreScreen.ID,"balance_text","Balance","余额");
-        addGUI(StoreScreen.ID,"balance","%d 円","%d 円");
-        addGUI(StoreScreen.ID,"total_text","Total: ","总计: ");
-        addGUI(StoreScreen.ID,"total","%d 円","%d 円");
-        addGUI(StoreScreen.ID,"ingredients","Buy Ingredients","购买食材");
-        addGUI(StoreScreen.ID,"beverages","Buy Beverages","购买酒水");
-        addGUI(StoreScreen.ID,"last_page","Last Page","上一页");
-        addGUI(StoreScreen.ID,"next_page","Next Page","下一页");
-        addGUI(StoreScreen.ID,"purchase","Purchase","购买");
+    private void addGUI() {
+        addGUI(StoreScreen.ID, "balance_text", "Balance", "余额");
+        addGUI(StoreScreen.ID, "balance", "%d 円", "%d 円");
+        addGUI(StoreScreen.ID, "total_text", "Total: ", "总计: ");
+        addGUI(StoreScreen.ID, "total", "%d 円", "%d 円");
+        addGUI(StoreScreen.ID, "ingredients", "Buy Ingredients", "购买食材");
+        addGUI(StoreScreen.ID, "beverages", "Buy Beverages", "购买酒水");
+        addGUI(StoreScreen.ID, "last_page", "Last Page", "上一页");
+        addGUI(StoreScreen.ID, "next_page", "Next Page", "下一页");
+        addGUI(StoreScreen.ID, "purchase", "Purchase", "购买");
     }
 
     @Override
@@ -2201,18 +2207,19 @@ public class NMILanguageProvider implements DataProvider {
         this.add(key.getDescriptionId(), en, cn);
     }
 
-    public void add(DeferredBlock<@NotNull Block> key, String en, String cn) {
+    public void add(DeferredBlock<? extends Block> key, String en, String cn) {
         this.add(key.asItem().getDescriptionId(), en, cn);
     }
 
     public void add(Item key, String en, String cn) {
         this.add(key.getDescriptionId(), en, cn);
     }
+
     public void add(BlockItem key, String en, String cn) {
         this.add(key.getDescriptionId(), en, cn);
     }
 
-    public void add(DeferredItem<@NotNull Item> key, String en, String cn) {
+    public void add(DeferredItem<? extends Item> key, String en, String cn) {
         this.add(key.asItem().getDescriptionId(), en, cn);
     }
 
@@ -2261,24 +2268,24 @@ public class NMILanguageProvider implements DataProvider {
         this.add(key.toLanguageKey("customer"), en, cn);
     }
 
-    private void addCustomerChat(Identifier key,String en, String cn) {
+    private void addCustomerChat(Identifier key, String en, String cn) {
         this.add(key.toLanguageKey("customer"), en, cn);
     }
 
     private void addCustomerDescription(Identifier key, String en, String cn) {
-        this.add(key.toLanguageKey("customer","desc"), en, cn);
+        this.add(key.toLanguageKey("customer", "desc"), en, cn);
     }
 
-    private void addCustomerDescriptionLevel(Identifier key,String level, String en, String cn) {
-        this.add(key.toLanguageKey("customer","desc."+level), en, cn);
+    private void addCustomerDescriptionLevel(Identifier key, String level, String en, String cn) {
+        this.add(key.toLanguageKey("customer", "desc." + level), en, cn);
     }
 
-    private void addEvaluation(Identifier key,String level, String en, String cn) {
-        this.add(key.toLanguageKey("evaluation",level), en, cn);
+    private void addEvaluation(Identifier key, String level, String en, String cn) {
+        this.add(key.toLanguageKey("evaluation", level), en, cn);
     }
 
-    private void addGUI(Identifier base,String suffix, String en, String cn) {
-        this.add(base.toLanguageKey("gui",suffix), en, cn);
+    private void addGUI(Identifier base, String suffix, String en, String cn) {
+        this.add(base.toLanguageKey("gui", suffix), en, cn);
     }
 
     @Override

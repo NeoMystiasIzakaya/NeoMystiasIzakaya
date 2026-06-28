@@ -13,10 +13,8 @@ import appeng.api.util.AECableType;
 import appeng.blockentity.grid.AENetworkedBlockEntity;
 import appeng.helpers.InterfaceLogic;
 import appeng.helpers.InterfaceLogicHost;
-import appeng.helpers.externalstorage.GenericStackItemHandler;
 import appeng.me.helpers.BlockEntityNodeListener;
 import icu.gensoukyo.neo_mystias_izakaya.api.common.ICupboard;
-import icu.gensoukyo.neo_mystias_izakaya.compat.ae2.registry.NMIMEBlockEntities;
 import icu.gensoukyo.neo_mystias_izakaya.compat.ae2.registry.NMIMEItems;
 import icu.gensoukyo.neo_mystias_izakaya.compat.ae2.resource.MEStorageInvHandler;
 import net.minecraft.core.BlockPos;
@@ -99,7 +97,7 @@ public class MECupboardBlockEntity extends AENetworkedBlockEntity implements ICu
 
     @Override
     public ItemStack getMainMenuIcon() {
-        return NMIMEItems.AE2_CUPBOARD.toStack();
+        return NMIMEItems.ME_CUPBOARD.toStack();
     }
 
     @Override

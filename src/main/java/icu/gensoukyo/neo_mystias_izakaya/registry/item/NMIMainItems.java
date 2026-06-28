@@ -19,18 +19,20 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class NMIMainItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(NeoMystiasIzakaya.MODID);
 
-    public static final DeferredItem<Item> BOILING_POT = ITEMS.registerItem("cooker/boiling_pot", (properties) -> new BlockItem(NMIBlocks.BOILING_POT.get(), properties), properties -> properties);
-    public static final DeferredItem<Item> GRILL = ITEMS.registerItem("cooker/grill", (properties) -> new BlockItem(NMIBlocks.GRILL.get(), properties), properties -> properties);
-    public static final DeferredItem<Item> FRYING_PAN = ITEMS.registerItem("cooker/frying_pan", (properties) -> new BlockItem(NMIBlocks.FRYING_PAN.get(), properties), properties -> properties);
-    public static final DeferredItem<Item> STEAMER = ITEMS.registerItem("cooker/steamer", (properties) -> new BlockItem(NMIBlocks.STEAMER.get(), properties), properties -> properties);
-    public static final DeferredItem<Item> CUTTING_BOARD = ITEMS.registerItem("cooker/cutting_board", (properties) -> new BlockItem(NMIBlocks.CUTTING_BOARD.get(), properties), properties -> properties);
+    public static final DeferredItem<BlockItem> BOILING_POT = ITEMS.registerSimpleBlockItem("cooker/boiling_pot",NMIBlocks.BOILING_POT);
+    public static final DeferredItem<BlockItem> GRILL = ITEMS.registerSimpleBlockItem("cooker/grill", NMIBlocks.GRILL);
+    public static final DeferredItem<BlockItem> FRYING_PAN = ITEMS.registerSimpleBlockItem("cooker/frying_pan", NMIBlocks.FRYING_PAN);
+    public static final DeferredItem<BlockItem> STEAMER = ITEMS.registerSimpleBlockItem("cooker/steamer",NMIBlocks.STEAMER);
+    public static final DeferredItem<BlockItem> CUTTING_BOARD = ITEMS.registerSimpleBlockItem("cooker/cutting_board", NMIBlocks.CUTTING_BOARD);
     public static final DeferredItem<Item> MYSTIAS_HAT = ITEMS.registerItem("misc/mystias_hat", MystiaHatItem::new, properties -> properties);
-    public static final DeferredItem<Item> CANTEEN = ITEMS.registerItem("misc/canteen", (properties) -> new BlockItem(NMIBlocks.CANTEEN.get(), properties), properties -> properties);
-    public static final DeferredItem<Item> DINING_TABLE = ITEMS.registerItem("misc/dining_table", (properties) -> new BlockItem(NMIBlocks.DINING_TABLE.get(), properties), properties -> properties);
+    public static final DeferredItem<BlockItem> CANTEEN = ITEMS.registerSimpleBlockItem("misc/canteen",NMIBlocks.CANTEEN);
+    public static final DeferredItem<BlockItem> DINING_TABLE = ITEMS.registerSimpleBlockItem("misc/dining_table",NMIBlocks.DINING_TABLE);
     public static final DeferredItem<Item> CANTEEN_CONFIG = ITEMS.registerItem("misc/canteen_config", CanteenConfigItem::new, properties -> properties);
-    public static final DeferredItem<Item> STORE = ITEMS.registerItem("misc/store", (properties) -> new BlockItem(NMIBlocks.STORE.get(), properties), properties -> properties);
-    public static final DeferredItem<Item> CUPBOARD = ITEMS.registerItem("misc/cupboard", (properties) -> new BlockItem(NMIBlocks.CUPBOARD.get(), properties), properties -> properties);
-    public static final DeferredItem<Item> CREATIVE_CUPBOARD = ITEMS.registerItem("misc/creative_cupboard", (properties) -> new BlockItem(NMIBlocks.CREATIVE_CUPBOARD.get(), properties), properties -> properties);
+    public static final DeferredItem<BlockItem> STORE = ITEMS.registerSimpleBlockItem("misc/store", NMIBlocks.STORE);
+    public static final DeferredItem<BlockItem> CUPBOARD = ITEMS.registerSimpleBlockItem("misc/cupboard",NMIBlocks.CUPBOARD);
+    public static final DeferredItem<BlockItem> CREATIVE_CUPBOARD = ITEMS.registerSimpleBlockItem("misc/creative_cupboard",NMIBlocks.CREATIVE_CUPBOARD);
+    public static final DeferredItem<BlockItem> INCUBATOR = ITEMS.registerSimpleBlockItem("misc/incubator",NMIBlocks.INCUBATOR);
+    public static final DeferredItem<BlockItem> CREATIVE_INCUBATOR = ITEMS.registerSimpleBlockItem("misc/creative_incubator",NMIBlocks.CREATIVE_INCUBATOR);
 
     public static final DeferredItem<Item> CHROME_BALL = ITEMS.registerItem("misc/chrome_ball", ChromeBallItem::new, properties -> properties);
     public static final DeferredItem<Item> RECIPE_BOOK = ITEMS.registerItem("misc/recipe_book", RecipeItem::new, properties -> properties);

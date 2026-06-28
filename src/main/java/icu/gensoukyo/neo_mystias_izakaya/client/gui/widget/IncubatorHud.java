@@ -7,7 +7,6 @@ package icu.gensoukyo.neo_mystias_izakaya.client.gui.widget;
 
 import com.mojang.logging.LogUtils;
 import icu.gensoukyo.neo_mystias_izakaya.common.resource.ItemResourceWithCount;
-import icu.gensoukyo.neo_mystias_izakaya.registry.NMIVanillaTags;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractContainerWidget;
@@ -22,22 +21,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class CupBoardHud extends AbstractContainerWidget {
+public class IncubatorHud extends AbstractContainerWidget {
 
     public static final Logger LOGGER = LogUtils.getLogger();
-    public static CupBoardHud CurrentActive;
+    public static IncubatorHud CurrentActive;
     private final Consumer<ItemResourceWithCount> onItemClick;
 
     private List<ItemResourceWithCount> itemResourceWithCountList = new ArrayList<>();
 
-    private CupBoardItemResourceListWidget cupBoardItemResourceListWidget;
+    private ItemResourceListWidget itemResourceListWidget;
 
-    public CupBoardHud(int x, int y, int width, int height, Consumer<ItemResourceWithCount> onItemClick) {
+    public IncubatorHud(int x, int y, int width, int height, Consumer<ItemResourceWithCount> onItemClick) {
         super(x, y, width, height, Component.empty(),AbstractScrollArea.defaultSettings(10));
         this.onItemClick = onItemClick;
         CurrentActive = this;
-        this.cupBoardItemResourceListWidget = new CupBoardItemResourceListWidget(Minecraft.getInstance(),this.getWidth(),this.getHeight()/2,getX(),getY(), ArrayList::new,(e)->{});
-//        this.cupBoardItemResourceListWidget.setPosition(getX(),getY());
+        this.itemResourceListWidget = new ItemResourceListWidget(Minecraft.getInstance(),this.getWidth(),this.getHeight()/2,getX(),getY(), ArrayList::new,(_)->{});
     }
 
     public void refresh(List<ItemResourceWithCount> itemResourceWithCountList){
@@ -56,16 +54,15 @@ public class CupBoardHud extends AbstractContainerWidget {
     }
 
     public void refresh(){
-        this.cupBoardItemResourceListWidget = new CupBoardItemResourceListWidget(Minecraft.getInstance(),this.getWidth(),this.getHeight()/2,getX(),getY(),()->itemResourceWithCountList,onItemClick);
-        this.cupBoardItemResourceListWidget.refresh();
-//        this.cupBoardItemResourceListWidget.setPosition(getX(),getY());
+        this.itemResourceListWidget = new ItemResourceListWidget(Minecraft.getInstance(),this.getWidth(),this.getHeight()/2,getX(),getY(),()->itemResourceWithCountList,onItemClick);
+        this.itemResourceListWidget.refresh();
         CurrentActive = this;
     }
 
     @Override
     protected void extractWidgetRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float v) {
-        if (cupBoardItemResourceListWidget != null) {
-            cupBoardItemResourceListWidget.extractRenderState(guiGraphics, mouseX, mouseY, v);
+        if (itemResourceListWidget != null) {
+            itemResourceListWidget.extractRenderState(guiGraphics, mouseX, mouseY, v);
         }
     }
 
@@ -80,11 +77,11 @@ public class CupBoardHud extends AbstractContainerWidget {
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
-        return cupBoardItemResourceListWidget.mouseScrolled(mouseX,mouseY,scrollX,scrollY);
+        return itemResourceListWidget.mouseScrolled(mouseX,mouseY,scrollX,scrollY);
     }
 
     @Override
     public List<? extends GuiEventListener> children() {
-        return List.of(cupBoardItemResourceListWidget);
+        return List.of(itemResourceListWidget);
     }
 }

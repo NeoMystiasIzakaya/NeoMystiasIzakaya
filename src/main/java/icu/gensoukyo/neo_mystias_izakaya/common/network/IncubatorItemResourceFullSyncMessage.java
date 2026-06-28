@@ -15,19 +15,19 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import java.util.ArrayList;
 import java.util.List;
 
-public record CupBoardItemResourceFullSyncMessage(List<ItemResourceWithCount> itemResourceList)implements CustomPacketPayload  {
+public record IncubatorItemResourceFullSyncMessage(List<ItemResourceWithCount> itemResourceList)implements CustomPacketPayload  {
 
-    public static final StreamCodec<RegistryFriendlyByteBuf, CupBoardItemResourceFullSyncMessage> STREAM_CODEC = StreamCodec.composite(
+    public static final StreamCodec<RegistryFriendlyByteBuf, IncubatorItemResourceFullSyncMessage> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.collection(ArrayList::new, ItemResourceWithCount.STREAM_CODEC),
-            CupBoardItemResourceFullSyncMessage::itemResourceList,
-            CupBoardItemResourceFullSyncMessage::new
+            IncubatorItemResourceFullSyncMessage::itemResourceList,
+            IncubatorItemResourceFullSyncMessage::new
     );
 
-    public static final CustomPacketPayload.Type<CupBoardItemResourceFullSyncMessage> TYPE = new CustomPacketPayload.Type<>(NeoMystiasIzakaya.id("cupboard_item_resource_full_sync"));
+    public static final Type<IncubatorItemResourceFullSyncMessage> TYPE = new Type<>(NeoMystiasIzakaya.id("incubator_item_resource_full_sync"));
 
 
     @Override
-    public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
+    public Type<? extends CustomPacketPayload> type() {
         return TYPE;
     }
 }

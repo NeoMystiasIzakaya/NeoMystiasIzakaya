@@ -99,11 +99,19 @@ public class ServerPayloadSender {
         PacketDistributor.sendToPlayer(player, new DiningTableSaleMessage(saleAmount, evaluation, textKey));
     }
 
-    public static void sendCupBoardItemResourceFullSyncMessage(ServerPlayer player, List<ItemResourceWithCount> itemResourceList) {
-        PacketDistributor.sendToPlayer(player, new CupBoardItemResourceFullSyncMessage(itemResourceList));
+    public static void sendCupboardItemResourceFullSyncMessage(ServerPlayer player, List<ItemResourceWithCount> itemResourceList) {
+        PacketDistributor.sendToPlayer(player, new CupboardItemResourceFullSyncMessage(itemResourceList));
     }
 
-    public static void sendCupBoardItemResourceConsumedMessage(ServerPlayer player, ItemResource itemResource) {
-        PacketDistributor.sendToPlayer(player, new CupBoardItemResourceConsumedMessage(itemResource));
+    public static void sendCupboardItemResourceConsumedMessage(ServerPlayer player, ItemResource itemResource) {
+        PacketDistributor.sendToPlayer(player, new CupboardItemResourceConsumedMessage(itemResource));
+    }
+
+    public static void sendIncubatorItemResourceFullSyncMessage(ServerPlayer player, List<ItemResourceWithCount> itemResourceList) {
+        PacketDistributor.sendToPlayer(player, new IncubatorItemResourceFullSyncMessage(itemResourceList));
+    }
+
+    public static void sendIncubatorItemResourceConsumedMessage(ServerPlayer player, ItemResource itemResource) {
+        PacketDistributor.sendToPlayer(player, new IncubatorItemResourceConsumedMessage(itemResource));
     }
 }

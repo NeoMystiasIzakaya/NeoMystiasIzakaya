@@ -6,7 +6,8 @@
 package icu.gensoukyo.neo_mystias_izakaya.client.gui.screen;
 
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
-import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.CupBoardHud;
+import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.CupboardHud;
+import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.IncubatorHud;
 import icu.gensoukyo.neo_mystias_izakaya.client.network.ClientPayloadSender;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientItemTagUtil;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientUtil;
@@ -42,7 +43,8 @@ public class DishServingScreen extends AbstractContainerScreen<DishServingMenu> 
     private static final Identifier CONFIRM_SPRITE = Identifier.withDefaultNamespace("container/beacon/confirm");
     private static final Identifier CANCEL_SPRITE = Identifier.withDefaultNamespace("container/beacon/cancel");
 
-    private CupBoardHud cupBoardHud;
+    private CupboardHud cupBoardHud;
+    private IncubatorHud incubatorHud;
 
     public DishServingScreen(DishServingMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title, 256, 219);
@@ -52,13 +54,19 @@ public class DishServingScreen extends AbstractContainerScreen<DishServingMenu> 
     protected void init(){
         super.init();
 
-        cupBoardHud = new CupBoardHud(leftPos,10,imageWidth/2,topPos-20,this::onHudItemResourceClick);
+        cupBoardHud = new CupboardHud(leftPos,10,imageWidth/2,topPos-20,this::onCupboardHudItemResourceClick);
+        incubatorHud = new IncubatorHud(leftPos+imageWidth/2,10,imageWidth/2,topPos-20,this::onIncubatorHudItemResourceClick);
         addRenderableWidget(cupBoardHud);
+        addRenderableWidget(incubatorHud);
         ClientPayloadSender.sendRequestCupboardBeveragesInfoMessage();
+        ClientPayloadSender.sendRequestIncubatorCuisinesInfoMessage();
     }
 
-    private void onHudItemResourceClick(ItemResourceWithCount resource) {
-        ClientPayloadSender.sendRequestExtractItemToPlayerHandMessage(resource.itemResource());
+    private void onCupboardHudItemResourceClick(ItemResourceWithCount resource) {
+        ClientPayloadSender.sendRequestCupboardExtractItemToPlayerHandMessage(resource.itemResource());
+    }
+    private void onIncubatorHudItemResourceClick(ItemResourceWithCount resource) {
+        ClientPayloadSender.sendRequestIncubatorExtractItemToPlayerHandMessage(resource.itemResource());
     }
 
     @Override

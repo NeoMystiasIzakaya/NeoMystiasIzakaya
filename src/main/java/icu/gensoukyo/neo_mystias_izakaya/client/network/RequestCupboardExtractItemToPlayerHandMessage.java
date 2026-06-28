@@ -12,14 +12,14 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import org.jspecify.annotations.NonNull;
 
-public record RequestExtractItemToPlayerHandMessage(ItemResource resource) implements CustomPacketPayload {
+public record RequestCupboardExtractItemToPlayerHandMessage(ItemResource resource) implements CustomPacketPayload {
 
-    public static final Type<RequestExtractItemToPlayerHandMessage> TYPE = new Type<>(NeoMystiasIzakaya.id("request_extract_item_to_player_hand"));
+    public static final Type<RequestCupboardExtractItemToPlayerHandMessage> TYPE = new Type<>(NeoMystiasIzakaya.id("request_cupboard_extract_item_to_player_hand"));
 
-    public static final StreamCodec<RegistryFriendlyByteBuf, RequestExtractItemToPlayerHandMessage> STREAM_CODEC = StreamCodec.composite(
+    public static final StreamCodec<RegistryFriendlyByteBuf, RequestCupboardExtractItemToPlayerHandMessage> STREAM_CODEC = StreamCodec.composite(
             ItemResource.STREAM_CODEC,
-            RequestExtractItemToPlayerHandMessage::resource,
-            RequestExtractItemToPlayerHandMessage::new
+            RequestCupboardExtractItemToPlayerHandMessage::resource,
+            RequestCupboardExtractItemToPlayerHandMessage::new
     );
 
     @Override

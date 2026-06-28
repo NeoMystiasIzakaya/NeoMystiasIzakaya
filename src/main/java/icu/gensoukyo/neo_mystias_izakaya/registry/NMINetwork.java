@@ -92,15 +92,26 @@ public class NMINetwork {
         );
 
         registrar.playToClient(
-                CupBoardItemResourceFullSyncMessage.TYPE,
-                CupBoardItemResourceFullSyncMessage.STREAM_CODEC,
-                ClientPayloadHandler::handleCupBoardItemResourceFullSyncMessage
+                CupboardItemResourceFullSyncMessage.TYPE,
+                CupboardItemResourceFullSyncMessage.STREAM_CODEC,
+                ClientPayloadHandler::handleCupboardItemResourceFullSyncMessage
         );
 
         registrar.playToClient(
-                CupBoardItemResourceConsumedMessage.TYPE,
-                CupBoardItemResourceConsumedMessage.STREAM_CODEC,
-                ClientPayloadHandler::handleCupBoardItemResourceUpdateMessage
+                CupboardItemResourceConsumedMessage.TYPE,
+                CupboardItemResourceConsumedMessage.STREAM_CODEC,
+                ClientPayloadHandler::handleCupboardItemResourceConsumedMessage
+        );
+        registrar.playToClient(
+                IncubatorItemResourceFullSyncMessage.TYPE,
+                IncubatorItemResourceFullSyncMessage.STREAM_CODEC,
+                ClientPayloadHandler::handleIncubatorItemResourceFullSyncMessage
+        );
+
+        registrar.playToClient(
+                IncubatorItemResourceConsumedMessage.TYPE,
+                IncubatorItemResourceConsumedMessage.STREAM_CODEC,
+                ClientPayloadHandler::handleIncubatorItemResourceConsumedMessage
         );
     }
 
@@ -167,9 +178,21 @@ public class NMINetwork {
         );
 
         registrar.playToServer(
-                RequestExtractItemToPlayerHandMessage.TYPE,
-                RequestExtractItemToPlayerHandMessage.STREAM_CODEC,
-                ServerPayloadHandler::handleRequestExtractItemToPlayerHandMessage
+                RequestCupboardExtractItemToPlayerHandMessage.TYPE,
+                RequestCupboardExtractItemToPlayerHandMessage.STREAM_CODEC,
+                ServerPayloadHandler::handleRequestCupboardExtractItemToPlayerHandMessage
+        );
+
+        registrar.playToServer(
+                RequestIncubatorCuisinesInfoMessage.TYPE,
+                RequestIncubatorCuisinesInfoMessage.STREAM_CODEC,
+                ServerPayloadHandler::handleRequestIncubatorCuisinesInfoMessage
+        );
+
+        registrar.playToServer(
+                RequestIncubatorExtractItemToPlayerHandMessage.TYPE,
+                RequestIncubatorExtractItemToPlayerHandMessage.STREAM_CODEC,
+                ServerPayloadHandler::handleRequestIncubatorExtractItemToPlayerHandMessage
         );
     }
 }

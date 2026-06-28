@@ -6,6 +6,8 @@
 package icu.gensoukyo.neo_mystias_izakaya.common.blockentity;
 
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
+import icu.gensoukyo.neo_mystias_izakaya.api.common.ICupboard;
+import icu.gensoukyo.neo_mystias_izakaya.api.common.IIncubator;
 import icu.gensoukyo.neo_mystias_izakaya.common.block.CanteenControllerBlock;
 import icu.gensoukyo.neo_mystias_izakaya.common.block.CupboardBlock;
 import icu.gensoukyo.neo_mystias_izakaya.common.block.DiningTableBlock;
@@ -40,6 +42,7 @@ public class CanteenControllerBlockEntity extends BlockEntity {
     private LinkedHashSet<BlockPos> kitchenwareList = new LinkedHashSet<>();
     private LinkedHashSet<BlockPos> dingingTableList = new LinkedHashSet<>();
     private LinkedHashSet<BlockPos> cupboardList = new LinkedHashSet<>();
+    private LinkedHashSet<BlockPos> incubatorList = new LinkedHashSet<>();
 
     // ==================== 代理层：EXTENSION 透明指向 MAIN ====================
     private boolean isOpen;
@@ -115,6 +118,10 @@ public class CanteenControllerBlockEntity extends BlockEntity {
         return getMain().cupboardList;
     }
 
+    public LinkedHashSet<BlockPos> getIncubatorList() {
+        return getMain().incubatorList;
+    }
+
     // ==================== 内部实现（仅在 MAIN 上执行） ====================
 
     public boolean isOpen() {
@@ -150,12 +157,20 @@ public class CanteenControllerBlockEntity extends BlockEntity {
         return getMain().removeCupboardImpl(pos);
     }
 
+    public boolean addIncubator(BlockPos pos) {
+        return getMain().addIncubatorImpl(pos);
+    }
+
+    public boolean removeIncubator(BlockPos pos) {
+        return getMain().removeIncubatorImpl(pos);
+    }
+
     public void setOpen(boolean open, @Nullable UUID ownerUUID) {
         getMain().setOpenImpl(open, ownerUUID);
     }
 
-    public CanteenConfigUtil.ScanResult scanAndBind(Level level, BlockPos cornerA, BlockPos cornerB, int maxKitchenware, int maxDiningTables, int maxCupboards) {
-        return getMain().scanAndBindImpl(level, cornerA, cornerB, maxKitchenware, maxDiningTables, maxCupboards);
+    public CanteenConfigUtil.ScanResult scanAndBind(Level level, BlockPos cornerA, BlockPos cornerB, int maxKitchenware, int maxDiningTables, int maxCupboards, int maxIncubators) {
+        return getMain().scanAndBindImpl(level, cornerA, cornerB, maxKitchenware, maxDiningTables, maxCupboards,maxIncubators);
     }
 
     private boolean addKitchenwareImpl(BlockPos pos) {
@@ -205,13 +220,25 @@ public class CanteenControllerBlockEntity extends BlockEntity {
         return removed;
     }
 
+    private boolean addIncubatorImpl(BlockPos pos) {
+        boolean added = incubatorList.add(pos);
+        if (added) markUpdated();
+        return added;
+    }
+
+    private boolean removeIncubatorImpl(BlockPos pos) {
+        boolean removed = incubatorList.remove(pos);
+        if (removed) markUpdated();
+        return removed;
+    }
+
     private void setOpenImpl(boolean open, @Nullable UUID ownerUUID) {
         this.isOpen = open;
         this.owner = open ? ownerUUID : null;
         markUpdated();
     }
 
-    private CanteenConfigUtil.ScanResult scanAndBindImpl(Level level, BlockPos cornerA, BlockPos cornerB, int maxKitchenware, int maxDiningTables, int maxCupboards) {
+    private CanteenConfigUtil.ScanResult scanAndBindImpl(Level level, BlockPos cornerA, BlockPos cornerB, int maxKitchenware, int maxDiningTables, int maxCupboards, int maxIncubators) {
         int minX = Math.min(cornerA.getX(), cornerB.getX());
         int minY = Math.min(cornerA.getY(), cornerB.getY());
         int minZ = Math.min(cornerA.getZ(), cornerB.getZ());
@@ -222,9 +249,11 @@ public class CanteenControllerBlockEntity extends BlockEntity {
         int kitchenwareCount = 0;
         int diningTableCount = 0;
         int cupboardCount = 0;
+        int incubatorCount = 0;
 
         for (BlockPos pos : BlockPos.betweenClosed(minX, minY, minZ, maxX, maxY, maxZ)) {
             BlockState state = level.getBlockState(pos);
+            BlockEntity entity = level.getBlockEntity(pos);
             if (state.getBlock() instanceof KitchenwareBlock) {
                 if (kitchenwareList.size() < maxKitchenware && addKitchenwareImpl(pos.immutable())) {
                     kitchenwareCount++;
@@ -233,13 +262,17 @@ public class CanteenControllerBlockEntity extends BlockEntity {
                 if (dingingTableList.size() < maxDiningTables && addDiningTableImpl(pos.immutable())) {
                     diningTableCount++;
                 }
-            } else if (state.getBlock() instanceof CupboardBlock) {
+            } else if (entity instanceof ICupboard) {
                 if (cupboardList.size() < maxCupboards && addCupboardImpl(pos.immutable())) {
                     cupboardCount++;
                 }
+            } else if (entity instanceof IIncubator) {
+                if (cupboardList.size() < maxIncubators && addIncubatorImpl(pos.immutable())) {
+                    incubatorCount++;
+                }
             }
         }
-        return new CanteenConfigUtil.ScanResult(kitchenwareCount, diningTableCount, cupboardCount);
+        return new CanteenConfigUtil.ScanResult(kitchenwareCount, diningTableCount, cupboardCount,incubatorCount);
     }
 
     /**
@@ -269,6 +302,7 @@ public class CanteenControllerBlockEntity extends BlockEntity {
         output.store("kitchenware", BlockPos.CODEC.listOf(), new ArrayList<>(this.kitchenwareList));
         output.store("diningTable", BlockPos.CODEC.listOf(), new ArrayList<>(this.dingingTableList));
         output.store("cupboard", BlockPos.CODEC.listOf(), new ArrayList<>(this.cupboardList));
+        output.store("incubator", BlockPos.CODEC.listOf(), new ArrayList<>(this.incubatorList));
         output.putBoolean("isOpen", this.isOpen);
         if (this.owner != null) {
             output.store("Owner", UUIDUtil.CODEC, this.owner);
@@ -282,6 +316,7 @@ public class CanteenControllerBlockEntity extends BlockEntity {
         this.kitchenwareList = new LinkedHashSet<>(input.read("kitchenware", BlockPos.CODEC.listOf()).orElse(List.of()));
         this.dingingTableList = new LinkedHashSet<>(input.read("diningTable", BlockPos.CODEC.listOf()).orElse(List.of()));
         this.cupboardList = new LinkedHashSet<>(input.read("cupboard", BlockPos.CODEC.listOf()).orElse(List.of()));
+        this.incubatorList = new LinkedHashSet<>(input.read("incubator", BlockPos.CODEC.listOf()).orElse(List.of()));
         this.isOpen = input.getBooleanOr("isOpen", false);
         this.owner = input.read("Owner", UUIDUtil.CODEC).orElse(null);
     }
@@ -331,4 +366,5 @@ public class CanteenControllerBlockEntity extends BlockEntity {
             this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);
         }
     }
+
 }

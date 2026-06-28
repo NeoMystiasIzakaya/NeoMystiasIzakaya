@@ -6,6 +6,7 @@
 package icu.gensoukyo.neo_mystias_izakaya.common.item;
 
 import icu.gensoukyo.neo_mystias_izakaya.api.common.ICupboard;
+import icu.gensoukyo.neo_mystias_izakaya.api.common.IIncubator;
 import icu.gensoukyo.neo_mystias_izakaya.common.block.DiningTableBlock;
 import icu.gensoukyo.neo_mystias_izakaya.common.block.KitchenwareBlock;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.CanteenControllerBlockEntity;
@@ -46,6 +47,8 @@ public class CanteenConfigItem extends Item {
     private static final Component MSG_DINING_TABLE_FULL = Component.translatable("item.neo_mystias_izakaya.canteen_config.dining_table_full");
     private static final Component MSG_CUPBOARD_BOUND = Component.translatable("item.neo_mystias_izakaya.canteen_config.cupboard_bound");
     private static final Component MSG_CUPBOARD_FULL = Component.translatable("item.neo_mystias_izakaya.canteen_config.cupboard_full");
+    private static final Component MSG_INCUBATOR_BOUND = Component.translatable("item.neo_mystias_izakaya.canteen_config.incubator_bound");
+    private static final Component MSG_INCUBATOR_FULL = Component.translatable("item.neo_mystias_izakaya.canteen_config.incubator_full");
     // 区域扫描消息
     private static final Component MSG_CORNER_A_SET = Component.translatable("item.neo_mystias_izakaya.canteen_config.corner_a_set");
     private static final Component MSG_CORNER_B_SET = Component.translatable("item.neo_mystias_izakaya.canteen_config.corner_b_set");
@@ -55,6 +58,7 @@ public class CanteenConfigItem extends Item {
     private static final int MAX_KITCHENWARE = 8;
     private static final int MAX_DINING_TABLES = 8;
     private static final int MAX_CUPBOARDS = 4;
+    private static final int MAX_INCUBATORS = 4;;
 
     public CanteenConfigItem(Properties properties) {
         super(properties.useCooldown(1.0F));
@@ -96,6 +100,11 @@ public class CanteenConfigItem extends Item {
         return data.cupboardList().size() >= MAX_CUPBOARDS;
     }
 
+    private static boolean isIncubatorLimitReached(ItemStack item) {
+        CanteenConfigData data = CanteenConfigUtil.getConfig(item);
+        return data.cupboardList().size() >= MAX_INCUBATORS;
+    }
+
     // ==================== 角点管理 ====================
 
     private static void clearCorners(ItemStack item) {
@@ -135,6 +144,7 @@ public class CanteenConfigItem extends Item {
         boolean isKitchenware = clickedState.getBlock() instanceof KitchenwareBlock;
         boolean isDiningTable = clickedState.getBlock() instanceof DiningTableBlock;
         boolean isCupboard = clickedBE instanceof ICupboard;
+        boolean isIncubator = clickedBE instanceof IIncubator;
         boolean isController = clickedBE instanceof CanteenControllerBlockEntity;
         boolean isSpecial = isKitchenware || isDiningTable || isCupboard || isController;
 
@@ -160,7 +170,7 @@ public class CanteenConfigItem extends Item {
             CanteenConfigData data = CanteenConfigUtil.getConfig(heldItem);
             if (data.cornerA() != null && data.cornerB() != null) {
                 // 两角点齐全 → 区域扫描绑定
-                CanteenConfigUtil.ScanResult result = CanteenConfigUtil.scan(level, player, heldItem, controllerBE, data.cornerA(), data.cornerB(), MAX_KITCHENWARE, MAX_DINING_TABLES, MAX_CUPBOARDS);
+                CanteenConfigUtil.ScanResult result = CanteenConfigUtil.scan(level, player, heldItem, controllerBE, data.cornerA(), data.cornerB(), MAX_KITCHENWARE, MAX_DINING_TABLES, MAX_CUPBOARDS,MAX_INCUBATORS);
                 if (player != null) {
                     player.sendOverlayMessage(Component.translatable(SCAN_RESULT_KEY, result.kitchenwareCount(), result.diningTableCount(), result.cupboardCount()));
                 }
@@ -176,27 +186,33 @@ public class CanteenConfigItem extends Item {
         }
 
         // 厨具 / 餐桌 / 橱柜 → 手动绑定（需已选择控制器）
-        if (isKitchenware || isDiningTable || isCupboard) {
+        if (isKitchenware || isDiningTable || isCupboard || isIncubator) {
             CanteenConfigData configData = CanteenConfigUtil.getConfig(heldItem);
             if (configData.controller() != null && level.isLoaded(configData.controller())) {
-                if (isCupboard) {
+                if (isIncubator){
+                    if (isIncubatorLimitReached(heldItem)) {
+                        if (player != null) player.sendOverlayMessage(MSG_INCUBATOR_FULL);
+                        return InteractionResult.FAIL;
+                    }
+                    return doBind(level, player, heldItem, clickedPos,CanteenConfigUtil.BindType.INCUBATOR,MSG_INCUBATOR_BOUND,MSG_ALREADY_BOUND);
+                } else if (isCupboard) {
                     if (isCupboardLimitReached(heldItem)) {
                         if (player != null) player.sendOverlayMessage(MSG_CUPBOARD_FULL);
                         return InteractionResult.FAIL;
                     }
-                    return doBindCupboard(level, player, heldItem, clickedPos);
+                    return doBind(level, player, heldItem, clickedPos,CanteenConfigUtil.BindType.CUPBOARD,MSG_CUPBOARD_BOUND,MSG_ALREADY_BOUND);
                 } else if (isKitchenware) {
                     if (isLimitReached(heldItem, true)) {
                         if (player != null) player.sendOverlayMessage(MSG_KITCHENWARE_FULL);
                         return InteractionResult.FAIL;
                     }
-                    return doBind(level, player, heldItem, clickedPos, true, MSG_KITCHENWARE_BOUND, MSG_ALREADY_BOUND);
+                    return doBind(level, player, heldItem, clickedPos, CanteenConfigUtil.BindType.KITCHENWARE, MSG_KITCHENWARE_BOUND, MSG_ALREADY_BOUND);
                 } else {
                     if (isLimitReached(heldItem, false)) {
                         if (player != null) player.sendOverlayMessage(MSG_DINING_TABLE_FULL);
                         return InteractionResult.FAIL;
                     }
-                    return doBind(level, player, heldItem, clickedPos, false, MSG_DINING_TABLE_BOUND, MSG_ALREADY_BOUND);
+                    return doBind(level, player, heldItem, clickedPos, CanteenConfigUtil.BindType.DINING_TABLE, MSG_DINING_TABLE_BOUND, MSG_ALREADY_BOUND);
                 }
             }
             // 未选控制器 → 设为角点A
@@ -215,14 +231,9 @@ public class CanteenConfigItem extends Item {
 
     // ==================== 手动绑定/解绑 ====================
 
-    private InteractionResult doBindCupboard(Level level, Player player, ItemStack heldItem, BlockPos target) {
-        BindResult result = CanteenConfigUtil.bindCupboard(level, player, heldItem, target);
-        return switchBindResult(level, player, heldItem, result, MSG_CUPBOARD_BOUND, MSG_ALREADY_BOUND);
-    }
-
     private InteractionResult doBind(Level level, Player player, ItemStack heldItem, BlockPos target,
-                                     boolean isKitchenware, Component successMsg, Component alreadyMsg) {
-        BindResult result = CanteenConfigUtil.bind(level, player, heldItem, target, isKitchenware);
+                                     CanteenConfigUtil.BindType bindType, Component successMsg, Component alreadyMsg) {
+        BindResult result = CanteenConfigUtil.bind(level, player, heldItem, target, bindType);
         return switchBindResult(level, player, heldItem, result, successMsg, alreadyMsg);
     }
 

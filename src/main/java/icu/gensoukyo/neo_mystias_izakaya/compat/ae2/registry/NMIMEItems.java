@@ -8,5 +8,5 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class NMIMEItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(NeoMystiasIzakaya.MODID);
 
-    public static final DeferredItem<BlockItem> AE2_CUPBOARD = ITEMS.registerSimpleBlockItem("me_cupboard", NMIMEBlocks.ME_CUPBOARD);
+    public static final DeferredItem<BlockItem> ME_CUPBOARD = ITEMS.registerSimpleBlockItem("me_cupboard", NMIMEBlocks.ME_CUPBOARD);
 }

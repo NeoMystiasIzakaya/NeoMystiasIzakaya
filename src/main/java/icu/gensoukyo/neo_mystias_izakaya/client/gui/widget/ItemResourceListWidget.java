@@ -17,20 +17,19 @@ import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.ObjectSelectionList;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.network.chat.Component;
-import net.neoforged.neoforge.transfer.item.ItemResource;
 
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class CupBoardItemResourceListWidget extends ObjectSelectionList<CupBoardItemResourceListWidget.Entry> {
+public class ItemResourceListWidget extends ObjectSelectionList<ItemResourceListWidget.Entry> {
 
     private final int listWidth;
     private final int itemPreRow;
     private final Supplier<List<ItemResourceWithCount>> itemResourceWithCountAssessor;
     private final Consumer<ItemResourceWithCount> onItemClick;
 
-    public CupBoardItemResourceListWidget(Minecraft minecraft, int width, int height, int x,int y, Supplier<List<ItemResourceWithCount>> itemResourceWithCountAssessor, Consumer<ItemResourceWithCount> onItemClick) {
+    public ItemResourceListWidget(Minecraft minecraft, int width, int height, int x, int y, Supplier<List<ItemResourceWithCount>> itemResourceWithCountAssessor, Consumer<ItemResourceWithCount> onItemClick) {
         super(minecraft, width, height, y, 20);
         setPosition(x,y);
         this.listWidth = width;
@@ -58,7 +57,7 @@ public class CupBoardItemResourceListWidget extends ObjectSelectionList<CupBoard
     }
 
     @Override
-    protected void extractSelection(GuiGraphicsExtractor graphics, CupBoardItemResourceListWidget.Entry entry, int outlineColor) {
+    protected void extractSelection(GuiGraphicsExtractor graphics, ItemResourceListWidget.Entry entry, int outlineColor) {
     }
 
     public void refresh(){

@@ -6,7 +6,8 @@
 package icu.gensoukyo.neo_mystias_izakaya.client.network;
 
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
-import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.CupBoardHud;
+import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.CupboardHud;
+import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.IncubatorHud;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.KitchenwareBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.common.network.*;
@@ -81,18 +82,34 @@ public class ClientPayloadHandler {
         });
     }
 
-    public static void handleCupBoardItemResourceFullSyncMessage(CupBoardItemResourceFullSyncMessage message, IPayloadContext context) {
+    public static void handleCupboardItemResourceFullSyncMessage(CupboardItemResourceFullSyncMessage message, IPayloadContext context) {
         context.enqueueWork(() -> {
-            if (CupBoardHud.CurrentActive !=null){
-                CupBoardHud.CurrentActive.refresh(message.itemResourceList());
+            if (CupboardHud.CurrentActive !=null){
+                CupboardHud.CurrentActive.refresh(message.itemResourceList());
             }
         });
     }
 
-    public static void handleCupBoardItemResourceUpdateMessage(CupBoardItemResourceConsumedMessage message, IPayloadContext context) {
+    public static void handleCupboardItemResourceConsumedMessage(CupboardItemResourceConsumedMessage message, IPayloadContext context) {
         context.enqueueWork(() -> {
-            if (CupBoardHud.CurrentActive !=null){
-                CupBoardHud.CurrentActive.update(message.itemResource());
+            if (CupboardHud.CurrentActive !=null){
+                CupboardHud.CurrentActive.update(message.itemResource());
+            }
+        });
+    }
+
+    public static void handleIncubatorItemResourceFullSyncMessage(IncubatorItemResourceFullSyncMessage message, IPayloadContext context) {
+        context.enqueueWork(() -> {
+            if (IncubatorHud.CurrentActive !=null){
+                IncubatorHud.CurrentActive.refresh(message.itemResourceList());
+            }
+        });
+    }
+
+    public static void handleIncubatorItemResourceConsumedMessage(IncubatorItemResourceConsumedMessage message, IPayloadContext context) {
+        context.enqueueWork(() -> {
+            if (IncubatorHud.CurrentActive !=null){
+                IncubatorHud.CurrentActive.update(message.itemResource());
             }
         });
     }

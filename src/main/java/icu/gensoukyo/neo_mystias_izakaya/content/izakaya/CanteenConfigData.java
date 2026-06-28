@@ -32,12 +32,13 @@ public record CanteenConfigData(
         List<BlockPos> kitchenwareList,
         List<BlockPos> diningTableList,
         List<BlockPos> cupboardList,
+        List<BlockPos> incubatorList,
         @Nullable BlockPos cornerA,
         @Nullable BlockPos cornerB
 ) {
     /** 空配置 */
     public static final CanteenConfigData EMPTY = new CanteenConfigData(
-            null, List.of(), List.of(), List.of(), null, null
+            null, List.of(), List.of(), List.of(), List.of(), null, null
     );
 
     public static final Codec<CanteenConfigData> CODEC = RecordCodecBuilder.create(instance ->
@@ -46,10 +47,11 @@ public record CanteenConfigData(
                     BlockPos.CODEC.listOf().optionalFieldOf("kitchenware_list", List.of()).forGetter(CanteenConfigData::kitchenwareList),
                     BlockPos.CODEC.listOf().optionalFieldOf("dining_table_list", List.of()).forGetter(CanteenConfigData::diningTableList),
                     BlockPos.CODEC.listOf().optionalFieldOf("cupboard_list", List.of()).forGetter(CanteenConfigData::cupboardList),
+                    BlockPos.CODEC.listOf().optionalFieldOf("incubator_list", List.of()).forGetter(CanteenConfigData::incubatorList),
                     BlockPos.CODEC.optionalFieldOf("corner_a").forGetter(d -> java.util.Optional.ofNullable(d.cornerA)),
                     BlockPos.CODEC.optionalFieldOf("corner_b").forGetter(d -> java.util.Optional.ofNullable(d.cornerB))
-            ).apply(instance, (ctrl, kw, dt, cb, ca, cb2) ->
-                    new CanteenConfigData(ctrl.orElse(null), kw, dt, cb, ca.orElse(null), cb2.orElse(null)))
+            ).apply(instance, (ctrl, kw, dt, cb, ic, ca, cb2) ->
+                    new CanteenConfigData(ctrl.orElse(null), kw, dt, cb, ic, ca.orElse(null), cb2.orElse(null)))
     );
 
     public static final StreamCodec<ByteBuf, CanteenConfigData> STREAM_CODEC = StreamCodec.composite(
@@ -57,48 +59,51 @@ public record CanteenConfigData(
             BlockPos.STREAM_CODEC.apply(ByteBufCodecs.list()), CanteenConfigData::kitchenwareList,
             BlockPos.STREAM_CODEC.apply(ByteBufCodecs.list()), CanteenConfigData::diningTableList,
             BlockPos.STREAM_CODEC.apply(ByteBufCodecs.list()), CanteenConfigData::cupboardList,
+            BlockPos.STREAM_CODEC.apply(ByteBufCodecs.list()), CanteenConfigData::incubatorList,
             BlockPos.STREAM_CODEC.apply(ByteBufCodecs::optional), d -> java.util.Optional.ofNullable(d.cornerA),
             BlockPos.STREAM_CODEC.apply(ByteBufCodecs::optional), d -> java.util.Optional.ofNullable(d.cornerB),
-            (ctrl, kw, dt, cb, ca, cb2) -> new CanteenConfigData(
-                    ctrl.orElse(null), kw, dt, cb, ca.orElse(null), cb2.orElse(null))
+            (ctrl, kw, dt, cb, ic, ca, cb2) -> new CanteenConfigData(
+                    ctrl.orElse(null), kw, dt, cb,ic, ca.orElse(null), cb2.orElse(null))
     );
 
     // ==================== 便捷方法 ====================
 
     /** 以指定控制器创建新配置（保留其他字段重置），用于 syncControllerData */
     public CanteenConfigData withController(@Nullable BlockPos newController) {
-        return new CanteenConfigData(newController, kitchenwareList, diningTableList, cupboardList, cornerA, cornerB);
+        return new CanteenConfigData(newController, kitchenwareList, diningTableList, cupboardList,incubatorList, cornerA, cornerB);
     }
 
     /** 设置控制器并用新的列表填充 */
     public CanteenConfigData withController(BlockPos controllerPos,
                                             List<BlockPos> kitchenware,
                                             List<BlockPos> diningTables,
-                                            List<BlockPos> cupboards) {
+                                            List<BlockPos> cupboards,
+                                            List<BlockPos> incubators) {
         return new CanteenConfigData(controllerPos,
                 new ArrayList<>(kitchenware),
                 new ArrayList<>(diningTables),
                 new ArrayList<>(cupboards),
+                new ArrayList<>(incubators),
                 cornerA, cornerB);
     }
 
     /** 清除控制器及各列表 */
     public CanteenConfigData clearController() {
-        return new CanteenConfigData(null, List.of(), List.of(), List.of(), cornerA, cornerB);
+        return new CanteenConfigData(null, List.of(), List.of(), List.of(), List.of(), cornerA, cornerB);
     }
 
     /** 设置角点 A */
     public CanteenConfigData withCornerA(BlockPos pos) {
-        return new CanteenConfigData(controller, kitchenwareList, diningTableList, cupboardList, pos, cornerB);
+        return new CanteenConfigData(controller, kitchenwareList, diningTableList, cupboardList, incubatorList, pos, cornerB);
     }
 
     /** 设置角点 B */
     public CanteenConfigData withCornerB(BlockPos pos) {
-        return new CanteenConfigData(controller, kitchenwareList, diningTableList, cupboardList, cornerA, pos);
+        return new CanteenConfigData(controller, kitchenwareList, diningTableList, cupboardList, incubatorList, cornerA, pos);
     }
 
     /** 清除角点 */
     public CanteenConfigData clearCorners() {
-        return new CanteenConfigData(controller, kitchenwareList, diningTableList, cupboardList, null, null);
+        return new CanteenConfigData(controller, kitchenwareList, diningTableList, cupboardList, incubatorList, null, null);
     }
 }

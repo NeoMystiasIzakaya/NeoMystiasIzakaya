@@ -7,7 +7,7 @@ package icu.gensoukyo.neo_mystias_izakaya.client.gui.screen;
 
 import icu.gensoukyo.neo_mystias_izakaya.api.event.server.cooking.IzakayaCookingEvent;
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
-import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.CupBoardHud;
+import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.CupboardHud;
 import icu.gensoukyo.neo_mystias_izakaya.client.network.ClientPayloadSender;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientEconomyUtil;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientRecipeUtil;
@@ -56,7 +56,7 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
     private final List<Identifier> menuCuisineIds = new ArrayList<>();
     List<NMIRecipeHolder> possibleRecipes;
 
-    private CupBoardHud cupBoardHud;
+    private CupboardHud cupBoardHud;
 
     public KitchenwareScreen(KitchenwareMenu menu, Inventory inv, Component title) {
         super(menu, inv, title, 230, 219);
@@ -143,7 +143,7 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
             }
         }
 
-        cupBoardHud = new CupBoardHud(10,10,getLeftPos()-20,getImageHeight(),this::onHudItemResourceClick);
+        cupBoardHud = new CupboardHud(10,10,getLeftPos()-20,getImageHeight(),this::onHudItemResourceClick);
         addRenderableWidget(cupBoardHud);
         ClientPayloadSender.sendRequestCupboardIngredientInfoMessage();
     }
