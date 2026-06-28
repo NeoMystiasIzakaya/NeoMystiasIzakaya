@@ -26,11 +26,10 @@ import java.util.ArrayList;
  */
 public final class CanteenConfigUtil {
 
-    private CanteenConfigUtil() {
-    }
-
     public enum BindResult { NO_CONTROLLER, NOT_FOUND, CANCELLED, BOUND, ALREADY_BOUND }
     public enum UnbindResult { NO_CONTROLLER, NOT_FOUND, CANCELLED, REMOVED, NOT_BOUND }
+
+    public record ScanResult(int kitchenwareCount,int diningTableCount,int cupboardCount ){}
 
     // ==================== 控制器数据读写 ====================
 
@@ -144,13 +143,13 @@ public final class CanteenConfigUtil {
      *
      * @return {厨具绑定数, 餐桌绑定数, 橱柜绑定数}
      */
-    public static int[] scan(Level level, Player player, ItemStack heldItem, CanteenControllerBlockEntity controller,
+    public static ScanResult scan(Level level, Player player, ItemStack heldItem, CanteenControllerBlockEntity controller,
                              BlockPos cornerA, BlockPos cornerB, int maxKitchenware, int maxDiningTables, int maxCupboards) {
         CanteenConfigEvent.Scan.Pre pre = NeoForge.EVENT_BUS.post(
                 new CanteenConfigEvent.Scan.Pre(player, heldItem, controller, cornerA, cornerB));
-        if (pre.isCanceled()) return new int[]{0, 0, 0};
+        if (pre.isCanceled()) return new ScanResult(0, 0, 0);
 
-        int[] result = controller.scanAndBind(level, cornerA, cornerB, maxKitchenware, maxDiningTables, maxCupboards);
+        ScanResult result = controller.scanAndBind(level, cornerA, cornerB, maxKitchenware, maxDiningTables, maxCupboards);
 
         CanteenConfigEvent.Scan.Post post = NeoForge.EVENT_BUS.post(
                 new CanteenConfigEvent.Scan.Post(player, heldItem, controller, cornerA, cornerB, result));

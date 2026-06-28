@@ -160,9 +160,9 @@ public class CanteenConfigItem extends Item {
             CanteenConfigData data = CanteenConfigUtil.getConfig(heldItem);
             if (data.cornerA() != null && data.cornerB() != null) {
                 // 两角点齐全 → 区域扫描绑定
-                int[] result = CanteenConfigUtil.scan(level, player, heldItem, controllerBE, data.cornerA(), data.cornerB(), MAX_KITCHENWARE, MAX_DINING_TABLES, MAX_CUPBOARDS);
+                CanteenConfigUtil.ScanResult result = CanteenConfigUtil.scan(level, player, heldItem, controllerBE, data.cornerA(), data.cornerB(), MAX_KITCHENWARE, MAX_DINING_TABLES, MAX_CUPBOARDS);
                 if (player != null) {
-                    player.sendOverlayMessage(Component.translatable(SCAN_RESULT_KEY, result[0], result[1], result[2]));
+                    player.sendOverlayMessage(Component.translatable(SCAN_RESULT_KEY, result.kitchenwareCount(), result.diningTableCount(), result.cupboardCount()));
                 }
                 clearCorners(heldItem);
             } else {

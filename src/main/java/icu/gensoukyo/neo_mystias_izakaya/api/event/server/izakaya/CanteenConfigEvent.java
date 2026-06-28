@@ -6,6 +6,7 @@
 package icu.gensoukyo.neo_mystias_izakaya.api.event.server.izakaya;
 
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.CanteenControllerBlockEntity;
+import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.CanteenConfigUtil;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.core.BlockPos;
@@ -117,9 +118,9 @@ public abstract class CanteenConfigEvent extends Event {
         @Getter
         @Setter
         public static class Post extends Scan {
-            private int[] result;
+            private CanteenConfigUtil.ScanResult result;
 
-            public Post(Player player, ItemStack heldItem, CanteenControllerBlockEntity controller, BlockPos cornerA, BlockPos cornerB, int[] result) {
+            public Post(Player player, ItemStack heldItem, CanteenControllerBlockEntity controller, BlockPos cornerA, BlockPos cornerB, CanteenConfigUtil.ScanResult result) {
                 super(player, heldItem, controller, cornerA, cornerB);
                 this.result = result;
             }

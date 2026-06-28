@@ -10,6 +10,7 @@ import icu.gensoukyo.neo_mystias_izakaya.common.block.CanteenControllerBlock;
 import icu.gensoukyo.neo_mystias_izakaya.common.block.CupboardBlock;
 import icu.gensoukyo.neo_mystias_izakaya.common.block.DiningTableBlock;
 import icu.gensoukyo.neo_mystias_izakaya.common.block.KitchenwareBlock;
+import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.CanteenConfigUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.CanteenOrderUtil;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockEntities;
 import net.minecraft.core.BlockPos;
@@ -153,7 +154,7 @@ public class CanteenControllerBlockEntity extends BlockEntity {
         getMain().setOpenImpl(open, ownerUUID);
     }
 
-    public int[] scanAndBind(Level level, BlockPos cornerA, BlockPos cornerB, int maxKitchenware, int maxDiningTables, int maxCupboards) {
+    public CanteenConfigUtil.ScanResult scanAndBind(Level level, BlockPos cornerA, BlockPos cornerB, int maxKitchenware, int maxDiningTables, int maxCupboards) {
         return getMain().scanAndBindImpl(level, cornerA, cornerB, maxKitchenware, maxDiningTables, maxCupboards);
     }
 
@@ -210,7 +211,7 @@ public class CanteenControllerBlockEntity extends BlockEntity {
         markUpdated();
     }
 
-    private int[] scanAndBindImpl(Level level, BlockPos cornerA, BlockPos cornerB, int maxKitchenware, int maxDiningTables, int maxCupboards) {
+    private CanteenConfigUtil.ScanResult scanAndBindImpl(Level level, BlockPos cornerA, BlockPos cornerB, int maxKitchenware, int maxDiningTables, int maxCupboards) {
         int minX = Math.min(cornerA.getX(), cornerB.getX());
         int minY = Math.min(cornerA.getY(), cornerB.getY());
         int minZ = Math.min(cornerA.getZ(), cornerB.getZ());
@@ -238,7 +239,7 @@ public class CanteenControllerBlockEntity extends BlockEntity {
                 }
             }
         }
-        return new int[]{kitchenwareCount, diningTableCount, cupboardCount};
+        return new CanteenConfigUtil.ScanResult(kitchenwareCount, diningTableCount, cupboardCount);
     }
 
     /**

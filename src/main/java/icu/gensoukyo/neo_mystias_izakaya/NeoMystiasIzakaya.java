@@ -37,6 +37,9 @@ public class NeoMystiasIzakaya {
         NMIMemoryTypes.MEMORY_MODULE_TYPES.register(modEventBus);
         NMIKitchenware.KITCHENWARE.register(modEventBus);
         NMIEntities.ENTITY_TYPES.register(modEventBus);
+
+
+        LOGGER.info("Ciallo～(∠・ω< )⌒★ ");
     }
 
     public static Identifier id(String key) {
