@@ -37,8 +37,12 @@ public class ClientPayloadSender {
         ClientPacketDistributor.sendToServer(new ToggleCanteenOpenMessage(controllerPos));
     }
 
-    public static void sendRequestCupboardInfoMessage() {
-        ClientPacketDistributor.sendToServer(new RequestCupboardInfoMessage());
+    public static void sendRequestCupboardIngredientInfoMessage() {
+        ClientPacketDistributor.sendToServer(new RequestCupboardIngredientInfoMessage());
+    }
+
+    public static void sendRequestCupboardBeveragesInfoMessage() {
+        ClientPacketDistributor.sendToServer(new RequestCupboardBeveragesInfoMessage());
     }
 
     public static void sendRequestExtractToKitchenwareMessage(int menuId,BlockPos blockPos){
@@ -47,5 +51,9 @@ public class ClientPayloadSender {
 
     public static void sendRequestExtractItemToKitchenwareMessage(ItemResource resource, BlockPos blockPos){
         ClientPacketDistributor.sendToServer(new RequestExtractItemToKitchenwareMessage(resource,blockPos));
+    }
+
+    public static void sendRequestExtractItemToPlayerHandMessage(ItemResource resource){
+        ClientPacketDistributor.sendToServer(new RequestExtractItemToPlayerHandMessage(resource));
     }
 }

@@ -11,11 +11,11 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import org.jspecify.annotations.NonNull;
 
-public record RequestCupboardInfoMessage() implements CustomPacketPayload {
+public record RequestCupboardBeveragesInfoMessage() implements CustomPacketPayload {
 
-    public static final StreamCodec<ByteBuf, RequestCupboardInfoMessage> STREAM_CODEC = StreamCodec.unit(new RequestCupboardInfoMessage());
+    public static final StreamCodec<ByteBuf, RequestCupboardBeveragesInfoMessage> STREAM_CODEC = StreamCodec.unit(new RequestCupboardBeveragesInfoMessage());
 
-    public static final CustomPacketPayload.Type<RequestCupboardInfoMessage> TYPE = new CustomPacketPayload.Type<>(NeoMystiasIzakaya.id("request_cupboard_info"));
+    public static final Type<RequestCupboardBeveragesInfoMessage> TYPE = new Type<>(NeoMystiasIzakaya.id("request_cupboard_beverages_info"));
 
     @Override
     public @NonNull Type<? extends CustomPacketPayload> type() {

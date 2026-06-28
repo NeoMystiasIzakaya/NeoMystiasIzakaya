@@ -24,4 +24,6 @@ public class NMIBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<DiningTableBlockEntity>> DINING_TABLE = BLOCK_ENTITY_TYPES.register("dining_table", () -> new BlockEntityType<>(DiningTableBlockEntity::new, NMIBlocks.DINING_TABLE.get()));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CupboardBlockEntity>> CUPBOARD = BLOCK_ENTITY_TYPES.register("cupboard", () -> new BlockEntityType<>(CupboardBlockEntity::new, NMIBlocks.CUPBOARD.get()));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CreativeCupboardBlockEntity>> CREATIVE_CUPBOARD = BLOCK_ENTITY_TYPES.register("creative_cupboard", () -> new BlockEntityType<>(CreativeCupboardBlockEntity::new, NMIBlocks.CREATIVE_CUPBOARD.get()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<IncubatorBlockEntity>> INCUBATOR = BLOCK_ENTITY_TYPES.register("incubator", () -> new BlockEntityType<>(IncubatorBlockEntity::new, NMIBlocks.INCUBATOR.get()));
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<CreativeIncubatorBlockEntity>> CREATIVE_INCUBATOR = BLOCK_ENTITY_TYPES.register("creative_incubator", () -> new BlockEntityType<>(CreativeIncubatorBlockEntity::new, NMIBlocks.CREATIVE_INCUBATOR.get()));
 }

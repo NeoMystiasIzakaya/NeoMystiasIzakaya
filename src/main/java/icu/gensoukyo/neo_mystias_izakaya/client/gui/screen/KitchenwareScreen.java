@@ -145,7 +145,7 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
 
         cupBoardHud = new CupBoardHud(10,10,getLeftPos()-20,getImageHeight(),this::onHudItemResourceClick);
         addRenderableWidget(cupBoardHud);
-        ClientPayloadSender.sendRequestCupboardInfoMessage();
+        ClientPayloadSender.sendRequestCupboardIngredientInfoMessage();
     }
 
     private void onHudItemResourceClick(ItemResourceWithCount resource) {

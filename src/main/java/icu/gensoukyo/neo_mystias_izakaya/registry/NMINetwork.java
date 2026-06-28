@@ -143,9 +143,15 @@ public class NMINetwork {
         );
 
         registrar.playToServer(
-                RequestCupboardInfoMessage.TYPE,
-                RequestCupboardInfoMessage.STREAM_CODEC,
-                ServerPayloadHandler::handleRequestCupboardInfoMessage
+                RequestCupboardIngredientInfoMessage.TYPE,
+                RequestCupboardIngredientInfoMessage.STREAM_CODEC,
+                ServerPayloadHandler::handleRequestCupboardIngredientInfoMessage
+        );
+
+        registrar.playToServer(
+                RequestCupboardBeveragesInfoMessage.TYPE,
+                RequestCupboardBeveragesInfoMessage.STREAM_CODEC,
+                ServerPayloadHandler::handleRequestCupboardBeveragesInfoMessage
         );
 
         registrar.playToServer(
@@ -158,6 +164,12 @@ public class NMINetwork {
                 RequestExtractItemToKitchenwareMessage.TYPE,
                 RequestExtractItemToKitchenwareMessage.STREAM_CODEC,
                 ServerPayloadHandler::handleRequestExtractItemToKitchenwareMessage
+        );
+
+        registrar.playToServer(
+                RequestExtractItemToPlayerHandMessage.TYPE,
+                RequestExtractItemToPlayerHandMessage.STREAM_CODEC,
+                ServerPayloadHandler::handleRequestExtractItemToPlayerHandMessage
         );
     }
 }

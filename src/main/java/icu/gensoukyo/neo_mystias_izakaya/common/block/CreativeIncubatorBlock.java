@@ -7,7 +7,6 @@ package icu.gensoukyo.neo_mystias_izakaya.common.block;
 
 import com.mojang.serialization.MapCodec;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.CreativeCupboardBlockEntity;
-import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.CupboardBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -19,10 +18,10 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.jspecify.annotations.Nullable;
 
-public class CreativeCupboardBlock extends BaseEntityBlock {
-    public static final MapCodec<CreativeCupboardBlock> CODEC = simpleCodec(CreativeCupboardBlock::new);
+public class CreativeIncubatorBlock extends BaseEntityBlock {
+    public static final MapCodec<CreativeIncubatorBlock> CODEC = simpleCodec(CreativeIncubatorBlock::new);
 
-    public CreativeCupboardBlock(Properties properties) {
+    public CreativeIncubatorBlock(Properties properties) {
         super(properties.noOcclusion());
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)

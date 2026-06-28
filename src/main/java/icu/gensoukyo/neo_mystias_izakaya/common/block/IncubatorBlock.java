@@ -6,23 +6,28 @@
 package icu.gensoukyo.neo_mystias_izakaya.common.block;
 
 import com.mojang.serialization.MapCodec;
-import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.CreativeCupboardBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.CupboardBlockEntity;
+import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.IncubatorBlockEntity;
+import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMainItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.BlockHitResult;
 import org.jspecify.annotations.Nullable;
 
-public class CreativeCupboardBlock extends BaseEntityBlock {
-    public static final MapCodec<CreativeCupboardBlock> CODEC = simpleCodec(CreativeCupboardBlock::new);
+public class IncubatorBlock extends BaseEntityBlock {
+    public static final MapCodec<IncubatorBlock> CODEC = simpleCodec(IncubatorBlock::new);
 
-    public CreativeCupboardBlock(Properties properties) {
+    public IncubatorBlock(Properties properties) {
         super(properties.noOcclusion());
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)
@@ -36,7 +41,22 @@ public class CreativeCupboardBlock extends BaseEntityBlock {
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new CreativeCupboardBlockEntity(blockPos,blockState);
+        return new IncubatorBlockEntity(blockPos, blockState);
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        if (!level.isClientSide()) {
+            if (player.getMainHandItem().is(NMIMainItems.CANTEEN_CONFIG)) {
+                return super.useWithoutItem(state, level, pos, player, hitResult);
+            }
+            BlockEntity blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof IncubatorBlockEntity cupboardBlockEntity) {
+                player.openMenu(cupboardBlockEntity, friendlyByteBuf -> friendlyByteBuf.writeBlockPos(cupboardBlockEntity.getBlockPos()));
+                return InteractionResult.SUCCESS_SERVER;
+            }
+        }
+        return InteractionResult.SUCCESS;
     }
 
     @Override

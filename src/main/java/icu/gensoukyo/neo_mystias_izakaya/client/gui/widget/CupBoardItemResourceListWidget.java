@@ -30,8 +30,9 @@ public class CupBoardItemResourceListWidget extends ObjectSelectionList<CupBoard
     private final Supplier<List<ItemResourceWithCount>> itemResourceWithCountAssessor;
     private final Consumer<ItemResourceWithCount> onItemClick;
 
-    public CupBoardItemResourceListWidget(Minecraft minecraft, int width, int height, int y, Supplier<List<ItemResourceWithCount>> itemResourceWithCountAssessor, Consumer<ItemResourceWithCount> onItemClick) {
+    public CupBoardItemResourceListWidget(Minecraft minecraft, int width, int height, int x,int y, Supplier<List<ItemResourceWithCount>> itemResourceWithCountAssessor, Consumer<ItemResourceWithCount> onItemClick) {
         super(minecraft, width, height, y, 20);
+        setPosition(x,y);
         this.listWidth = width;
         this.itemPreRow = (width-10)/20;
         this.itemResourceWithCountAssessor = itemResourceWithCountAssessor;

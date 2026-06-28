@@ -8,6 +8,7 @@ package icu.gensoukyo.neo_mystias_izakaya.content.izakaya;
 import icu.gensoukyo.neo_mystias_izakaya.api.common.ICupboard;
 import icu.gensoukyo.neo_mystias_izakaya.api.dal.NMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.KitchenwareBlockEntity;
+import icu.gensoukyo.neo_mystias_izakaya.common.menu.DishServingMenu;
 import icu.gensoukyo.neo_mystias_izakaya.common.network.ServerPayloadSender;
 import icu.gensoukyo.neo_mystias_izakaya.common.resource.ItemResourceWithCount;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonIzakayaUtil;
@@ -54,7 +55,7 @@ public final class CupBoardUtil {
     }
 
     public static List<ItemResourceWithCount> extractBeveragesItemResourceList(ServerPlayer serverPlayer) {
-        return extractIngredientItemResourceList(getItemResourceHandler(serverPlayer));
+        return extractBeveragesItemResourceList(getItemResourceHandler(serverPlayer));
     }
 
     public static List<ItemResourceWithCount> extractBeveragesItemResourceList(ResourceHandler<ItemResource> resourceHandler) {
@@ -134,10 +135,8 @@ public final class CupBoardUtil {
             return;
         }
 
-        PlayerInventoryWrapper playerResourceHandler = PlayerInventoryWrapper.of(serverPlayer);
         ResourceHandler<ItemResource> kitchenwareResourceHandler = kitchenwareBlockEntity.getItemHandler();
-        ResourceHandler<ItemResource> combinedResourceHandler = new CombinedResourceHandler<>(getItemResourceHandler(serverPlayer),
-                playerResourceHandler);
+        ResourceHandler<ItemResource> combinedResourceHandler = getItemResourceHandler(serverPlayer);
 
         try (Transaction transaction = Transaction.openRoot()) {
             if (combinedResourceHandler.extract(itemResource, 1, transaction) == 1) {
@@ -148,6 +147,22 @@ public final class CupBoardUtil {
                 }
             }
             transaction.commit();
+            ServerPayloadSender.sendCupBoardItemResourceConsumedMessage(serverPlayer, itemResource);
+        }
+    }
+
+    public static void extractItemToPlayerHand(ServerPlayer serverPlayer, ItemResource itemResource) {
+        if (!(serverPlayer.containerMenu instanceof DishServingMenu dishServingMenu)) {
+            return;
+        }
+        ResourceHandler<ItemResource> combinedResourceHandler = getItemResourceHandler(serverPlayer);
+
+        try (Transaction transaction = Transaction.openRoot()) {
+            if (combinedResourceHandler.extract(itemResource, 1, transaction) == 1 && dishServingMenu.getCarried().isEmpty()) {
+                dishServingMenu.setCarried(itemResource.toStack());
+            }
+            transaction.commit();
+            dishServingMenu.broadcastChanges();
             ServerPayloadSender.sendCupBoardItemResourceConsumedMessage(serverPlayer, itemResource);
         }
     }

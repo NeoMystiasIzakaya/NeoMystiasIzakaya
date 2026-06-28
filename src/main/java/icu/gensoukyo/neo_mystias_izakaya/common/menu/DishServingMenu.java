@@ -46,6 +46,9 @@ public class DishServingMenu extends AbstractNMIMenu {
     private final int tableCount;
     private final boolean lastRowSingle;
 
+    @Getter
+    private final List<BlockPos> diningTables;
+
     public DishServingMenu(int containerId, Inventory inventory, FriendlyByteBuf buf) {
         this(containerId, inventory, buf.readList(BlockPos.STREAM_CODEC));
     }
@@ -53,6 +56,7 @@ public class DishServingMenu extends AbstractNMIMenu {
     public DishServingMenu(int containerId, Inventory inventory, List<BlockPos> diningTables) {
         super(NMIMenus.DISH_SERVING_MENU.get(), containerId);
         Level level = inventory.player.level();
+        this.diningTables = diningTables;
         this.tableCount = diningTables.size();
         this.lastRowSingle = tableCount % 2 == 1;
 

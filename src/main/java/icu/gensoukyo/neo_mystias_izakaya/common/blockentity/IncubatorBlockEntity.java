@@ -5,7 +5,7 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.common.blockentity;
 
-import icu.gensoukyo.neo_mystias_izakaya.api.common.ICupboard;
+import icu.gensoukyo.neo_mystias_izakaya.api.common.IIncubator;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
@@ -24,7 +24,7 @@ import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper;
 
-public class CupboardBlockEntity extends RandomizableContainerBlockEntity implements ICupboard {
+public class IncubatorBlockEntity extends RandomizableContainerBlockEntity implements IIncubator {
 
     private static final int SLOT_COUNT = 27;
 
@@ -32,8 +32,8 @@ public class CupboardBlockEntity extends RandomizableContainerBlockEntity implem
 
     private final ResourceHandler<ItemResource> itemStacksResourceHandler= VanillaContainerWrapper.of(this);
 
-    public CupboardBlockEntity(BlockPos worldPosition, BlockState blockState) {
-        super(NMIBlockEntities.CUPBOARD.get(), worldPosition, blockState);
+    public IncubatorBlockEntity(BlockPos worldPosition, BlockState blockState) {
+        super(NMIBlockEntities.INCUBATOR.get(), worldPosition, blockState);
     }
 
     @Override

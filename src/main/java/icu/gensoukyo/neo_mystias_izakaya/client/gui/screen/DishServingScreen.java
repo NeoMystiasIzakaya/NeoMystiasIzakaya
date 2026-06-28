@@ -6,10 +6,13 @@
 package icu.gensoukyo.neo_mystias_izakaya.client.gui.screen;
 
 import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
+import icu.gensoukyo.neo_mystias_izakaya.client.gui.widget.CupBoardHud;
+import icu.gensoukyo.neo_mystias_izakaya.client.network.ClientPayloadSender;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientItemTagUtil;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.DiningTableBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.common.menu.DishServingMenu;
+import icu.gensoukyo.neo_mystias_izakaya.common.resource.ItemResourceWithCount;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaOrder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -39,8 +42,23 @@ public class DishServingScreen extends AbstractContainerScreen<DishServingMenu> 
     private static final Identifier CONFIRM_SPRITE = Identifier.withDefaultNamespace("container/beacon/confirm");
     private static final Identifier CANCEL_SPRITE = Identifier.withDefaultNamespace("container/beacon/cancel");
 
+    private CupBoardHud cupBoardHud;
+
     public DishServingScreen(DishServingMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title, 256, 219);
+    }
+
+    @Override
+    protected void init(){
+        super.init();
+
+        cupBoardHud = new CupBoardHud(leftPos,10,imageWidth/2,topPos-20,this::onHudItemResourceClick);
+        addRenderableWidget(cupBoardHud);
+        ClientPayloadSender.sendRequestCupboardBeveragesInfoMessage();
+    }
+
+    private void onHudItemResourceClick(ItemResourceWithCount resource) {
+        ClientPayloadSender.sendRequestExtractItemToPlayerHandMessage(resource.itemResource());
     }
 
     @Override
@@ -293,6 +311,15 @@ public class DishServingScreen extends AbstractContainerScreen<DishServingMenu> 
         graphics.fill(left, top, left + 1, bottom, 0xFFAAAAAA);
         // 右边框
         graphics.fill(right - 1, top, right, bottom, 0xFFAAAAAA);
+    }
+
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
+        boolean b = super.mouseScrolled(mouseX, mouseY, scrollX, scrollY);
+        if (cupBoardHud.isMouseOver(mouseX, mouseY)) {
+            return cupBoardHud.mouseScrolled(mouseX, mouseY, scrollX, scrollY) || b;
+        }
+        return b;
     }
 
     public boolean isPauseScreen() {

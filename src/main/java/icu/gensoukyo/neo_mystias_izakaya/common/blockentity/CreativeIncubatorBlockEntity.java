@@ -6,9 +6,11 @@
 package icu.gensoukyo.neo_mystias_izakaya.common.blockentity;
 
 import icu.gensoukyo.neo_mystias_izakaya.api.common.ICupboard;
+import icu.gensoukyo.neo_mystias_izakaya.api.common.IIncubator;
 import icu.gensoukyo.neo_mystias_izakaya.common.resource.InfiniteItemResourceHandler;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockEntities;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIBeveragesItems;
+import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMICuisinesItems;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIIngredientItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.Item;
@@ -24,27 +26,15 @@ import net.neoforged.neoforge.transfer.item.ItemResource;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreativeCupboardBlockEntity extends BlockEntity implements ICupboard {
+public class CreativeIncubatorBlockEntity extends BlockEntity implements IIncubator {
 
     private final InfiniteItemResourceHandler infiniteItemResourceHandler;
 
-    public CreativeCupboardBlockEntity(BlockPos worldPosition, BlockState blockState) {
-        super(NMIBlockEntities.CREATIVE_CUPBOARD.get(), worldPosition, blockState);
+    public CreativeIncubatorBlockEntity(BlockPos worldPosition, BlockState blockState) {
+        super(NMIBlockEntities.CREATIVE_INCUBATOR.get(), worldPosition, blockState);
 
         List<Item> itemList = new ArrayList<>();
-        itemList.addAll(NMIIngredientItems.ITEM_LIST.stream().map(DeferredItem::get).toList());
-        itemList.addAll(NMIBeveragesItems.ITEM_LIST.stream().map(DeferredItem::get).toList());
-        itemList.add(Items.PUFFERFISH);
-        itemList.add(Items.PUMPKIN);
-        itemList.add(Items.KELP);
-        itemList.add(Items.BROWN_MUSHROOM);
-        itemList.add(Items.POTATO);
-        itemList.add(Items.PORKCHOP);
-        itemList.add(Items.BEEF);
-        itemList.add(Items.EGG);
-        itemList.add(Items.ICE);
-        itemList.add(Items.HONEY_BOTTLE);
-        itemList.add(Items.COCOA_BEANS);
+        itemList.addAll(NMICuisinesItems.ITEM_LIST.stream().map(DeferredItem::get).toList());
         this.infiniteItemResourceHandler = InfiniteItemResourceHandler.withItem(itemList);
     }
 

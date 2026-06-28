@@ -24,4 +24,6 @@ public class NMIBlocks {
     public static final DeferredBlock<Block> STORE = BLOCKS.registerBlock("store", StoreBlock::new);
     public static final DeferredBlock<Block> CUPBOARD = BLOCKS.registerBlock("cupboard", CupboardBlock::new);
     public static final DeferredBlock<Block> CREATIVE_CUPBOARD = BLOCKS.registerBlock("creative_cupboard", CreativeCupboardBlock::new);
+    public static final DeferredBlock<Block> INCUBATOR = BLOCKS.registerBlock("incubator", IncubatorBlock::new);
+    public static final DeferredBlock<Block> CREATIVE_INCUBATOR = BLOCKS.registerBlock("creative_incubator", CreativeIncubatorBlock::new);
 }

@@ -36,17 +36,13 @@ public class CupBoardHud extends AbstractContainerWidget {
         super(x, y, width, height, Component.empty(),AbstractScrollArea.defaultSettings(10));
         this.onItemClick = onItemClick;
         CurrentActive = this;
-        this.cupBoardItemResourceListWidget = new CupBoardItemResourceListWidget(Minecraft.getInstance(),this.getWidth(),this.getHeight()/2,getY(), ArrayList::new,(e)->{});
+        this.cupBoardItemResourceListWidget = new CupBoardItemResourceListWidget(Minecraft.getInstance(),this.getWidth(),this.getHeight()/2,getX(),getY(), ArrayList::new,(e)->{});
 //        this.cupBoardItemResourceListWidget.setPosition(getX(),getY());
     }
 
     public void refresh(List<ItemResourceWithCount> itemResourceWithCountList){
         this.itemResourceWithCountList = new ArrayList<>();
-        itemResourceWithCountList.forEach(e->{
-            if (e.itemResource().is(NMIVanillaTags.INGREDIENT)){
-                this.itemResourceWithCountList.add(e);
-            }
-        });
+        this.itemResourceWithCountList.addAll(itemResourceWithCountList);
         refresh();
     }
     public void update(ItemResource itemResource){
@@ -60,7 +56,7 @@ public class CupBoardHud extends AbstractContainerWidget {
     }
 
     public void refresh(){
-        this.cupBoardItemResourceListWidget = new CupBoardItemResourceListWidget(Minecraft.getInstance(),this.getWidth(),this.getHeight()/2,getY(),()->itemResourceWithCountList,onItemClick);
+        this.cupBoardItemResourceListWidget = new CupBoardItemResourceListWidget(Minecraft.getInstance(),this.getWidth(),this.getHeight()/2,getX(),getY(),()->itemResourceWithCountList,onItemClick);
         this.cupBoardItemResourceListWidget.refresh();
 //        this.cupBoardItemResourceListWidget.setPosition(getX(),getY());
         CurrentActive = this;

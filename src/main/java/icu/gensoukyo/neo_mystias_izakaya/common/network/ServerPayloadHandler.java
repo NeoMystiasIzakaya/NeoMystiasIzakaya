@@ -114,10 +114,18 @@ public class ServerPayloadHandler {
         });
     }
 
-    public static void handleRequestCupboardInfoMessage(RequestCupboardInfoMessage message, IPayloadContext context) {
+    public static void handleRequestCupboardIngredientInfoMessage(RequestCupboardIngredientInfoMessage message, IPayloadContext context) {
         context.enqueueWork(() -> {
             if (context.player() instanceof ServerPlayer serverPlayer) {
                 ServerPayloadSender.sendCupBoardItemResourceFullSyncMessage(serverPlayer, CupBoardUtil.extractIngredientItemResourceList(serverPlayer));
+            }
+        });
+    }
+
+    public static void handleRequestCupboardBeveragesInfoMessage(RequestCupboardBeveragesInfoMessage message, IPayloadContext context) {
+        context.enqueueWork(() -> {
+            if (context.player() instanceof ServerPlayer serverPlayer) {
+                ServerPayloadSender.sendCupBoardItemResourceFullSyncMessage(serverPlayer, CupBoardUtil.extractBeveragesItemResourceList(serverPlayer));
             }
         });
     }
@@ -135,6 +143,14 @@ public class ServerPayloadHandler {
         context.enqueueWork(() -> {
             if (context.player() instanceof ServerPlayer serverPlayer) {
                 CupBoardUtil.extractItemToKitchenware(serverPlayer, message.resource(), message.blockPos());
+            }
+        });
+    }
+
+    public static void handleRequestExtractItemToPlayerHandMessage(RequestExtractItemToPlayerHandMessage message, IPayloadContext context) {
+        context.enqueueWork(() -> {
+            if (context.player() instanceof ServerPlayer serverPlayer) {
+                CupBoardUtil.extractItemToPlayerHand(serverPlayer, message.resource());
             }
         });
     }
