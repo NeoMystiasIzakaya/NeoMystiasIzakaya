@@ -113,7 +113,7 @@ dependencies {
     compileOnly("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}")
     runtimeOnly("mezz.jei:jei-${minecraft_version}-common:${jei_version}")
 
-    implementation 'com.github.TouhouLittleMaid:TouhouLittleMaid-26.1:7c11c1d0a4'
+    implementation 'com.github.TouhouLittleMaid:TouhouLittleMaid-26.1:snapshot-2026-06-30-10-42-43'
 
     implementation "org.appliedenergistics:appliedenergistics2:${ae2_version}:api"
     implementation "org.appliedenergistics:appliedenergistics2:${ae2_version}"

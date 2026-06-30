@@ -74,6 +74,13 @@ description='''
     ordering="BEFORE"
     side="CLIENT"
 
+[[dependencies."${mod_id}"]]
+    modId="touhou_little_maid"
+    type="optional"
+    versionRange="[0,)"
+    ordering="NONE"
+    side="BOTH"
+
 # Here's another dependency
 [[dependencies."${mod_id}"]]
     modId="minecraft"
