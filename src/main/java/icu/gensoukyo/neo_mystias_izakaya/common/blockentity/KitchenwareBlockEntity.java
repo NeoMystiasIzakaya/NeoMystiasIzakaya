@@ -51,13 +51,16 @@ public class KitchenwareBlockEntity extends RandomizableContainerBlockEntity {
      * 5为结果格
      * 6为保存烹饪过程中的目标物品
      */
-    NonNullList<ItemStack> items = NonNullList.withSize(7, ItemStack.EMPTY);
+    NonNullList<ItemStack> items = NonNullList.withSize(6, ItemStack.EMPTY);
 
+    private ItemStack target = ItemStack.EMPTY;
 
     private final ResourceHandler<ItemResource> itemStacksResourceHandler= VanillaContainerWrapper.of(this);
 
+    @Getter
     @Setter
     private int cookingTime = 0;
+    @Getter
     @Setter
     private int totalCookingTime = 0;
     private final ContainerData dataAccess = new ContainerData() {
@@ -115,7 +118,7 @@ public class KitchenwareBlockEntity extends RandomizableContainerBlockEntity {
 
     @Override
     public void setItems(NonNullList<ItemStack> itemStacks) {
-        if (itemStacks.size() != 7) {
+        if (itemStacks.size() != 6) {
             LOGGER.error("Attempted to set items with a list of size {}, but expected size is 7. This may cause unexpected behavior.", itemStacks.size());
         }
         this.items = itemStacks;
@@ -137,7 +140,7 @@ public class KitchenwareBlockEntity extends RandomizableContainerBlockEntity {
 
     @Override
     public int getContainerSize() {
-        return 7;
+        return 6;
     }
 
     @Override
@@ -145,6 +148,7 @@ public class KitchenwareBlockEntity extends RandomizableContainerBlockEntity {
         super.loadAdditional(input);
         this.items.clear();
         ContainerHelper.loadAllItems(input, this.items);
+        this.target = input.read("cooking",ItemStack.CODEC).orElse(ItemStack.EMPTY);
         this.cookingTime = input.getIntOr("CookingTime", 0);
         this.totalCookingTime = input.getIntOr("TotalCookingTime", 0);
     }
@@ -153,6 +157,7 @@ public class KitchenwareBlockEntity extends RandomizableContainerBlockEntity {
     protected void saveAdditional(ValueOutput output) {
         super.saveAdditional(output);
         ContainerHelper.saveAllItems(output, this.items);
+        output.store("cooking",ItemStack.CODEC, target);
         output.putInt("CookingTime", this.cookingTime);
         output.putInt("TotalCookingTime", this.totalCookingTime);
     }
@@ -171,11 +176,11 @@ public class KitchenwareBlockEntity extends RandomizableContainerBlockEntity {
     }
 
     public ItemStack getTargetItem() {
-        return items.get(6);
+        return target;
     }
 
     public void setTargetItem(ItemStack stack) {
-        items.set(6, stack);
+        target = stack;
     }
 
     public ItemStack getResultItem() {

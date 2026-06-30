@@ -118,7 +118,7 @@ dependencies {
     implementation "org.appliedenergistics:appliedenergistics2:${ae2_version}:api"
     implementation "org.appliedenergistics:appliedenergistics2:${ae2_version}"
 
-    api "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
+    compileOnly( api "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}")
 
 //    runtimeOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
 //    runtimeOnly "dev.architectury:architectury-neoforge:${architectury_version}"
@@ -126,6 +126,7 @@ dependencies {
 //    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:${rei_version}"
 //
 //    localRuntime "me.shedaniel:RoughlyEnoughItems-neoforge:$rei_version"
+    implementation "maven.modrinth:jade:${jade_version}"
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
