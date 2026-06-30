@@ -11,6 +11,7 @@ import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.StoreScreen;
 import icu.gensoukyo.neo_mystias_izakaya.compat.ae2.registry.NMIMEBlocks;
 import icu.gensoukyo.neo_mystias_izakaya.compat.ae2.registry.NMIMECreativeModeTabs;
 import icu.gensoukyo.neo_mystias_izakaya.compat.ae2.registry.NMIMEItems;
+import icu.gensoukyo.neo_mystias_izakaya.compat.jade.MystiaJadePlugin;
 import icu.gensoukyo.neo_mystias_izakaya.content.cooking.Kitchenware;
 import icu.gensoukyo.neo_mystias_izakaya.content.customer.consts.*;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.consts.NMIBeveragesTags;
@@ -195,6 +196,8 @@ public class NMILanguageProvider implements DataProvider {
         this.add(Kitchenware.FRYING_PAN_ID.toLanguageKey("rei"), "Frying Pan", "油锅");
         this.add(Kitchenware.STEAMER_ID.toLanguageKey("rei"), "Steamer", "蒸锅");
         this.add(Kitchenware.CUTTING_BOARD_ID.toLanguageKey("rei"), "Cutting Board", "料理台");
+
+        this.addJade(MystiaJadePlugin.KITCHENWARE_DATA_PROVIDER,"Kitchenware","厨具");
     }
 
     private void addTagTranslations() {
@@ -2298,6 +2301,10 @@ public class NMILanguageProvider implements DataProvider {
 
     private void addGUI(Identifier base, String suffix, String en, String cn) {
         this.add(base.toLanguageKey("gui", suffix), en, cn);
+    }
+
+    private void addJade(Identifier uid, String en, String cn){
+        this.add(Identifier.fromNamespaceAndPath("plugin_"+uid.getNamespace(), uid.getPath()).toLanguageKey("config.jade"),en,cn);
     }
 
     @Override

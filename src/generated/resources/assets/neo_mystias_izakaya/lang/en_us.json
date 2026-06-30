@@ -24,6 +24,7 @@
   "blockentity.neo_mystias_izakaya.frying_pan": "Frying Pan",
   "blockentity.neo_mystias_izakaya.grill": "Grill",
   "blockentity.neo_mystias_izakaya.steamer": "Steamer",
+  "config.jade.plugin_neo_mystias_izakaya.kitchenware_data_provider": "Kitchenware",
   "container.neo_mystias_izakaya.dining_table": "Dining Table",
   "customer.neo_mystias_izakaya.customer/alice": "Alice",
   "customer.neo_mystias_izakaya.customer/alice.desc.1": "",
