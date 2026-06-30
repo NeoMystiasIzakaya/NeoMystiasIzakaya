@@ -185,11 +185,16 @@ public class NMILanguageProvider implements DataProvider {
 
         this.add("blockentity.neo_mystias_izakaya.cupboard", "CupBoard", "橱柜");
         this.add("blockentity.neo_mystias_izakaya.creative_cupboard", "CupBoard (Creative)", "橱柜 (创造)");
-        this.add(Kitchenware.BOILING_POT.toLanguageKey("blockentity"), "Boiling Pot", "煮锅");
-        this.add(Kitchenware.GRILL.toLanguageKey("blockentity"), "Grill", "烤架");
-        this.add(Kitchenware.FRYING_PAN.toLanguageKey("blockentity"), "Frying Pan", "油锅");
-        this.add(Kitchenware.STEAMER.toLanguageKey("blockentity"), "Steamer", "蒸锅");
-        this.add(Kitchenware.CUTTING_BOARD.toLanguageKey("blockentity"), "Cutting Board", "料理台");
+        this.add(Kitchenware.BOILING_POT_ID.toLanguageKey("blockentity"), "Boiling Pot", "煮锅");
+        this.add(Kitchenware.GRILL_ID.toLanguageKey("blockentity"), "Grill", "烤架");
+        this.add(Kitchenware.FRYING_PAN_ID.toLanguageKey("blockentity"), "Frying Pan", "油锅");
+        this.add(Kitchenware.STEAMER_ID.toLanguageKey("blockentity"), "Steamer", "蒸锅");
+        this.add(Kitchenware.CUTTING_BOARD_ID.toLanguageKey("blockentity"), "Cutting Board", "料理台");
+        this.add(Kitchenware.BOILING_POT_ID.toLanguageKey("rei"), "Boiling Pot", "煮锅");
+        this.add(Kitchenware.GRILL_ID.toLanguageKey("rei"), "Grill", "烤架");
+        this.add(Kitchenware.FRYING_PAN_ID.toLanguageKey("rei"), "Frying Pan", "油锅");
+        this.add(Kitchenware.STEAMER_ID.toLanguageKey("rei"), "Steamer", "蒸锅");
+        this.add(Kitchenware.CUTTING_BOARD_ID.toLanguageKey("rei"), "Cutting Board", "料理台");
     }
 
     private void addTagTranslations() {

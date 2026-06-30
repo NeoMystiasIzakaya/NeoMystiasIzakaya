@@ -67,6 +67,13 @@ description='''
     ordering="NONE"
     side="CLIENT"
 
+[[dependencies."${mod_id}"]]
+    modId="rei"
+    type="optional"
+    versionRange="[0,)"
+    ordering="BEFORE"
+    side="CLIENT"
+
 # Here's another dependency
 [[dependencies."${mod_id}"]]
     modId="minecraft"

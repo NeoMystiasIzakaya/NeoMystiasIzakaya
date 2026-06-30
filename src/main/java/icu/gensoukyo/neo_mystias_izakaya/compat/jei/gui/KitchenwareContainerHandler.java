@@ -3,13 +3,12 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-package icu.gensoukyo.neo_mystias_izakaya.compat.jei;
+package icu.gensoukyo.neo_mystias_izakaya.compat.jei.gui;
 
 import com.google.common.collect.ImmutableList;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.KitchenwareScreen;
 import mezz.jei.api.gui.handlers.IGuiContainerHandler;
 import net.minecraft.client.renderer.Rect2i;
-import net.minecraft.util.Mth;
 
 import java.util.List;
 

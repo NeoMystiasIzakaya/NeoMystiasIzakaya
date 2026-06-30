@@ -9,6 +9,8 @@ import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.DishServingScreen;
 import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.KitchenwareScreen;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientRecipeUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonRecipeUtil;
+import icu.gensoukyo.neo_mystias_izakaya.compat.jei.gui.DishServingContainerHandler;
+import icu.gensoukyo.neo_mystias_izakaya.compat.jei.gui.KitchenwareContainerHandler;
 import icu.gensoukyo.neo_mystias_izakaya.compat.jei.recipe.*;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipe;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIVanillaTags;

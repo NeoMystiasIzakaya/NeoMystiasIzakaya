@@ -6,6 +6,7 @@
 package icu.gensoukyo.neo_mystias_izakaya.content.recipe;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -28,6 +29,16 @@ public record NMIRecipe(List<Ingredient> input, ItemStackTemplate output, TagKey
                     Codec.INT.fieldOf("time").forGetter(NMIRecipe::time)
             ).apply(instance, NMIRecipe::new)
     );
+
+    public static final MapCodec<NMIRecipe> MAP_CODEC = RecordCodecBuilder.mapCodec(
+            instance -> instance.group(
+                    Ingredient.CODEC.listOf().fieldOf("input").forGetter(NMIRecipe::input),
+                    ItemStackTemplate.CODEC.fieldOf("output").forGetter(NMIRecipe::output),
+                    TagKey.codec(Registries.BLOCK).fieldOf("kitchenware").forGetter(NMIRecipe::kitchenware),
+                    Codec.INT.fieldOf("time").forGetter(NMIRecipe::time)
+            ).apply(instance, NMIRecipe::new)
+    );
+
 
     public static final StreamCodec<RegistryFriendlyByteBuf, NMIRecipe> STREAM_CODEC = StreamCodec.composite(
             ByteBufCodecs.<RegistryFriendlyByteBuf, Ingredient>list().apply(Ingredient.CONTENTS_STREAM_CODEC), NMIRecipe::input,

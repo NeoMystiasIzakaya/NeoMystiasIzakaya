@@ -220,27 +220,27 @@ public class KitchenwareBlockEntity extends RandomizableContainerBlockEntity {
 
     public static class BoilingPot extends KitchenwareBlockEntity {
         public BoilingPot(BlockPos worldPosition, BlockState blockState) {
-            super(Kitchenware.BOILING_POT, worldPosition, blockState);
+            super(Kitchenware.BOILING_POT_ID, worldPosition, blockState);
         }
     }
     public static class FryingPan extends KitchenwareBlockEntity {
         public FryingPan(BlockPos worldPosition, BlockState blockState) {
-            super(Kitchenware.FRYING_PAN, worldPosition, blockState);
+            super(Kitchenware.FRYING_PAN_ID, worldPosition, blockState);
         }
     }
     public static class CuttingBoard extends KitchenwareBlockEntity {
         public CuttingBoard(BlockPos worldPosition, BlockState blockState) {
-            super(Kitchenware.CUTTING_BOARD, worldPosition, blockState);
+            super(Kitchenware.CUTTING_BOARD_ID, worldPosition, blockState);
         }
     }
     public static class Grill extends KitchenwareBlockEntity {
         public Grill(BlockPos worldPosition, BlockState blockState) {
-            super(Kitchenware.GRILL, worldPosition, blockState);
+            super(Kitchenware.GRILL_ID, worldPosition, blockState);
         }
     }
     public static class Steamer extends KitchenwareBlockEntity {
         public Steamer(BlockPos worldPosition, BlockState blockState) {
-            super(Kitchenware.STEAMER, worldPosition, blockState);
+            super(Kitchenware.STEAMER_ID, worldPosition, blockState);
         }
     }
 }
