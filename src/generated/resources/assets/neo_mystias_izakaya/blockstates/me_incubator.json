@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "neo_mystias_izakaya:block/me_incubator",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "neo_mystias_izakaya:block/me_incubator"
+    },
+    "facing=south": {
+      "model": "neo_mystias_izakaya:block/me_incubator",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "neo_mystias_izakaya:block/me_incubator",
+      "y": 270
+    }
+  }
+}

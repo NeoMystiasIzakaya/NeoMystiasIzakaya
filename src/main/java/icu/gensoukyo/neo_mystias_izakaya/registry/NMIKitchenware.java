@@ -27,19 +27,19 @@ public final class NMIKitchenware {
 
 
     public static final DeferredHolder<Kitchenware, Kitchenware> BOILING_POT = KITCHENWARE.register("boiling_pot",
-            () -> new Kitchenware(NMIVanillaTags.BOILING_POT, NMIMainItems.BOILING_POT.get(), NMICuisinesTags.Boiling_Pot, NMIBlockEntities.BOILING_POT.get(), KitchenwareBlockEntity.BoilingPot::new));
+            () -> new Kitchenware(NMIVanillaTags.BOILING_POT, NMIMainItems.BOILING_POT.get(),NMIBlocks.BOILING_POT.get() ,NMICuisinesTags.Boiling_Pot, NMIBlockEntities.BOILING_POT.get(), KitchenwareBlockEntity.BoilingPot::new));
 
     public static final DeferredHolder<Kitchenware, Kitchenware> CUTTING_BOARD = KITCHENWARE.register("cutting_board",
-            () -> new Kitchenware(NMIVanillaTags.CUTTING_BOARD, NMIMainItems.CUTTING_BOARD.get(), NMICuisinesTags.Cutting_Board, NMIBlockEntities.CUTTING_BOARD.get(), KitchenwareBlockEntity.CuttingBoard::new));
+            () -> new Kitchenware(NMIVanillaTags.CUTTING_BOARD, NMIMainItems.CUTTING_BOARD.get(),NMIBlocks.CUTTING_BOARD.get(),NMICuisinesTags.Cutting_Board, NMIBlockEntities.CUTTING_BOARD.get(), KitchenwareBlockEntity.CuttingBoard::new));
 
     public static final DeferredHolder<Kitchenware, Kitchenware> FRYING_PAN = KITCHENWARE.register("frying_pan",
-            () -> new Kitchenware(NMIVanillaTags.FRYING_PAN, NMIMainItems.FRYING_PAN.get(), NMICuisinesTags.Frying_Pan, NMIBlockEntities.FRYING_PAN.get(), KitchenwareBlockEntity.FryingPan::new));
+            () -> new Kitchenware(NMIVanillaTags.FRYING_PAN, NMIMainItems.FRYING_PAN.get(),NMIBlocks.FRYING_PAN.get() ,NMICuisinesTags.Frying_Pan, NMIBlockEntities.FRYING_PAN.get(), KitchenwareBlockEntity.FryingPan::new));
 
     public static final DeferredHolder<Kitchenware, Kitchenware> GRILL = KITCHENWARE.register("grill",
-            () -> new Kitchenware(NMIVanillaTags.GRILL, NMIMainItems.GRILL.get(), NMICuisinesTags.Grill, NMIBlockEntities.GRILL.get(), KitchenwareBlockEntity.Grill::new));
+            () -> new Kitchenware(NMIVanillaTags.GRILL, NMIMainItems.GRILL.get(),NMIBlocks.GRILL.get() ,NMICuisinesTags.Grill, NMIBlockEntities.GRILL.get(), KitchenwareBlockEntity.Grill::new));
 
     public static final DeferredHolder<Kitchenware, Kitchenware> STEAMER = KITCHENWARE.register("steamer",
-            () -> new Kitchenware(NMIVanillaTags.STEAMER, NMIMainItems.STEAMER.get(), NMICuisinesTags.Steamer, NMIBlockEntities.STEAMER.get(), KitchenwareBlockEntity.Steamer::new));
+            () -> new Kitchenware(NMIVanillaTags.STEAMER, NMIMainItems.STEAMER.get(),NMIBlocks.STEAMER.get() ,NMICuisinesTags.Steamer, NMIBlockEntities.STEAMER.get(), KitchenwareBlockEntity.Steamer::new));
 
 
 }

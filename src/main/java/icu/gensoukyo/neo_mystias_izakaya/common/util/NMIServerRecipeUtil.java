@@ -36,10 +36,29 @@ public final class NMIServerRecipeUtil {
         return getRecipes(new ArrayList<>(post.getRecipes()));
     }
 
-    public static List<NMIRecipeHolder> getRecipesByOutput(@Nullable Player player, ItemStack output) {
-        List<Identifier> recipesIds = NMIDataAccessor.server().getRecipeMap().getOutputItemToRecipeMap().get(NMICommonItemStackUtil.get(output));
+
+    public static List<NMIRecipeHolder> getRecipesByOutput(@Nullable Player player, Identifier output) {
+        List<Identifier> recipesIds = NMIDataAccessor.server().getRecipeMap().getOutputItemToRecipeMap().get(output);
         return getRecipes(recipesIds);
     }
+
+    public static List<NMIRecipeHolder> getRecipesByOutputAndKitchenware(@Nullable Player player, Identifier output, TagKey<Block> kitchenware) {
+        List<Identifier> byOutput = NMIDataAccessor.server().getRecipeMap().getOutputItemToRecipeMap().get(output);
+        List<Identifier> byKitchenware = NMIDataAccessor.server().getRecipeMap().getKitchenwareToRecipeMap().get(kitchenware);
+
+        // 取交集
+        List<Identifier> recipesIds = new ArrayList<>();
+        if (byOutput != null && byKitchenware != null) {
+            for (Identifier id : byOutput) {
+                if (byKitchenware.contains(id)) {
+                    recipesIds.add(id);
+                }
+            }
+        }
+
+        return getRecipes(recipesIds);
+    }
+
 
     public static List<NMIRecipeHolder> getRecipesByKitchenware(@Nullable Player player, TagKey<Block> kitchenware) {
         List<Identifier> recipesIds = NMIDataAccessor.server().getRecipeMap().getKitchenwareToRecipeMap().get(kitchenware);

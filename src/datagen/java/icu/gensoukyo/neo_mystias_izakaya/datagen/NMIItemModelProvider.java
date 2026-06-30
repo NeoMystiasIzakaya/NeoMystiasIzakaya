@@ -106,6 +106,7 @@ public class NMIItemModelProvider extends ModelProvider {
         horizontallyBlock(blockModels, NMIBlocks.INCUBATOR.get());
         horizontallyBlock(blockModels, NMIBlocks.CREATIVE_INCUBATOR.get());
         horizontallyBlock(blockModels, NMIMEBlocks.ME_CUPBOARD.get());
+        horizontallyBlock(blockModels, NMIMEBlocks.ME_INCUBATOR.get());
     }
 
     private void registerItemModels(ItemModelGenerators itemModels) {

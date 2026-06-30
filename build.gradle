@@ -52,6 +52,7 @@ repositories {
             includeGroup "com.github.*"
         }
     }
+    maven { url "https://maven.shedaniel.me/" }
 }
 
 base {
@@ -117,6 +118,10 @@ dependencies {
     implementation "org.appliedenergistics:appliedenergistics2:${ae2_version}:api"
     implementation "org.appliedenergistics:appliedenergistics2:${ae2_version}"
 
+    api "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
+
+//    runtimeOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
+//    runtimeOnly "dev.architectury:architectury-neoforge:${architectury_version}"
 //    compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:${rei_version}"
 //    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:${rei_version}"
 //

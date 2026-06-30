@@ -27,7 +27,7 @@ public final class NMIClientRecipeUtil {
     public static List<NMIRecipeHolder> getRecipesByInput(@Nullable Player player, List<ItemStack> input) {
         Set<Identifier> recipesIds = new HashSet<>();
         for (ItemStack stack : input) {
-            List<Identifier> identifiers = NMIDataAccessor.server().getRecipeMap().getInputItemToRecipeMap().get(NMICommonItemStackUtil.get(stack));
+            List<Identifier> identifiers = NMIDataAccessor.client().getRecipeMap().getInputItemToRecipeMap().get(NMICommonItemStackUtil.get(stack));
             if (identifiers != null) {
                 recipesIds.addAll(identifiers);
             }
@@ -38,13 +38,31 @@ public final class NMIClientRecipeUtil {
         return getRecipes(new ArrayList<>(post.getRecipes()));
     }
 
-    public static List<NMIRecipeHolder> getRecipesByOutput(@Nullable Player player, ItemStack output) {
-        List<Identifier> recipesIds = NMIDataAccessor.server().getRecipeMap().getOutputItemToRecipeMap().get(NMICommonItemStackUtil.get(output));
+    public static List<NMIRecipeHolder> getRecipesByOutput(@Nullable Player player, Identifier output) {
+        List<Identifier> recipesIds = NMIDataAccessor.client().getRecipeMap().getOutputItemToRecipeMap().get(output);
         return getRecipes(recipesIds);
     }
 
+    public static List<NMIRecipeHolder> getRecipesByOutputAndKitchenware(@Nullable Player player, Identifier output, TagKey<Block> kitchenware) {
+        List<Identifier> byOutput = NMIDataAccessor.client().getRecipeMap().getOutputItemToRecipeMap().get(output);
+        List<Identifier> byKitchenware = NMIDataAccessor.client().getRecipeMap().getKitchenwareToRecipeMap().get(kitchenware);
+
+        // 取交集
+        List<Identifier> recipesIds = new ArrayList<>();
+        if (byOutput != null && byKitchenware != null) {
+            for (Identifier id : byOutput) {
+                if (byKitchenware.contains(id)) {
+                    recipesIds.add(id);
+                }
+            }
+        }
+
+        return getRecipes(recipesIds);
+    }
+
+
     public static List<NMIRecipeHolder> getRecipesByKitchenware(@Nullable Player player, TagKey<Block> kitchenware) {
-        List<Identifier> recipesIds = NMIDataAccessor.server().getRecipeMap().getKitchenwareToRecipeMap().get(kitchenware);
+        List<Identifier> recipesIds = NMIDataAccessor.client().getRecipeMap().getKitchenwareToRecipeMap().get(kitchenware);
         IzakayaRecipeEvent.Collect post = NeoForge.EVENT_BUS.post(new IzakayaRecipeEvent.Collect(player, recipesIds, kitchenware, List.of()));
         return getRecipes(post.getRecipes());
     }

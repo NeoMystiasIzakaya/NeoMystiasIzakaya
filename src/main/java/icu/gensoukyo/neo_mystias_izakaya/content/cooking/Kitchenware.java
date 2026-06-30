@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.function.BiFunction;
 
-public record Kitchenware(TagKey<Block> blockTagKey, Item kitchenwareItem, Identifier kitchenwareTag,
+public record Kitchenware(TagKey<Block> blockTagKey, Item kitchenwareItem,Block kitchenwareBlock,Identifier kitchenwareTag,
                           BlockEntityType<? extends KitchenwareBlockEntity> blockEntityType,
                           BiFunction<BlockPos, BlockState, KitchenwareBlockEntity> blockEntitySupplier) {
 
@@ -26,9 +26,9 @@ public record Kitchenware(TagKey<Block> blockTagKey, Item kitchenwareItem, Ident
     }
 
 
-    public static final Identifier CUTTING_BOARD = NeoMystiasIzakaya.id("cutting_board");
-    public static final Identifier BOILING_POT = NeoMystiasIzakaya.id("boiling_pot");
-    public static final Identifier FRYING_PAN = NeoMystiasIzakaya.id("frying_pan");
-    public static final Identifier STEAMER = NeoMystiasIzakaya.id("steamer");
-    public static final Identifier GRILL = NeoMystiasIzakaya.id("grill");
+    public static final Identifier CUTTING_BOARD_ID = NeoMystiasIzakaya.id("cutting_board");
+    public static final Identifier BOILING_POT_ID = NeoMystiasIzakaya.id("boiling_pot");
+    public static final Identifier FRYING_PAN_ID = NeoMystiasIzakaya.id("frying_pan");
+    public static final Identifier STEAMER_ID = NeoMystiasIzakaya.id("steamer");
+    public static final Identifier GRILL_ID = NeoMystiasIzakaya.id("grill");
 }
