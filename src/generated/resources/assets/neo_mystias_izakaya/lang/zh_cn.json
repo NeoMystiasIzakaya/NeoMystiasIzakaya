@@ -1514,6 +1514,7 @@
   "item.neo_mystias_izakaya.canteen_config.incubator_full": "最多只能绑定4个保温箱！",
   "item.neo_mystias_izakaya.canteen_config.kitchenware_bound": "厨房用具已绑定！",
   "item.neo_mystias_izakaya.canteen_config.kitchenware_full": "最多只能绑定8个厨房用具！",
+  "item.neo_mystias_izakaya.canteen_config.maid_assigned": "已将女仆分配到该餐厅！",
   "item.neo_mystias_izakaya.canteen_config.no_controller": "未选择控制器！请先右键点击餐厅控制器。",
   "item.neo_mystias_izakaya.canteen_config.scan_result": "扫描完成！厨房用具：%s，餐桌：%s，橱柜：%s",
   "item.neo_mystias_izakaya.canteen_config.unbound": "已从控制器解绑。",

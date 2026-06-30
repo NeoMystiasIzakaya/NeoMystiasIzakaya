@@ -13,6 +13,6 @@ import java.util.List;
 
 public class MaidExtraBrain implements IExtraMaidBrain {
     public List<MemoryModuleType<?>> getExtraMemoryTypes() {
-        return List.of(NMIMemoryTypes.TARGET_POS.get());
+        return List.of(NMIMemoryTypes.TARGET_POS.get(), NMIMemoryTypes.CONTROLLER_POS.get());
     }
 }

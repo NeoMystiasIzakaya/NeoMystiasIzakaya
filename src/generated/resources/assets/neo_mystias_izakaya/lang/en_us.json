@@ -1514,6 +1514,7 @@
   "item.neo_mystias_izakaya.canteen_config.incubator_full": "Maximum 4 incubators reached!",
   "item.neo_mystias_izakaya.canteen_config.kitchenware_bound": "Kitchenware bound!",
   "item.neo_mystias_izakaya.canteen_config.kitchenware_full": "Maximum 8 kitchenware reached!",
+  "item.neo_mystias_izakaya.canteen_config.maid_assigned": "Maid assigned to this canteen!",
   "item.neo_mystias_izakaya.canteen_config.no_controller": "No controller selected! Right-click a Canteen Controller first.",
   "item.neo_mystias_izakaya.canteen_config.scan_result": "Scan complete! Kitchenware: %s, Dining Tables: %s, Cupboards: %s",
   "item.neo_mystias_izakaya.canteen_config.unbound": "Unbound from controller.",
