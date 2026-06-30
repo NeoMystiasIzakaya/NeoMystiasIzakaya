@@ -273,7 +273,7 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
     }
 
     /**
-     * 记录女仆座位实体并标记占用（由 MaidDiningTask 调用）
+     * 记录女仆座位实体并标记占用（由 MaidTakeSeatTask 调用）
      */
     public void setSeatEntityId(UUID id) {
         this.seatEntityId = id;

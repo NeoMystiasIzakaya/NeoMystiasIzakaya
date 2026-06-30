@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-package icu.gensoukyo.neo_mystias_izakaya.compat.tlm;
+package icu.gensoukyo.neo_mystias_izakaya.compat.tlm.task;
 
 import com.github.tartaricacid.touhoulittlemaid.entity.ai.brain.task.MaidCheckRateTask;
 import com.github.tartaricacid.touhoulittlemaid.entity.item.EntitySit;
@@ -34,13 +34,13 @@ import javax.annotation.Nullable;
 import java.util.Comparator;
 import java.util.Random;
 
-import static icu.gensoukyo.neo_mystias_izakaya.compat.tlm.MystiaTask.MystiasSeat;
+import static icu.gensoukyo.neo_mystias_izakaya.compat.tlm.ai.MystiaTask.MystiasSeat;
 
-public class MaidDiningTask extends MaidCheckRateTask {
+public class MaidTakeSeatTask extends MaidCheckRateTask {
     float speed;
     int closeEnoughDist;
 
-    public MaidDiningTask(float movementSpeed, int closeEnoughDist) {
+    public MaidTakeSeatTask(float movementSpeed, int closeEnoughDist) {
         super(ImmutableMap.of(MemoryModuleType.WALK_TARGET, MemoryStatus.VALUE_ABSENT,
                 InitBrains.TARGET_POS.get(), MemoryStatus.VALUE_ABSENT));
         this.closeEnoughDist = closeEnoughDist;

@@ -175,7 +175,12 @@ public class NMILanguageProvider implements DataProvider {
         this.add(NMIMainItems.RECIPE_BOOK, "Recipe Book", "食谱");
 
         this.add("task.neo_mystias_izakaya.mystias_izakaya_task", "Neo Mystia's Izakaya", "夜雀食堂");
-        this.add("task.neo_mystias_izakaya.mystias_izakaya_task.desc", "Find nearest dining table", "寻找最近的餐桌");
+        this.add("task.neo_mystias_izakaya.mystias_izakaya_task.desc", "Dine at the izakaya", "前往食堂就餐");
+        this.add("task.neo_mystias_izakaya.mystias_izakaya_beverage", "Beverage Service", "酒水服务");
+        this.add("task.neo_mystias_izakaya.mystias_izakaya_beverage.desc", "Serve beverages to customers", "为客人提供酒水");
+        this.add("task.neo_mystias_izakaya.mystias_izakaya_cuisine", "Cuisine Cooking", "料理烹饪");
+        this.add("task.neo_mystias_izakaya.mystias_izakaya_cuisine.desc", "Cook cuisines for customers", "为客人烹饪料理");
+        
 
 
         this.add("blockentity.neo_mystias_izakaya.cupboard", "CupBoard", "橱柜");

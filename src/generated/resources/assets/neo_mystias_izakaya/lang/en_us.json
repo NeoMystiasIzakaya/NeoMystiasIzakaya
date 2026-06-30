@@ -2044,8 +2044,12 @@
   "tag.neo_mystias_izakaya.cuisines/vegetarian": "Vegetarian",
   "tag.neo_mystias_izakaya.cuisines/western": "Western",
   "tag.neo_mystias_izakaya.cuisines/wonderful": "Wonderful",
+  "task.neo_mystias_izakaya.mystias_izakaya_beverage": "Beverage Service",
+  "task.neo_mystias_izakaya.mystias_izakaya_beverage.desc": "Serve beverages to customers",
+  "task.neo_mystias_izakaya.mystias_izakaya_cuisine": "Cuisine Cooking",
+  "task.neo_mystias_izakaya.mystias_izakaya_cuisine.desc": "Cook cuisines for customers",
   "task.neo_mystias_izakaya.mystias_izakaya_task": "Neo Mystia's Izakaya",
-  "task.neo_mystias_izakaya.mystias_izakaya_task.desc": "Find nearest dining table",
+  "task.neo_mystias_izakaya.mystias_izakaya_task.desc": "Dine at the izakaya",
   "tooltip.neo_mystias_izakaya.price": "Price: %d %s",
   "tooltip.neo_mystias_izakaya.price.total": "Total Price: %d %s",
   "unit.neo_mystias_izakaya.en": "円"

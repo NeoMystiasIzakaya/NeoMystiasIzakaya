@@ -1,15 +1,9 @@
-/*
- * Copyright 2026 NeoMystiasIzakaya Team
- * SPDX-License-Identifier: GPL-3.0-or-later
- */
-
-package icu.gensoukyo.neo_mystias_izakaya.compat.tlm;
+package icu.gensoukyo.neo_mystias_izakaya.compat.tlm.ai;
 
 import com.github.tartaricacid.touhoulittlemaid.api.task.IMaidTask;
 import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
 import com.github.tartaricacid.touhoulittlemaid.init.InitSounds;
 import com.github.tartaricacid.touhoulittlemaid.util.SoundUtil;
-import com.google.common.collect.Lists;
 import com.mojang.datafixers.util.Pair;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMICuisinesItems;
@@ -21,16 +15,15 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class MystiaTask implements IMaidTask {
-    public static final String MystiasSeat = "mystias_seat";
+public class MystiaCuisineTask implements IMaidTask {
     @Override
     public Identifier getUid() {
-        return NeoMystiasIzakaya.id("mystias_izakaya_task");
+        return NeoMystiasIzakaya.id("mystias_izakaya_cuisine");
     }
 
     @Override
     public ItemStack getIcon() {
-        return NMICuisinesItems.RICE_BALL.toStack();
+        return NMICuisinesItems.GRILLED_LAMPREY.toStack();
     }
 
     @Nullable
@@ -40,18 +33,7 @@ public class MystiaTask implements IMaidTask {
     }
 
     @Override
-    public List<Pair<Integer, BehaviorControl<? super EntityMaid>>> createBrainTasks(EntityMaid entityMaid) {
-        Pair<Integer, BehaviorControl<? super EntityMaid>> maidMealTask = Pair.of(5, new MaidDiningTask(0.6f, 2));
-        return Lists.newArrayList(maidMealTask);
-    }
-
-    @Override
-    public List<Pair<Integer, BehaviorControl<? super EntityMaid>>> createRideBrainTasks(EntityMaid maid) {
-        return Lists.newArrayList(Pair.of(5, new MaidMealTask()));
-    }
-
-    @Override
-    public boolean canSitInJoy(EntityMaid maid, String joyType) {
-        return joyType.equals(MystiasSeat);
+    public List<Pair<Integer, BehaviorControl<? super EntityMaid>>> createBrainTasks(EntityMaid maid) {
+        return List.of();
     }
 }

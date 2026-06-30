@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: GPL-3.0-or-later
  */
 
-package icu.gensoukyo.neo_mystias_izakaya.compat.tlm;
+package icu.gensoukyo.neo_mystias_izakaya.compat.tlm.task;
 
 import com.github.tartaricacid.touhoulittlemaid.entity.ai.brain.task.MaidCheckRateTask;
 import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
@@ -27,12 +27,12 @@ import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import java.util.List;
 import java.util.Random;
 
-public class MaidMealTask extends MaidCheckRateTask {
+public class MaidPlaceOrderTask extends MaidCheckRateTask {
     private static final Random random = new Random();
     private static final int checkRate = 50;
     private static final int showTime = 2000;
 
-    public MaidMealTask() {
+    public MaidPlaceOrderTask() {
         super(ImmutableMap.of(MemoryModuleType.WALK_TARGET, MemoryStatus.VALUE_ABSENT,
                 InitBrains.TARGET_POS.get(), MemoryStatus.VALUE_ABSENT));
         this.setMaxCheckRate(checkRate);
