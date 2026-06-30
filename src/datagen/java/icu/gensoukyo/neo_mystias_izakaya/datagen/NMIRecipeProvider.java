@@ -1576,7 +1576,11 @@ public class NMIRecipeProvider extends icu.gensoukyo.neo_mystias_izakaya.datagen
 
     private void addOtherRecipes() {
         this.builder(NMICuisinesItems.DARK_MATTER)
-                .input(Items.BARRIER, Items.BARRIER, Items.BARRIER, Items.BARRIER, Items.BARRIER)
+                .input(Items.BARRIER)
+                .input(Items.BARRIER)
+                .input(Items.BARRIER)
+                .input(Items.BARRIER)
+                .input(Items.BARRIER)
                 .kitchenware(NMIVanillaTags.KITCHENWARE_BLOCK)
                 .time(0)
                 .build();
