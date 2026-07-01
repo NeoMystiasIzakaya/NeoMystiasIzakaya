@@ -23,8 +23,7 @@ public class KitchenwareServerDataProvider implements StreamServerDataProvider<B
     @Override
     public @Nullable KitchenwareData streamData(BlockAccessor blockAccessor) {
         if (!(blockAccessor.getBlockEntity() instanceof KitchenwareBlockEntity entity)) return null;
-        return new KitchenwareData(entity.getResultItem().isEmpty()? Optional.empty():Optional.of(entity.getResultItem())
-                ,entity.getTargetItem().isEmpty()? Optional.empty():Optional.of(entity.getTargetItem())
+        return new KitchenwareData(entity.getTargetItem().isEmpty()? Optional.empty():Optional.of(entity.getTargetItem())
                 , entity.getCookingTime(), entity.getTotalCookingTime());
     }
 
