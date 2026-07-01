@@ -34,12 +34,10 @@ public class ItemTagListReloadListener extends SimplePreparableReloadListener<Ta
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final FileToIdConverter POSITIVE_TAG_LISTER = FileToIdConverter.json(NeoMystiasIzakaya.path("item_positive_tags"));
     private static final FileToIdConverter NEGATIVE_TAG_LISTER = FileToIdConverter.json(NeoMystiasIzakaya.path("item_negative_tags"));
-    private final HolderLookup.Provider registries;
     @Getter
     private TagItemListMap tagItemListMap = TagItemListMap.EMPTY;
 
-    public ItemTagListReloadListener(HolderLookup.Provider registries) {
-        this.registries = registries;
+    public ItemTagListReloadListener() {
     }
 
     @Override
@@ -49,7 +47,7 @@ public class ItemTagListReloadListener extends SimplePreparableReloadListener<Ta
 
         HashMap<Identifier, TagItemList> pItemTagTreeMap = new HashMap<>();
         HashMap<Identifier, TagItemList> nItemTagTreeMap = new HashMap<>();
-        var conditionalOps = new ConditionalOps<>(this.registries.createSerializationContext(JsonOps.INSTANCE), getContext());
+        var conditionalOps = new ConditionalOps<>(this.getRegistryLookup().createSerializationContext(JsonOps.INSTANCE), getContext());
         SimpleJsonResourceReloadListener.scanDirectoryWithModifier(
                 resourceManager, POSITIVE_TAG_LISTER, conditionalOps, TagItemList.CODEC, pItemTagTreeMap, recipeJsons -> {
                     var event = new ModifyItemTagJsonsEvent(conditionalOps, recipeJsons, true);

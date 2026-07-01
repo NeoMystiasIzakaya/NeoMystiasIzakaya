@@ -34,14 +34,12 @@ import java.util.List;
 public class NMIEconomyReloadListener extends SimplePreparableReloadListener<NMIEconomyMap> {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final FileToIdConverter ECONOMY = FileToIdConverter.json(NeoMystiasIzakaya.path("economy"));
-    private final HolderLookup.Provider registries;
     @Getter
     private NMIEconomyMap economyMap = NMIEconomyMap.EMPTY;
     @Getter
     private NMIStoreMap storeMap = NMIStoreMap.EMPTY;
 
-    public NMIEconomyReloadListener(HolderLookup.Provider registries) {
-        this.registries = registries;
+    public NMIEconomyReloadListener() {
     }
 
     @Override
@@ -50,7 +48,7 @@ public class NMIEconomyReloadListener extends SimplePreparableReloadListener<NMI
         long loadStartTime = System.currentTimeMillis();
 
         HashMap<Identifier, NMIEconomyList> economyListHashMap = new HashMap<>();
-        var conditionalOps = new ConditionalOps<>(this.registries.createSerializationContext(JsonOps.INSTANCE), getContext());
+        var conditionalOps = new ConditionalOps<>(this.getRegistryLookup().createSerializationContext(JsonOps.INSTANCE), getContext());
         SimpleJsonResourceReloadListener.scanDirectoryWithModifier(
                 resourceManager, ECONOMY, conditionalOps, NMIEconomyList.CODEC, economyListHashMap, recipeJsons -> {
                     var event = new ModifyNMIEconomyJsonEvent(conditionalOps, recipeJsons);

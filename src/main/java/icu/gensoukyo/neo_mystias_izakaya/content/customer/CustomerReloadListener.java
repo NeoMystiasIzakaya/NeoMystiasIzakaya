@@ -34,12 +34,10 @@ public class CustomerReloadListener extends SimplePreparableReloadListener<Custo
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final FileToIdConverter COMMON_CUSTOMER = FileToIdConverter.json(NeoMystiasIzakaya.path("common_customer"));
     private static final FileToIdConverter RARE_CUSTOMER = FileToIdConverter.json(NeoMystiasIzakaya.path("rare_customer"));
-    private final HolderLookup.Provider registries;
     @Getter
     private CustomerMap customerMap = CustomerMap.EMPTY;
 
-    public CustomerReloadListener(HolderLookup.Provider registries) {
-        this.registries = registries;
+    public CustomerReloadListener() {
     }
 
     @Override
@@ -49,7 +47,7 @@ public class CustomerReloadListener extends SimplePreparableReloadListener<Custo
 
         HashMap<Identifier, CommonCustomer> commonCustomerHashMap = new HashMap<>();
         HashMap<Identifier, RareCustomer> rareCustomerHashMap = new HashMap<>();
-        var conditionalOps = new ConditionalOps<>(this.registries.createSerializationContext(JsonOps.INSTANCE), getContext());
+        var conditionalOps = new ConditionalOps<>(this.getRegistryLookup().createSerializationContext(JsonOps.INSTANCE), getContext());
         SimpleJsonResourceReloadListener.scanDirectoryWithModifier(
                 resourceManager, COMMON_CUSTOMER, conditionalOps, CommonCustomer.CODEC, commonCustomerHashMap, recipeJsons -> {
                     var event = new ModifyNMICustomerJsonsEvent(conditionalOps, recipeJsons, true);

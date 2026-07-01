@@ -23,9 +23,9 @@ public class ReloadEventHandler {
 
     @SubscribeEvent
     public static void onAddServerReloadListenersEvent(AddServerReloadListenersEvent event){
-        event.addListener(NeoMystiasIzakaya.id("item_tag"), new ItemTagListReloadListener(event.getRegistryAccess()));
-        event.addListener(NeoMystiasIzakaya.id("recipe"),new NMIRecipeReloadListener(event.getRegistryAccess()));
-        event.addListener(NeoMystiasIzakaya.id("economy"),new NMIEconomyReloadListener(event.getRegistryAccess()));
-        event.addListener(NeoMystiasIzakaya.id("customer"),new CustomerReloadListener(event.getRegistryAccess()));
+        event.addListener(NeoMystiasIzakaya.id("item_tag"), new ItemTagListReloadListener());
+        event.addListener(NeoMystiasIzakaya.id("recipe"),new NMIRecipeReloadListener());
+        event.addListener(NeoMystiasIzakaya.id("economy"),new NMIEconomyReloadListener());
+        event.addListener(NeoMystiasIzakaya.id("customer"),new CustomerReloadListener());
     }
 }

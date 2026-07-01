@@ -93,21 +93,13 @@ public abstract class NMIRecipeProvider implements DataProvider {
 
         public Builder input(ItemLike... items) {
             this.fillNull();
-            for (ItemLike item : items) {
-                this.input.add(Ingredient.of(item));
-            }
+            this.input.add(Ingredient.of(items));
             return this;
         }
 
         public Builder input(Ingredient ingredient) {
             this.fillNull();
             this.input.add(ingredient);
-            return this;
-        }
-
-        public Builder input(List<Ingredient> ingredients) {
-            this.fillNull();
-            this.input.addAll(ingredients);
             return this;
         }
 
