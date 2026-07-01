@@ -17,12 +17,7 @@ import java.util.Objects;
 @Mod(value = NeoMystiasIzakaya.MODID)
 public class NeoMystiasIzakayaRDCompact {
 
-
     public NeoMystiasIzakayaRDCompact(IEventBus modEventBus, ModContainer modContainer) {
-
-        if (FMLLoader.getCurrent().getLoadingModList().getMods().stream().noneMatch(e-> Objects.equals(e.getModId(), "reverie_dreams"))) {
-            NMIRDItemAlias.ITEMS.register(modEventBus);
-        }
-
+        NMIRDItemAlias.ITEMS.register(modEventBus);
     }
 }
