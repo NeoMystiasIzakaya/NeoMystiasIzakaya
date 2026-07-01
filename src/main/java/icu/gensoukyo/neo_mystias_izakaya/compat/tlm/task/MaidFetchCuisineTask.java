@@ -9,24 +9,16 @@ import com.github.tartaricacid.touhoulittlemaid.entity.ai.brain.task.MaidCheckRa
 import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
 import com.github.tartaricacid.touhoulittlemaid.init.InitBrains;
 import com.google.common.collect.ImmutableMap;
-import icu.gensoukyo.neo_mystias_izakaya.api.common.ICupboard;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.CanteenControllerBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.DiningTableBlockEntity;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaOrder;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIMemoryTypes;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.ai.behavior.BehaviorUtils;
+import net.minecraft.world.entity.ai.behavior.BlockPosTracker;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.neoforged.neoforge.transfer.item.ItemResource;
-import net.neoforged.neoforge.transfer.transaction.Transaction;
 
 import java.util.Optional;
 
@@ -36,8 +28,6 @@ import java.util.Optional;
  * 流程：找需上菜的桌子 → 找橱柜取料理 → 导航到餐桌 → 交给 {@link MaidDeliverCuisineTask}
  */
 public class MaidFetchCuisineTask extends MaidCheckRateTask {
-    private static final double CLOSE_ENOUGH = 2.5;
-    private static final float SPEED = 0.6f;
 
     public MaidFetchCuisineTask() {
         super(ImmutableMap.of(
@@ -51,24 +41,16 @@ public class MaidFetchCuisineTask extends MaidCheckRateTask {
     protected boolean checkExtraStartConditions(ServerLevel level, EntityMaid maid) {
         if (!super.checkExtraStartConditions(level, maid) || !maid.canBrainMoving()) return false;
 
-        // 必须有已分配的餐厅控制器
-        Optional<BlockPos> controllerMem = maid.getBrain().getMemory(NMIMemoryTypes.CONTROLLER_POS.get());
-        if (controllerMem.isEmpty()) return false;
-
-        BlockPos controllerPos = controllerMem.get();
-        BlockEntity be = level.getBlockEntity(controllerPos);
-        if (!(be instanceof CanteenControllerBlockEntity controller)) {
-            maid.getBrain().eraseMemory(NMIMemoryTypes.CONTROLLER_POS.get());
-            return false;
-        }
+        CanteenControllerBlockEntity controller = MaidTaskUtil.getController(level, maid);
+        if (controller == null) return false;
 
         // 阶段1：找一张需要上菜的餐桌
         Optional<BlockPos> tableMem = maid.getBrain().getMemory(NMIMemoryTypes.TARGET_POS.get());
         BlockPos tablePos;
         if (tableMem.isPresent()) {
             tablePos = tableMem.get();
-            // 目标餐桌已完成（菜已上好），清除
-            if (level.getBlockEntity(tablePos) instanceof DiningTableBlockEntity dt && !dt.getCuisine().isEmpty()) {
+            DiningTableBlockEntity dt = MaidTaskUtil.getTargetTable(level, maid);
+            if (dt != null && !dt.getCuisine().isEmpty()) {
                 maid.getBrain().eraseMemory(NMIMemoryTypes.TARGET_POS.get());
                 maid.getBrain().eraseMemory(InitBrains.TARGET_POS.get());
                 return false;
@@ -80,46 +62,39 @@ public class MaidFetchCuisineTask extends MaidCheckRateTask {
         }
 
         // 阶段2：判断是否需要取料理
-        if (!maidHasCuisineFor(level, maid, tablePos)) {
-            // 找到存有所需料理的橱柜
-            Identifier cuisineId = getRequiredCuisine(level, tablePos);
-            if (cuisineId == null) return false;
-            BlockPos cupboardPos = findCupboardWithItem(level, controller, cuisineId);
+        Identifier cuisineId = getRequiredCuisineId(level, tablePos);
+        if (cuisineId == null) return false;
+        if (!MaidTaskUtil.hasItemInTaskInv(maid, cuisineId)) {
+            BlockPos cupboardPos = MaidTaskUtil.findCupboardWithItem(level, controller, cuisineId);
             if (cupboardPos == null) return false;
 
-            if (isCloseEnough(maid, cupboardPos)) {
-                // 到达橱柜 → 提取料理 → 导航到餐桌
-                extractCuisine(level, cupboardPos, cuisineId, maid);
-                setNavigateTo(maid, tablePos);
+            if (MaidTaskUtil.isCloseEnough(maid, cupboardPos)) {
+                MaidTaskUtil.extractFromCupboard(level, cupboardPos, cuisineId, maid);
+                MaidTaskUtil.setNavigateTo(maid, tablePos);
             } else {
-                setNavigateTo(maid, cupboardPos);
+                MaidTaskUtil.setNavigateTo(maid, cupboardPos);
             }
             this.setNextCheckTickCount(5);
             return false;
         }
 
         // 阶段3：已持有料理，导航到餐桌
-        if (isCloseEnough(maid, tablePos)) {
-            maid.getBrain().setMemory(InitBrains.TARGET_POS.get(),
-                    new net.minecraft.world.entity.ai.behavior.BlockPosTracker(tablePos));
-            return true; // 触发 start()，移交 MaidDeliverCuisineTask
+        if (MaidTaskUtil.isCloseEnough(maid, tablePos)) {
+            maid.getBrain().setMemory(InitBrains.TARGET_POS.get(), new BlockPosTracker(tablePos));
+            return true;
         }
-        setNavigateTo(maid, tablePos);
+        MaidTaskUtil.setNavigateTo(maid, tablePos);
         this.setNextCheckTickCount(5);
         return false;
     }
 
     @Override
     protected void start(ServerLevel level, EntityMaid maid, long gameTimeIn) {
-        // TARGET_POS 已设置，MaidDeliverCuisineTask 会接管
-        maid.getBrain().eraseMemory(InitBrains.TARGET_POS.get());
-        maid.getBrain().eraseMemory(MemoryModuleType.WALK_TARGET);
-        maid.getBrain().eraseMemory(MemoryModuleType.LOOK_TARGET);
+        MaidTaskUtil.clearFetchStartMemories(maid);
     }
 
-    // ==================== 工具方法 ====================
+    // ==================== 业务方法 ====================
 
-    /** 找到第一张需要上菜的餐桌（跳过稀客，稀客的 cuisine 是标签而非物品） */
     private static BlockPos findTableNeedingCuisine(ServerLevel level, CanteenControllerBlockEntity controller) {
         for (BlockPos pos : controller.getDiningTableList()) {
             if (level.getBlockEntity(pos) instanceof DiningTableBlockEntity table) {
@@ -135,93 +110,10 @@ public class MaidFetchCuisineTask extends MaidCheckRateTask {
         return null;
     }
 
-    /** 获取目标餐桌所需的料理ID */
-    private static Identifier getRequiredCuisine(ServerLevel level, BlockPos tablePos) {
+    private static Identifier getRequiredCuisineId(ServerLevel level, BlockPos tablePos) {
         if (level.getBlockEntity(tablePos) instanceof DiningTableBlockEntity table) {
             return table.getCurrentOrder().cuisine();
         }
         return null;
-    }
-
-    /** 检查女仆的 TaskInv 中是否已持有所需料理 */
-    private static boolean maidHasCuisineFor(ServerLevel level, EntityMaid maid, BlockPos tablePos) {
-        Identifier required = getRequiredCuisine(level, tablePos);
-        if (required == null) return false;
-        Optional<Holder.Reference<Item>> itemReference = BuiltInRegistries.ITEM.get(required);
-        if (itemReference.isEmpty()) return false;
-        Item targetItem = itemReference.get().value();
-
-        var taskInv = maid.getItemManager().getTaskInv();
-        for (int i = 0; i < taskInv.size(); i++) {
-            ItemStack stack = taskInv.getResource(i).toStack();
-            if (stack.is(targetItem)) return true;
-        }
-        return false;
-    }
-
-    /** 找到第一个存有指定物品的橱柜 */
-    private static BlockPos findCupboardWithItem(ServerLevel level, CanteenControllerBlockEntity controller,
-                                                  Identifier itemId) {
-        Optional<Holder.Reference<Item>> itemReference = BuiltInRegistries.ITEM.get(itemId);
-        if (itemReference.isEmpty()) return null;
-        Item targetItem = itemReference.get().value();
-
-        for (BlockPos pos : controller.getCupboardList()) {
-            if (level.getBlockEntity(pos) instanceof ICupboard cupboard) {
-                if (cupboardHasItem(cupboard, targetItem)) {
-                    return pos;
-                }
-            }
-        }
-        return null;
-    }
-
-    private static boolean cupboardHasItem(ICupboard cupboard, Item targetItem) {
-        var handler = cupboard.getItemHandler();
-        for (int i = 0; i < handler.size(); i++) {
-            if (targetItem.getDefaultInstance().is(handler.getResource(i).getItem())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /** 从橱柜提取料理放入女仆 TaskInv */
-    private static void extractCuisine(ServerLevel level, BlockPos cupboardPos, Identifier cuisineId, EntityMaid maid) {
-        if (!(level.getBlockEntity(cupboardPos) instanceof ICupboard cupboard)) return;
-        Optional<Holder.Reference<Item>> itemReference = BuiltInRegistries.ITEM.get(cuisineId);
-        if (itemReference.isEmpty()) return;
-        Item targetItem = itemReference.get().value();
-
-        var cupboardHandler = cupboard.getItemHandler();
-        Transaction tx = Transaction.openRoot();
-        for (int i = 0; i < cupboardHandler.size(); i++) {
-            var resource = cupboardHandler.getResource(i);
-            if (targetItem.getDefaultInstance().is(cupboardHandler.getResource(i).getItem())) {
-                cupboardHandler.extract(i, resource, 1, tx);
-                tx.commit();
-
-                // 放入女仆 TaskInv 的空位
-                var taskInv = maid.getItemManager().getTaskInv();
-                ItemResource cuisineResource = ItemResource.of(new ItemStack(targetItem, 1));
-                for (int j = 0; j < taskInv.size(); j++) {
-                    if (taskInv.getResource(j).isEmpty()) {
-                        taskInv.set(j, cuisineResource, 1);
-                        return;
-                    }
-                }
-                return;
-            }
-        }
-    }
-
-    // ==================== 导航辅助 ====================
-
-    private static boolean isCloseEnough(EntityMaid maid, BlockPos pos) {
-        return pos.distToCenterSqr(maid.position()) < CLOSE_ENOUGH * CLOSE_ENOUGH;
-    }
-
-    private static void setNavigateTo(EntityMaid maid, BlockPos pos) {
-        BehaviorUtils.setWalkAndLookTargetMemories(maid, pos, SPEED, 1);
     }
 }
