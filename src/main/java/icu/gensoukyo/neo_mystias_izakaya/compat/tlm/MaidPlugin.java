@@ -10,6 +10,7 @@ import com.github.tartaricacid.touhoulittlemaid.api.LittleMaidExtension;
 import com.github.tartaricacid.touhoulittlemaid.entity.ai.brain.ExtraMaidBrainManager;
 import com.github.tartaricacid.touhoulittlemaid.entity.task.TaskManager;
 import icu.gensoukyo.neo_mystias_izakaya.compat.tlm.ai.MystiaBeverageTask;
+import icu.gensoukyo.neo_mystias_izakaya.compat.tlm.ai.MystiaCookTask;
 import icu.gensoukyo.neo_mystias_izakaya.compat.tlm.ai.MystiaCuisineTask;
 import icu.gensoukyo.neo_mystias_izakaya.compat.tlm.ai.MystiaTask;
 import icu.gensoukyo.neo_mystias_izakaya.compat.tlm.event.MaidCanteenInteractEvent;
@@ -28,6 +29,7 @@ public class MaidPlugin implements ILittleMaid {
         manager.add(new MystiaTask());
         manager.add(new MystiaCuisineTask());
         manager.add(new MystiaBeverageTask());
+        manager.add(new MystiaCookTask());
     }
 
     @Override

@@ -7,9 +7,7 @@ import com.github.tartaricacid.touhoulittlemaid.util.SoundUtil;
 import com.google.common.collect.Lists;
 import com.mojang.datafixers.util.Pair;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
-import icu.gensoukyo.neo_mystias_izakaya.compat.tlm.task.MaidDeliverCuisineTask;
-import icu.gensoukyo.neo_mystias_izakaya.compat.tlm.task.MaidFetchCuisineTask;
-import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMICuisinesItems;
+import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMainItems;
 import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.ai.behavior.BehaviorControl;
@@ -18,15 +16,15 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class MystiaCuisineTask implements IMaidTask {
+public class MystiaCookTask implements IMaidTask {
     @Override
     public Identifier getUid() {
-        return NeoMystiasIzakaya.id("mystias_izakaya_cuisine");
+        return NeoMystiasIzakaya.id("mystias_izakaya_cook");
     }
 
     @Override
     public ItemStack getIcon() {
-        return NMICuisinesItems.GRILLED_LAMPREY.toStack();
+        return NMIMainItems.STEAMER.toStack();
     }
 
     @Nullable
@@ -37,9 +35,6 @@ public class MystiaCuisineTask implements IMaidTask {
 
     @Override
     public List<Pair<Integer, BehaviorControl<? super EntityMaid>>> createBrainTasks(EntityMaid maid) {
-        return Lists.newArrayList(
-                Pair.of(4, new MaidFetchCuisineTask()),
-                Pair.of(5, new MaidDeliverCuisineTask())
-        );
+        return Lists.newArrayList();
     }
 }
