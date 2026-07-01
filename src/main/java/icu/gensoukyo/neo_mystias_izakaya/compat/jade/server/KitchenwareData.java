@@ -13,11 +13,9 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.Optional;
 
-public record KitchenwareData(Optional<ItemStack> result, Optional<ItemStack> target, int cookingTime, int totalCookingTime) {
+public record KitchenwareData(Optional<ItemStack> target, int cookingTime, int totalCookingTime) {
 
     public static final StreamCodec<RegistryFriendlyByteBuf, KitchenwareData> STREAM_CODEC = StreamCodec.composite(
-            ByteBufCodecs.optional(ItemStack.STREAM_CODEC),
-            KitchenwareData::result,
             ByteBufCodecs.optional(ItemStack.STREAM_CODEC),
             KitchenwareData::target,
             ByteBufCodecs.VAR_INT,

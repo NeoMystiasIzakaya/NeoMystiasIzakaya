@@ -49,7 +49,6 @@ public class KitchenwareBlockEntity extends RandomizableContainerBlockEntity {
     /**
      * 0-4为食材格
      * 5为结果格
-     * 6为保存烹饪过程中的目标物品
      */
     NonNullList<ItemStack> items = NonNullList.withSize(6, ItemStack.EMPTY);
 
@@ -104,6 +103,7 @@ public class KitchenwareBlockEntity extends RandomizableContainerBlockEntity {
             ServerPayloadSender.sendKitchenwareSyncMessage(pBlockEntity.getBlockPos(), pBlockEntity.cookingTime);
             if (pBlockEntity.cookingTime <= 0) {
                 pBlockEntity.cookingTime = 0;
+                pBlockEntity.totalCookingTime = 0;
                 ItemStack copy = pBlockEntity.getTargetItem().copy();
                 pBlockEntity.setResultItem(copy);
                 pLevel.setBlock(pPos, pState.setValue(BlockStateProperties.LIT, false), Block.UPDATE_CLIENTS);
@@ -119,7 +119,7 @@ public class KitchenwareBlockEntity extends RandomizableContainerBlockEntity {
     @Override
     public void setItems(NonNullList<ItemStack> itemStacks) {
         if (itemStacks.size() != 6) {
-            LOGGER.error("Attempted to set items with a list of size {}, but expected size is 7. This may cause unexpected behavior.", itemStacks.size());
+            LOGGER.debug("Attempted to set items with a list of size {}, but expected size is 7. This may cause unexpected behavior.", itemStacks.size());
         }
         this.items = itemStacks;
     }
@@ -131,7 +131,7 @@ public class KitchenwareBlockEntity extends RandomizableContainerBlockEntity {
 
     public void setIngredients(NonNullList<ItemStack> itemStacks) {
         if (itemStacks.size() != 5) {
-            LOGGER.error("Attempted to set ingredient items with a list of size {}, but expected size is 5. This may cause unexpected behavior.", itemStacks.size());
+            LOGGER.debug("Attempted to set ingredient items with a list of size {}, but expected size is 5. This may cause unexpected behavior.", itemStacks.size());
         }
         for (int i = 0; i < 5; i++) {
             this.items.set(i, i < itemStacks.size() ? itemStacks.get(i).copy() : ItemStack.EMPTY);
@@ -204,7 +204,7 @@ public class KitchenwareBlockEntity extends RandomizableContainerBlockEntity {
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
         try (ProblemReporter.ScopedCollector reporter = new ProblemReporter.ScopedCollector(this.problemPath(), NeoMystiasIzakaya.LOGGER)) {
             TagValueOutput output = TagValueOutput.createWithContext(reporter, registries);
-            ContainerHelper.saveAllItems(output, this.items);
+//            ContainerHelper.saveAllItems(output, this.items);
             output.putInt("CookingTime", this.cookingTime);
             output.putInt("TotalCookingTime", this.totalCookingTime);
             return output.buildResult();
