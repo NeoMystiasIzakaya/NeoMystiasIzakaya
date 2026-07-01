@@ -33,12 +33,10 @@ import java.util.List;
 public class NMIRecipeReloadListener extends SimplePreparableReloadListener<NMIRecipeMap> {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final FileToIdConverter NMI_RECIPE = FileToIdConverter.json(NeoMystiasIzakaya.path("recipe"));
-    private final HolderLookup.Provider registries;
     @Getter
     private NMIRecipeMap nmiRecipeMap = NMIRecipeMap.EMPTY;
 
-    public NMIRecipeReloadListener(HolderLookup.Provider registries) {
-        this.registries = registries;
+    public NMIRecipeReloadListener() {
     }
 
     @Override
@@ -47,7 +45,7 @@ public class NMIRecipeReloadListener extends SimplePreparableReloadListener<NMIR
         long loadStartTime = System.currentTimeMillis();
 
         HashMap<Identifier, NMIRecipe> recipeHolderTreeMap = new HashMap<>();
-        var conditionalOps = new ConditionalOps<>(this.registries.createSerializationContext(JsonOps.INSTANCE), getContext());
+        var conditionalOps = new ConditionalOps<>(this.getRegistryLookup().createSerializationContext(JsonOps.INSTANCE), getContext());
         SimpleJsonResourceReloadListener.scanDirectoryWithModifier(
                 resourceManager, NMI_RECIPE, conditionalOps, NMIRecipe.CODEC, recipeHolderTreeMap, recipeJsons -> {
                     var event = new ModifyNMIRecipeJsonEvent(conditionalOps, recipeJsons);

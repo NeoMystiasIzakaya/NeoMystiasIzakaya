@@ -103,12 +103,6 @@ public abstract class NMIRecipeProvider implements DataProvider {
             return this;
         }
 
-        public Builder input(List<Ingredient> ingredients) {
-            this.fillNull();
-            this.input.addAll(ingredients);
-            return this;
-        }
-
         public Builder output(ItemStackTemplate output) {
             this.output = output;
             return this;

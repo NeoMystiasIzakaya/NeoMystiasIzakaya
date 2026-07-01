@@ -127,6 +127,12 @@ dependencies {
 //
 //    localRuntime "me.shedaniel:RoughlyEnoughItems-neoforge:$rei_version"
     implementation "maven.modrinth:jade:${jade_version}"
+
+    // 跑datagen时记得带上下面两个 runtimeOnly
+    compileOnly "maven.modrinth:gensokyo-reverie-of-lost-dreams:${reverie_dreams_version}"
+    //runtimeOnly "maven.modrinth:gensokyo-reverie-of-lost-dreams:${reverie_dreams_version}"
+    compileOnly "maven.modrinth:balm:${balm_version}"
+    //runtimeOnly "maven.modrinth:balm:${balm_version}"
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
