@@ -9,17 +9,17 @@ import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.KitchenwareBlockEnti
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.core.NonNullList;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.ICancellableEvent;
 
 @Getter
 public abstract class IzakayaCookingEvent extends Event {
-    private final Player player;
+    private final LivingEntity player;
     private final KitchenwareBlockEntity kitchenwareBE;
 
-    public IzakayaCookingEvent(Player player, KitchenwareBlockEntity kitchenwareBE) {
+    public IzakayaCookingEvent(LivingEntity player, KitchenwareBlockEntity kitchenwareBE) {
         this.player = player;
         this.kitchenwareBE = kitchenwareBE;
     }
@@ -27,20 +27,20 @@ public abstract class IzakayaCookingEvent extends Event {
 
     public abstract static class SpawnDarkMatter extends IzakayaCookingEvent {
 
-        public SpawnDarkMatter(Player player, KitchenwareBlockEntity kitchenwareBE) {
+        public SpawnDarkMatter(LivingEntity player, KitchenwareBlockEntity kitchenwareBE) {
             super(player, kitchenwareBE);
         }
 
         public static class Pre extends SpawnDarkMatter implements ICancellableEvent {
 
-            public Pre(Player player, KitchenwareBlockEntity kitchenwareBE) {
+            public Pre(LivingEntity player, KitchenwareBlockEntity kitchenwareBE) {
                 super(player, kitchenwareBE);
             }
         }
 
         public static class Post extends SpawnDarkMatter {
 
-            public Post(Player player, KitchenwareBlockEntity kitchenwareBE) {
+            public Post(LivingEntity player, KitchenwareBlockEntity kitchenwareBE) {
                 super(player, kitchenwareBE);
             }
         }
@@ -53,21 +53,21 @@ public abstract class IzakayaCookingEvent extends Event {
 
         private final ItemStack result;
 
-        public SpawnResult(Player player, KitchenwareBlockEntity kitchenwareBE, ItemStack result) {
+        public SpawnResult(LivingEntity player, KitchenwareBlockEntity kitchenwareBE, ItemStack result) {
             super(player, kitchenwareBE);
             this.result = result;
         }
 
         public static class Pre extends SpawnResult implements ICancellableEvent {
 
-            public Pre(Player player, KitchenwareBlockEntity kitchenwareBE, ItemStack result) {
+            public Pre(LivingEntity player, KitchenwareBlockEntity kitchenwareBE, ItemStack result) {
                 super(player, kitchenwareBE, result);
             }
         }
 
         public static class Post extends SpawnResult {
 
-            public Post(Player player, KitchenwareBlockEntity kitchenwareBE, ItemStack result) {
+            public Post(LivingEntity player, KitchenwareBlockEntity kitchenwareBE, ItemStack result) {
                 super(player, kitchenwareBE, result);
             }
         }
@@ -79,7 +79,7 @@ public abstract class IzakayaCookingEvent extends Event {
         @Setter
         private NonNullList<ItemStack> resultIngredients;
 
-        public ConsumeIngredients(Player player, KitchenwareBlockEntity kitchenwareBE, NonNullList<ItemStack> originIngredients, NonNullList<ItemStack> resultIngredients) {
+        public ConsumeIngredients(LivingEntity player, KitchenwareBlockEntity kitchenwareBE, NonNullList<ItemStack> originIngredients, NonNullList<ItemStack> resultIngredients) {
             super(player, kitchenwareBE);
             this.originIngredients = originIngredients;
             this.resultIngredients = resultIngredients;
@@ -87,14 +87,14 @@ public abstract class IzakayaCookingEvent extends Event {
 
         public static class Pre extends ConsumeIngredients implements ICancellableEvent {
 
-            public Pre(Player player, KitchenwareBlockEntity kitchenwareBE, NonNullList<ItemStack> ingredients, NonNullList<ItemStack> consumedIngredients) {
+            public Pre(LivingEntity player, KitchenwareBlockEntity kitchenwareBE, NonNullList<ItemStack> ingredients, NonNullList<ItemStack> consumedIngredients) {
                 super(player, kitchenwareBE, ingredients, consumedIngredients);
             }
         }
 
         public static class Post extends ConsumeIngredients {
 
-            public Post(Player player, KitchenwareBlockEntity kitchenwareBE, NonNullList<ItemStack> ingredients, NonNullList<ItemStack> consumedIngredients) {
+            public Post(LivingEntity player, KitchenwareBlockEntity kitchenwareBE, NonNullList<ItemStack> ingredients, NonNullList<ItemStack> consumedIngredients) {
                 super(player, kitchenwareBE, ingredients, consumedIngredients);
             }
         }
@@ -106,7 +106,7 @@ public abstract class IzakayaCookingEvent extends Event {
         private final int cookingTimeTick;
         private final int cookingTotalTimeTick;
 
-        public SetCookingTime(Player player, KitchenwareBlockEntity kitchenwareBE, int cookingTime) {
+        public SetCookingTime(LivingEntity player, KitchenwareBlockEntity kitchenwareBE, int cookingTime) {
             super(player, kitchenwareBE);
             this.cookingTimeTick = cookingTime * 20;
             this.cookingTotalTimeTick = cookingTime * 20;
@@ -114,7 +114,7 @@ public abstract class IzakayaCookingEvent extends Event {
     }
 
     public static class Trigger extends IzakayaCookingEvent implements ICancellableEvent{
-        public Trigger(Player player, KitchenwareBlockEntity kitchenwareBE) {
+        public Trigger(LivingEntity player, KitchenwareBlockEntity kitchenwareBE) {
             super(player, kitchenwareBE);
         }
     }

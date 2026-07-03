@@ -11,7 +11,7 @@ import icu.gensoukyo.neo_mystias_izakaya.client.dal.ClientNMIDataAccessor;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeHolder;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.NeoForge;
@@ -24,7 +24,7 @@ import java.util.Set;
 
 public final class NMIServerRecipeUtil {
 
-    public static List<NMIRecipeHolder> getRecipesByInput(@Nullable Player player, List<ItemStack> input) {
+    public static List<NMIRecipeHolder> getRecipesByInput(@Nullable LivingEntity player, List<ItemStack> input) {
         Set<Identifier> recipesIds = new HashSet<>();
         for (ItemStack stack : input) {
             List<Identifier> identifiers = NMIDataAccessor.server().getRecipeMap().getInputItemToRecipeMap().get(NMICommonItemStackUtil.get(stack));
@@ -37,12 +37,12 @@ public final class NMIServerRecipeUtil {
     }
 
 
-    public static List<NMIRecipeHolder> getRecipesByOutput(@Nullable Player player, Identifier output) {
+    public static List<NMIRecipeHolder> getRecipesByOutput(@Nullable LivingEntity player, Identifier output) {
         List<Identifier> recipesIds = NMIDataAccessor.server().getRecipeMap().getOutputItemToRecipeMap().get(output);
         return getRecipes(recipesIds);
     }
 
-    public static List<NMIRecipeHolder> getRecipesByOutputAndKitchenware(@Nullable Player player, Identifier output, TagKey<Block> kitchenware) {
+    public static List<NMIRecipeHolder> getRecipesByOutputAndKitchenware(@Nullable LivingEntity player, Identifier output, TagKey<Block> kitchenware) {
         List<Identifier> byOutput = NMIDataAccessor.server().getRecipeMap().getOutputItemToRecipeMap().get(output);
         List<Identifier> byKitchenware = NMIDataAccessor.server().getRecipeMap().getKitchenwareToRecipeMap().get(kitchenware);
 
@@ -60,13 +60,13 @@ public final class NMIServerRecipeUtil {
     }
 
 
-    public static List<NMIRecipeHolder> getRecipesByKitchenware(@Nullable Player player, TagKey<Block> kitchenware) {
+    public static List<NMIRecipeHolder> getRecipesByKitchenware(@Nullable LivingEntity player, TagKey<Block> kitchenware) {
         List<Identifier> recipesIds = NMIDataAccessor.server().getRecipeMap().getKitchenwareToRecipeMap().get(kitchenware);
         IzakayaRecipeEvent.Collect post = NeoForge.EVENT_BUS.post(new IzakayaRecipeEvent.Collect(player, recipesIds, kitchenware, List.of()));
         return getRecipes(post.getRecipes());
     }
 
-    public static List<NMIRecipeHolder> getRecipesByInputAndKitchenware(@Nullable Player player, List<ItemStack> input, TagKey<Block> kitchenware) {
+    public static List<NMIRecipeHolder> getRecipesByInputAndKitchenware(@Nullable LivingEntity player, List<ItemStack> input, TagKey<Block> kitchenware) {
         Set<Identifier> inputRecipeIds = new HashSet<>();
         for (ItemStack stack : input) {
             List<Identifier> identifiers = NMIDataAccessor.client().getRecipeMap().getInputItemToRecipeMap().get(NMICommonItemStackUtil.get(stack));

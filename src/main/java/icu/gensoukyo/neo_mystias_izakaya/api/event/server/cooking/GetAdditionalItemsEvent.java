@@ -9,7 +9,7 @@ import icu.gensoukyo.neo_mystias_izakaya.common.blockentity.KitchenwareBlockEnti
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipe;
 import lombok.Getter;
 import lombok.Setter;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
@@ -20,14 +20,14 @@ public abstract class GetAdditionalItemsEvent extends IzakayaCookingEvent {
     private final NMIRecipe recipe;
     private final List<ItemStack> inputs;
 
-    protected GetAdditionalItemsEvent(Player player, KitchenwareBlockEntity kitchenwareBE, NMIRecipe recipe, List<ItemStack> inputs) {
+    protected GetAdditionalItemsEvent(LivingEntity player, KitchenwareBlockEntity kitchenwareBE, NMIRecipe recipe, List<ItemStack> inputs) {
         super(player, kitchenwareBE);
         this.recipe = recipe;
         this.inputs = inputs;
     }
 
     public static class Pre extends GetAdditionalItemsEvent {
-        public Pre(Player player, KitchenwareBlockEntity kitchenwareBE, NMIRecipe recipe, List<ItemStack> inputs) {
+        public Pre(LivingEntity player, KitchenwareBlockEntity kitchenwareBE, NMIRecipe recipe, List<ItemStack> inputs) {
             super(player, kitchenwareBE, recipe, inputs);
         }
     }
@@ -36,7 +36,7 @@ public abstract class GetAdditionalItemsEvent extends IzakayaCookingEvent {
     @Getter
     public static class Post extends GetAdditionalItemsEvent {
         private final List<ItemStack> additionalItems;
-        public Post(Player player, KitchenwareBlockEntity kitchenwareBE, NMIRecipe recipe, List<ItemStack> inputs, List<ItemStack> additionalItems) {
+        public Post(LivingEntity player, KitchenwareBlockEntity kitchenwareBE, NMIRecipe recipe, List<ItemStack> inputs, List<ItemStack> additionalItems) {
             super(player, kitchenwareBE, recipe, inputs);
             this.additionalItems = additionalItems;
         }

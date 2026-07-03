@@ -10,7 +10,7 @@ import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
 import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.LivingEntity;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public abstract class IzakayaCookingTagEvent extends IzakayaCookingEvent{
     private final ItemTagList cuisine;
     private final List<ItemTagList> additional;
 
-    public IzakayaCookingTagEvent(Player player, KitchenwareBlockEntity kitchenwareBE, ItemTagList cuisine, List<ItemTagList> additional) {
+    public IzakayaCookingTagEvent(LivingEntity player, KitchenwareBlockEntity kitchenwareBE, ItemTagList cuisine, List<ItemTagList> additional) {
         super(player, kitchenwareBE);
         this.cuisine = cuisine;
         this.additional = additional;
@@ -32,7 +32,7 @@ public abstract class IzakayaCookingTagEvent extends IzakayaCookingEvent{
 
         private boolean hasConflict;
 
-        public Check(Player player, KitchenwareBlockEntity kitchenwareBE, ItemTagList cuisine, List<ItemTagList> additional, boolean hasConflict) {
+        public Check(LivingEntity player, KitchenwareBlockEntity kitchenwareBE, ItemTagList cuisine, List<ItemTagList> additional, boolean hasConflict) {
             super(player, kitchenwareBE, cuisine, additional);
             this.hasConflict = hasConflict;
         }
@@ -45,7 +45,7 @@ public abstract class IzakayaCookingTagEvent extends IzakayaCookingEvent{
 
         List<Identifier> result;
 
-        public Collect(Player player, KitchenwareBlockEntity kitchenwareBE, ItemTagList cuisine, List<ItemTagList> additional, List<Identifier> result) {
+        public Collect(LivingEntity player, KitchenwareBlockEntity kitchenwareBE, ItemTagList cuisine, List<ItemTagList> additional, List<Identifier> result) {
             super(player, kitchenwareBE, cuisine, additional);
             this.result = result;
         }

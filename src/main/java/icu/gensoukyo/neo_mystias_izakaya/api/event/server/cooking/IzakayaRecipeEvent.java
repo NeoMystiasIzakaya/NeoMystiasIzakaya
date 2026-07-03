@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.Event;
@@ -20,9 +20,9 @@ import java.util.List;
 @Getter
 public class IzakayaRecipeEvent extends Event {
 
-    private final Player player;
+    private final LivingEntity player;
 
-    public IzakayaRecipeEvent(Player player) {
+    public IzakayaRecipeEvent(LivingEntity player) {
         this.player = player;
     }
 
@@ -34,7 +34,7 @@ public class IzakayaRecipeEvent extends Event {
         @Nullable
         private final TagKey<Block> kitchenware;
         private final List<ItemStack> inputs;
-        public Collect(Player player, List<Identifier> recipes,@Nullable TagKey<Block> kitchenware, List<ItemStack> inputs) {
+        public Collect(LivingEntity player, List<Identifier> recipes,@Nullable TagKey<Block> kitchenware, List<ItemStack> inputs) {
             super(player);
             this.recipes = recipes;
             this.kitchenware = kitchenware;
