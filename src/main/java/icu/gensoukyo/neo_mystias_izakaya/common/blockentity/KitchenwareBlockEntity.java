@@ -106,6 +106,7 @@ public class KitchenwareBlockEntity extends RandomizableContainerBlockEntity {
                 pBlockEntity.totalCookingTime = 0;
                 ItemStack copy = pBlockEntity.getTargetItem().copy();
                 pBlockEntity.setResultItem(copy);
+                pBlockEntity.setTargetItem(ItemStack.EMPTY);
                 pLevel.setBlock(pPos, pState.setValue(BlockStateProperties.LIT, false), Block.UPDATE_CLIENTS);
             }
         }
