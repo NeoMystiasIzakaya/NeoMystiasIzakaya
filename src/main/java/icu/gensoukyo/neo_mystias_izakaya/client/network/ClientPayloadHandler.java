@@ -90,7 +90,7 @@ public class ClientPayloadHandler {
         });
     }
 
-    public static void handleCupboardItemResourceConsumedMessage(CupboardItemResourceConsumedMessage message, IPayloadContext context) {
+    public static void handleCupboardItemResourceConsumedMessage(CupboardItemResourceUpdatedMessage message, IPayloadContext context) {
         context.enqueueWork(() -> {
             if (CupboardHud.CurrentActive !=null){
                 CupboardHud.CurrentActive.update(message.itemResource());
@@ -106,7 +106,7 @@ public class ClientPayloadHandler {
         });
     }
 
-    public static void handleIncubatorItemResourceConsumedMessage(IncubatorItemResourceConsumedMessage message, IPayloadContext context) {
+    public static void handleIncubatorItemResourceConsumedMessage(IncubatorItemResourceUpdatedMessage message, IPayloadContext context) {
         context.enqueueWork(() -> {
             if (IncubatorHud.CurrentActive !=null){
                 IncubatorHud.CurrentActive.update(message.itemResource());

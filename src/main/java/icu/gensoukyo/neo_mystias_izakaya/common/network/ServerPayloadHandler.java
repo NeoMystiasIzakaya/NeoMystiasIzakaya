@@ -171,5 +171,21 @@ public class ServerPayloadHandler {
             }
         });
     }
+
+    public static void handleRequestCupboardInsertItemFromPlayerHandMessage(RequestCupboardInsertItemFromPlayerHandMessage message, IPayloadContext context) {
+        context.enqueueWork(() -> {
+            if (context.player() instanceof ServerPlayer serverPlayer) {
+                CupboardUtil.insertItemFromPlayerHand(serverPlayer);
+            }
+        });
+    }
+
+    public static void handleRequestIncubatorInsertItemFromPlayerHandMessage(RequestIncubatorInsertItemFromPlayerHandMessage message, IPayloadContext context) {
+        context.enqueueWork(() -> {
+            if (context.player() instanceof ServerPlayer serverPlayer) {
+                IncubatorUtil.insertItemFromPlayerHand(serverPlayer);
+            }
+        });
+    }
 }
 

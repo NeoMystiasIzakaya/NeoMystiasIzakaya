@@ -29,6 +29,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
 import java.util.Optional;
 
@@ -51,14 +52,14 @@ public class DishServingScreen extends AbstractContainerScreen<DishServingMenu> 
     }
 
     @Override
-    protected void init(){
+    protected void init() {
         super.init();
 
-        int x1 = getLeftPos()+getImageWidth()+4;
-        int width = Math.min(130,getMinecraft().getWindow().getGuiScaledWidth()-x1-10);
-        int x2 = Math.max(getLeftPos()-130,10);
-        cupBoardHud = new CupboardHud(x2,getTopPos(),getLeftPos()-x2-4,getImageHeight(),this::onCupboardHudItemResourceClick);
-        incubatorHud = new IncubatorHud(x1,getTopPos(),width,getImageHeight(),this::onIncubatorHudItemResourceClick);
+        int x1 = getLeftPos() + getImageWidth() + 4;
+        int width = Math.min(130, getMinecraft().getWindow().getGuiScaledWidth() - x1 - 10);
+        int x2 = Math.max(getLeftPos() - 130, 10);
+        cupBoardHud = new CupboardHud(x2, getTopPos(), getLeftPos() - x2 - 4, getImageHeight(), this::onCupboardHudItemResourceClick);
+        incubatorHud = new IncubatorHud(x1, getTopPos(), width, getImageHeight(), this::onIncubatorHudItemResourceClick);
         addRenderableWidget(cupBoardHud);
         addRenderableWidget(incubatorHud);
         ClientPayloadSender.sendRequestCupboardBeveragesInfoMessage();
@@ -66,10 +67,19 @@ public class DishServingScreen extends AbstractContainerScreen<DishServingMenu> 
     }
 
     private void onCupboardHudItemResourceClick(ItemResourceWithCount resource) {
-        ClientPayloadSender.sendRequestCupboardExtractItemToPlayerHandMessage(resource.itemResource());
+        if (menu.getCarried().isEmpty() || resource.itemResource().equals(ItemResource.of(menu.getCarried()))) {
+            ClientPayloadSender.sendRequestCupboardExtractItemToPlayerHandMessage(resource.itemResource());
+        } else {
+            ClientPayloadSender.sendRequestCupboardInsertItemFromPlayerHandMessage();
+        }
     }
+
     private void onIncubatorHudItemResourceClick(ItemResourceWithCount resource) {
-        ClientPayloadSender.sendRequestIncubatorExtractItemToPlayerHandMessage(resource.itemResource());
+        if (menu.getCarried().isEmpty() || resource.itemResource().equals(ItemResource.of(menu.getCarried()))) {
+            ClientPayloadSender.sendRequestIncubatorExtractItemToPlayerHandMessage(resource.itemResource());
+        } else {
+            ClientPayloadSender.sendRequestIncubatorInsertItemFromPlayerHandMessage();
+        }
     }
 
     @Override
@@ -130,7 +140,7 @@ public class DishServingScreen extends AbstractContainerScreen<DishServingMenu> 
             int x1 = x0 + DishServingMenu.CELL_WIDTH;
             int y1 = y0 + 24; // 单元格高度 24
 
-            graphics.fill(x0,y1,x1,y1+1, RecipeScreen.POSITIVE_OUT_COLOR);
+            graphics.fill(x0, y1, x1, y1 + 1, RecipeScreen.POSITIVE_OUT_COLOR);
 
             // 绘制槽位区域边框（每个 18×18 槽位独立画框）
             int slotTop = y0 + 2;

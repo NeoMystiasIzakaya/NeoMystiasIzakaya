@@ -64,4 +64,12 @@ public class ClientPayloadSender {
     public static void sendRequestIncubatorExtractItemToPlayerHandMessage(ItemResource resource){
         ClientPacketDistributor.sendToServer(new RequestIncubatorExtractItemToPlayerHandMessage(resource));
     }
+
+    public static void sendRequestCupboardInsertItemFromPlayerHandMessage(){
+        ClientPacketDistributor.sendToServer(new RequestCupboardInsertItemFromPlayerHandMessage());
+    }
+
+    public static void sendRequestIncubatorInsertItemFromPlayerHandMessage(){
+        ClientPacketDistributor.sendToServer(new RequestIncubatorInsertItemFromPlayerHandMessage());
+    }
 }

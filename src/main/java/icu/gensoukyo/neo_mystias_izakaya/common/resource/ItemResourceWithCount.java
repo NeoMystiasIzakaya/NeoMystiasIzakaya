@@ -25,4 +25,11 @@ public record ItemResourceWithCount(ItemResource itemResource,long count) {
             ItemResource.CODEC.fieldOf("itemResource").forGetter(ItemResourceWithCount::itemResource),
             Codec.LONG.fieldOf("count").forGetter(ItemResourceWithCount::count)
     ).apply(ins, ItemResourceWithCount::new));
+
+    public static ItemResourceWithCount of(ItemResource itemResource,int count){
+        return new ItemResourceWithCount(itemResource,count);
+    }
+    public static ItemResourceWithCount of(ItemResource itemResource){
+        return new ItemResourceWithCount(itemResource,1);
+    }
 }

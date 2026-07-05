@@ -30,10 +30,11 @@ public class NMIMEBlockEntities {
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<MECupboardBlockEntity>> ME_CUPBOARD = create("me_cupboard",MECupboardBlockEntity.class, MECupboardBlockEntity::new, NMIMEBlocks.ME_CUPBOARD);
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<MEIncubatorBlockEntity>> ME_INCUBATOR = create("me_incubator",MEIncubatorBlockEntity.class, MEIncubatorBlockEntity::new, NMIMEBlocks.ME_INCUBATOR);
 
+    @SafeVarargs
     private static <T extends AEBaseBlockEntity> DeferredHolder<BlockEntityType<?>, BlockEntityType<T>> create(String shortId,
-                                                                                   Class<T> entityClass,
-                                                                                   BlockEntityFactory<T> factory,
-                                                                                   DeferredBlock<? extends AEBaseEntityBlock<?>>... blockDefinitions) {
+                                                                                                               Class<T> entityClass,
+                                                                                                               BlockEntityFactory<T> factory,
+                                                                                                               DeferredBlock<? extends AEBaseEntityBlock<?>>... blockDefinitions) {
         Preconditions.checkArgument(blockDefinitions.length > 0);
 
         var deferred = BLOCK_ENTITY_TYPES.register(shortId, () -> {

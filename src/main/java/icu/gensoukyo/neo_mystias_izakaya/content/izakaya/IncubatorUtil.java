@@ -47,7 +47,12 @@ public final class IncubatorUtil {
     }
 
     public static void extractItemToPlayerHand(ServerPlayer serverPlayer, ItemResource itemResource) {
-        ResourceHandlerUtil.extractItemToPlayerHand(serverPlayer,itemResource,getItemResourceHandler(serverPlayer));
-        ServerPayloadSender.sendIncubatorItemResourceConsumedMessage(serverPlayer, itemResource);
+        int i = ResourceHandlerUtil.extractItemToPlayerHand(serverPlayer, itemResource, getItemResourceHandler(serverPlayer));
+        ServerPayloadSender.sendIncubatorItemResourceUpdatedMessage(serverPlayer, ItemResourceWithCount.of(itemResource,i));
+    }
+
+    public static void insertItemFromPlayerHand(ServerPlayer serverPlayer){
+        ItemResourceWithCount itemResource = ResourceHandlerUtil.insertItemFromPlayerHand(serverPlayer, getItemResourceHandler(serverPlayer));
+        ServerPayloadSender.sendIncubatorItemResourceUpdatedMessage(serverPlayer, itemResource);
     }
 }

@@ -21,7 +21,6 @@ import icu.gensoukyo.neo_mystias_izakaya.content.tag.TagItemListMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.PacketDistributor;
-import net.neoforged.neoforge.transfer.item.ItemResource;
 
 import java.util.List;
 
@@ -103,15 +102,15 @@ public class ServerPayloadSender {
         PacketDistributor.sendToPlayer(player, new CupboardItemResourceFullSyncMessage(itemResourceList));
     }
 
-    public static void sendCupboardItemResourceConsumedMessage(ServerPlayer player, ItemResource itemResource) {
-        PacketDistributor.sendToPlayer(player, new CupboardItemResourceConsumedMessage(itemResource));
+    public static void sendCupboardItemResourceUpdatedMessage(ServerPlayer player, ItemResourceWithCount itemResource) {
+        PacketDistributor.sendToPlayer(player, new CupboardItemResourceUpdatedMessage(itemResource));
     }
 
     public static void sendIncubatorItemResourceFullSyncMessage(ServerPlayer player, List<ItemResourceWithCount> itemResourceList) {
         PacketDistributor.sendToPlayer(player, new IncubatorItemResourceFullSyncMessage(itemResourceList));
     }
 
-    public static void sendIncubatorItemResourceConsumedMessage(ServerPlayer player, ItemResource itemResource) {
-        PacketDistributor.sendToPlayer(player, new IncubatorItemResourceConsumedMessage(itemResource));
+    public static void sendIncubatorItemResourceUpdatedMessage(ServerPlayer player, ItemResourceWithCount itemResource) {
+        PacketDistributor.sendToPlayer(player, new IncubatorItemResourceUpdatedMessage(itemResource));
     }
 }

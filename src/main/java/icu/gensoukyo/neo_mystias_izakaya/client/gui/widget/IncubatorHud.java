@@ -43,10 +43,10 @@ public class IncubatorHud extends AbstractContainerWidget {
         this.itemResourceWithCountList.addAll(itemResourceWithCountList);
         refresh();
     }
-    public void update(ItemResource itemResource){
+    public void update(ItemResourceWithCount itemResource){
         for (int i = 0; i < itemResourceWithCountList.size(); i++) {
-            if (itemResourceWithCountList.get(i).itemResource().equals(itemResource) && itemResourceWithCountList.get(i).count() != Long.MAX_VALUE){
-                itemResourceWithCountList.set(i,new ItemResourceWithCount(itemResource,itemResourceWithCountList.get(i).count()-1));
+            if (itemResourceWithCountList.get(i).itemResource().equals(itemResource.itemResource()) && itemResourceWithCountList.get(i).count() != Long.MAX_VALUE){
+                itemResourceWithCountList.set(i,new ItemResourceWithCount(itemResource.itemResource(),itemResourceWithCountList.get(i).count()+itemResource.count()));
                 refresh();
                 return;
             }

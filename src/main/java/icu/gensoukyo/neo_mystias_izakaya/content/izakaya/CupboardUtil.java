@@ -104,7 +104,7 @@ public final class CupboardUtil {
                 }
                 if (!equals && i < extractedList.size() && extractedList.get(i) != null) {
                     kitchenwareResourceHandler.insert(extractedList.get(i), 1, transaction);
-                    ServerPayloadSender.sendCupboardItemResourceConsumedMessage(serverPlayer, extractedList.get(i));
+                    ServerPayloadSender.sendCupboardItemResourceUpdatedMessage(serverPlayer, ItemResourceWithCount.of(extractedList.get(i),-1));
                 }
             }
 
@@ -130,12 +130,17 @@ public final class CupboardUtil {
                 }
             }
             transaction.commit();
-            ServerPayloadSender.sendCupboardItemResourceConsumedMessage(serverPlayer, itemResource);
+            ServerPayloadSender.sendCupboardItemResourceUpdatedMessage(serverPlayer, ItemResourceWithCount.of(itemResource,-1));
         }
     }
 
     public static void extractItemToPlayerHand(ServerPlayer serverPlayer, ItemResource itemResource) {
-        ResourceHandlerUtil.extractItemToPlayerHand(serverPlayer,itemResource,getItemResourceHandler(serverPlayer));
-        ServerPayloadSender.sendCupboardItemResourceConsumedMessage(serverPlayer, itemResource);
+        int i = ResourceHandlerUtil.extractItemToPlayerHand(serverPlayer, itemResource, getItemResourceHandler(serverPlayer));
+        ServerPayloadSender.sendCupboardItemResourceUpdatedMessage(serverPlayer, ItemResourceWithCount.of(itemResource,i));
+    }
+
+    public static void insertItemFromPlayerHand(ServerPlayer serverPlayer){
+        ItemResourceWithCount itemResource = ResourceHandlerUtil.insertItemFromPlayerHand(serverPlayer, getItemResourceHandler(serverPlayer));
+        ServerPayloadSender.sendCupboardItemResourceUpdatedMessage(serverPlayer, itemResource);
     }
 }

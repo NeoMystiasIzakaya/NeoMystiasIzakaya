@@ -98,8 +98,8 @@ public class NMINetwork {
         );
 
         registrar.playToClient(
-                CupboardItemResourceConsumedMessage.TYPE,
-                CupboardItemResourceConsumedMessage.STREAM_CODEC,
+                CupboardItemResourceUpdatedMessage.TYPE,
+                CupboardItemResourceUpdatedMessage.STREAM_CODEC,
                 ClientPayloadHandler::handleCupboardItemResourceConsumedMessage
         );
         registrar.playToClient(
@@ -109,8 +109,8 @@ public class NMINetwork {
         );
 
         registrar.playToClient(
-                IncubatorItemResourceConsumedMessage.TYPE,
-                IncubatorItemResourceConsumedMessage.STREAM_CODEC,
+                IncubatorItemResourceUpdatedMessage.TYPE,
+                IncubatorItemResourceUpdatedMessage.STREAM_CODEC,
                 ClientPayloadHandler::handleIncubatorItemResourceConsumedMessage
         );
     }
@@ -193,6 +193,18 @@ public class NMINetwork {
                 RequestIncubatorExtractItemToPlayerHandMessage.TYPE,
                 RequestIncubatorExtractItemToPlayerHandMessage.STREAM_CODEC,
                 ServerPayloadHandler::handleRequestIncubatorExtractItemToPlayerHandMessage
+        );
+
+        registrar.playToServer(
+                RequestCupboardInsertItemFromPlayerHandMessage.TYPE,
+                RequestCupboardInsertItemFromPlayerHandMessage.STREAM_CODEC,
+                ServerPayloadHandler::handleRequestCupboardInsertItemFromPlayerHandMessage
+        );
+
+        registrar.playToServer(
+                RequestIncubatorInsertItemFromPlayerHandMessage.TYPE,
+                RequestIncubatorInsertItemFromPlayerHandMessage.STREAM_CODEC,
+                ServerPayloadHandler::handleRequestIncubatorInsertItemFromPlayerHandMessage
         );
     }
 }

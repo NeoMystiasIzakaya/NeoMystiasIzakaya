@@ -35,6 +35,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -150,7 +151,11 @@ public class KitchenwareScreen extends AbstractContainerScreen<KitchenwareMenu> 
     }
 
     private void onHudItemResourceClick(ItemResourceWithCount resource) {
-        ClientPayloadSender.sendRequestExtractItemToKitchenwareMessage(resource.itemResource(),kitchenwareBE.getBlockPos());
+        if (menu.getCarried().isEmpty()) {
+            ClientPayloadSender.sendRequestExtractItemToKitchenwareMessage(resource.itemResource(),kitchenwareBE.getBlockPos());
+        } else {
+            ClientPayloadSender.sendRequestCupboardInsertItemFromPlayerHandMessage();
+        }
     }
 
     @Override
