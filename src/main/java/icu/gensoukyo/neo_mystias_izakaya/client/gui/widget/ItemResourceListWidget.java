@@ -122,8 +122,8 @@ public class ItemResourceListWidget extends ObjectSelectionList<ItemResourceList
             }
             if (isMouseOver(mouseX,mouseY)&& mouseX-10 > this.getContentX()){
                 int index = ((mouseX-10 - getX()) / 20);
-                ItemStack stack = this.itemResourceWithCountList.get(index).itemResource().toStack();
                 if (index >= itemResourceWithCountList.size()) return;
+                ItemStack stack = this.itemResourceWithCountList.get(index).itemResource().toStack();
                 guiGraphics.setTooltipForNextFrame(font, this.getTooltipFromContainerItem(stack), stack.getTooltipImage(), stack, mouseX, mouseY, stack.get(DataComponents.TOOLTIP_STYLE));
             }
         }
