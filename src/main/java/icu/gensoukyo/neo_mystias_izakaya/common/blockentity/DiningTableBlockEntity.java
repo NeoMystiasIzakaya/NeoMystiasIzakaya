@@ -11,6 +11,7 @@ import icu.gensoukyo.neo_mystias_izakaya.common.network.ServerPayloadSender;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMICommonBalanceUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMIServerEconomyUtil;
 import icu.gensoukyo.neo_mystias_izakaya.common.util.NMIServerItemTagUtil;
+import icu.gensoukyo.neo_mystias_izakaya.compat.tlm.TLMUtil;
 import icu.gensoukyo.neo_mystias_izakaya.content.economy.transaction.NMIBalanceTransactionReasons;
 import icu.gensoukyo.neo_mystias_izakaya.content.izakaya.IzakayaOrder;
 import icu.gensoukyo.neo_mystias_izakaya.content.customer.Customer;
@@ -34,6 +35,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.Item;
@@ -44,6 +46,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.fml.ModList;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Optional;
@@ -108,14 +111,15 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
 
     public static void serverTick(Level pLevel, BlockPos pPos, BlockState pState, DiningTableBlockEntity pBlockEntity) {
         // 女仆离席检测：座位实体消失则自动清桌
-        if (pBlockEntity.seatEntityId != null && pLevel.getEntity(pBlockEntity.seatEntityId) == null) {
+        Entity entity = pLevel.getEntity(pBlockEntity.seatEntityId);
+        if (pBlockEntity.seatEntityId != null && entity == null) {
             pBlockEntity.clear();
             pBlockEntity.seatEntityId = null;
             return;
         }
 
         // CD 中，递减并跳过
-        if (pBlockEntity.cooldownTicks > 0) {
+        if (pBlockEntity.isCD()) {
             pBlockEntity.cooldownTicks--;
             return;
         }
@@ -125,12 +129,12 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
         }
 
         IzakayaOrder order = pBlockEntity.getCurrentOrder();
-        
+
         // 计算顾客评价
         CustomerEvaluation evaluation = evaluateCustomer(pBlockEntity, order);
         // 解析文本键：稀客用 evaluation 键，普客随机挑选 chat
         String textKey = resolveTextKey(pBlockEntity, order, evaluation);
-            
+
         int price = 0;
 
         if (order.isRare()) {
@@ -164,18 +168,31 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
         }
         // 应用评价倍率
         int finalPrice = evaluation.apply(price);
-        
+
         if (pBlockEntity.level != null
                 && pBlockEntity.level.getBlockEntity(pBlockEntity.controllerPos) instanceof CanteenControllerBlockEntity canteen
                 && canteen.getOwner() != null
                 && pLevel.getEntity(canteen.getOwner()) instanceof ServerPlayer serverPlayer) {
             NMICommonBalanceUtil.insertEn(serverPlayer, finalPrice, false, NMIBalanceTransactionReasons.ORDER_PAY, "DiningTable", serverPlayer.getPlainTextName());
-            ServerPayloadSender.sendDiningTableSaleMessage(serverPlayer, finalPrice, evaluation, textKey);
+
+            if (pBlockEntity.seatEntityId != null && entity != null && ModList.get().isLoaded("touhou_little_maid")) {
+                TLMUtil.addMaidChatBauble(entity, textKey);
+            } else {
+                ServerPayloadSender.sendDiningTableSaleMessage(serverPlayer, finalPrice, evaluation, textKey);
+            }
         }
         // 完成后进入随机 10~20 秒 CD
         pBlockEntity.cooldownTicks = pLevel.getRandom().nextInt(200, 401);
-        // 女仆仍在座则只清物品保留占用，否则完全重置
-        pBlockEntity.clear();
+        // 女仆仍在座则只清物品和订单状态，否则完全重置
+        if (pBlockEntity.seatEntityId != null) {
+            pBlockEntity.items.clear();
+            pBlockEntity.isOccupied = false;
+            pBlockEntity.currentOrder = IzakayaOrder.EMPTY;
+            pBlockEntity.customerId = IzakayaOrder.EMPTY_RARE_CUSTOMER;
+            pBlockEntity.markUpdated();
+        } else {
+            pBlockEntity.clear();
+        }
     }
 
     @Override
@@ -472,5 +489,9 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
         this.currentOrder = IzakayaOrder.EMPTY;
         this.seatEntityId = null;
         markUpdated();
+    }
+
+    public boolean isCD() {
+        return this.cooldownTicks > 0;
     }
 }

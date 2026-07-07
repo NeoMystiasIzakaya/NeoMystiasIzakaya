@@ -44,7 +44,7 @@ public class MaidPlaceOrderTask extends MaidCheckRateTask {
             if (level.getBlockEntity(targetPos) instanceof DiningTableBlockEntity diningTableBlock) {
                 // 闭店时不得点餐
                 if (!isCanteenOpen(level, diningTableBlock)) return;
-                if (!diningTableBlock.isOccupied()) {
+                if (!diningTableBlock.isOccupied() && !diningTableBlock.isCD()) {
                     Identifier maidModel = Identifier.parse(maid.getModelId());
                     Identifier maidID = NeoMystiasIzakaya.id("customer/" + maidModel.getPath());
 

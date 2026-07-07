@@ -7,6 +7,9 @@ package icu.gensoukyo.neo_mystias_izakaya.compat.tlm;
 
 import com.github.tartaricacid.touhoulittlemaid.TouhouLittleMaid;
 import com.github.tartaricacid.touhoulittlemaid.api.client.render.MaidRenderState;
+import com.github.tartaricacid.touhoulittlemaid.entity.chatbubble.implement.TextChatBubbleData;
+import com.github.tartaricacid.touhoulittlemaid.entity.item.EntityChair;
+import com.github.tartaricacid.touhoulittlemaid.entity.item.EntitySit;
 import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -15,7 +18,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.Entity;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -62,6 +67,13 @@ public class TLMUtil {
         int middleX = (width - imageWidth) / 2;
         int middleY = (height - imageHeight) / 2;
         Identifier customerID = Identifier.fromNamespaceAndPath(TouhouLittleMaid.MOD_ID, key.getPath().replaceFirst("^customer/", ""));
-        renderEntityPart(customerID.toString(), guiGraphics, mouseX, mouseY, middleX + 170,middleY - 10,0.7F);
+        renderEntityPart(customerID.toString(), guiGraphics, mouseX, mouseY, middleX + 170, middleY - 10, 0.7F);
+    }
+
+    public static void addMaidChatBauble(Entity entity, String textKey) {
+        if (entity instanceof EntitySit entitySit
+                && entitySit.getFirstPassenger() instanceof EntityMaid entityMaid) {
+              entityMaid.getChatBubbleManager().addChatBubble(TextChatBubbleData.type2(Component.translatable(textKey)));
+        }
     }
 }
