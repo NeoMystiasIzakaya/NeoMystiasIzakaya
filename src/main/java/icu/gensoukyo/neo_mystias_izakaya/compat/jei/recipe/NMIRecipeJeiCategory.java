@@ -5,7 +5,11 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.compat.jei.recipe;
 
+import icu.gensoukyo.neo_mystias_izakaya.content.cooking.Kitchenware;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipe;
+import icu.gensoukyo.neo_mystias_izakaya.registry.NMIKitchenware;
+import icu.gensoukyo.neo_mystias_izakaya.registry.item.NMIMainItems;
+import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
@@ -13,6 +17,7 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -26,15 +31,23 @@ import net.minecraft.world.level.block.Block;
 
 import java.util.List;
 
-public abstract class AbstractNMIRecipe implements IRecipeCategory<NMIRecipe> {
+public abstract class NMIRecipeJeiCategory implements IRecipeCategory<NMIRecipe> {
+
+    private final IRecipeType<NMIRecipe> recipeType;
     private final IDrawable icon;
     private final IDrawable slotDraw;
     private final Component localizedName;
 
-    public AbstractNMIRecipe(IGuiHelper guiHelper, IDrawable icon) {
+    public NMIRecipeJeiCategory(IGuiHelper guiHelper, Kitchenware kitchenware) {
         this.slotDraw = guiHelper.getSlotDrawable();
-        this.icon = icon;
+        this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(kitchenware.kitchenwareItem()));
         this.localizedName = Component.translatable("neo_mystias_izakaya");
+        this.recipeType = IRecipeType.create(kitchenware.kitchenwareTag(), NMIRecipe.class);
+    }
+
+    @Override
+    public IRecipeType<NMIRecipe> getRecipeType() {
+        return recipeType;
     }
 
     @Override
@@ -78,8 +91,33 @@ public abstract class AbstractNMIRecipe implements IRecipeCategory<NMIRecipe> {
         graphics.item(defaultInstance, 64, 25);
     }
 
-    @SuppressWarnings("deprecation")
     private List<ItemStack> getItemList(Ingredient ingredient) {
         return ingredient.items().map(itemHolder -> itemHolder.value().getDefaultInstance()).toList();
+    }
+
+    public static class BoilingPot extends NMIRecipeJeiCategory {
+        public BoilingPot(IGuiHelper guiHelper) {
+            super(guiHelper, NMIKitchenware.BOILING_POT.get());
+        }
+    }
+    public static class CuttingBoard extends NMIRecipeJeiCategory {
+        public CuttingBoard(IGuiHelper guiHelper) {
+            super(guiHelper, NMIKitchenware.CUTTING_BOARD.get());
+        }
+    }
+    public static class FryingPan extends NMIRecipeJeiCategory {
+        public FryingPan(IGuiHelper guiHelper) {
+            super(guiHelper, NMIKitchenware.FRYING_PAN.get());
+        }
+    }
+    public static class Steamer extends NMIRecipeJeiCategory {
+        public Steamer(IGuiHelper guiHelper) {
+            super(guiHelper, NMIKitchenware.STEAMER.get());
+        }
+    }
+    public static class Grill extends NMIRecipeJeiCategory {
+        public Grill(IGuiHelper guiHelper){
+            super(guiHelper, NMIKitchenware.GRILL.get());
+        }
     }
 }

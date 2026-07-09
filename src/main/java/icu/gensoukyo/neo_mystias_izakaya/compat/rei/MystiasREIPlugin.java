@@ -12,6 +12,7 @@ import icu.gensoukyo.neo_mystias_izakaya.client.gui.screen.KitchenwareScreen;
 import icu.gensoukyo.neo_mystias_izakaya.client.util.NMIClientRecipeUtil;
 import icu.gensoukyo.neo_mystias_izakaya.compat.rei.gui.DishServingExclusionZonesProvider;
 import icu.gensoukyo.neo_mystias_izakaya.compat.rei.gui.KitchenwareExclusionZonesProvider;
+import icu.gensoukyo.neo_mystias_izakaya.compat.rei.recipe.NMIRecipeDisplayGenerator;
 import icu.gensoukyo.neo_mystias_izakaya.compat.rei.recipe.NMIRecipeReiCategory;
 import icu.gensoukyo.neo_mystias_izakaya.compat.rei.recipe.NMIRecipeReiDisplay;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIKitchenware;
@@ -74,24 +75,11 @@ public class MystiasREIPlugin implements REIClientPlugin {
     @Override
     public void registerDisplays(DisplayRegistry registry) {
         init();
-
-        NMIDataAccessor.client().getRecipeMap().getKitchenwareToRecipeMap().get(NMIKitchenware.CUTTING_BOARD.get().blockTagKey()).forEach(
-               e-> registry.add(new NMIRecipeReiDisplay.CuttingBoard(NMIClientRecipeUtil.getRecipe(e).recipe()))
-        );
-        NMIDataAccessor.client().getRecipeMap().getKitchenwareToRecipeMap().get(NMIKitchenware.BOILING_POT.get().blockTagKey()).forEach(
-                e-> registry.add(new NMIRecipeReiDisplay.BoilingPot(NMIClientRecipeUtil.getRecipe(e).recipe()))
-        );
-        NMIDataAccessor.client().getRecipeMap().getKitchenwareToRecipeMap().get(NMIKitchenware.FRYING_PAN.get().blockTagKey()).forEach(
-                e-> registry.add(new NMIRecipeReiDisplay.FryingPan(NMIClientRecipeUtil.getRecipe(e).recipe()))
-        );
-        NMIDataAccessor.client().getRecipeMap().getKitchenwareToRecipeMap().get(NMIKitchenware.STEAMER.get().blockTagKey()).forEach(
-                e-> registry.add(new NMIRecipeReiDisplay.Steamer(NMIClientRecipeUtil.getRecipe(e).recipe()))
-        );
-        NMIDataAccessor.client().getRecipeMap().getKitchenwareToRecipeMap().get(NMIKitchenware.GRILL.get().blockTagKey()).forEach(
-                e-> registry.add(new NMIRecipeReiDisplay.Grill(NMIClientRecipeUtil.getRecipe(e).recipe()))
-        );
-
-
+        registry.registerDisplayGenerator(cuttingBoard.getCategoryIdentifier(),new NMIRecipeDisplayGenerator.CuttingBoard());
+        registry.registerDisplayGenerator(boilingPot.getCategoryIdentifier(),new NMIRecipeDisplayGenerator.BoilingPot());
+        registry.registerDisplayGenerator(fryingPan.getCategoryIdentifier(),new NMIRecipeDisplayGenerator.FryingPan());
+        registry.registerDisplayGenerator(steamer.getCategoryIdentifier(),new NMIRecipeDisplayGenerator.Steamer());
+        registry.registerDisplayGenerator(grill.getCategoryIdentifier(),new NMIRecipeDisplayGenerator.Grill());
     }
 
     @Override

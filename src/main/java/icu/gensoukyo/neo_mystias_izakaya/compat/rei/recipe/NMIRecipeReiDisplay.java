@@ -37,7 +37,6 @@ public class NMIRecipeReiDisplay extends BasicDisplay {
     );
 
     private final CategoryIdentifier<?> category;
-
     private final Identifier location;
     private final NMIRecipe recipe;
 
