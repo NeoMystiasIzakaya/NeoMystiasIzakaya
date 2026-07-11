@@ -20,6 +20,7 @@ import icu.gensoukyo.neo_mystias_izakaya.content.customer.CustomerMap;
 import icu.gensoukyo.neo_mystias_izakaya.content.customer.consts.CustomerEvaluation;
 import icu.gensoukyo.neo_mystias_izakaya.content.recipe.NMIRecipeHolder;
 import icu.gensoukyo.neo_mystias_izakaya.content.tag.ItemTagList;
+import icu.gensoukyo.neo_mystias_izakaya.registry.NMIAttachmentTypes;
 import icu.gensoukyo.neo_mystias_izakaya.registry.NMIBlockEntities;
 import lombok.Getter;
 import net.minecraft.core.BlockPos;
@@ -173,6 +174,18 @@ public class DiningTableBlockEntity extends RandomizableContainerBlockEntity {
                 && pBlockEntity.level.getBlockEntity(pBlockEntity.controllerPos) instanceof CanteenControllerBlockEntity canteen
                 && canteen.getOwner() != null
                 && pLevel.getEntity(canteen.getOwner()) instanceof ServerPlayer serverPlayer) {
+            // 应用 Combo 加乘因子
+            int combo = serverPlayer.getData(NMIAttachmentTypes.COMBO);
+            int comboBonus = Math.min(combo, 25);
+            finalPrice = (int) (finalPrice * (1.0 + comboBonus * 0.03));
+
+            // 更新 Combo：非负面评价则 +1，否则清零
+            if (evaluation.isNotNegative()) {
+                serverPlayer.setData(NMIAttachmentTypes.COMBO, combo + 1);
+            } else {
+                serverPlayer.setData(NMIAttachmentTypes.COMBO, 0);
+            }
+
             NMICommonBalanceUtil.insertEn(serverPlayer, finalPrice, false, NMIBalanceTransactionReasons.ORDER_PAY, "DiningTable", serverPlayer.getPlainTextName());
 
             if (pBlockEntity.seatEntityId != null && entity != null && ModList.get().isLoaded("touhou_little_maid")) {

@@ -78,4 +78,13 @@ public enum CustomerEvaluation {
     public String getTranslationKey() {
         return "evaluation.neo_mystias_izakaya." + level;
     }
+
+    /**
+     * 判断评价是否不为负面（即 {@link #NORM} 及以上）。
+     *
+     * @return {@code true} 若评价为 NORM、GOOD 或 EX_GOOD
+     */
+    public boolean isNotNegative() {
+        return this == NORM || this == GOOD || this == EX_GOOD;
+    }
 }

@@ -5,6 +5,7 @@
 
 package icu.gensoukyo.neo_mystias_izakaya.registry;
 
+import com.mojang.serialization.Codec;
 import icu.gensoukyo.neo_mystias_izakaya.NeoMystiasIzakaya;
 import icu.gensoukyo.neo_mystias_izakaya.content.economy.balance.NMIBalance;
 import icu.gensoukyo.neo_mystias_izakaya.content.economy.transaction.NMIBalanceTransaction;
@@ -40,5 +41,10 @@ public class NMIAttachmentTypes {
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<NMIBalanceTransaction>> TRANSACTION = ATTACHMENT_TYPES.register(
             "transaction",
             () -> AttachmentType.builder(()-> NMIBalanceTransaction.EMPTY).serialize(NMIBalanceTransaction.MAP_CODEC).copyOnDeath().build()
+    );
+
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> COMBO = ATTACHMENT_TYPES.register(
+            "combo",
+            () -> AttachmentType.builder(() -> 0).serialize(Codec.INT.fieldOf("combo")).copyOnDeath().build()
     );
 }
