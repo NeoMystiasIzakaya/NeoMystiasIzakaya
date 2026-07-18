@@ -44,7 +44,7 @@ public final class ResourceHandlerUtil {
     }
 
     public static int extractItemToPlayerHand(ServerPlayer serverPlayer, ItemResource itemResource, ResourceHandler<ItemResource> resourceHandler) {
-         return extractItemToPlayerHand(serverPlayer, itemResource, serverPlayer.isShiftKeyDown() ? 64 : 1, resourceHandler);
+        return extractItemToPlayerHand(serverPlayer, itemResource, serverPlayer.isShiftKeyDown() ? 64 : 1, resourceHandler);
     }
 
     public static int extractItemToPlayerHand(ServerPlayer serverPlayer, ItemResource itemResource, int amount, ResourceHandler<ItemResource> resourceHandler) {
@@ -54,8 +54,7 @@ public final class ResourceHandlerUtil {
             int extracted = resourceHandler.extract(itemResource, limit, transaction);
             if (menu.getCarried().isEmpty()) {
                 menu.setCarried(itemResource.toStack(extracted));
-            }
-            if (itemResource.equals(ItemResource.of(menu.getCarried()))) {
+            } else if (itemResource.equals(ItemResource.of(menu.getCarried()))) {
                 menu.getCarried().setCount(menu.getCarried().count() + extracted);
             }
             transaction.commit();
@@ -73,7 +72,7 @@ public final class ResourceHandlerUtil {
             menu.getCarried().shrink(inserted);
             transaction.commit();
             menu.broadcastChanges();
-            return ItemResourceWithCount.of(itemResource,inserted);
+            return ItemResourceWithCount.of(itemResource, inserted);
         }
     }
 }
