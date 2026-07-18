@@ -90,7 +90,7 @@ public class NMIBalance implements ResourceHandler<NMIBalanceEntry> {
         if (getResource(index).isEmpty()) {
             return true;
         }
-        return getResource(index).getItem() == resource.getItem();
+        return getResource(index).getItem().equals(resource.getItem()) ;
     }
 
     @Override
